@@ -22,7 +22,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 public class DBConfig {
 
-	@Value(value = "${hikariConfig.driverClassName}") private String driverClassName;
+	@Value(value="${hikariConfig.driverClassName}") private String driverClassName;
 	@Value(value="${hikariConfig.jdbcUrl}") private String jdbcUrl;
 	@Value(value="${hikariConfig.username}") private String username;
 	@Value(value="${hikariConfig.password}") private String password;
