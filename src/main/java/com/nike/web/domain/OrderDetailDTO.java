@@ -1,7 +1,5 @@
 package com.nike.web.domain;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartDTO {
+public class OrderDetailDTO {
 
-	private int cNo;
-	private int mNo;
+	private int odNo;
+	private int oNo;
 	private int pNo;
-	private int cTotal;
-	private Date cRegdate;
+	private int oQty;
+	private int oPrice;
 
 }
