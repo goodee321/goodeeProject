@@ -10,6 +10,18 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.nike.web.domain.CartDTO" alias="CartDTO" />
+		<typeAlias type="com.nike.web.domain.MemberDTO" alias="MemberDTO" />
+		<typeAlias type="com.nike.web.domain.MemberLogDTO" alias="MemberLogDTO" />
+		<typeAlias type="com.nike.web.domain.NoticeDTO" alias="NoticeDTO" />
+		<typeAlias type="com.nike.web.domain.OrderDetailDTO" alias="OrderDetailDTO" />
+		<typeAlias type="com.nike.web.domain.OrderDTO" alias="OrderDTO" />
+		<typeAlias type="com.nike.web.domain.ProductDTO" alias="ProductDTO" />
+		<typeAlias type="com.nike.web.domain.ProductImageDTO" alias="ProductImageDTO" />
+		<typeAlias type="com.nike.web.domain.QnaDTO" alias="QnaDTO" />
+		<typeAlias type="com.nike.web.domain.ReviewDTO" alias="ReviewDTO" />
+		<typeAlias type="com.nike.web.domain.ReviewImageDTO" alias="ReviewImageDTO" />
+		<typeAlias type="com.nike.web.domain.SignOutMemberDTO" alias="SignOutMemberDTO" />
 	</typeAliases>
 	
 </configuration>
