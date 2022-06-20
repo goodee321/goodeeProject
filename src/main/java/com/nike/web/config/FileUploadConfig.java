@@ -9,11 +9,11 @@ public class FileUploadConfig {
 
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
+		
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		multipartResolver.setDefaultEncoding("UTF-8");
 		multipartResolver.setMaxUploadSizePerFile(1024 * 1024 * 10);
 		multipartResolver.setMaxUploadSize(1024 * 1024 * 50);
 		return multipartResolver;
-
 	}
 }
