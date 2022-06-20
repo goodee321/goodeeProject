@@ -7,6 +7,8 @@ import com.nike.web.service.CartService;
 import com.nike.web.service.CartServiceImpl;
 import com.nike.web.service.OrderService;
 import com.nike.web.service.OrderServiceImpl;
+import com.nike.web.service.ProductService;
+import com.nike.web.service.ProductServiceImpl;
 
 @Configuration
 public class ServiceConfig {
@@ -19,6 +21,11 @@ public class ServiceConfig {
 	@Bean
 	public CartService cartService() {
 		return new CartServiceImpl();
+	}
+	
+	@Bean
+	public ProductService productService() {
+		return new ProductServiceImpl();
 	}
 
 }

@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class ProductDTO {
 
-	private int	pNo;
-	private String	pName;
-	private int pPrice;
+	private int	pNo;				//ProductNo   상품 번호	==galleryNo
+	private String	pName;			//productName 상품 이름 
+	private int pPrice;				
 	private int pStock;
 	private String	pDetail;
 	private String	pDelivery;
