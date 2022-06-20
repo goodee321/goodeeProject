@@ -6,7 +6,7 @@
 	<artifactId>web</artifactId>
 	<name>GoodeeProject</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHO</version>
+	<version>1.0.0-BUILD-SNAP</version>
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.3</org.springframework-version>
