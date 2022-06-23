@@ -7,25 +7,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
 public class MemberDTO {
-	private int mNo;
-	private String mId;
-	private String mPw;
-	private String mName;
-	private String mEmail;
-	private String mAddress;
-	private String mAddDetail;
-	private String mPhone;
-	private Date mDate;
+	private Long memberNo;
+	private String id;
+	private String pw;
+	private String name;
+	private String email;
+	private String address;
+	private String addrDetail;
+	private String phone;
+	private Integer agreeState;
+	private Date signIn;
 	private Date pwModified;
 	private Date infoModified;
 	private String sessionId;
 	private Date sessionLimit;
-	private int power;
-	
-	
 }

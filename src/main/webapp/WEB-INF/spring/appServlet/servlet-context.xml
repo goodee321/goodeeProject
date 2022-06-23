@@ -23,6 +23,36 @@
 	
 	<context:component-scan base-package="com.nike.web" />
 	
+	<!-- 인터셉터 -->
+	<!-- 
+		1. 컨트롤러의 어떤 매핑을 처리하기 이전/이후에 처리되는 작업이다.
+		2. 로그인이 필요한 기능을 사용하려는 경우에 주로 활용된다.
+		3. 인터셉터로 사용할 bean을 생성해 둬야 한다.
+	 -->
+	 <beans:bean class="com.nike.web.interceptor.LoginInterceptor" id="loginInterceptor" />
+	 <beans:bean class="com.nike.web.interceptor.PreventLoginInterceptor" id="PreventLoginInterceptor" />
+	 <beans:bean class="com.nike.web.interceptor.RequiredLoginInterceptor" id="requiredLoginInterceptor" />
+	 
+	 <interceptors>
+	 	<interceptor>
+	 		<mapping path="/member/login" />
+	 		<beans:ref bean="loginInterceptor" />
+	 	</interceptor>
+	 	<interceptor>
+	 		<mapping path="/member/agreePage" />
+	 		<mapping path="/member/signInPage" />
+	 		<mapping path="/member/loginPage" />
+	 		<beans:ref bean="PreventLoginInterceptor" />
+	 	</interceptor>
+	 	<interceptor>
+	 		<mapping path="/board/savePage" />
+	 		<beans:ref bean="requiredLoginInterceptor" />
+	 		
+	 	</interceptor>
+	 	
+	 	
+	 </interceptors>
+	
 	
 	
 </beans:beans>
