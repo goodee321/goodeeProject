@@ -1,7 +1,9 @@
 package com.nike.web.service;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -19,10 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.nike.web.domain.MemberDTO;
 import com.nike.web.domain.SignOutMemberDTO;
 import com.nike.web.mapper.MemberMapper;
+import com.nike.web.util.PageUtils;
 import com.nike.web.util.SecurityUtils;
 
 @Service
@@ -292,6 +296,83 @@ public class MemberServiceImpl implements MemberService {
 		
 		
 	}
+	
+	
+	
+	// 목록(협업)
+		@Override
+		public void findMembers(HttpServletRequest request, Model model) {
+			// TODO Auto-generated method stub
+			
+			Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+			int page = Integer.parseInt(opt.orElse("1"));
+			
+			int totalRecord = memberMapper.selectMemberCount();
+			
+			PageUtils pageUtils = new PageUtils();
+			pageUtils.setPageEntity(totalRecord, page);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("beginRecord", pageUtils.getBeginRecord());
+			map.put("endRecord", pageUtils.getEndRecord());
+			
+			List<MemberDTO> members = memberMapper.selectMemberList(map);
+			
+			model.addAttribute("members", members);
+			model.addAttribute("totalRecord", totalRecord);
+			model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/admin/member/list"));
+			
+			
+//			int page = 1;
+//			String strPage = request.getParameter("page");
+//			if(strPage != null) {
+//				page = Integer.parseInt(strPage);
+//			}
+			
+			
+		}
+		
+		
+		// 삭제
+		@Override
+		public int removeList2(HttpServletRequest request) {
+			// 한 번에 여러 개 지우기
+			// DELETE FROM NOTICE WHERE NOTICE_NO IN(1, 4)
+			String[] memberNoList = request.getParameterValues("memberNoList");  // {"1", "4"}
+			List<Long> list = new ArrayList<>();
+			for(int i = 0; i < memberNoList.length; i++) {
+				list.add(Long.parseLong(memberNoList[i]));  // list.add(1) -> list.add(4)
+			}
+			return memberMapper.deleteMemberList(list);
+		}
+		
+		
+		// 상세보기
+		@Override
+		public MemberDTO findMemberByNo(HttpServletRequest request) {
+			// TODO Auto-generated method stub
+			
+			String requestURI = request.getRequestURI();  // "/ex09/notice/detail"
+			String[] arr = requestURI.split("/");         // { "", "ex09", "notice", "detail"}
+			
+			Long memberNo = Long.parseLong(request.getParameter("memberNo"));
+			
+			return memberMapper.selectMemberByNo(memberNo); 
+		}
+		
+		// 수정
+		@Override
+		public int change(HttpServletRequest request) {
+			MemberDTO member = new MemberDTO();
+			member.setMemberNo(Long.parseLong(request.getParameter("memberNo")));
+			member.setName(request.getParameter("name"));
+			member.setEmail(request.getParameter("email"));
+			member.setAddress(request.getParameter("address"));
+			member.setAddrDetail(request.getParameter("addrDetail"));
+			member.setPhone(request.getParameter("phone"));
+			return memberMapper.updateMember(member);
+		}
+	
 	
 	
 }

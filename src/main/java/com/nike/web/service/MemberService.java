@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.ui.Model;
+
 import com.nike.web.domain.MemberDTO;
 import com.nike.web.domain.SignOutMemberDTO;
 
@@ -18,5 +20,18 @@ public interface MemberService {
 	public SignOutMemberDTO findSignOutMember(String id);
 	public void reSignIn(HttpServletRequest request, HttpServletResponse response);
 
+	// 목록(협업)
+	public void findMembers(HttpServletRequest request, Model model);
+		
+	// 삭제(선택해서삭제)
+	public int removeList2(HttpServletRequest request);
+		
+	// 세부사항
+	public MemberDTO findMemberByNo(HttpServletRequest request);
+		
+	// 수정
+	public int change(HttpServletRequest request);
+	
+	
 	
 }

@@ -1,10 +1,5 @@
 package com.nike.web.util;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class PageUtils {
 
 	
@@ -13,9 +8,9 @@ public class PageUtils {
 	   - 한 페이지에 3개씩 표시한다면
 	   - 전체 페이지는 4페이지가 된다.
 	*****************************************************************************/
-	private int totalRecord;         // DB에서 구해온다.
+	private int totalRecord;        // DB에서 구해온다.
 	private int recordPerPage = 10;  // 여기서 마음대로 정한다.
-	private int totalPage;           // totalRecord와 recordPerPage로 계산한다.
+	private int totalPage;          // totalRecord와 recordPerPage로 계산한다.
 	
 	
 	/***************************************************************************
@@ -41,8 +36,8 @@ public class PageUtils {
 		block = 3,  11 12           ,  page = 11~15, beginPage = 11, endPage = 12 (endPage = 15가 아님을 주의)
 	*****************************************************************************/
 	private int pagePerBlock = 10;  // 여기서 마음대로 정한다.
-	private int beginPage;          // page와 pagePerBlock으로 계산한다.
-	private int endPage;            // beginPage와 pagePerBlock과 totalPage로 계산한다.
+	private int beginPage;         // page와 pagePerBlock으로 계산한다.
+	private int endPage;           // beginPage와 pagePerBlock과 totalPage로 계산한다.
 	
 	
 	// 매개변수 2개
@@ -76,57 +71,10 @@ public class PageUtils {
 		}
 	}
 
-	// ◀◀  prev  1  2  3  4  5  next  ▶▶
+	
+	// 매개변수 1개
+	// path : "/employee/list", "/board/list" 등이 각 ServiceImpl에서 전달된다.
 	public String getPaging(String path) {
-		
-		StringBuilder sb = new StringBuilder();
-		
-		String concat = path.contains("?") ? "&" : "?";
-		path += concat;
-			
-		// 이전 블록으로 이동, 1블록은 <a> 태그가 없다.
-		if(page <= pagePerBlock) {
-			sb.append("<span class=\"unlink\"><i class=\"fa-solid fa-backward\"></i></span>");
-		} else {
-			sb.append("<a class=\"link\" href=\"" + path + "page=" + (beginPage - 1) + "\"><i class=\"fa-solid fa-backward\"></i></a>");
-		}
-		
-		// 이전 페이지 (prev), 1페이지는 <a> 태그가 없다.
-		if(page == 1) {
-			sb.append("<span class=\"unlink\">prev</span>");
-		} else {
-			sb.append("<a class=\"link\" href=\"" + path + "page=" + (page - 1) + "\">prev</a>");
-		}
-		
-		// 페이지 번호 (1 2 3 4 5), 현재 페이지는 <a> 태그가 없다.
-		for(int p = beginPage; p <= endPage; p++) {
-			if(p == page) {
-				sb.append("<span class=\"unlink\">" + p + "</span>");
-			} else {
-				sb.append("<a class=\"link\" href=\"" + path + "page=" + p + "\">" + p + "</a>");
-			}
-		}
-		
-		// 다음 페이지 (next), 마지막 페이지는 <a> 태그가 없다.
-		if(page == totalPage) {
-			sb.append("<span class=\"unlink\">next</span>");
-		} else {
-			sb.append("<a class=\"link\" href=\"" + path + "page=" + (page + 1) + "\">next</a>");
-		}
-		
-		// 다음 블록으로 이동, 마지막 블록에는 <a> 태그가 없다.
-		if(endPage == totalPage) {
-			sb.append("<span class=\"unlink\"><i class=\"fa-solid fa-forward\"></i></span>");
-		} else {
-			sb.append("<a class=\"link\" href=\"" + path + "page=" + (endPage + 1) + "\"><i class=\"fa-solid fa-forward\"></i></a>");
-		}
-		
-		return sb.toString();
-		
-	}
-	
-	
-	public String getPagingOrigin(String path) {
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -196,6 +144,63 @@ public class PageUtils {
 		
 		return sb.toString();
 		
+	}
+
+
+	// Getter/Setter
+	public int getTotalRecord() {
+		return totalRecord;
+	}
+	public void setTotalRecord(int totalRecord) {
+		this.totalRecord = totalRecord;
+	}
+	public int getRecordPerPage() {
+		return recordPerPage;
+	}
+	public void setRecordPerPage(int recordPerPage) {
+		this.recordPerPage = recordPerPage;
+	}
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getBeginRecord() {
+		return beginRecord;
+	}
+	public void setBeginRecord(int beginRecord) {
+		this.beginRecord = beginRecord;
+	}
+	public int getEndRecord() {
+		return endRecord;
+	}
+	public void setEndRecord(int endRecord) {
+		this.endRecord = endRecord;
+	}
+	public int getPagePerBlock() {
+		return pagePerBlock;
+	}
+	public void setPagePerBlock(int pagePerBlock) {
+		this.pagePerBlock = pagePerBlock;
+	}
+	public int getBeginPage() {
+		return beginPage;
+	}
+	public void setBeginPage(int beginPage) {
+		this.beginPage = beginPage;
+	}
+	public int getEndPage() {
+		return endPage;
+	}
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
 	}
 
 }
