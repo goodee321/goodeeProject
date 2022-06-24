@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class QnaDTO {
-	private int qNo;
-	private int mNo;
-	private String qTitle;
-	private String qContent;
-	private Date qDate;
-	private int qState;
-	private int qDepth;
-	private int qGroupNo;
-	private int qGroupOrd;
+	private int qnaNo;
+	private String id;
+	private String qnaTitle;
+	private String qnaContent;
+	private Date qnaDate;
+	private int qnaState;
+	private int qnaDepth;
+	private int qnaGroupNo;
+	private int qnaGroupOrd;
 
 }
