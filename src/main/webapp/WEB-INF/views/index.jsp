@@ -16,7 +16,9 @@
 	
 	<h1>MAIN PAGE</h1>
 	
-	<a href="${contextPath}/board/savePage">상품보러가기</a>
+	<a href="${contextPath}/notice/list">공지사항</a>
+	<a href="${contextPath}/qna/list">QNA</a>
+	
 	
 	
 </body>
