@@ -143,7 +143,7 @@
 	
 	<h3>회원관리</h3>
 	
-	<h3>총회원: ${totalRecord}</h3>
+	<h3>총회원: ${totalRecord - 1}</h3>
 	
 	
 	<hr>
