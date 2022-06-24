@@ -31,6 +31,15 @@
 			location.href='${contextPath}/admin/member/changePage?memberNo=${member.memberNo}';
 		})
 		
+		// 삭제
+		// 폼의 서브밋을 활용
+		$('#btnRemove').on('click', function(){
+			if(confirm('삭제할까요?')){
+				$('#f').attr('action', '${contextPath}/notice/removeOne');
+				$('#f').submit();
+			}
+		})
+		
 		// 목록
 		$('#btnList').on('click', function(){
 			location.href='${contextPath}/admin/member/list';
@@ -46,17 +55,19 @@
 	
 		<input type="hidden" name="memberNo" value="${member.memberNo}"> <!-- 삭제에서 활용 -->
 	
-		<strong>회원번호:</strong> ${member.memberNo}<br>
-		<strong>ID:</strong> ${member.id}<br>
-		<strong>이름:</strong> ${member.name}<br>
-		<strong>email:</strong> ${member.email}<br>
-		<strong>주소:</strong> ${member.address}<br>
-		<strong>상세주소:</strong> ${member.addrDetail}<br>
-		<strong>휴대폰번호:</strong> ${member.phone}<br>
+		<strong>회원번호:</strong> ${member.memberNo}<br><hr>
+		<strong>ID:</strong> ${member.id}<br><hr>
+		<strong>이름:</strong> ${member.name}<br><hr>
+		<strong>email:</strong> ${member.email}<br><hr>
+		<strong>주소:</strong> ${member.address}<br><hr>
+		<strong>상세주소:</strong> ${member.addrDetail}<br><hr>
+		<strong>휴대폰번호:</strong> ${member.phone}<br><hr>
 		
 		
 		<input type="button" value="수정페이지" id="btnChangePage">
+		<input type="button" value="삭제" id="btnRemove">
 		<input type="button" value="목록" id="btnList"><br><br>
+		
 	
 	</form>
 	

@@ -66,7 +66,10 @@
   		height: 27px; 
 	}
 	
-	
+	.btnRemove {
+		width: 80px;
+		height: 50px;
+	}
 	
 </style>
 <script src="../../resources/js/jquery-3.6.0.js"></script>
@@ -140,15 +143,16 @@
 	
 	<h3>회원관리</h3>
 	
+	<h3>총회원: ${totalRecord}</h3>
 	
 	
 	<hr>
 	
 	<form action="${contextPath}/admin/member/removeList">
 
-		<button>선택삭제</button><br>
+		<button class="btnRemove">선택삭제</button><br><br>
 	
-		<table border="1">
+		<table border="1"><br>
 		
 			<thead>
 				<tr>
@@ -177,9 +181,10 @@
 			</tbody>
 			<tfoot>
 			<tr>
-				<td colspan="5">
+				 <td colspan="5">
 					${paging}
 				</td>
+				
 			</tr>
 		</tfoot>
 		</table>

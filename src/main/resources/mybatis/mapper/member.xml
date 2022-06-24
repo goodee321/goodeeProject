@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMemberList" parameterType="Map" resultType="MemberDTO">
 		 SELECT *
        	   FROM MEMBER
-      ORDER BY SIGN_IN DESC LIMIT #{beginRecord}, #{endRecord}
+      ORDERS LIMIT #{beginRecord}, #{endRecord}
 	</select>
 	
 	
@@ -133,6 +133,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   	   MEMBER_NO = #{memberNo}
 	</update>
  	
+ 	
+ 	
+ 	<!-- 삭제 -->
+	<delete id="deleteMember2" parameterType="Long">
+		DELETE
+		  FROM MEMBER
+		 WHERE MEMBER_NO = #{memberNo}
+	</delete>
  	
  	
 	

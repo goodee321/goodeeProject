@@ -32,6 +32,9 @@ public interface MemberService {
 	// 수정
 	public int change(HttpServletRequest request);
 	
+	// 개별삭제
+	public int removeOne(HttpServletRequest request);
+	
 	
 	
 }

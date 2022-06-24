@@ -34,13 +34,14 @@ public interface MemberMapper {
 	public MemberDTO selectMemberByNo(Long memberNo);
 		
 		
-	// 삭제
+	// 삭제(선택해서)
 	public int deleteMemberList(List<Long> list);
 		
 		
 	// 수정
 	public int updateMember(MemberDTO member);
 	
-	
+	// 개별삭제
+	public int deleteMember2(Long memberNo);
 	
 }

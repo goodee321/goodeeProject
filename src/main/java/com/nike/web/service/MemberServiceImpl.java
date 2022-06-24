@@ -373,6 +373,10 @@ public class MemberServiceImpl implements MemberService {
 			return memberMapper.updateMember(member);
 		}
 	
-	
-	
+		@Override
+		public int removeOne(HttpServletRequest request) {
+			Long memberNo = Long.parseLong(request.getParameter("memberNo"));
+			return memberMapper.deleteMember2(memberNo);
+		}
+		
 }

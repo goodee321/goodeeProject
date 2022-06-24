@@ -28,7 +28,7 @@ public class AdminController {
 	}
 	
 	
-	
+	// 회원관리
 	@GetMapping("/admin/member/list")
 	public String list(HttpServletRequest request, Model model) {
 		memberService.findMembers(request, model);
@@ -36,6 +36,16 @@ public class AdminController {
 	}
 	
 	
+	// 개별삭제
+	@GetMapping("/notice/removeOne")
+	public String removeOne(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("kind", "deleteOne");
+		redirectAttributes.addFlashAttribute("res", memberService.removeOne(request));
+		return "redirect:/admin/member/afterDML";
+	}
+	
+	
+	// 선택삭제
 	@GetMapping("/admin/member/removeList")
 	public String removeList(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("kind", "deleteList");
@@ -64,7 +74,7 @@ public class AdminController {
 	}
 	
 	
-	
+	// 여기까지 회원관리
 	@PostMapping("/admin/member/change")
 	public String change(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("kind", "update");
