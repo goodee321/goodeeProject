@@ -5,8 +5,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+<<<<<<< HEAD
 import org.springframework.ui.Model;
 
+=======
+>>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 import com.nike.web.domain.MemberDTO;
 import com.nike.web.domain.SignOutMemberDTO;
 
@@ -21,6 +24,7 @@ public interface MemberService {
 	public void reSignIn(HttpServletRequest request, HttpServletResponse response);
 
 	
+<<<<<<< HEAD
 	// 목록(Admin)
 	public void findMembers(HttpServletRequest request, Model model);
 		
@@ -38,4 +42,6 @@ public interface MemberService {
 	
 	
 	
+=======
+>>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 }

@@ -19,6 +19,10 @@
 </style>
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 	/* 페이지 로드 이벤트 */
 	$(function(){
 		fnIdCheck();
@@ -219,9 +223,15 @@
 	function fnPwCheck(){
 		// 비밀번호 정규식 검사
 		$('#pw').on('keyup', function(){
+<<<<<<< HEAD
 			let regPw = /^[a-zA-Z0-9!@#$%^&*]{3,16}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 3~16자 사이
 			/*if(regPw.test($('#pw').val())==false){
 				$('#pwMsg').text('3~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
+=======
+			let regPw = /^[a-zA-Z0-9!@#$%^&*]{3,15}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 3~15자 사이
+			/*if(regPw.test($('#pw').val())==false){
+				$('#pwMsg').text('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
+>>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 				pwPass = false;
 			} else {
 				$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
@@ -235,7 +245,11 @@
 				$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
 				pwPass = true;
 			} else {
+<<<<<<< HEAD
 				$('#pwMsg').text('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
+=======
+				$('#pwMsg').text('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
+>>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 				pwPass = false;
 			}
 			
@@ -276,6 +290,7 @@
 	}
 	
 </script>
+<<<<<<< HEAD
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function sample6_execDaumPostcode() {
@@ -322,6 +337,8 @@
         }).open();
     }
 </script>
+=======
+>>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 </head>
 <body>
 	
@@ -369,6 +386,7 @@
 		</label><br><br>
 		
 		
+<<<<<<< HEAD
 		주소검색<br>
 		<input type="text" id="sample6_postcode" placeholder="우편번호">
 		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
@@ -376,6 +394,17 @@
 		<input type="text" name="addrDetail" id="addrDetail" placeholder="상세주소">
 		<input type="text" id="sample6_extraAddress" placeholder="참고항목">
 		<br><br><br>
+=======
+		<label for="address">
+			주소<br>
+			<input type="text" name="address" id="address"><br>
+		</label><br><br>
+		
+		<label for="addrDetail">
+			상세주소<br>
+			<input type="text" name="addrDetail" id="addrDetail"><br>
+		</label><br><br>
+>>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 		
 		<label for="phone">
 			휴대폰번호<br>
