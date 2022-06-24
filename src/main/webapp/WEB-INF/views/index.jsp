@@ -16,7 +16,11 @@
 </head>
 <body>
 
-	<h1>Welcome to NiShoe ♥</h1>
+	
+	<h1>MAIN PAGE</h1>
+	
+	<a href="${contextPath}/notice/list">공지사항</a>
+	<a href="${contextPath}/qna/list">QNA</a>
 
 </body>
 </html>
