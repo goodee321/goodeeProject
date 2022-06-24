@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nike.web.mapper.CartMapper">
+
+    <resultMap type="ProductImageDTO" id="ProductImageMap">
+        <result property="proimgNo" column="PROIMG_NO"/>
+    </resultMap>
+
+    <resultMap type="ProductDTO" id="ProductMap">
+        <result property="proName" column="PRO_NAME"/>
+        <result property="proSize" column="PRO_SIZE"/>
+        <result property="proPrice" column="PRO_PRICE"/>
+        <result property="proDiscount" column="PRO_DISCOUNT"/>
+        <result property="proDelivery" column="PRO_DELIVERY"/>
+    </resultMap>
+
+    <resultMap type="cart" id="CartMap">
+        <result property="cartNo" column="CART_NO"/>
+        <result property="memberNo" column="MEMBER_NO"/>
+        <result property="productNo" column="PRODUCT_NO"/>
+        <result property="cartQty" column="CART_QTY"/>
+        <result property="cartRegdate" column="CART_REGDATE"/>
+    </resultMap>
+
+    <select id="selectListByMemberNo" resultMap="CartMap" parameterType="int">
+        SELECT C.MEMBER_NO,
+               C.CART_QTY,
+               P.PRO_NAME,
+               P.PRO_SIZE,
+               P.PRO_PRICE,
+               P.PRO_DELIVERY,
+               PI.PROIMG_NOFROM CART CINNER
+            JOIN PRODUCT PON C.PRODUCT_NO = P.PRO_NOLEFT
+            JOIN PRODUCT_IMAGE PION C.PRODUCT_NO = PI.PRO_NO
+        WHERE C.MEMBER_NO = {memberNo}
+    </select>
+
+    <select id="existCart" resultType="cart">
+        SELECT * FROM
+            CART
+        WHERE MEMBER_NO = #{memberNo}
+          AND
+            PRODUCT_NO = #{pNo}
+    </select>
+
+    <insert id="insertCart">
+        INSERT INTO CART
+            (MEMBER_NO, PRODUCT_NO, CART_QTY)
+        VALUES
+            (#{memberNo}, #{productNo}, #{cartQty})
+    </insert>
+
+    <update id="updateCart" parameterType="cart">
+        UPDATE CART
+        SET CART_QTY = #{cartQty}
+        WHERE CART_NO = #{cartNo}
+    </update>
+
+    <delete id="deleteCartOne" parameterType="int">
+        DELETE * FROM
+            CART
+        WHERE CART_NO = #{cartNo}
+    </delete>
+
+    <delete id="deleteCartAll" parameterType="int">
+        DELETE * FROM
+            CART
+        WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
+</mapper>
