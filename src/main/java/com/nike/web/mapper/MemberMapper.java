@@ -1,11 +1,10 @@
 package com.nike.web.mapper;
 
-<<<<<<< HEAD
+
 import java.util.List;
 import java.util.Map;
 
-=======
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.nike.web.domain.MemberDTO;
@@ -24,7 +23,7 @@ public interface MemberMapper {
 	public int deleteSignOutMember(String id);
 
 	
-<<<<<<< HEAD
+
 	
 	
 	// 목록(Admin)
@@ -45,6 +44,5 @@ public interface MemberMapper {
 	// 개별삭제(Admin)
 	public int deleteMember2(Long memberNo);
 	
-=======
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
+
 }

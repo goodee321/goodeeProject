@@ -14,7 +14,7 @@
 	
 	<jsp:include page="./layout/header.jsp"></jsp:include>
 	
-	<h1>MAIN PAGE</h1>
+	<h1>MAIN PAGE</h1> 
 	
 <<<<<<< HEAD
 	<a href="${contextPath}/notice/list">공지사항</a>

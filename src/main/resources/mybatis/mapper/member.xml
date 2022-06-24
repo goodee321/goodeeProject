@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE ID = #{id}
 	</delete>
  	
-<<<<<<< HEAD
+
  	
  	
  	<!-- 협업 -->
@@ -144,8 +144,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
  	
  	
-=======
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
+
 	
 	
 	

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nike.web.service.MemberService;
+import com.nike.web.service.NoticeService;
 
 @Controller
 public class AdminController {
@@ -19,6 +20,9 @@ public class AdminController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+		@Autowired
+		private NoticeService noticeService;
 	
 	
 	
@@ -37,7 +41,7 @@ public class AdminController {
 	
 	
 	// 회원개별삭제
-	@GetMapping("/notice/removeOne")
+	@GetMapping("/admin/member/removeOne")
 	public String removeOne(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("kind", "deleteOne");
 		redirectAttributes.addFlashAttribute("res", memberService.removeOne(request));
@@ -82,6 +86,27 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("res", memberService.change(request));
 		return "redirect:/admin/member/afterDML";
 	}
+	
+	
+	
+		// 공지사항관리
+		@GetMapping("/admin/notice/list")
+		public String noticeList(HttpServletRequest request, Model model) {
+			noticeService.findNotices2(request, model);
+			return "admin/notice/list";
+		}
+		
+		
+		// 공지상세보기
+		@GetMapping("/admin/notice/detail")
+		public String noticeDetail(HttpServletRequest request, Model model) {
+			model.addAttribute("notice", noticeService.findNoticeByNo2(request));
+			return "admin/notice/detail";  // admin 폴더 아래 member 폴더 아래 detail.jsp로 이동
+		}
+		
+		
+		
+		
 	
 	
 	

@@ -11,10 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class NoticeDTO {
-
-	private int nNo;
-	private String nTitle;
-	private String nContent;
-	private Date nDate;
-	private int nHit;
+	private int noticeNo;
+	private String noticeTitle;
+	private String noticeContent;
+	private Date noticeDate;
+	private int noticeHit;
 }

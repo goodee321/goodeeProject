@@ -1,13 +1,13 @@
 package com.nike.web.service;
 
 import java.io.PrintWriter;
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-=======
+
 import java.util.HashMap;
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -25,18 +25,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-<<<<<<< HEAD
+
 import org.springframework.ui.Model;
-=======
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
+
 
 import com.nike.web.domain.MemberDTO;
 import com.nike.web.domain.SignOutMemberDTO;
 import com.nike.web.mapper.MemberMapper;
-<<<<<<< HEAD
+
 import com.nike.web.util.PageUtils;
-=======
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
+
 import com.nike.web.util.SecurityUtils;
 
 @Service
@@ -308,7 +306,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	
-<<<<<<< HEAD
+
 	
 	// 목록(Admin)
 		@Override
@@ -392,6 +390,5 @@ public class MemberServiceImpl implements MemberService {
 			return memberMapper.deleteMember2(memberNo);
 		}
 		
-=======
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
+
 }

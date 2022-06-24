@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: GDJ45
-=======
-Built-By: Slim 5 Pro
->>>>>>> 42cbe105611f332659269d2db15c72e066893d3f
 Build-Jdk: 11.0.13
 Created-By: Maven Integration for Eclipse
 
