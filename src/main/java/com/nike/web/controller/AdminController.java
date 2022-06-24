@@ -36,7 +36,7 @@ public class AdminController {
 	}
 	
 	
-	// 개별삭제
+	// 회원개별삭제
 	@GetMapping("/notice/removeOne")
 	public String removeOne(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("kind", "deleteOne");
@@ -45,7 +45,7 @@ public class AdminController {
 	}
 	
 	
-	// 선택삭제
+	// 회원선택삭제
 	@GetMapping("/admin/member/removeList")
 	public String removeList(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("kind", "deleteList");
@@ -54,19 +54,20 @@ public class AdminController {
 	}
 	
 	
+	// 
 	@GetMapping("/admin/member/afterDML")
 	public String afterDML() {
 		return "admin/member/result";   // admin 폴더 아래 member 폴더 아래 result.jsp로 이동
 	}
 	
-	
+	// 회원상세보기
 	@GetMapping("/admin/member/detail")
 	public String detail(HttpServletRequest request, Model model) {
 		model.addAttribute("member", memberService.findMemberByNo(request));
 		return "admin/member/detail";  // admin 폴더 아래 member 폴더 아래 detail.jsp로 이동
 	}
 	
-	
+	// 회원수정
 	@GetMapping("/admin/member/changePage")
 	public String changePage(HttpServletRequest request, Model model) {
 		model.addAttribute("member", memberService.findMemberByNo(request));
@@ -81,6 +82,11 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("res", memberService.change(request));
 		return "redirect:/admin/member/afterDML";
 	}
+	
+	
+	
+	
+	
 
 	
 	

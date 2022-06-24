@@ -23,25 +23,22 @@ public interface MemberMapper {
 	
 	
 	
-	// 목록(협업)
+	// 목록(Admin)
 	public List<MemberDTO> selectMemberList(Map<String, Object> map);
 		
-	// 전체회원수
+	// 전체회원수(Admin)
 	public int selectMemberCount();
 		
-		
-	// 상세보기
+	// 상세보기(Admin)
 	public MemberDTO selectMemberByNo(Long memberNo);
 		
-		
-	// 삭제(선택해서)
+	// 삭제(Admin)
 	public int deleteMemberList(List<Long> list);
 		
-		
-	// 수정
+	// 수정(Admin)
 	public int updateMember(MemberDTO member);
 	
-	// 개별삭제
+	// 개별삭제(Admin)
 	public int deleteMember2(Long memberNo);
 	
 }

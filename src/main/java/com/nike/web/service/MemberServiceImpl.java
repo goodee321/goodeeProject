@@ -299,7 +299,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
-	// 목록(협업)
+	// 목록(Admin)
 		@Override
 		public void findMembers(HttpServletRequest request, Model model) {
 			// TODO Auto-generated method stub
@@ -333,7 +333,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		
-		// 삭제
+		// 삭제(Admin)
 		@Override
 		public int removeList2(HttpServletRequest request) {
 			// 한 번에 여러 개 지우기
@@ -347,7 +347,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		
-		// 상세보기
+		// 상세보기(Admin)
 		@Override
 		public MemberDTO findMemberByNo(HttpServletRequest request) {
 			// TODO Auto-generated method stub
@@ -360,7 +360,7 @@ public class MemberServiceImpl implements MemberService {
 			return memberMapper.selectMemberByNo(memberNo); 
 		}
 		
-		// 수정
+		// 수정(Admin)
 		@Override
 		public int change(HttpServletRequest request) {
 			MemberDTO member = new MemberDTO();
@@ -373,6 +373,8 @@ public class MemberServiceImpl implements MemberService {
 			return memberMapper.updateMember(member);
 		}
 	
+		
+		//개별삭제(Admin)
 		@Override
 		public int removeOne(HttpServletRequest request) {
 			Long memberNo = Long.parseLong(request.getParameter("memberNo"));
