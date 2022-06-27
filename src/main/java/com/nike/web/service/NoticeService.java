@@ -32,7 +32,12 @@ public interface NoticeService {
 		// 개별삭제(Admin)
 		public int removeOne(HttpServletRequest request);
 		
+		// 삽입(Admin)
 		public int save2(HttpServletRequest request);
+		
+		// 삭제(선택해서삭제, Admin)
+		public int removeList(HttpServletRequest request);
+		
 	
 	
 }

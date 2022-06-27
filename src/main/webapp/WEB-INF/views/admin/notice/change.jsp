@@ -35,9 +35,9 @@
 	<form action="${contextPath}/admin/notice/change" method="post">
 	
 	
-		<strong>제목</strong><br>
+		<strong>제목</strong>
 		<input type="text" name="noticeTitle" id="noticeTitle" value="${notice.noticeTitle}" placeholder="제목" required><br><br>
-		<strong>내용</strong> 
+		<strong>내용</strong><br><br>
 		<textarea rows="10" cols="30" name="noticeContent" id="noticeContent" placeholder="내용" required>${notice.noticeContent}</textarea><br><br>
 		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 		

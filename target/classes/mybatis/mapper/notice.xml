@@ -104,6 +104,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(#{noticeTitle}, #{noticeContent}, NOW(), 0)
 			
 		</insert>
+		
+		
+		<!-- 다중 삭제(선택해서 삭제) Adimin -->
+	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+	<delete id="deleteNoticeList">
+		DELETE
+		  FROM NOTICE
+		<where> 
+		 	<foreach collection="list" item="noticeNo" open="NOTICE_NO IN(" separator="," close=")">
+				#{noticeNo}
+			</foreach>
+		</where>
+	</delete>
 			
 
 </mapper>

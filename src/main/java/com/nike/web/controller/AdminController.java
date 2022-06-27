@@ -154,6 +154,13 @@ public class AdminController {
 				}
 	
 		
+				// 회원선택삭제
+				@GetMapping("/admin/notice/removeList")
+				public String noticeRemoveList(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+					redirectAttributes.addFlashAttribute("kind", "deleteList");
+					redirectAttributes.addFlashAttribute("res", noticeService.removeList(request));
+					return "redirect:/admin/notice/afterDML";
+				}
 
 	
 	

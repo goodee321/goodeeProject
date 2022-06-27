@@ -1,6 +1,7 @@
 package com.nike.web.service;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,6 +152,7 @@ public class NoticeServiceImpl implements NoticeService {
 			return noticeMapper.updateNotice2(notice);
 		}
 		
+		// 개별삭제(Admin)
 		@Override
 		public int removeOne(HttpServletRequest request) {
 			Integer noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
@@ -158,7 +160,7 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 		
 		
-		
+		// 삽입(Admin)
 		@Override
 		public int save2(HttpServletRequest request) {
 			
@@ -167,6 +169,20 @@ public class NoticeServiceImpl implements NoticeService {
 			notice.setNoticeContent(request.getParameter("noticeContent"));
 			
 			return noticeMapper.insertNotice2(notice);
+		}
+		
+		
+		// 선택삭제(Admin)
+		@Override
+		public int removeList(HttpServletRequest request) {
+			// 한 번에 여러 개 지우기
+			// DELETE FROM NOTICE WHERE NOTICE_NO IN(1, 4)
+			String[] noticeNoList = request.getParameterValues("noticeNoList");  // {"1", "4"}
+			List<Long> list = new ArrayList<>();
+			for(int i = 0; i < noticeNoList.length; i++) {
+				list.add(Long.parseLong(noticeNoList[i]));  // list.add(1) -> list.add(4)
+			}
+			return noticeMapper.deleteNoticeList(list);
 		}
 		
 		

@@ -9,6 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	body {
+		background-color: #BDBDBD;
+		text-align: center;
+		}
+</style>
 <script src="../../resources/js/jquery-3.6.0.js"></script>
 
 <script>
@@ -39,8 +45,8 @@ $(function(){
 	<h1>공지사항 작성화면</h1>
 	
 	<form id="f" action="${contextPath}/admin/notice/save" method="post">
-		제목 <input type="text" name="noticeTitle" id="noticeTitle"><br>
-		내용<br>
+		<strong>제목:</strong> <input type="text" name="noticeTitle" id="noticeTitle"><br><br>
+		<strong>내용</strong><br><br>
 		<textarea rows="3" cols="30" name="noticeContent" id="noticeContent" placeholder="내용" required></textarea><br><br>
 		<button>작성완료</button>
 		<input type="button" value="목록" id="btnList">
