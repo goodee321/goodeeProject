@@ -17,4 +17,8 @@ public class OrderDetailDTO {
 	private int orderQty;
 	private int orderPrice;
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e33e547ab711e5b91a43a92a3fee6a3f941ee1b5
