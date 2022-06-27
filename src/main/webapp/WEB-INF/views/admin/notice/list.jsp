@@ -151,6 +151,8 @@
 	<form action="${contextPath}/admin/notice/removeList">
 
 		<button class="btnRemove">선택삭제</button><br><br>
+		
+		<a href="${contextPath}/admin/notice/savePage">새 공지 작성</a>
 	
 		<table border="1"><br>
 		

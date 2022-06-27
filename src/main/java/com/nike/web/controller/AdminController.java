@@ -137,6 +137,21 @@ public class AdminController {
 					redirectAttributes.addFlashAttribute("res", noticeService.removeOne(request));
 					return "redirect:/admin/notice/afterDML";
 				}
+				
+				
+				// 공지사항삽입
+				@GetMapping("/admin/notice/savePage")
+				public String noticeSavePage() {
+					return "admin/notice/save";
+				}
+				
+				// 공지사항삽입
+				@PostMapping("/admin/notice/save")
+				public String noticeSave(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+					redirectAttributes.addFlashAttribute("insRes", noticeService.save2(request));
+					redirectAttributes.addFlashAttribute("type", "insert");
+					return "redirect:/admin/notice/afterDML";  
+				}
 	
 		
 

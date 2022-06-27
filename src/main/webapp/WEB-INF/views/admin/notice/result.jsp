@@ -17,6 +17,19 @@
 		}
 	}
 	
+	if('${type}' == 'insert'){
+		
+		if('${insRes}' == '1'){	
+			alert('공지사항이 등록되었습니다.');
+			location.href='${contextPath}/admin/notice/list';
+		} else{
+			alert('공지사항이 등록되지 않았습니다.');
+			history.back();
+		}
+	}
+	
+	
+	
 	if('${kind}' == 'deleteOne'){
 		if('${res}' == '1'){
 			alert('공지사항이 삭제되었습니다.');

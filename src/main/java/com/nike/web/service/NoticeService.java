@@ -32,7 +32,7 @@ public interface NoticeService {
 		// 개별삭제(Admin)
 		public int removeOne(HttpServletRequest request);
 		
-		
+		public int save2(HttpServletRequest request);
 	
 	
 }

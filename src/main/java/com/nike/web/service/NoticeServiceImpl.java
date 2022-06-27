@@ -158,4 +158,16 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 		
 		
+		
+		@Override
+		public int save2(HttpServletRequest request) {
+			
+			NoticeDTO notice = new NoticeDTO();
+			notice.setNoticeTitle(request.getParameter("noticeTitle"));
+			notice.setNoticeContent(request.getParameter("noticeContent"));
+			
+			return noticeMapper.insertNotice2(notice);
+		}
+		
+		
 }

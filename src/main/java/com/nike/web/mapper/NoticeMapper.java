@@ -31,8 +31,12 @@ public interface NoticeMapper {
 		// 수정(Admin)
 		public int updateNotice2(NoticeDTO notice);
 		
+		
 		// 개별삭제(Admin)
 		public int deleteNotice2(Integer noticeNo);
+		
+		// 삽입(Admin)
+		public int insertNotice2(NoticeDTO notice);
 		
 		
 		
