@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.nike.web.mapper.ProductMapper">
+
+	<resultMap type="ProductImageDTO" id="ProductImageMap">
+		<result column="PROIMG_NO" property="proimgNo" />
+		<result column="PROIMG_NAME" property="proimgName" />
+		<result column="PROIMG_PATH" property="proimgPath" />
+		<result column="PROIMG_ORIGIN" property="proimgOrigin" />
+		<result column="PRO_NO" property="proNo" />
+	</resultMap>
+	<resultMap type="ProductDTO" id="ProductMap">
+	<result column="PRO_NO" property="proNo" />
+	<result column="PRO_NAME" property="proName" />
+	<result column="PRO_PRICE" property="proPrice" />
+	<result column="PRO_STOCK" property="proStock" />
+	<result column="PRO_DETAIL" property="proDetail" />
+	<result column="PRO_DATE" property="proDate" />
+	<result column="PRO_SIZE" property="proSize" />
+	<result column="PRO_DISCOUNT" property="proDiscount" />
+	<collection resultMap="ProductImageMap" property="productImageDTO" />
+	
+	
+	</resultMap>
+
+<!-- 갤러리 목록 -->
+	<!-- 전체 갤러리 갯수 -->
+	<select id="selectProductCount" resultType="Integer">
+		SELECT COUNT(PRO_NO)
+		  FROM PRODUCT
+	</select>
+	
+	
+	<!-- 제품 리스트 -->
+	<select id="selectProductList" parameterType="Map" resultMap="ProductMap">
+
+        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, P.PRO_STOCK, P.PRO_SIZE, P.PRO_DISCOUNT, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
+      FROM  PRODUCT P INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO
+      ORDER BY PRO_NO DESC  
+      LIMIT #{beginRecord}, #{recordPerPage}
+     
+	</select>
+	
+		<!-- 제품 검색 -->
+	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM PRODUCT
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+	</select>
+
+	<!-- 제품 검색 리스트 -->
+	<select id="selectFindProductList" parameterType="Map" resultMap="ProductMap">
+		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, P.PRO_STOCK, P.PRO_SIZE, P.PRO_DISCOUNT, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
+		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
+  		    ON  PI.PRO_NO = P.PRO_NO
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+		 ORDER BY P.PRO_NO DESC
+		 LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+
+	 <!-- 데이터 삽입 -->
+	 <insert id="insertProduct" parameterType="ProductDTO">
+	
+	  INSERT 
+	  INTO PRODUCT(PRO_NAME, PRO_PRICE, PRO_STOCK, PRO_DETAIL, PRO_DISCOUNT, PRO_DATE, PRO_SIZE)
+	   VALUES
+	   (#{proName}, #{proPrice}, #{proStock}, #{proDetail}, #{proDiscount}, SYSDATE(), #{proSize})
+	   <selectKey keyProperty="proNo" resultType="Integer" order="AFTER">
+	   	SELECT LAST_INSERT_ID();
+	   </selectKey>
+	
+	  </insert>
+	  
+	  <!-- 파일 첨부 추가 -->
+	<insert id="insertProductAttach" parameterType="ProductImageDTO">
+		INSERT 
+		INTO PRODUCT_IMAGE (PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO)
+		VALUES
+			(#{proimgName}, #{proimgPath}, #{proimgOrigin}, #{proNo})
+	</insert>
+
+	<!-- 첨부 파일 정보 -->
+	<select id="selectProductImageByNo" parameterType="Integer" resultType="ProductImageDTO">
+		SELECT PROIMG_NO, PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO
+		  FROM PRODUCT_IMAGE
+		 WHERE  PROIMG_NO = #{proimgNo}
+	</select>
+
+</mapper>

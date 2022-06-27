@@ -1,8 +1,25 @@
 package com.nike.web.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
-public class ProductMapper {
+import com.nike.web.domain.ProductDTO;
+import com.nike.web.domain.ProductImageDTO;
 
+@Mapper
+public interface ProductMapper {
+
+	// 갤러리 목록
+		public int selectProductCount();
+		public List<ProductDTO> selectProductList(Map<String, Object> map);
+		public ProductImageDTO selectProductImageByNo(Integer proimgNo);
+		
+		// 갤러리 삽입
+		public int insertProduct(ProductDTO product);
+		public int insertProductAttach(ProductImageDTO productImageAttach);
+		public int selectFindProductCount(Map<String, Object> map);
+		public List<ProductDTO> selectFindProductList(Map<String, Object> map);
+		
 }

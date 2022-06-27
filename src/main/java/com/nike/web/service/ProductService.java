@@ -1,0 +1,16 @@
+package com.nike.web.service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+public interface ProductService {
+
+	public void findProducts(HttpServletRequest request, Model model);
+	public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response, Model model);
+	public void getFindProducts(HttpServletRequest request, Model model);
+	public ResponseEntity<byte[]> display(Integer proimgNo, String type);
+}
