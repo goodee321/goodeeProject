@@ -342,7 +342,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		
-		// 삭제(Admin)
+		// 선택삭제(Admin)
 		@Override
 		public int removeList2(HttpServletRequest request) {
 			// 한 번에 여러 개 지우기

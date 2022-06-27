@@ -25,6 +25,12 @@ public interface NoticeService {
 		// 세부사항(Admin)
 		public NoticeDTO findNoticeByNo2(HttpServletRequest request);
 	
+		// 수정(Admin)
+		public int change2(HttpServletRequest request);
+		
+		
+		// 개별삭제(Admin)
+		public int removeOne(HttpServletRequest request);
 		
 		
 	

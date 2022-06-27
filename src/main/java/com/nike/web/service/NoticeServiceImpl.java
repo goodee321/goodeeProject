@@ -140,6 +140,22 @@ public class NoticeServiceImpl implements NoticeService {
 			return noticeMapper.selectNoticeByNo2(noticeNo); 
 		}
 		
+		// 수정(Admin)
+		@Override
+		public int change2(HttpServletRequest request) {
+			NoticeDTO notice = new NoticeDTO();
+			notice.setNoticeNo(Integer.parseInt(request.getParameter("noticeNo")));
+			notice.setNoticeTitle(request.getParameter("noticeTitle"));
+			notice.setNoticeContent(request.getParameter("noticeContent"));
+			
+			return noticeMapper.updateNotice2(notice);
+		}
+		
+		@Override
+		public int removeOne(HttpServletRequest request) {
+			Integer noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+			return noticeMapper.deleteNotice2(noticeNo);
+		}
 		
 		
 }

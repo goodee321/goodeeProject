@@ -89,29 +89,56 @@ public class AdminController {
 	
 	
 	
-		// 공지사항관리
-		@GetMapping("/admin/notice/list")
-		public String noticeList(HttpServletRequest request, Model model) {
-			noticeService.findNotices2(request, model);
-			return "admin/notice/list";
-		}
-		
-		
-		// 공지상세보기
-		@GetMapping("/admin/notice/detail")
-		public String noticeDetail(HttpServletRequest request, Model model) {
-			model.addAttribute("notice", noticeService.findNoticeByNo2(request));
-			return "admin/notice/detail";  // admin 폴더 아래 member 폴더 아래 detail.jsp로 이동
-		}
-		
-		
-		
-		
+				// 공지사항관리
+				@GetMapping("/admin/notice/list")
+				public String noticeList(HttpServletRequest request, Model model) {
+					noticeService.findNotices2(request, model);
+					return "admin/notice/list";
+				}
+				
+				
+				// 공지상세보기
+				@GetMapping("/admin/notice/detail")
+				public String noticeDetail(HttpServletRequest request, Model model) {
+					model.addAttribute("notice", noticeService.findNoticeByNo2(request));
+					return "admin/notice/detail";  // admin 폴더 아래 member 폴더 아래 detail.jsp로 이동
+				}
+				
+				
+				// 공지사항수정
+				@GetMapping("/admin/notice/changePage")
+				public String noticeChangePage(HttpServletRequest request, Model model) {
+					model.addAttribute("notice", noticeService.findNoticeByNo2(request));
+					return "admin/notice/change";  // admin 폴더 아래 member 폴더 아래 change.jsp로 이동
+				}
+				
+				
+				// 공지사항수정
+				@PostMapping("/admin/notice/change")
+				public String noticeChange(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+					redirectAttributes.addFlashAttribute("kind", "update");
+					redirectAttributes.addFlashAttribute("res", noticeService.change2(request));
+					return "redirect:/admin/notice/afterDML";
+				}
+				
+			
+				// result 맵핑
+				@GetMapping("/admin/notice/afterDML")
+				public String NoticeafterDML() {
+					return "admin/notice/result";   // admin 폴더 아래 member 폴더 아래 result.jsp로 이동
+				}
+			
+			
+				
+				// 공지사항개별삭제
+				@GetMapping("/admin/notice/removeOne")
+				public String noticeRemoveOne(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+					redirectAttributes.addFlashAttribute("kind", "deleteOne");
+					redirectAttributes.addFlashAttribute("res", noticeService.removeOne(request));
+					return "redirect:/admin/notice/afterDML";
+				}
 	
-	
-	
-	
-	
+		
 
 	
 	

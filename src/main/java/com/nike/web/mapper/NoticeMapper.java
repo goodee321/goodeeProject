@@ -28,4 +28,12 @@ public interface NoticeMapper {
 		public NoticeDTO selectNoticeByNo2(Long noticeNo);
 		
 		
+		// 수정(Admin)
+		public int updateNotice2(NoticeDTO notice);
+		
+		// 개별삭제(Admin)
+		public int deleteNotice2(Integer noticeNo);
+		
+		
+		
 }
