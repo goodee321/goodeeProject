@@ -12,7 +12,7 @@
 </head>
 <body>
 	
-	<h1>Welcome to NiShoe ♥</h1>
+	<h1>상품페이지</h1>
 		
 	
 </body>

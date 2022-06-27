@@ -16,19 +16,14 @@
 	
 	<h1>MAIN PAGE</h1> 
 	
-<<<<<<< Updated upstream
-	<a href="${contextPath}/notice/list">공지사항</a>
-	<a href="${contextPath}/qna/list">QNA</a>
-	
-=======
 
 	<a href="${contextPath}/notice/list">공지사항</a>
+	
 	<a href="${contextPath}/qna/list">QNA</a>
 	
-
 	<a href="${contextPath}/board/savePage">상품보러가기</a>
 
->>>>>>> Stashed changes
+
 	
 	
 </body>
