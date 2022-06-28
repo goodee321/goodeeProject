@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MemberDTO {
+	
 	private Long memberNo;
 	private String id;
 	private String pw;
@@ -27,9 +28,7 @@ public class MemberDTO {
 	private String sessionId;
 	private Date sessionLimit;
 	
-	// 검색필터
-	private String type;	// 검색 타입
-	private String keyword;	// 검색 내용
+	
 	
 	
 }

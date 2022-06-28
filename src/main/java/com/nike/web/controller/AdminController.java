@@ -2,6 +2,7 @@ package com.nike.web.controller;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,6 @@ import com.nike.web.domain.MemberDTO;
 import com.nike.web.service.MemberService;
 import com.nike.web.service.NoticeService;
 import com.nike.web.service.QnaService;
-import com.nike.web.util.Search;
 
 @Controller
 public class AdminController {
@@ -44,25 +44,32 @@ public class AdminController {
 	}
 	
 	
-	// 회원관리
-	@GetMapping("/admin/member/list")
-	public String list(HttpServletRequest request, Model model , @RequestParam(required = false, defaultValue = "1") int page
-
-			, @RequestParam(required = false, defaultValue = "1") int range
-
-			, @RequestParam(required = false, defaultValue = "title") String searchType
-
-			, @RequestParam(required = false) String keyword) {
-		
-		Search search = new Search();
-
-		search.setSearchType(searchType);
-
-		search.setKeyword(keyword);
-		
-		memberService.findMembers(request, model);
-		return "admin/member/list";	
+	// 
+	@GetMapping("/admin/member/searchPage")
+	public String searchPage() {
+		return "admin/member/search";
 	}
+	
+	
+	// 회원목록
+	@GetMapping("/admin/member/list")
+	public String list(HttpServletRequest request, Model model) {
+		memberService.getMembers(request, model);
+		return "admin/member/search";	// search.jsp를 열면 list.jsp가 포함되어 있으므로 search.jsp로 간다.
+	}
+	
+	@GetMapping("/admin/member/search")
+	public String search(HttpServletRequest request, Model model) {
+		memberService.findMembers(request, model);
+		return "admin/member/search";	
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/admin/member/autoComplete", produces="application/json")
+	public Map<String, Object> autoComplete(HttpServletRequest request){
+		return memberService.autoComplete(request);
+	}
+	
 	
 	
 	// 회원개별삭제
@@ -288,7 +295,3 @@ public class AdminController {
 	
 	
 }
-
-	
-	
-

@@ -10,7 +10,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
 	* {
 		box-sizing: border-box;
 	}
@@ -133,24 +132,6 @@
 	})
 	
 	
-	$(document).on('click', '#btnSearch', function(e){
-
-		e.preventDefault();
-
-		var url = "${pageContext.request.contextPath}/admin/member/list";
-
-		url = url + "?searchType=" + $('#searchType').val();
-
-		url = url + "&keyword=" + $('#keyword').val();
-
-		location.href = url;
-
-		console.log(url);
-
-	});	
-	
-	
-	
 	
 </script>
 	<style>
@@ -163,7 +144,10 @@
 	
 	<h3>회원관리</h3>
 	
-	<h3>총회원: ${totalRecord - 1}</h3>
+	<h3>총회원: ${totalRecord}</h3>
+	
+	
+	
 	
 	
 	<hr>
@@ -211,26 +195,7 @@
 
 	</form>
 	
-	<div class="form-group row justify-content-center">			
-		<div class="w100" style="padding-right:10px"><br>
-			<select class="form-control form-control-sm" name="searchType" id="searchType">
-				<option value="id">아이디</option>
-				<option value="name">이름</option>
-			</select>
-		</div>
-		<div class="w300" style="padding-right:10px">
-			<input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
-		</div>
-		<div>
-			<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
-		</div>
-		
-	</div>	
-		
-
-	
 	
 
 </body>
-</html>
 </html>

@@ -308,9 +308,9 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	
-	// 목록(Admin)
+		// 목록(Admin)
 		@Override
-		public void findMembers(HttpServletRequest request, Model model ) {
+		public void getMembers(HttpServletRequest request, Model model ) {
 			// TODO Auto-generated method stub
 			
 			Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
@@ -338,6 +338,95 @@ public class MemberServiceImpl implements MemberService {
 //				page = Integer.parseInt(strPage);
 //			}
 			
+			
+		}
+		
+		
+		@Override
+		public void findMembers(HttpServletRequest request, Model model) {
+			// TODO Auto-generated method stub
+			// request에서 page 파라미터 꺼내기
+			// page 파라미터는 전달되지 않는 경우 page = 1을 사용
+			Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+			int page = Integer.parseInt(opt.orElse("1"));
+			
+			
+			// column, query, begin, end 파라미터 꺼내기
+			String column = request.getParameter("column");
+			String query = request.getParameter("query");
+			
+			
+			// column + query + begin + end => Map
+			Map<String, Object> map = new HashMap<>();
+			map.put("column", column);
+			map.put("query", query);
+			
+			
+			// 검색된 레코드 갯수 가져오기
+			int findRecord = memberMapper.selectFindCount(map);
+			
+			// findRecord와 page를 알면 PageEntity를 모두 계산할 수 있다.
+			PageUtils pageUtils = new PageUtils();
+			pageUtils.setPageEntity(findRecord, page);
+			
+			// beginRecord + endRecord => Map
+			map.put("beginRecord", pageUtils.getBeginRecord());
+			map.put("endRecord", pageUtils.getEndRecord());
+			
+			// beginRecord ~ endRecord 사이 검색된 목록 가져오기
+			List<MemberDTO> members = memberMapper.selectFindList(map);
+			
+			// list.jsp로 forward할 때 가지고 갈 속성 저장하기
+			model.addAttribute("members", members);
+			model.addAttribute("beginNo", findRecord - pageUtils.getRecordPerPage() * (page - 1));
+			
+			// 검색 카테고리에 따라서 전달되는 파라미터가 다름
+			switch(column) {
+			case "ID":
+			case "NAME":
+				model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/admin/member/search?column=" + column + "&query=" + query));
+				break;
+			
+			}
+		}
+		
+		
+		@Override
+		public Map<String, Object> autoComplete(HttpServletRequest request) {
+			
+			String column = request.getParameter("column");
+			String query = request.getParameter("query");
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("column", column);
+			map.put("query", query);
+			
+			List<MemberDTO> list = memberMapper.autoComplete(map);
+			
+			Map<String, Object> result = new HashMap<>();
+			if(list.size() == 0) {
+				result.put("status", 400);
+				result.put("list", null);
+			} else {
+				result.put("status", 200);
+				result.put("list", list);
+			}
+			if(column.equals("ID")) {
+				result.put("column", "ID");
+			} else if(column.equals("NAME")) {
+				result.put("column", "NAME");
+			}
+			
+			return result;
+			
+			/*  
+			    Map result는 jackson에 의해서 아래 JSON으로 변환된다.
+				{
+					"status": 200,
+					"list": [ {}, {}, {} ],
+					"column": "firstName"
+				}
+			*/
 			
 		}
 		

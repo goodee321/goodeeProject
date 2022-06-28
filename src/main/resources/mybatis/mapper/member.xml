@@ -5,6 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.nike.web.mapper.MemberMapper">
 
+
+
+	
+
+
+
+
 	<!--  -->
 	<select id="selectMemberById" parameterType="String" resultType="MemberDTO">
 		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
@@ -85,19 +92,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMemberList" parameterType="Map" resultType="MemberDTO">
 		 SELECT MEMBER_NO, ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
        	   FROM MEMBER
-       	   <trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="searchType=='title' and keyword != null and keyword != '' ">
-				AND TITLE like CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType=='content' and keyword != null and keyword != '' ">
-				AND CONTENT like CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType=='reg_id' and keyword != null and keyword != '' ">
-				AND reg_id like CONCAT('%', #{keyword}, '%')
-			</if>	
-		</trim>
-      ORDERS LIMIT #{beginRecord}, #{endRecord}
+       LIMIT #{beginRecord}, #{endRecord}
 	</select>
+	
+	
 	
 	
 	
@@ -105,23 +103,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMemberCount" resultType="Integer">
 		SELECT COUNT(MEMBER_NO)
 		  FROM MEMBER
-		<trim prefix="WHERE" prefixOverrides="AND|OR">
-				<if test="keyword != null and keyword != '' ">
-					<if test="searchType=='title'">
-						AND TITLE like CONCAT('%', #{keyword}, '%')
-					</if>
-					<if test="searchType=='content'">
-							AND CONTENT like CONCAT('%', #{keyword}, '%')
-					</if>
-					<if test="searchType=='reg_id'">
-							AND reg_id like CONCAT('%', #{keyword}, '%')
-					</if>
-
-      		</if>
-
-		</trim>
 	</select>
+	
  	
+	<!-- 검색된 레코드 갯수 -->
+	<select id="selectFindCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM MEMBER
+	</select>
+	
+	<!-- 검색 -->
+	<select id="selectFindList" parameterType="Map" resultType="MemberDTO">
+		SELECT *
+		  FROM MEMBER
+		  <if test="column=='ID'">
+		WHERE ID
+		LIKE CONCAT('%', #{query}, '%')
+		</if>
+		<if test="column=='NAME'">
+		WHERE NAME
+		LIKE CONCAT('%', #{query}, '%')
+		</if>		
+		LIMIT #{beginRecord}, #{endRecord} 
+	</select>
+	
+	<!-- 자동완성 -->
+	<select id="autoComplete" parameterType="Map" resultType="MemberDTO">
+		SELECT DISTINCT ${column}
+		  FROM MEMBER
+		 WHERE ${column} LIKE #{query} || '%'
+	</select>
+	
 	
 	
 	<!-- 다중 삭제(선택해서 삭제) Adimin -->
@@ -168,6 +180,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM MEMBER
 		 WHERE MEMBER_NO = #{memberNo}
 	</delete>
+	
+	
+	
  	
  	
 

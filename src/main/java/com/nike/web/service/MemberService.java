@@ -29,6 +29,15 @@ public interface MemberService {
 	// 목록(Admin)
 	public void findMembers(HttpServletRequest request, Model model);
 		
+	//
+	public void getMembers(HttpServletRequest request, Model model);
+	
+	
+	//
+	public Map<String, Object> autoComplete(HttpServletRequest request);
+	
+	
+	
 	// 삭제(선택해서삭제, Admin)
 	public int removeList2(HttpServletRequest request);
 		
@@ -40,6 +49,7 @@ public interface MemberService {
 	
 	// 개별삭제(Admin)
 	public int removeOne(HttpServletRequest request);
+	
 	
 	
 	
