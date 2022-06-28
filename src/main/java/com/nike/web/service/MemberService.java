@@ -23,7 +23,9 @@ public interface MemberService {
 	public void reSignIn(HttpServletRequest request, HttpServletResponse response);
 
 	
-
+	
+	
+	
 	// 목록(Admin)
 	public void findMembers(HttpServletRequest request, Model model);
 		

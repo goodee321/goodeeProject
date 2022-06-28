@@ -132,6 +132,8 @@
 		
 	})
 	
+	
+	
 </script>
 	<style>
 		.blind{display: none; }
@@ -152,7 +154,7 @@
 
 		<button class="btnRemove">선택삭제</button><br><br>
 	
-		<table border="1"><br>
+		<table border="1" id="boardtable"><br>
 		
 			<thead>
 				<tr>
@@ -190,6 +192,8 @@
 		</table>
 
 	</form>
+	
+	
 
 </body>
 </html>
