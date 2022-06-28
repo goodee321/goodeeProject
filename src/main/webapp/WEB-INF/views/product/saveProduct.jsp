@@ -15,6 +15,8 @@
 	$(function(){
 		fnFileCheck();
 		fnSignIn();
+		fnCheck();
+		fnRegExp();
 	})
 	
 	// 첨부파일 사전점검(확장자, 크기)
@@ -43,6 +45,46 @@
 		})
 	}
 
+	function fnRegExp(){
+			var numberRegExp = 	/^[0-9]+$/;
+			var decimalRegExp = /^[0]\.{1}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
+			var pricePass = false;
+			var DiscountPass = false;
+			
+			
+			$('#proPrice').on('keyup', function(){
+				if(numberRegExp.test( $('#proPrice').val() ) == false){
+					$('#proPriceError').text('가격에는 숫자만 입력 가능합니다.').addClass('dont').removeClass('hidden');
+					pricePass = false;
+					return;
+				}else{
+					$('#proPriceError').addClass('hidden').removeClass('dont');
+					pricePass = true;
+				}
+				
+			})
+			
+			$('#proDiscount').on('keyup',function(){
+			
+				
+				if(decimalRegExp.test( $('#proDiscount').val() ) == false){ 
+					$('#proDiscountError').text('할인율에는 1이하의 숫자만 입력 가능합니다.').addClass('dont').removeClass('hidden');
+					discountPass = false;
+					return;
+				
+				}else{
+					$('#proDiscountError').addClass('hidden').removeClass('dont');
+					discountPass = true;
+				}
+				
+			})
+			
+			
+			
+			
+			
+		}
+		
 
 	
 	
@@ -51,21 +93,31 @@
 			if($('#proName').val() == ""){
 				alert('제품 명을 입력해주세요.');
 				event.preventDefault();
-				return false;
+				return;
 			}
 			else if($('#proPrice').val() == ""){
 				alert('가격을 입력해주세요.');
 				event.preventDefault();
-				return false;
+				return;
 			}
 			
-			
+
 			else if($('#files').val() == ""){
 				alert('이미지를 반드시 1개 이상 업로드해야 합니다.');
 				event.preventDefault();
-				return false;
+				return;
 			}
-			return true;
+			
+			else if(pricePass == false){
+				alert('가격을 변경하시기 바랍니다.');
+				event.preventDefault();
+				return;
+			}
+			else if(discountPass == false){
+				alert('할인율을 변경하시기 바랍니다.');
+				event.preventDefault();
+				return;
+			}
 		})
 	}
 	
@@ -108,57 +160,53 @@ table{
   font-weight: bold;  
 }
 
+.hidden{
+ display: none;
+}
 
+
+	.dont {
+		color: crimson;
+	}
 </style>
 </head>
 <body>
 	
-	<%--
-		파일 첨부 폼 : method="post" enctype="multipart/form-data"
-		다중 첨부    : <input type="file" multiple="multiple">
-	--%>
 	
 	<h1>작성화면</h1>
 	<div class="table">
-	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/save" method="post" enctype="multipart/form-data">
+	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/saveProduct" method="post" enctype="multipart/form-data">
 		<table>
 		<tr>	
 		<td>제품명</td><td>	<input type="text" name="proName" id="proName" class="form-control" placeholder="제품명"></td>
 		</tr><tr>
 		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" placeholder="가격"></td>
 		</tr><tr>
+		<td></td><td id="proPriceError"></td>
+		</tr><tr>
 		<td>내용</td><td>	<textarea class="form-control" name="proDetail" rows="3" placeholder="상세 내용"></textarea>
 		</tr><tr>
-		<td>할인가</td><td>	<input type="text" name="proDiscount" class="form-control"placeholder="할인액(0.00)" value="0"></td>
+		<td>할인가</td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control"placeholder="할인액(0.00)" value="0"></td>
+		</tr><tr>
+		<td></td><td id="proDiscountError"></td>
 		</tr><tr>
 		<td>사이즈</td><td>
-		<label class="checkbox-inline">
-		  <input type="checkbox"  id="Checkbox240" class="sizeCheck" > 240
-		</label>
-		<label class="checkbox-inline">
-		  <input type="checkbox"  id="Checkbox250"class="sizeCheck" > 250
-		</label>
-		<label class="checkbox-inline">
-		  <input type="checkbox"  id="Checkbox260" class="sizeCheck"> 260
-		</label>	
-		<label class="checkbox-inline">
-		  <input type="checkbox"  id="Checkbox270" class="sizeCheck"> 270
-		</label>	
-		<br>
-		<tr>
-		<td>240</td><td> <input type="text" name="proSize240" id="proSize240" class="form-control" value="0"></td><br>
+		<select name="proSize">
+			<option selected >사이즈 선택</option>
+			<option value="240">240</option>
+			<option value="250">250</option>
+			<option value="260">260</option>
+			<option value="270">270</option>
+			<option value="280">280</option>
+		</select>
+		</td>
 		</tr><tr>
-		<td>250</td><td> <input type="text" name="proSize250" id="proSize250" class="form-control" value="0"></td><br>
+		<td>수량</td><td><input type="text" name="proQty" value="0"></td>
 		</tr><tr>
-		<td>260</td><td> <input type="text" name="proSize260" id="proSize260" class="form-control" value="0"></td><br>
-		</tr><tr>
-		<td>270</td><td> <input type="text" name="proSize270" id="proSize270" class="form-control" value="0"></td><br>
-		</tr>
-		<br>
-		<td>첨부</td>
+		<td>첨부</td><td><input type="file" name="files" id="files" multiple="multiple"></td>
 		</tr>
 		</table>
-		<input type="file" name="files" id="files" multiple="multiple"><br>
+		<
 		<button class="btn">작성완료</button>
 	</form>
 	</div>

@@ -14,19 +14,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	<resultMap type="productQtyDTO" id="productQtyMap">
 		<result column="PRO_NO" property="proNo" />
-		<result column="PRO_SIZE_240" property="proSize240" />
-		<result column="PRO_SIZE_250" property="proSize250" />
-		<result column="PRO_SIZE_260" property="proSize260" />
-		<result column="PRO_SIZE_270" property="proSize270" />
-	
+		<result column="PRO_SIZE" property="proSize" />
+		<result column="PRO_QTY" property="proQty" />
+		<result column="PRO_DISCOUNT" property="proDiscount" />
 	</resultMap>
+	
 	<resultMap type="ProductDTO" id="ProductMap">
 	<result column="PRO_NO" property="proNo" />
 	<result column="PRO_NAME" property="proName" />
 	<result column="PRO_PRICE" property="proPrice" />
 	<result column="PRO_DETAIL" property="proDetail" />
 	<result column="PRO_DATE" property="proDate" />
-	<result column="PRO_DISCOUNT" property="proDiscount" />
 	<collection resultMap="ProductImageMap" property="productImageDTO" />
 	<collection resultMap="productQtyMap" property="productQtyDTO" />
 	
@@ -44,10 +42,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 제품 리스트 -->
 	<select id="selectProductList" parameterType="Map" resultMap="ProductMap">
 
-        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, P.PRO_DISCOUNT, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
+        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE,  PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN,PQ.PRO_SIZE, PQ.PRO_QTY, PQ.PRO_DISCOUNT
       FROM  PRODUCT P INNER JOIN PRODUCT_IMAGE PI
-      ON  P.PRO_NO = PI.PRO_NO
-      ORDER BY PRO_NO DESC  
+      ON  P.PRO_NO = PI.PRO_NO INNER JOIN PRODUCT_QTY PQ
+      ON P.PRO_NO = PQ.PRO_NO
+      ORDER BY P.PRO_NO DESC  
       LIMIT #{beginRecord}, #{recordPerPage}
      
 	</select>
@@ -61,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 제품 검색 리스트 -->
 	<select id="selectFindProductList" parameterType="Map" resultMap="ProductMap">
-		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, P.PRO_DISCOUNT, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
+		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
 		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
   		    ON  PI.PRO_NO = P.PRO_NO
 		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
@@ -69,13 +68,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 LIMIT #{beginRecord}, #{recordPerPage}
 	</select>
 
+
 	 <!-- 데이터 삽입 -->
 	 <insert id="insertProduct" parameterType="ProductDTO">
 	
 	  INSERT 
-	  INTO PRODUCT(PRO_NAME, PRO_PRICE, PRO_DETAIL, PRO_DISCOUNT, PRO_DATE)
+	  INTO PRODUCT(PRO_NAME, PRO_PRICE, PRO_DETAIL, PRO_DATE)
 	   VALUES
-	   (#{proName}, #{proPrice}, #{proDetail}, #{proDiscount}, SYSDATE())
+	   (#{proName}, #{proPrice}, #{proDetail}, SYSDATE())
 	   <selectKey keyProperty="proNo" resultType="Integer" order="AFTER">
 	   	SELECT LAST_INSERT_ID();
 	   </selectKey>
@@ -84,9 +84,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 	  <insert id="insertProductQty" parameterType="ProductQtyDTO">
 	  INSERT
-	  INTO PRODUCT_QTY (PRO_NO, PRO_SIZE_240,PRO_SIZE_250, PRO_SIZE_260, PRO_SIZE_270)
+	  INTO PRODUCT_QTY (PRO_NO, PRO_SIZE,PRO_QTY,PRO_DISCOUNT)
 	  VALUES
-	  	(#{proNo}, #{proSize240}, #{proSize250}, #{proSize260}, #{proSize270})
+	  	(#{proNo}, #{proSize}, #{proQty}, #{proDiscount})
 	  
 	  </insert>
 	  

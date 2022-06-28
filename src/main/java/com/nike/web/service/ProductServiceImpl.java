@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 		// PageEntity 계산
 		PageUtils pageUtils = new PageUtils();
 		pageUtils.setPageEntity(totalRecord, page);
-		
+	
 		// beginRecord + endRecord => Map
 		Map<String, Object> map = new HashMap<>();
 		map.put("beginRecord", pageUtils.getBeginRecord() -1);
@@ -134,34 +134,35 @@ public class ProductServiceImpl implements ProductService {
 			//no, stock 데이터 DB에서 가져와야함
 			String proName = multipartRequest.getParameter("proName");
 			int proPrice = Integer.parseInt(multipartRequest.getParameter("proPrice"));
-			double proDiscount= Double.parseDouble(multipartRequest.getParameter("proDiscount"));
 			String proDetail = multipartRequest.getParameter("proDetail");
 			
 			// GalleryDTO
 			ProductDTO product = ProductDTO.builder()
 					.proName(proName)
 					.proPrice(proPrice)
-					.proDiscount(proDiscount)
 					.proDetail(proDetail)
 					.build();
 			
 			
-			int productResult = productMapper.insertProduct(product);  // INSERT 수행
-		
-			int proSize240 = Integer.parseInt(multipartRequest.getParameter("proSize240"));
-			int proSize250 = Integer.parseInt(multipartRequest.getParameter("proSize250"));
-			int proSize260 = Integer.parseInt(multipartRequest.getParameter("proSize260"));
-			int proSize270 = Integer.parseInt(multipartRequest.getParameter("proSize270"));
+			Integer productResult = productMapper.insertProduct(product);  // INSERT 수행
+			System.out.println(productResult);
+			
+			int proSize = Integer.parseInt(multipartRequest.getParameter("proSize"));
+			int proQty = Integer.parseInt(multipartRequest.getParameter("proQty"));
+			Double proDiscount= Double.parseDouble(multipartRequest.getParameter("proDiscount"));
+	
+			
 			
 			ProductQtyDTO productQty = ProductQtyDTO.builder()
 					.proNo(product.getProNo())
-					.proSize240(proSize240)
-					.proSize250(proSize250)
-					.proSize260(proSize260)
-					.proSize270(proSize270)
+					.proSize(proSize)
+					.proQty(proQty)
+					.proDiscount(proDiscount)
 					.build();
 			
-			int productQtyResult = productMapper.insertProductQty(productQty);
+			Integer productQtyResult = productMapper.insertProductQty(productQty); //업데이트
+			
+			
 			
 					// 첨부insertProductQty된 모든 파일들
 			List<MultipartFile> files = multipartRequest.getFiles("files");  // 파라미터 files

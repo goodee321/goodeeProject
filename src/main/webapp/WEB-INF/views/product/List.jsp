@@ -137,26 +137,21 @@ h3{
 								<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="100%"></a>
 	
 						</div>
-					
-						<div class="stockLack">
-							품절임박
-						</div>
-					
-					 -->
+				
 					<span class="title">
 						${product.proName}
 					</span>
 						<!-- 할인가 적용 -->
-					<c:if test="${product.proDiscount == 0}">
+					<c:if test="${product.productQtyDTO.proDiscount == 0}">
 						<div class="price">
 							<fmt:formatNumber value="${product.proPrice}" pattern="#,###"/>원
 						</div>
 					</c:if> 
-					<c:if test="${product.proDiscount > 0}">
+					<c:if test="${product.productQtyDTO.proDiscount > 0}">
 						<div class="price">
-								<fmt:formatNumber value="${product.proPrice - product.proPrice * product.proDiscount}" pattern="#,###원"/>
+								<fmt:formatNumber value="${product.proPrice - product.proPrice * product.productQtyDTO.proDiscount}" pattern="#,###원"/>
 							<span class="salePer">
-								<fmt:formatNumber value="${product.proDiscount}" pattern="##% 할인"/>
+								<fmt:formatNumber value="${product.productQtyDTO.proDiscount}" pattern="##% 할인"/>
 							</span>
 						</div>
 					</c:if> 

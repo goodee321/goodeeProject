@@ -13,9 +13,8 @@ import lombok.NoArgsConstructor;
 
 public class ProductQtyDTO {
 
-	private Integer	proNo;				//ProductNo   상품 번호	==galleryNo
-	private int proSize240;
-	private int proSize250;
-	private int proSize260;
-	private int proSize270;
+	private Integer	proNo;				
+	private int proSize;
+	private int proQty;
+	private Double	proDiscount;
 }
