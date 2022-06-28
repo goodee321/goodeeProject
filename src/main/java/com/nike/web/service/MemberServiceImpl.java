@@ -310,7 +310,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 목록(Admin)
 		@Override
-		public void findMembers(HttpServletRequest request, Model model) {
+		public void findMembers(HttpServletRequest request, Model model ) {
 			// TODO Auto-generated method stub
 			
 			Optional<String> opt = Optional.ofNullable(request.getParameter("page"));

@@ -19,6 +19,7 @@ import com.nike.web.domain.MemberDTO;
 import com.nike.web.service.MemberService;
 import com.nike.web.service.NoticeService;
 import com.nike.web.service.QnaService;
+import com.nike.web.util.Search;
 
 @Controller
 public class AdminController {
@@ -45,9 +46,22 @@ public class AdminController {
 	
 	// 회원관리
 	@GetMapping("/admin/member/list")
-	public String list(HttpServletRequest request, Model model) {
+	public String list(HttpServletRequest request, Model model , @RequestParam(required = false, defaultValue = "1") int page
+
+			, @RequestParam(required = false, defaultValue = "1") int range
+
+			, @RequestParam(required = false, defaultValue = "title") String searchType
+
+			, @RequestParam(required = false) String keyword) {
+		
+		Search search = new Search();
+
+		search.setSearchType(searchType);
+
+		search.setKeyword(keyword);
+		
 		memberService.findMembers(request, model);
-		return "admin/member/list";
+		return "admin/member/list";	
 	}
 	
 	

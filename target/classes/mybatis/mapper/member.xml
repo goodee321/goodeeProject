@@ -83,8 +83,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<!-- 목록(beginRecord - endRecord) Admin -->
 	<select id="selectMemberList" parameterType="Map" resultType="MemberDTO">
-		 SELECT *
+		 SELECT MEMBER_NO, ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
        	   FROM MEMBER
+       	   <trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="searchType=='title' and keyword != null and keyword != '' ">
+				AND TITLE like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='content' and keyword != null and keyword != '' ">
+				AND CONTENT like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType=='reg_id' and keyword != null and keyword != '' ">
+				AND reg_id like CONCAT('%', #{keyword}, '%')
+			</if>	
+		</trim>
       ORDERS LIMIT #{beginRecord}, #{endRecord}
 	</select>
 	
@@ -94,6 +105,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMemberCount" resultType="Integer">
 		SELECT COUNT(MEMBER_NO)
 		  FROM MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="keyword != null and keyword != '' ">
+					<if test="searchType=='title'">
+						AND TITLE like CONCAT('%', #{keyword}, '%')
+					</if>
+					<if test="searchType=='content'">
+							AND CONTENT like CONCAT('%', #{keyword}, '%')
+					</if>
+					<if test="searchType=='reg_id'">
+							AND reg_id like CONCAT('%', #{keyword}, '%')
+					</if>
+
+      		</if>
+
+		</trim>
 	</select>
  	
 	
