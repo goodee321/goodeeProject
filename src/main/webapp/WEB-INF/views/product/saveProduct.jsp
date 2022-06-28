@@ -58,6 +58,8 @@
 				event.preventDefault();
 				return false;
 			}
+			
+			
 			else if($('#files').val() == ""){
 				alert('이미지를 반드시 1개 이상 업로드해야 합니다.');
 				event.preventDefault();
@@ -69,19 +71,7 @@
 	
 </script>
 <style>
-/*
-.table{
-	  width: 40%;
-    margin: 0 auto;
-    display: flex;
-    background-color: gray;
-    flex-wrap: wrap;
-}
-#f{
-	color: white;
-}
-*/
- 
+
 #f {
   width:70%; 
     margin-left:15%; 
@@ -137,29 +127,34 @@ table{
 		</tr><tr>
 		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" placeholder="가격"></td>
 		</tr><tr>
-		<td>수량</td><td>	<input type="text" name="proStock" class="form-control"placeholder="수량"></td>
-		</tr><tr>
 		<td>내용</td><td>	<textarea class="form-control" name="proDetail" rows="3" placeholder="상세 내용"></textarea>
 		</tr><tr>
 		<td>할인가</td><td>	<input type="text" name="proDiscount" class="form-control"placeholder="할인액(0.00)" value="0"></td>
 		</tr><tr>
 		<td>사이즈</td><td>
 		<label class="checkbox-inline">
-		  <input type="checkbox" name="proSize" id="inlineCheckbox1" value="240"> 240
+		  <input type="checkbox"  id="Checkbox240" class="sizeCheck" > 240
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" name="proSize" id="inlineCheckbox2" value="250"> 250
+		  <input type="checkbox"  id="Checkbox250"class="sizeCheck" > 250
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" name="proSize" id="inlineCheckbox3" value="260"> 260
+		  <input type="checkbox"  id="Checkbox260" class="sizeCheck"> 260
 		</label>	
 		<label class="checkbox-inline">
-		  <input type="checkbox" name="proSize" id="inlineCheckbox3" value="270"> 270
+		  <input type="checkbox"  id="Checkbox270" class="sizeCheck"> 270
 		</label>	
-		<label class="checkbox-inline">
-		  <input type="checkbox" name="proSize" id="inlineCheckbox3" value="280"> 280
-		</label>			
+		<br>
+		<tr>
+		<td>240</td><td> <input type="text" name="proSize240" id="proSize240" class="form-control" value="0"></td><br>
 		</tr><tr>
+		<td>250</td><td> <input type="text" name="proSize250" id="proSize250" class="form-control" value="0"></td><br>
+		</tr><tr>
+		<td>260</td><td> <input type="text" name="proSize260" id="proSize260" class="form-control" value="0"></td><br>
+		</tr><tr>
+		<td>270</td><td> <input type="text" name="proSize270" id="proSize270" class="form-control" value="0"></td><br>
+		</tr>
+		<br>
 		<td>첨부</td>
 		</tr>
 		</table>

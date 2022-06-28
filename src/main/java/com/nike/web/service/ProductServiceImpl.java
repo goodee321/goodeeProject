@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.nike.web.domain.ProductDTO;
 import com.nike.web.domain.ProductImageDTO;
+import com.nike.web.domain.ProductQtyDTO;
 import com.nike.web.mapper.ProductMapper;
 import com.nike.web.util.FileUtils;
 import com.nike.web.util.PageUtils;
@@ -133,26 +134,36 @@ public class ProductServiceImpl implements ProductService {
 			//no, stock 데이터 DB에서 가져와야함
 			String proName = multipartRequest.getParameter("proName");
 			int proPrice = Integer.parseInt(multipartRequest.getParameter("proPrice"));
-			int proStock = Integer.parseInt(multipartRequest.getParameter("proStock"));
 			double proDiscount= Double.parseDouble(multipartRequest.getParameter("proDiscount"));
 			String proDetail = multipartRequest.getParameter("proDetail");
-			int proSize = Integer.parseInt(multipartRequest.getParameter("proSize"));
 			
 			// GalleryDTO
 			ProductDTO product = ProductDTO.builder()
 					.proName(proName)
 					.proPrice(proPrice)
-					.proStock(proStock)
 					.proDiscount(proDiscount)
 					.proDetail(proDetail)
-					.proSize(proSize)
 					.build();
 			
 			
 			int productResult = productMapper.insertProduct(product);  // INSERT 수행
 		
-		
-			// 첨부된 모든 파일들
+			int proSize240 = Integer.parseInt(multipartRequest.getParameter("proSize240"));
+			int proSize250 = Integer.parseInt(multipartRequest.getParameter("proSize250"));
+			int proSize260 = Integer.parseInt(multipartRequest.getParameter("proSize260"));
+			int proSize270 = Integer.parseInt(multipartRequest.getParameter("proSize270"));
+			
+			ProductQtyDTO productQty = ProductQtyDTO.builder()
+					.proNo(product.getProNo())
+					.proSize240(proSize240)
+					.proSize250(proSize250)
+					.proSize260(proSize260)
+					.proSize270(proSize270)
+					.build();
+			
+			int productQtyResult = productMapper.insertProductQty(productQty);
+			
+					// 첨부insertProductQty된 모든 파일들
 			List<MultipartFile> files = multipartRequest.getFiles("files");  // 파라미터 files
 			// 파일 첨부 결과
 			int productImageAttachResult;
@@ -232,7 +243,7 @@ public class ProductServiceImpl implements ProductService {
 			try {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
-				if(productResult == 1 && productImageAttachResult == files.size()) {
+				if(productResult == 1 && productQtyResult == 1 && productImageAttachResult == files.size()) {
 					out.println("<script>");
 					out.println("alert('제품이 등록되었습니다.')");
 					out.println("location.href='" + multipartRequest.getContextPath() + "/product/list'");

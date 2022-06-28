@@ -35,15 +35,16 @@ public class ProductController {
 		return "product/list";
 	}
 	
-	@GetMapping("/product/savePage")
-	public String savePage() {
-		return "product/save";
+	@GetMapping("/product/saveProductPage")
+	public String saveProductPage() {
+		return "product/saveProduct";
 	}
 	
-	@PostMapping("/product/save")
-	public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response, Model model) {
+	@PostMapping("/product/saveProduct")
+	public void saveProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response, Model model) {
 		productService.save(multipartRequest, response, model);
 	}
+	
 	@ResponseBody
 	@GetMapping("/product/display")
 	public ResponseEntity<byte[]> display(@RequestParam(value="proimgNo", required=true) Integer ProimgNo, @RequestParam(value="type", required=false, defaultValue="image") String type) {

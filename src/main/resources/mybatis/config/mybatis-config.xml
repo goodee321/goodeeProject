@@ -17,6 +17,7 @@
 		<typeAlias type="com.nike.web.domain.OrderDetailDTO" alias="orderDetail" />
 		<typeAlias type="com.nike.web.domain.OrderDTO" alias="order" />
 		<typeAlias type="com.nike.web.domain.ProductDTO" alias="ProductDTO" />
+		<typeAlias type="com.nike.web.domain.ProductQtyDTO" alias="ProductQtyDTO" />
 		<typeAlias type="com.nike.web.domain.ProductImageDTO" alias="ProductImageDTO" />
 		<typeAlias type="com.nike.web.domain.QnaDTO" alias="QnaDTO" />
 		<typeAlias type="com.nike.web.domain.ReviewDTO" alias="ReviewDTO" />
