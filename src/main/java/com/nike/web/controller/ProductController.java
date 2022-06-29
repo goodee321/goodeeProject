@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -58,9 +61,11 @@ public class ProductController {
 		return "product/saveProductOption";
 		
 	}
-	@PostMapping("/product/saveProductOptionOk")
-	public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response, Model model) {
-		productService.saveProduct(request, response, model);
+
+
+	@RequestMapping(value="/product/saveProductOptionOk", method= {RequestMethod.GET, RequestMethod.POST})
+	public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response) {
+		productService.saveProductOptionOk(request, response);
 	}
 	
 	

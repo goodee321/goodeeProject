@@ -141,21 +141,14 @@ h3{
 					<span class="title">
 						${product.proName}
 					</span>
-						<!-- 할인가 적용 -->
-					<c:if test="${product.productQtyDTO.proDiscount == 0}">
+						
+				
 						<div class="price">
 							<fmt:formatNumber value="${product.proPrice}" pattern="#,###"/>원
 						</div>
-					</c:if> 
-					<c:if test="${product.productQtyDTO.proDiscount > 0}">
-						<div class="price">
-								<fmt:formatNumber value="${product.proPrice - product.proPrice * product.productQtyDTO.proDiscount}" pattern="#,###원"/>
-							<span class="salePer">
-								<fmt:formatNumber value="${product.productQtyDTO.proDiscount}" pattern="##% 할인"/>
-							</span>
-						</div>
-					</c:if> 
-							
+				
+					
+				
 					</li>
 				</c:forEach>
 			</ul>

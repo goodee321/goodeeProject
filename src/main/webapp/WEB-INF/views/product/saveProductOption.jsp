@@ -4,14 +4,99 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script src="../resources/js/jquery-3.6.0.js"></script>
+
+
+
+
+<script>
+	
+	$(function(){
+		fnSignIn();
+		fnRegExp();
+		
+	})
+	
+	function fnSignIn(){
+		$('#f').on('submit', function(event){
+			
+			if(discountPass == false){
+				alert('할인율을 변경하시기 바랍니다.');
+				event.preventDefault();
+				return;
+			}
+
+			else if($("#proSize").val() == 0){
+				alert('사이즈를 선택해주시기 바랍니다.');
+				event.preventDefault();
+				return false;
+			}
+			
+			else if($('#proQty').val() == 0){
+				alert('수량을 확인하시길 바랍니다.');
+				event.preventDefault();
+				return false;
+			}
+			else if(qtyPass == false){
+				alert('수량은 숫자만 입력가능합니다.');
+				event.preventDefault();
+				return false;
+			}
+
+			return true;
+		})
+	}
+	
+
+			let discountPass = false;
+			let qtyPass = false; 
+			
+	function fnRegExp(){
+			let numberRegExp = 	/^[0-9]+$/;
+			let decimalRegExp = /^[0]\.{1}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
+			
+			
+			
+			$('#proDiscount').on('keyup',function(){
+			
+				if(decimalRegExp.test( $('#proDiscount').val() ) == false){ 
+					$('#proDiscountError').text('할인율에는 1이하의 숫자만 입력 가능합니다.').addClass('dont').removeClass('hidden');
+					discountPass = false;
+					return;
+				}else{
+					$('#proDiscountError').addClass('hidden').removeClass('dont');
+					discountPass = true;
+				}
+				
+			})
+			
+				$('#proQty').on('keyup',function(){
+			
+				if(numberRegExp.test( $('#proQty').val() ) == false){ 
+					$('#proQtyError').text('수량에는 숫자만 넣을 수 있습니다..').addClass('dont').removeClass('hidden');
+					qtyPass = false;
+					return;
+				}else{
+					$('#proQtyError').addClass('hidden').removeClass('dont');
+					qtyPass = true;
+				}
+				
+			})
+			
+			
+			
+		}
+		
+	
+	
+</script>
+
 <style>
 
 
@@ -70,7 +155,7 @@ table{
 	<h2>제품 옵션 변경 페이지</h2>
 	
 	<div class="table">
-	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/saveProductOptionOk" method="post" enctype="multipart/form-data">
+	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/saveProductOptionOk" method="post">
 		<table>
 		<input type="hidden" name="proNo" value="${detail.proNo}" readonly="readonly">
 		<tr>	
@@ -79,7 +164,7 @@ table{
 		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${detail.proPrice}" placeholder="가격" readonly="readonly"></td>
 		</tr><tr>
 		<td>사이즈</td><td>
-		<select name="proSize" id="proSize">
+		<select class="my-select selectpicker" name="proSize" id="proSize" >
 			<option value="0" selected >사이즈 선택</option>
 			<option value="240">240</option>
 			<option value="250">250</option>
@@ -89,7 +174,7 @@ table{
 		</select>
 		</td>
 		</tr><tr>
-		<td>수량</td><td><input type="text" name="proQty" id="proQty" value="0"></td>
+		<td>수량</td><td><input type="text" name="proQty" id="proQty" value="0"  class="form-control"></td>
 		</tr><tr>
 		<td></td><td id="proQtyError"></td>
 		</tr><tr>
@@ -99,7 +184,6 @@ table{
 		
 		<button class="btn">작성완료</button>
 		<br>
-		<input class="btn" type="button" value="리스트 돌아가기" onclick="location.href='${contextPath}/product/list'">
 	</form>
 	</div>
 	

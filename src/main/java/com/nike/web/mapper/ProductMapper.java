@@ -25,6 +25,7 @@ public interface ProductMapper {
 		public int insertProductAttach(ProductImageDTO productImageAttach);
 		public int selectFindProductCount(Map<String, Object> map);
 		public List<ProductDTO> selectFindProductList(Map<String, Object> map);
+		public int productQtyOverLap(Map<String, Object> map);
 		
 		public ProductDTO selectGalleryByNo (Integer proNo);
 		

@@ -150,23 +150,6 @@ public class ProductServiceImpl implements ProductService {
 			Integer productResult = productMapper.insertProduct(product);  // INSERT 수행
 		
 			
-			int proSize = Integer.parseInt(multipartRequest.getParameter("proSize"));
-			int proQty = Integer.parseInt(multipartRequest.getParameter("proQty"));
-			Double proDiscount= Double.parseDouble(multipartRequest.getParameter("proDiscount"));
-	
-			
-			
-			ProductQtyDTO productQty = ProductQtyDTO.builder()
-					.proNo(product.getProNo())
-					.proSize(proSize)
-					.proQty(proQty)
-					.proDiscount(proDiscount)
-					.build();
-			
-			Integer productQtyResult = productMapper.insertProductQty(productQty);
-			
-			
-			
 					// 첨부insertProductQty된 모든 파일들
 			List<MultipartFile> files = multipartRequest.getFiles("files");  // 파라미터 files
 			// 파일 첨부 결과
@@ -247,7 +230,7 @@ public class ProductServiceImpl implements ProductService {
 			try {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
-				if(productResult == 1 && productQtyResult == 1 && productImageAttachResult == files.size()) {
+				if(productResult == 1 && productImageAttachResult == files.size()) {
 					out.println("<script>");
 					out.println("alert('제품이 등록되었습니다.')");
 					out.println("location.href='" + multipartRequest.getContextPath() + "/product/list'");
@@ -266,17 +249,14 @@ public class ProductServiceImpl implements ProductService {
 			
 		}
 		//제품 옵션 인서트
-
-		@Transactional
+		
 		@Override
-		public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response, Model model) {
+		public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response) {
 			// 전달된 파라미터
-			int proNo = Integer.parseInt(request.getParameter("proNo"));
-			int proSize = Integer.parseInt(request.getParameter("prosize"));
-			int proQty = Integer.parseInt(request.getParameter("proQty"));
+			Integer proNo = Integer.parseInt(request.getParameter("proNo"));
+			Integer proQty = Integer.parseInt(request.getParameter("proQty"));
 			Double proDiscount= Double.parseDouble(request.getParameter("proDiscount"));
-	
-			
+			Integer proSize = Integer.parseInt(request.getParameter("proSize"));
 			
 			ProductQtyDTO productQty = ProductQtyDTO.builder()
 					.proNo(proNo)
@@ -285,22 +265,28 @@ public class ProductServiceImpl implements ProductService {
 					.proDiscount(proDiscount)
 					.build();
 			
-			Integer productQtyResult = productMapper.insertProductQty(productQty);
+			Map<String, Object> map = new HashMap<>();
+			map.put("proNo", proNo);
+			map.put("proSize", proSize);
 			
+			int productQtyOverlap = productMapper.productQtyOverLap(map);
+			
+			if(productQtyOverlap == 0) {
+			Integer productQtyResult = productMapper.insertProductQty(productQty);
 			
 			// 응답
 			try {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
-				if(productQtyResult == 1) {
+				if(productQtyResult == 1 ) {				
 					out.println("<script>");
-					out.println("alert('제품이 등록되었습니다.')");
-					out.println("location.href='" + multipartRequest.getContextPath() + "/product/list'");
+					out.println("alert('옵션이 등록되었습니다.')");
+					out.println("location.href='" + request.getContextPath() + "/product/list'");
 					out.println("</script>");
 					out.close();
 				} else {
 					out.println("<script>");
-					out.println("alert('제품이 등록되지 않았습니다.')");
+					out.println("alert(' "+proSize + "사이즈가 이미 존재합니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 					out.close();
@@ -309,6 +295,21 @@ public class ProductServiceImpl implements ProductService {
 				e.printStackTrace();
 			}
 			
+			}else {
+				response.setContentType("text/html");
+				try {
+				PrintWriter out = response.getWriter();
+				 {				
+					 out.println("<script>");
+						out.println("alert(' "+proSize + "사이즈가 이미 존재합니다.')");
+						out.println("history.back()");
+						out.println("</script>");
+						out.close();
+			}
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
+			}
 		}
 		
 		//업데이트
@@ -587,7 +588,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		
-		
+		/*
 		
 		//삭제
 		// 갤러리 삭제
@@ -701,7 +702,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		
-		
+		*/
 }
 
 		
