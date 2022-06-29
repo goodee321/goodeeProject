@@ -179,7 +179,8 @@ table{
 		<td></td><td id="proQtyError"></td>
 		</tr><tr>
 		<td>할인가</td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)" value="0"></td>
-		</tr>
+		</tr><tr>
+		<td></td><td id="proDiscountError"></td>
 		</table>
 		
 		<button class="btn">작성완료</button>
