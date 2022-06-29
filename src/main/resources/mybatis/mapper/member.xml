@@ -110,19 +110,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectFindCount" parameterType="Map" resultType="Integer">
 		SELECT COUNT(*)
 		  FROM MEMBER
+		  <if test="column == 'ID'">
+		WHERE ID
+		LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+		</if>
+		<if test="column == 'NAME'">
+		WHERE NAME
+		LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+		</if>		
 	</select>
 	
 	<!-- 검색 -->
 	<select id="selectFindList" parameterType="Map" resultType="MemberDTO">
-		SELECT *
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
 		  FROM MEMBER
-		  <if test="column=='ID'">
+		  <if test="column == 'ID'">
 		WHERE ID
-		LIKE CONCAT('%', #{query}, '%')
+		LIKE CONCAT('%', TRIM(#{query}), '%')
 		</if>
-		<if test="column=='NAME'">
+		<if test="column == 'NAME'">
 		WHERE NAME
-		LIKE CONCAT('%', #{query}, '%')
+		LIKE CONCAT('%', TRIM(#{query}), '%')
 		</if>		
 		LIMIT #{beginRecord}, #{endRecord} 
 	</select>

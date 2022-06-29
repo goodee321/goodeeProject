@@ -5,8 +5,12 @@ import org.springframework.context.annotation.Configuration;
 
 import com.nike.web.service.CartService;
 import com.nike.web.service.CartServiceImpl;
+import com.nike.web.service.MemberService;
+import com.nike.web.service.MemberServiceImpl;
 import com.nike.web.service.OrderService;
 import com.nike.web.service.OrderServiceImpl;
+import com.nike.web.service.ProductService;
+import com.nike.web.service.ProductServiceImpl;
 
 @Configuration
 public class ServiceConfig {
@@ -21,4 +25,16 @@ public class ServiceConfig {
 		return new CartServiceImpl();
 	}
 
+	@Bean
+	public ProductService productService() {
+		return new ProductServiceImpl();
+	}
+	
+	@Bean
+	public MemberService memberService() {
+		return new MemberServiceImpl();
+	}
+	
+	
+	
 }

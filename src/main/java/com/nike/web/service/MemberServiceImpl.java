@@ -322,7 +322,7 @@ public class MemberServiceImpl implements MemberService {
 			pageUtils.setPageEntity(totalRecord, page);
 			
 			Map<String, Object> map = new HashMap<>();
-			map.put("beginRecord", pageUtils.getBeginRecord());
+			map.put("beginRecord", pageUtils.getBeginRecord() - 1);
 			map.put("endRecord", pageUtils.getEndRecord());
 			
 			List<MemberDTO> members = memberMapper.selectMemberList(map);

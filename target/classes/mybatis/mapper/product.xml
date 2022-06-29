@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.nike.web.mapper.ProductMapper">
+
+	<resultMap type="ProductImageDTO" id="ProductImageMap">
+		<result column="PROIMG_NO" property="proimgNo" />
+		<result column="PROIMG_NAME" property="proimgName" />
+		<result column="PROIMG_PATH" property="proimgPath" />
+		<result column="PROIMG_ORIGIN" property="proimgOrigin" />
+		<result column="PRO_NO" property="proNo" />
+	</resultMap>
+	<resultMap type="productQtyDTO" id="productQtyMap">
+		<result column="PRO_NO" property="proNo" />
+		<result column="PRO_SIZE" property="proSize" />
+		<result column="PRO_QTY" property="proQty" />
+		<result column="PRO_DISCOUNT" property="proDiscount" />
+	</resultMap>
+	
+	<resultMap type="ProductDTO" id="ProductMap">
+	<result column="PRO_NO" property="proNo" />
+	<result column="PRO_NAME" property="proName" />
+	<result column="PRO_PRICE" property="proPrice" />
+	<result column="PRO_DETAIL" property="proDetail" />
+	<result column="PRO_DATE" property="proDate" />
+	<collection resultMap="ProductImageMap" property="productImageDTO" />
+	<collection resultMap="productQtyMap" property="productQtyDTO" />
+	
+	
+	</resultMap>
+
+<!-- 갤러리 목록 -->
+	<!-- 전체 갤러리 갯수 -->
+	<select id="selectProductCount" resultType="Integer">
+		SELECT COUNT(PRO_NO)
+		  FROM PRODUCT
+	</select>
+	
+	
+	<!-- 제품 리스트 -->
+	<select id="selectProductList" parameterType="Map" resultMap="ProductMap">
+
+        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE,  PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN,PQ.PRO_SIZE, PQ.PRO_QTY, PQ.PRO_DISCOUNT
+      FROM  PRODUCT P INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO INNER JOIN PRODUCT_QTY PQ
+      ON P.PRO_NO = PQ.PRO_NO
+      ORDER BY P.PRO_NO DESC  
+      LIMIT #{beginRecord}, #{recordPerPage}
+     
+	</select>
+	
+		<!-- 제품 검색 -->
+	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(P.PRO_NO)
+		  FROM PRODUCT P INNER JOIN PRODUCT_QTY
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+	</select>
+
+	<!-- 제품 검색 리스트 -->
+	<select id="selectFindProductList" parameterType="Map" resultMap="ProductMap">
+		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_SIZE 
+		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
+  		 ON  PI.PRO_NO = P.PRO_NO  INNER JOIN PRODUCT_QTY PQ
+         ON P.PRO_NO = PQ.PRO_NO
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+		 ORDER BY P.PRO_NO DESC
+		 LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+
+
+	 <!-- 데이터 삽입 -->
+	 <insert id="insertProduct" parameterType="ProductDTO">
+	
+	  INSERT 
+	  INTO PRODUCT(PRO_NAME, PRO_PRICE, PRO_DETAIL, PRO_DATE)
+	   VALUES
+	   (#{proName}, #{proPrice}, #{proDetail}, SYSDATE())
+	   <selectKey keyProperty="proNo" resultType="Integer" order="AFTER">
+	   	SELECT LAST_INSERT_ID();
+	   </selectKey>
+	
+	  </insert>
+	  
+	  <insert id="insertProductQty" parameterType="ProductQtyDTO">
+	  INSERT
+	  INTO PRODUCT_QTY (PRO_NO, PRO_SIZE,PRO_QTY,PRO_DISCOUNT)
+	  VALUES
+	  	(#{proNo}, #{proSize}, #{proQty}, #{proDiscount})
+	  
+	  </insert>
+	  
+	  <!-- 파일 첨부 추가 -->
+	<insert id="insertProductAttach" parameterType="ProductImageDTO">
+		INSERT 
+		INTO PRODUCT_IMAGE (PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO)
+		VALUES
+			(#{proimgName}, #{proimgPath}, #{proimgOrigin}, #{proNo})
+	</insert>
+
+	<!-- 첨부 파일 정보 -->
+	<select id="selectProductImageByNo" parameterType="Integer" resultType="ProductImageDTO">
+		SELECT PROIMG_NO, PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO
+		  FROM PRODUCT_IMAGE
+		 WHERE  PROIMG_NO = #{proimgNo}
+	</select>
+	<!-- 디테일 정보 -->
+	<select id="selectGalleryByNo" parameterType="Integer" resultType="ProductDTO">
+			SELECT *
+			  FROM PRODUCT
+			 WHERE PRO_NO = #{proNo}
+	</select>
+
+	<!-- 제품 수정 -->
+	<update id="updateProduct" parameterType="ProductDTO">
+		UPDATE PRODUCT
+		   SET PRO_NAME = #{proName}, PRO_PRICE= #{proPrice}, PRO_DETAIL= #{proDetail}, PRO_DATE = SYSDATE()
+		 WHERE PRO_NO = #{proNo}
+	</update>
+
+<!-- 제품 수량 수정 -->
+	<update id="updateProductQty" parameterType="ProductQtyDTO">
+		UPDATE PRODUCT_QTY
+		   SET PRO_QTY = #{proQty}, PRO_DISCOUNT = #{proDiscount}, PRO_SIZE = #{proSize}
+		 WHERE PRO_NO = #{proNo}
+	</update>
+</mapper>

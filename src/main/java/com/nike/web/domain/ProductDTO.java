@@ -10,17 +10,19 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
+@Builder
+
 public class ProductDTO {
 
-	private int	pNo;
-	private String	pName;
-	private int pPrice;
-	private int pStock;
-	private String	pDetail;
-	private String	pDelivery;
-	private Date pDate;
-	private int	pSize;
-	private double	pDiscount;
+	private Integer	proNo;				//ProductNo   상품 번호	==galleryNo
+	private String	proName;			//productName 상품 이름 
+	private int proPrice;				
+	private String	proDetail;
+	private Date proDate;
+	
+	
+	
+	private ProductImageDTO productImageDTO;
+	private ProductQtyDTO productQtyDTO;
 }

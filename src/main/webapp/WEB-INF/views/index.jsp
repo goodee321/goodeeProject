@@ -23,7 +23,7 @@
 	
 	<a href="${contextPath}/board/savePage">상품보러가기</a>
 
-
+	
 	
 	
 </body>
