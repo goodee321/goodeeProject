@@ -279,7 +279,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			
 			ProductQtyDTO productQty = ProductQtyDTO.builder()
-					.proNo(product.getProNo())
+					.proNo(proNo)
 					.proSize(proSize)
 					.proQty(proQty)
 					.proDiscount(proDiscount)
@@ -288,88 +288,11 @@ public class ProductServiceImpl implements ProductService {
 			Integer productQtyResult = productMapper.insertProductQty(productQty);
 			
 			
-			
-					// 첨부insertProductQty된 모든 파일들
-			List<MultipartFile> files = multipartRequest.getFiles("files");  // 파라미터 files
-			// 파일 첨부 결과
-			int productImageAttachResult;
-			if(files.get(0).getOriginalFilename().isEmpty()) {  // 첨부가 없으면 files.size() == 1임. [MultipartFile[field="files", filename=, contentType=application/octet-stream, size=0]] 값을 가짐.
-				productImageAttachResult = 1;
-			} else {  // 첨부가 있으면 "files.size() == 첨부파일갯수"이므로 productImageAttachResult = 0으로 시작함.
-				productImageAttachResult = 0;
-			}
-			
-			for (MultipartFile multipartFile : files) {
-				
-				// 예외 처리는 기본으로 필요함.
-				try {
-					
-					// 첨부가 없을 수 있으므로 점검해야 함.
-					if(multipartFile != null && multipartFile.isEmpty() == false) {  // 첨부가 있다.(둘 다 필요함)
-						
-						// 첨부파일의 본래 이름(origin)
-						String origin = multipartFile.getOriginalFilename();
-						origin = origin.substring(origin.lastIndexOf("\\") + 1);  // IE는 본래 이름에 전체 경로가 붙어서 파일명만 빼야 함.
-						
-						// 첨부파일의 저장된 이름(proimgName)
-						String proimgName = FileUtils.getUuidName(origin);
-						
-						// 첨부파일의 저장 경로(ProimgPath)
-						// String proimgPath = FileUtils.getTodayPath();
-						String proimgPath = multipartRequest.getServletContext().getRealPath("/resources/gallery");
-						
-						// 저장 경로(디렉터리) 없으면 만들기
-						File dir = new File(proimgPath);
-						if(dir.exists() == false) {
-							dir.mkdirs();
-						}
-						
-						// 첨부파일
-						File file = new File(dir, proimgName);
-						
-						// 첨부파일 확인
-						String contentType = Files.probeContentType(file.toPath());  // 이미지의 Content-Type(image/jpeg, image/png, image/gif)
-						if(contentType.startsWith("image")) {
-							
-							// 첨부파일 서버에 저장(업로드)
-							multipartFile.transferTo(file);
-							
-							// 썸네일 서버에 저장(썸네일 정보는 DB에 저장되지 않음)
-							// 썸네일 내용 확인해서 프론트(list)로 보내기
-							String thumbnails = "s_" + proimgName;
-							Thumbnails.of(file)
-								.size(100, 100)
-								.toFile(new File(dir, thumbnails));
-							// FileAttachDTO
-							
-							
-
-							ProductImageDTO productImageAttach = ProductImageDTO.builder()
-									.proimgPath(proimgPath)
-									.proimgOrigin(origin)
-									.proimgName(proimgName)
-									.proNo(product.getProNo())
-									.build();
-							
-							// FileAttach INSERT 수행
-							productImageAttachResult += productMapper.insertProductAttach(productImageAttach);
-					
-							
-						}
-
-					}
-					
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-			
 			// 응답
 			try {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
-				if(productResult == 1 && productQtyResult == 1 && productImageAttachResult == files.size()) {
+				if(productQtyResult == 1) {
 					out.println("<script>");
 					out.println("alert('제품이 등록되었습니다.')");
 					out.println("location.href='" + multipartRequest.getContextPath() + "/product/list'");
