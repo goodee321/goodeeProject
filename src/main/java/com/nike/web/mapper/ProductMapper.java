@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.nike.web.domain.ProductDTO;
 import com.nike.web.domain.ProductImageDTO;
 import com.nike.web.domain.ProductQtyDTO;
+import com.nike.web.domain.ReviewDTO;
+import com.nike.web.domain.ReviewImageDTO;
 
 @Mapper
 public interface ProductMapper {
@@ -23,5 +25,16 @@ public interface ProductMapper {
 		public int insertProductAttach(ProductImageDTO productImageAttach);
 		public int selectFindProductCount(Map<String, Object> map);
 		public List<ProductDTO> selectFindProductList(Map<String, Object> map);
+		
+		public ProductDTO selectGalleryByNo (Integer proNo);
+		
+		//갤러리 수정
+		public ProductDTO selectProductByNo(Integer proNo);
+		public int selectDetailReviewCount();
+		public List<ReviewDTO> selectDetailReviewList(Map<String, Object> map);
+		public int insertDetailReview(ReviewDTO review);
+		public Integer insertDetailReviewImage(ReviewImageDTO reviewImage);
+		public int updateProduct(ProductDTO product);
+		public int updateProductQty(ProductQtyDTO productQty);
 		
 }

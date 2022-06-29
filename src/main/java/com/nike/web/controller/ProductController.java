@@ -50,4 +50,52 @@ public class ProductController {
 	public ResponseEntity<byte[]> display(@RequestParam(value="proimgNo", required=true) Integer ProimgNo, @RequestParam(value="type", required=false, defaultValue="image") String type) {
 		return productService.display(ProimgNo, type);		
 	}
+
+
+	@GetMapping("/product/saveProductOption")
+	public String saveProductOption(@RequestParam Integer proNo, HttpServletRequest request, Model model) {
+		model.addAttribute("detail", productService.getProductByNo(proNo));
+		return "product/saveProductOption";
+		
+	}
+	@PostMapping("/product/saveProductOptionOk")
+	public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response, Model model) {
+		productService.saveProduct(request, response, model);
+	}
+	
+	
+
+	@GetMapping("/product/detail")
+	public String detail(@RequestParam Integer proNo, HttpServletRequest request, Model model) {
+		model.addAttribute("detail", productService.getProductByNo(proNo));
+		productService.findDetailReviews(request, model);
+		return "product/detail";
+		
+	}
+	
+
+//	@GetMapping(value="product/detailReview")
+//	public String detailReviewList(HttpServletRequest request, Model model) {
+//		productService.findDetailReviews(request, model);
+//		Integer proNo = Integer.parseInt(request.getParameter("proNo"));
+//		return "product/detail?=" + proNo;
+//	}
+	
+	@PostMapping("/product/detailReviewSave")
+	public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+		productService.addDetailReview(multipartRequest, response);
+	}
+	
+	
+	/*
+	@GetMapping("/product/productChangePage")
+	public String productChangePage(HttpServletRequest request, Model model) {
+		productService.findProductByNo(request, model);
+		return "gallery/change";
+	}
+	@PostMapping("/gallery/productChange")
+	public void productChange(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+		productService.change(multipartRequest, response);
+	}
+	*/
 }
