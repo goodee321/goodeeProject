@@ -8,7 +8,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectNoticeList" parameterType="Map" resultType="NoticeDTO">
 		SELECT *
 		  FROM NOTICE
-		 ORDER BY NOTICE_NO DESC LIMIT #{beginRecord}, #{endRecord}
+		 ORDER BY NOTICE_NO DESC LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+	
+	<!-- 검색된 레코드 갯수 -->
+	<select id="selectFindCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM NOTICE
+	</select>
+	
+	<!-- 검색 -->
+	<select id="selectFindList" parameterType="Map" resultType="NoticeDTO">
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
+		  FROM NOTICE
+		 WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
 	</select>
 	
 	<!-- 레코드 수 -->
@@ -27,9 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 삽입 -->
 	<insert id="insertNotice" parameterType="NoticeDTO">
 		INSERT INTO NOTICE
-			(NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
+			(NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
 		VALUES
-			(#{noticeTitle}, #{noticeContent}, NOW(), 0)
+			(#{noticeNo}, #{noticeTitle}, #{noticeContent}, NOW(), 0)
 	</insert>
 	
 	<!-- 조회수증가 -->
@@ -55,5 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM NOTICE
 		 WHERE NOTICE_NO = #{noticeNo}
 	</delete>
+	
+	
 
 </mapper>

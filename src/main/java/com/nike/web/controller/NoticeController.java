@@ -23,8 +23,8 @@ public class NoticeController {
 	@GetMapping("/notice/list")
 	public String list(HttpServletRequest request, Model model) {
 		request.getSession().removeAttribute("notice");
-		noticeService.findNotices(request, model);
-		return "notice/list";
+		noticeService.getNotices(request, model);
+		return "notice/search";
 	}
 	
 	@GetMapping("/notice/savePage")
@@ -70,6 +70,17 @@ public class NoticeController {
 		redirectAttributes.addFlashAttribute("delRes",noticeService.remove(noticeNo));
 		redirectAttributes.addFlashAttribute("type", "delete");
 		return "redirect:/notice/result";
+	}
+	
+	@GetMapping("/notice/searchPage")
+	public String searchPage() {
+		return "notice/search";
+	}
+	
+	@GetMapping("/notice/search")
+	public String search(HttpServletRequest request, Model model) {
+		noticeService.findNotices(request, model);
+		return "notice/search";	
 	}
 	
 }

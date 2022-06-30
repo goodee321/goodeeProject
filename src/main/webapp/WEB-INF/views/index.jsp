@@ -19,8 +19,10 @@
 	
 	<h1>MAIN PAGE</h1>
 	
-	<a href="${contextPath}/notice/list">공지사항</a>
+	<a href="${contextPath}/notice/list">공지사항 바로가기</a>
+	<a href="${contextPath}/notice/savePage">새 공지 작성하기</a>
 	<a href="${contextPath}/qna/list">QNA</a>
+
 
 </body>
 </html>

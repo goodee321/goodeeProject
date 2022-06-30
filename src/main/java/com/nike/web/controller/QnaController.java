@@ -55,7 +55,7 @@ public class QnaController {
 	
 	@GetMapping("/qna/detail")
 	public String detail(HttpServletRequest request, HttpServletResponse response, Model model) {
-		qnaService.findQnaByNo(request, response, model);
+		qnaService.findQnaByNo(request, model);
 		return "qna/detail";
 	}
 	
@@ -82,10 +82,21 @@ public class QnaController {
 		}
 	}
 	
+	@GetMapping("/qna/changePage")
+	public String changePage(HttpServletRequest request, Model model) {
+		qnaService.findQnaByNo(request, model);
+		return "qna/change";
+	}
+	
+	@PostMapping("/qna/change")
+	public void change(HttpServletRequest request, HttpServletResponse response) {
+		qnaService.change(request, response);
+	}
+	
 	@GetMapping("/qna/remove")
 	public void remove(HttpServletRequest request, HttpServletResponse response){
 		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
-		int res = qnaService.remove(qnaNo);
+		int res = qnaService.removeQna(qnaNo);
 		try {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();

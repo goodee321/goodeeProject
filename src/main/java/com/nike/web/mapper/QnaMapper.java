@@ -18,5 +18,8 @@ public interface QnaMapper {
 	
 	public int updatePreviousReply(QnaDTO qna);
 	public int insertReply(QnaDTO qna);
+	
+	public int updateQna(QnaDTO qna);
+	
 	public int deleteQna(int qnaNo);
 }

@@ -15,15 +15,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectQnaList" parameterType="Map" resultType="QnaDTO">
 		SELECT *
 		  FROM QNA
-		 ORDER BY QNA_NO LIMIT #{beginRecord}, #{endRecord}
+		ORDER BY QNA_GROUP_NO DESC LIMIT #{beginRecord}, #{endRecord}
 	</select>
 	
 	<!-- 원글 삽입 // (SELECT MAX(auto_increment 컬럼) FROM 테이블 S) +1 -->
 	<insert id="insertQna" parameterType="QnaDTO">
 		INSERT INTO QNA
-			(QNA_TITLE, ID, QNA_CONTENT, QNA_DATE, QNA_STATE, QNA_DEPTH, QNA_GROUP_NO, QNA_GROUP_ORD)
+			(ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_STATE, QNA_DEPTH, QNA_GROUP_NO, QNA_GROUP_ORD)
 		VALUES
-			(#{qnaTitle}, #{id}, #{qnaContent}, NOW(), 1, 0, QNA_NO + 1, 0)
+			(#{id}, #{qnaTitle}, #{qnaContent}, NOW(), 1, 0, (SELECT MAX(QNA_NO) + 1 FROM QNA ALIAS_FOR_SUBQUERY), 0)
 	</insert>
 	
 	<!-- 상세보기 -->
@@ -33,11 +33,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE QNA_NO = #{qnaNo}
 	</select>
 	
+	<!-- 
+		UPDATE QNA
+		   SET QNA_GROUP_NO = QNA_NO   
+		  WHERE QNA_GROUP_NO = 0
+		 ORDER BY QNA_NO DESC LIMIT 1
+	 -->
 	<update id="updatePreviousReply" parameterType="QnaDTO">
 		UPDATE QNA
-		   SET QNA_GROUP_ORD = QNA_GROUP_ORD + 1
-		 WHERE QNA_GROUP_NO = #{qnaGroupNo}    
-		   AND QNA_GROUP_ORD > 0
+		   SET QNA_GROUP_ORD = QNA_GROUP_ORD + 1   
+		WHERE QNA_GROUP_NO = #{qnaGroupNo}
+		  AND QNA_GROUP_ORD > 0
 	</update>
 	
 	<!-- 댓글 삽입 (아이디 널값 수정해야함.test)-->
@@ -48,12 +54,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(null, #{qnaContent}, NOW(), 1, #{qnaDepth}, #{qnaGroupNo}, #{qnaGroupOrd})
 	</insert>
 	
-	<!-- 삭제 -->
-	<delete id="deleteQna" parameterType="Integer">
+	<!-- 수정 -->
+	<update id="updateQna" parameterType="QnaDTO">
 		UPDATE QNA
-		   SET STATE = -1
+		   SET QNA_TITLE = #{qnaTitle}, QNA_CONTENT = #{qnaContent}, QNA_DATE = NOW()
 		 WHERE QNA_NO = #{qnaNo}
-	</delete>
+	</update>
+	
+	<!-- 삭제 -->
+	<update id="deleteQna" parameterType="Integer">
+		UPDATE QNA
+		   SET QNA_STATE = -1
+		 WHERE QNA_NO = #{qnaNo}
+	</update>
 
 
 </mapper>

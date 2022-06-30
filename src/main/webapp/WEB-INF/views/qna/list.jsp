@@ -24,6 +24,76 @@
 	.blind {
 		display: none;
 	}
+	
+	* {
+		box-sizing: border-box;
+	}
+	.unlink, .link {
+		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
+		padding: 10px;
+		margin: 5px;
+		border: 1px solid white;
+		text-align: center;
+		text-decoration: none;  /* 링크 밑줄 없애기 */
+		color: gray;
+	}
+	
+	.link:hover {
+		color: #008bcc;
+	}
+	
+	.title {
+		font-size: 20px;
+		text-align: center;
+	}
+	
+	.title p {
+		font-size: 15px;
+		display: block;
+	}
+	
+	
+	table {
+		border-collapse: collapse;
+		margin: auto;
+	}
+	
+	table caption {
+		margin-bottom: 5px;
+		margin-left: 0;
+	}
+	
+	table caption a {
+		background-color: #008bbc;
+		color: white;
+		text-decoration: none; 
+	}
+	
+	thead {
+		background-color: silver;	
+	}
+	
+	td:nth-of-type(1) { width: 80px; }
+	td:nth-of-type(2) { width: 160px; }
+	td:nth-of-type(3) { width: 400px; }
+	td:nth-of-type(4) { width: 100px; }
+	td:nth-of-type(5) { width: 150px; }
+	td {
+		padding: 5px;
+		border-top: 1px solid silver;
+		border-bottom: 1px solid silver;
+		text-align: center;
+	}
+	
+	tfoot {
+		text-align: center;
+	}
+	
+	tfoot td {
+		border-left: 0;
+		border-right: 0;
+		border-bottom: 0;
+	}
 </style>
 </head>
 <body>
@@ -31,13 +101,15 @@
 	대충이미지
 
 	<hr>
-
-	<h1>Q&A</h1>
 	
-	<!-- 로그인만 가능 -->
-	<a href="${contextPath}/qna/saveQna">글쓰기</a><br>
+	<div class="title">
+		<h1>Q&A</h1>
+		<p>상품 Q&A입니다.</p>
+	</div>
 
 		<table>
+			<!-- <c:if test="${member.id != null}"></c:if> -->
+			<caption><a href="${contextPath}/qna/saveQna">글쓰기</a><br></caption>
 			<thead>
 				<tr>
 					<td>번호</td>
@@ -58,40 +130,40 @@
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
 							<tr>
-								<td>${totalRecord - qna.qnaNo + 1}</td>
-								<td colspan="4">삭제된 게시글입니다</td>
+								<td colspan="7">삭제된 게시글입니다</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
+						<!-- 작성자or관리자 아니면 비밀글 -->
+						<!-- <tr><td><i class="fa-regular fa-lock-keyhole"></i>비밀글입니다</td></tr> -->
 							<tr>
-								<td>${totalRecord - qna.qnaNo + 1}</td>
+								<td>Q</td>
 								<td>
 									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;</c:forEach>
 									
-									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-brands fa-replyd"></i></c:if>
+									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-regular fa-user">관리자 답변</i></c:if>
 									<!-- 제목 -->
-									<c:if test="${qna.qnaTitle.length() gt 20}">
-										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 20)}</a>
+									<c:if test="${qna.qnaTitle.length() gt 30}">
+										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 30)}</a>
 									</c:if>
-									<c:if test="${qna.qnaTitle.length() le 20}">								
+									<c:if test="${qna.qnaTitle.length() le 30}">								
 										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
 									</c:if>
 								</td>
 								<td>${qna.qnaContent}</td>
 								<td>${qna.id}</td>
+								<td>${qna.qnaDate}</td>
+								<!-- 삭제버튼c:if test=qna.id == member.id || qna.id == 관리자/c:if -->
 								<td>
-									${qna.qnaDate}
 									<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
-									
 									<c:if test="${qna.qnaDepth eq 0}">
-										<a class="reply_link">답글</a>								
+										<a class="reply_link">답변하기</a>								
 									</c:if>
 								</td>
 								<td>
-									<!-- 삭제버튼c:if test=qna.id == member.id || qna.id == 관리자/c:if -->
-										<a href="${contextPath}/qna/remove?qnaNo=${qna.qnaNo}" onclick="fnRemove(this)">
-											<i class="fa-solid fa-trash-can"></i>
-										</a>
+									<a data-qna_no="${qna.qnaNo}" onclick="fnRemove(this)">
+										<i class="fa-solid fa-trash-can"></i>
+									</a>
 								</td>
 							</tr>
 							<tr class="reply_form blind">
@@ -114,13 +186,13 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="4">
+					<td colspan="7">
 						${paging}
 					</td>
 				</tr>
 			</tfoot>
 		</table>
-		
+
 	<script>
 		function fnRemove(a) {
 			if(confirm('게시글을 삭제할까요?')){

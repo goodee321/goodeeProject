@@ -44,6 +44,7 @@
 		작성일 ${qna.qnaDate}<br>
 		
 		<!-- <c:if test="${member.id eq qna.id}"></c:if>  -->
+		<input type="button" value="수정하러가기" id="btnChangePage">
 		<input type="button" value="삭제" id="btnRemove">
 		<input type="button" value="목록" id="btnList">
 		

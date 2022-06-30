@@ -34,5 +34,6 @@ public class ServiceConfig {
 	public QnaService qnaService() {
 		return new QnaServiceImpl();
 	}
-
+	
+	
 }
