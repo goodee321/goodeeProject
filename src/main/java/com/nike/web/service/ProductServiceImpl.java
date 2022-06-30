@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -31,6 +30,7 @@ import com.nike.web.domain.ReviewImageDTO;
 import com.nike.web.mapper.ProductMapper;
 import com.nike.web.util.FileUtils;
 import com.nike.web.util.PageUtils;
+import com.nike.web.util.PageUtils2;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
 		int page = Integer.parseInt(opt.orElse("1"));
 		
 		// PageEntity 계산
-		PageUtils pageUtils = new PageUtils();
+		PageUtils2 pageUtils = new PageUtils2();
 		pageUtils.setPageEntity(totalRecord, page);
 	
 		// beginRecord + endRecord => Map
@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
 		Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
 		int page = Integer.parseInt(opt.orElse("1"));
 		
-		PageUtils pageUtils = new PageUtils();
+		PageUtils2 pageUtils = new PageUtils2();
 		pageUtils.setPageEntity(totalRecord, page);
 		
 		map.put("beginRecord", pageUtils.getBeginRecord() - 1);
@@ -93,6 +93,7 @@ public class ProductServiceImpl implements ProductService {
 		model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/product/find?column=" + column + "&query=" + query));
 		
 	}
+	
 	@Override
 	public ResponseEntity<byte[]> display(Integer proimgNo, String type) {
 		
@@ -319,6 +320,17 @@ public class ProductServiceImpl implements ProductService {
 		public ProductDTO getProductByNo(Integer proNo) {
 			return productMapper.selectProductByNo(proNo);
 		}
+		@Override
+		public void changeProductOptionPage(HttpServletRequest request, Model model) {
+			Integer proNo = Integer.parseInt(request.getParameter("proNo"));
+			System.out.println(proNo);
+			// 갤러리 정보 가져와서 model에 저장하기
+			model.addAttribute("product", productMapper.selectProductByNo(proNo));
+			
+			// 첨부 파일 정보 가져와서 model에 저장하기
+			model.addAttribute("productImages", productMapper.selectProductImageListInTheProduct(proNo));
+			System.out.println(productMapper.selectProductImageByNo(proNo));
+		}
 		
 		@Override
 		public void findDetailReviews(HttpServletRequest request, Model model) {
@@ -454,12 +466,12 @@ public class ProductServiceImpl implements ProductService {
 		
 		
 		
-		/*여기서 부터 추후 설정*/
+
 
 		// 갤러리 수정
 		@Transactional
 		@Override
-		public void change(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+		public void changeProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response){
 			
 			// 전달된 파라미터
 			Integer proNo = Integer.parseInt(multipartRequest.getParameter("proNo"));
@@ -479,23 +491,9 @@ public class ProductServiceImpl implements ProductService {
 			int productResult = productMapper.updateProduct(product);  // UPDATE 수행
 			
 			
-			Integer proQty = Integer.parseInt(multipartRequest.getParameter("proQty"));
-			Double proDiscount = Double.parseDouble(multipartRequest.getParameter("proDiscount"));
-			Integer proSize = Integer.parseInt(multipartRequest.getParameter("proSize"));
-			
-			ProductQtyDTO productQty = ProductQtyDTO.builder()
-					.proNo(proNo)
-					.proQty(proQty)
-					.proDiscount(proDiscount)
-					.proSize(proSize)
-					.build();
-			
-		
-			int productQtyResult = productMapper.updateProductQty(productQty);  // UPDATE 수행
-			
 			// 첨부된 모든 파일들
 			List<MultipartFile> files = multipartRequest.getFiles("files");  // 파라미터 files
-
+			System.out.println(files);
 			// 파일 첨부 결과
 			int productImageResult;
 			if(files.get(0).getOriginalFilename().isEmpty()) {  // 첨부가 없으면 files.size() == 1임. [MultipartFile[field="files", filename=, contentType=application/octet-stream, size=0]] 값을 가짐.
@@ -568,15 +566,15 @@ public class ProductServiceImpl implements ProductService {
 			try {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
-				if( productResult == 1  && productQtyResult == 1 && productImageResult == files.size()) {
+				if( productResult == 1  && productImageResult == files.size()) {
 					out.println("<script>");
-					out.println("alert('갤러리가 수정되었습니다.')");
-					out.println("location.href='" + multipartRequest.getContextPath() + "/gallery/detail?galleryNo=" + proNo + "'");
+					out.println("alert('제품 정보가 수정되었습니다.')");
+					out.println("location.href='" + multipartRequest.getContextPath() + "/product/detail?proNo=" + proNo + "'");
 					out.println("</script>");
 					out.close();
 				} else {
 					out.println("<script>");
-					out.println("alert('갤러리가 수정되지 않았습니다.')");
+					out.println("alert('제품 정보가 수정되지 않았습니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 					out.close();
@@ -586,6 +584,66 @@ public class ProductServiceImpl implements ProductService {
 			}
 
 		}
+		
+		@Override	//옵션 수정 페이지 정보
+		public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request) {
+			Integer proNo = Integer.parseInt(request.getParameter("proNo"));
+			Integer proSize = Integer.parseInt(request.getParameter("proSize"));
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("proNo", proNo );
+			map.put("proSize", proSize );
+			
+			ProductQtyDTO productQty = productMapper.changeProductOptionByNo(map);
+			return productQty;
+		}
+		
+		@Override	//옵션 수정
+		public void changeProductOption(HttpServletRequest request, HttpServletResponse response) {
+			Integer proNo = Integer.parseInt(request.getParameter("proNo"));
+			Integer proSize = Integer.parseInt(request.getParameter("proSize"));
+			Integer proQty = Integer.parseInt(request.getParameter("proQty"));
+			Double proDiscount = Double.parseDouble(request.getParameter("proDiscount"));
+			
+			
+			ProductQtyDTO productQty = ProductQtyDTO.builder()
+					.proNo(proNo)
+					.proSize(proSize)
+					.proQty(proQty)
+					.proDiscount(proDiscount)
+					.build();
+			
+				
+			int productQtyResult=  productMapper.updateProductQty(productQty);
+			// 응답
+						try {
+							response.setContentType("text/html");
+							PrintWriter out = response.getWriter();
+							if( productQtyResult == 1 ) {
+								out.println("<script>");
+								out.println("alert('제품 옵션 정보가 수정되었습니다.')");
+								out.println("location.href='" + request.getContextPath() + "/product/detail?proNo=" + proNo + "'");
+								out.println("</script>");
+								out.close();
+							} else {
+								out.println("<script>");
+								out.println("alert('추가되지 않은 옵션이므로 옵션 추가 항목으로 이동합니다.')");
+								out.println("location.href='" + request.getContextPath() + "/product/saveProductOption?proNo=" + proNo + "'");
+								out.println("</script>");
+								out.close();
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+			
+	
+			
+		
+			
+			
+		}
+			
 		
 		
 		/*

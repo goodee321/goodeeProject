@@ -18,14 +18,47 @@
 <script>
 	
 	$(function(){
+		
 		fnSignIn();
 		fnRegExp();
+		fnData();
 		
 	})
 	
+	
+	function fnData(){
+	
+$("#proSize").change(function () {
+	var proNo= $("#proNo").val();
+	var proSize= $("#proSize").val();
+	
+	  $.ajax({
+		    
+		    url: '${contextPath}/product/changeProductOptionDetail/',
+		    type: 'get',
+		    data:"proNo="+proNo+'&proSize='+proSize,
+			dataType: 'json',
+			header: {
+				"Content-Type" : "application/json"
+			},
+			contentType : "application/json",
+		    success: function (data) {
+		    	$('#proQty').val(data.proQty);
+		    	$('#proDiscount').val(data.proDiscount);
+		    },
+		    error: function () {
+		    	$('#proQty').val('0');
+		    	$('#proDiscount').val('0');
+		    }
+	  });
+	});
+	
+	}
+	
 	function fnSignIn(){
+		
 		$('#f').on('submit', function(event){
-			
+	
 			if(discountPass == false){
 				alert('할인율을 변경하시기 바랍니다.');
 				event.preventDefault();
@@ -155,17 +188,17 @@ table{
 	<h2>제품 옵션 변경 페이지</h2>
 	
 	<div class="table">
-	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/saveProductOptionOk" method="post">
+	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/changeProductOption" method="post">
 		<table>
-		<input type="hidden" name="proNo" value="${detail.proNo}" readonly="readonly">
+		<input type="hidden" name="proNo" id="proNo" value="${product.proNo}" readonly="readonly">
 		<tr>	
-		<td>제품명</td><td>	<input type="text" name="proName" id="proName" value="${detail.proName}" class="form-control" placeholder="제품명" readonly="readonly"></td>
+		<td>제품명</td><td>	<input type="text" name="proName" id="proName" value="${product.proName}" class="form-control" placeholder="제품명" readonly="readonly"></td>
 		</tr><tr>
-		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${detail.proPrice}" placeholder="가격" readonly="readonly"></td>
+		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${product.proPrice}" placeholder="가격" readonly="readonly"></td>
 		</tr><tr>
 		<td>사이즈</td><td>
 		<select class="my-select selectpicker" name="proSize" id="proSize" >
-			<option value="0" selected >사이즈 선택</option>
+			<option value="0" >사이즈 선택</option>
 			<option value="240">240</option>
 			<option value="250">250</option>
 			<option value="260">260</option>
@@ -174,16 +207,16 @@ table{
 		</select>
 		</td>
 		</tr><tr>
-		<td>수량</td><td><input type="text" name="proQty" id="proQty" value="0"  class="form-control"></td>
+		<td>수량</td><td><input type="text" name="proQty" id="proQty"   class="form-control"></td>
 		</tr><tr>
 		<td></td><td id="proQtyError"></td>
 		</tr><tr>
-		<td>할인가</td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)" value="0"></td>
+		<td>할인가</td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)"></td>
 		</tr><tr>
 		<td></td><td id="proDiscountError"></td>
 		</table>
 		
-		<button class="btn">작성완료</button>
+		<button class="btn">변경 완료</button>
 		<br>
 	</form>
 	</div>

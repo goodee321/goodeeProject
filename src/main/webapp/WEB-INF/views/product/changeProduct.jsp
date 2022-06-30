@@ -34,46 +34,11 @@
 				event.preventDefault();
 				return false;
 			}
-			
-			else if(pricePass == false){
-				alert('가격을 변경하시기 바랍니다.');
-				event.preventDefault();
-				return false;
-			}
-			
-			else if(discountPass == false){
-				alert('할인율을 변경하시기 바랍니다.');
-				event.preventDefault();
-				return;
-			}
+	
 
-			else if($("#proSize").val() == 0){
-				alert('사이즈를 선택해주시기 바랍니다.');
-				event.preventDefault();
-				return false;
-			}
-			
-			else if($('#proQty').val() == 0){
-				alert('수량을 확인하시길 바랍니다.');
-				event.preventDefault();
-				return false;
-			}
-			else if(qtyPass == false){
-				alert('수량은 숫자만 입력가능합니다.');
-				event.preventDefault();
-				return false;
-			}
-
-			else if($('#files').val() == ""){
-				alert('이미지를 반드시 1개 이상 업로드해야 합니다.');
-				event.preventDefault();
-				return false;
-			}
-			return true;
-		})
+	})
+	
 	}
-	
-	
 	// 첨부파일 사전점검(확장자, 크기)
 	function fnFileCheck(){
 		$('#files').on('change', function(){
@@ -106,7 +71,7 @@
 			
 	function fnRegExp(){
 			let numberRegExp = 	/^[0-9]+$/;
-			let decimalRegExp = /^[0]\.{1}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
+			let decimalRegExp = /^[0]\.{0}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
 			
 			
 			$('#proPrice').on('keyup', function(){
@@ -122,32 +87,7 @@
 			})
 			
 			
-			$('#proDiscount').on('keyup',function(){
-			
-				if(decimalRegExp.test( $('#proDiscount').val() ) == false){ 
-					$('#proDiscountError').text('할인율에는 1이하의 숫자만 입력 가능합니다.').addClass('dont').removeClass('hidden');
-					discountPass = false;
-					return;
-				}else{
-					$('#proDiscountError').addClass('hidden').removeClass('dont');
-					discountPass = true;
-				}
-				
-			})
-			
-				$('#proQty').on('keyup',function(){
-			
-				if(numberRegExp.test( $('#proQty').val() ) == false){ 
-					$('#proQtyError').text('수량에는 숫자만 넣을 수 있습니다..').addClass('dont').removeClass('hidden');
-					qtyPass = false;
-					return;
-				}else{
-					$('#proQtyError').addClass('hidden').removeClass('dont');
-					qtyPass = true;
-				}
-				
-			})
-			
+	
 			
 			
 		}
@@ -206,43 +146,30 @@ table{
 <body>
 	
 	
-	<h1>작성화면</h1>
+	<h1>제품 수정 화면</h1>
 	<div class="table">
-	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/saveProduct" method="post" enctype="multipart/form-data">
+	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/changeProduct" method="post" enctype="multipart/form-data">
 		<table>
+		<input type="hidden" name="proNo" value="${product.proNo}">
 		<tr>	
-		<td>제품명</td><td>	<input type="text" name="proName" id="proName" class="form-control" placeholder="제품명"></td>
+		<td>제품명</td><td>	<input type="text" name="proName" id="proName" class="form-control" placeholder="제품명" value="${product.proName}"></td>
 		</tr><tr>
-		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="0" placeholder="가격"></td>
+		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${product.proPrice}" placeholder="가격"></td>
 		</tr><tr>
 		<td></td><td id="proPriceError"></td>
 		</tr><tr>
-		<td>내용</td><td>	<textarea class="form-control" name="proDetail" rows="3" placeholder="상세 내용"></textarea>
-		</tr><tr>
-		<td>할인가</td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)" value="0"></td>
-		</tr><tr>
-		<td></td><td id="proDiscountError"></td>
-		</tr><tr>
-		<td>사이즈</td><td>
-		<select name="proSize" id="proSize">
-			<option value="0" selected >사이즈 선택</option>
-			<option value="240">240</option>
-			<option value="250">250</option>
-			<option value="260">260</option>
-			<option value="270">270</option>
-			<option value="280">280</option>
-		</select>
-		</td>
-		</tr><tr>
-		<td>수량</td><td><input type="text" name="proQty" id="proQty" value="0"></td>
-		</tr><tr>
-		<td></td><td id="proQtyError"></td>
+		<td>내용</td><td>	<textarea class="form-control" name="proDetail"  "${product.proDetail}"rows="3" placeholder="상세 내용"></textarea>
 		</tr><tr>
 		<td>첨부</td><td><input type="file" name="files" id="files" multiple="multiple"></td>
+		 
+		<tr><tr><td></td><td></td>
+		<c:forEach var="productImage" items="${productImages}">
+			<img alt="${productImage.proimgOrigin}" src="${contextPath}/product/display?proimgNo=${productImage.proimgNo}" width="90px">
+		</c:forEach>
 		</tr>
 		</table>
 		
-		<button class="btn">작성완료</button>
+		<button class="btn">수정완료</button>
 	</form>
 	</div>
 </body>

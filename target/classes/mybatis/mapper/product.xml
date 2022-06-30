@@ -70,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       LIMIT #{beginRecord}, #{recordPerPage}
      
 	</select>
+
 	
 		<!-- 제품 검색 -->
 	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
@@ -134,6 +135,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM PRODUCT_IMAGE
 		 WHERE  PROIMG_NO = #{proimgNo}
 	</select>
+	
+	<!-- 갤러리에 첨부된 첨부 파일 목록 -->
+		<select id="selectProductImageListInTheProduct" parameterType="Int" resultType="ProductImageDTO">
+			SELECT PROIMG_NO, PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO
+			  FROM PRODUCT_IMAGE
+			 WHERE PRO_NO = #{proNo}
+		</select>
+	<!-- 제품 수정 -->
+	<update id="updateProduct" parameterType="ProductDTO">
+		UPDATE PRODUCT
+		   SET PRO_NAME = #{proName}, PRO_PRICE= #{proPrice}, PRO_DETAIL= #{proDetail}, PRO_DATE = SYSDATE()
+		 WHERE PRO_NO = #{proNo}
+	</update>
+
+	<!-- 제품 옵션 사이즈별 확인 -->
+	<select id="changeProductOptionByNo" parameterType="Map" resultType="ProductQtyDTO">
+		SELECT PRO_NO, PRO_QTY ,PRO_DISCOUNT, PRO_SIZE
+		FROM PRODUCT_QTY
+		WHERE PRO_NO = #{proNo}
+		AND PRO_SIZE = #{proSize}
+	
+	</select>
+	
+	<!-- 제품 옵션 수정 -->
+	<update id="updateProductQty" parameterType="Map">
+		UPDATE PRODUCT_QTY
+		SET PRO_QTY = #{proQty} ,PRO_DISCOUNT = #{proDiscount}
+		WHERE PRO_NO = #{proNo}
+		AND PRO_SIZE = #{proSize}
+	
+	</update>
+	
+	
 <!-- 제품 상세 -->
 	<select id="selectProductByNo" parameterType="Integer" resultMap="ProductMap">
 	   SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
@@ -172,18 +206,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(#{riNo}, #{riName}, #{riPath}, #{riOrigin})
 	</select>
 	
-
-	<!-- 제품 수정 -->
-	<update id="updateProduct" parameterType="ProductDTO">
-		UPDATE PRODUCT
-		   SET PRO_NAME = #{proName}, PRO_PRICE= #{proPrice}, PRO_DETAIL= #{proDetail}, PRO_DATE = SYSDATE()
-		 WHERE PRO_NO = #{proNo}
-	</update>
-
-<!-- 제품 수량 수정 -->
-	<update id="updateProductQty" parameterType="ProductQtyDTO">
-		UPDATE PRODUCT_QTY
-		   SET PRO_QTY = #{proQty}, PRO_DISCOUNT = #{proDiscount}, PRO_SIZE = #{proSize}
-		 WHERE PRO_NO = #{proNo}
-	</update>
 </mapper>

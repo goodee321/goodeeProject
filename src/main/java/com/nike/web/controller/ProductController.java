@@ -1,5 +1,8 @@
 package com.nike.web.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nike.web.domain.ProductDTO;
+import com.nike.web.domain.ProductQtyDTO;
 import com.nike.web.service.ProductService;
 
 
@@ -92,15 +100,43 @@ public class ProductController {
 	}
 	
 	
-	/*
-	@GetMapping("/product/productChangePage")
-	public String productChangePage(HttpServletRequest request, Model model) {
-		productService.findProductByNo(request, model);
-		return "gallery/change";
+	
+	@GetMapping("/product/changeProductPage")
+	public String changeProductPage(HttpServletRequest request, Model model) {
+		productService.changeProductOptionPage(request, model);
+		return "product/changeProduct";
 	}
-	@PostMapping("/gallery/productChange")
-	public void productChange(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
-		productService.change(multipartRequest, response);
+	
+	
+	
+	@PostMapping("/product/changeProduct")
+	public void changeProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+		productService.changeProduct(multipartRequest, response);
 	}
-	*/
+	//체인지부터 다시 할 것
+	@GetMapping("/product/changeProductOptionPage")
+	public String changeProductOptionPage(@RequestParam Integer proNo,HttpServletRequest request, Model model) {
+		model.addAttribute("product", productService.getProductByNo(proNo));
+		return "product/changeProductOption";
+	}
+	
+	// fnAjax1이 요청하는 곳
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@ResponseBody
+	@RequestMapping(value="/product/changeProductOptionDetail", method= {RequestMethod.GET, RequestMethod.POST})  
+		public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request) { 
+		ProductQtyDTO productQty = productService.changeProductOptionDetail(request);
+			return productQty;
+		}
+	
+	@PostMapping("/product/changeProductOption")
+	public void changeProductOption(HttpServletRequest request, HttpServletResponse response) {
+			productService.changeProductOption(request, response);
+	}
+	
+
+	
+
+	
+
 }

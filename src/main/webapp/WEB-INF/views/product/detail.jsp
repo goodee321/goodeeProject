@@ -171,7 +171,10 @@
 	디테일 ${detail.proDetail}
 
 	<hr>
+	<a href="${contextPath}/product/changeProductPage?proNo=${detail.proNo}">제품 수정 </a>
 	<a href="${contextPath}/product/saveProductOption?proNo=${detail.proNo}">제품 옵션 추가 </a>
+	<a href="${contextPath}/product/changeProductOptionPage?proNo=${detail.proNo}">제품 수정 </a> 
+	
 	
 	
 	<div class="">
