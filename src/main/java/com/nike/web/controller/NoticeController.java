@@ -23,8 +23,13 @@ public class NoticeController {
 	@GetMapping("/notice/list")
 	public String list(HttpServletRequest request, Model model) {
 		request.getSession().removeAttribute("notice");
+<<<<<<< HEAD
 		noticeService.findNotices(request, model);
 		return "notice/list";
+=======
+		noticeService.getNotices(request, model);
+		return "notice/search";
+>>>>>>> JeongHwaha
 	}
 	
 	@GetMapping("/notice/savePage")
@@ -72,4 +77,18 @@ public class NoticeController {
 		return "redirect:/notice/result";
 	}
 	
+<<<<<<< HEAD
+=======
+	@GetMapping("/notice/searchPage")
+	public String searchPage() {
+		return "notice/search";
+	}
+	
+	@GetMapping("/notice/search")
+	public String search(HttpServletRequest request, Model model) {
+		noticeService.findNotices(request, model);
+		return "notice/search";	
+	}
+	
+>>>>>>> JeongHwaha
 }

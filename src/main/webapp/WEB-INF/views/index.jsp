@@ -17,11 +17,21 @@
 	<h1>MAIN PAGE</h1> 
 	
 
+<<<<<<< HEAD
 	<a href="${contextPath}/notice/list">공지사항</a>
 	
 	<a href="${contextPath}/qna/list">QNA</a>
 	
 	<a href="${contextPath}/board/savePage">상품보러가기</a>
+=======
+	
+	<h1>MAIN PAGE</h1>
+	
+	<a href="${contextPath}/notice/list">공지사항 바로가기</a>
+	<a href="${contextPath}/notice/savePage">새 공지 작성하기</a>
+	<a href="${contextPath}/qna/list">QNA</a>
+
+>>>>>>> JeongHwaha
 
 	<a href="${contextPath}/product/list">상품 리스트</a>
 	<a href="${contextPath}/product/saveProductPage">데이터 저장</a>

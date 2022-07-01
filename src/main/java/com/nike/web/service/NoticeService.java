@@ -5,12 +5,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.ui.Model;
 
+<<<<<<< HEAD
 import com.nike.web.domain.MemberDTO;
+=======
+>>>>>>> JeongHwaha
 import com.nike.web.domain.NoticeDTO;
 
 public interface NoticeService {
 
 	public void findNotices(HttpServletRequest request, Model model);
+<<<<<<< HEAD
 	
 	public NoticeDTO findNoticeByNo(HttpServletRequest request, HttpServletResponse response, Model model);
 	public int save(HttpServletRequest request);
@@ -29,4 +33,12 @@ public interface NoticeService {
 		
 	
 	
+=======
+	public void getNotices(HttpServletRequest request, Model model);
+	
+	public void findNoticeByNo(HttpServletRequest request, HttpServletResponse response, Model model);
+	public int save(HttpServletRequest request);
+	public int change(NoticeDTO notice);
+	public int remove(int noticeNo);
+>>>>>>> JeongHwaha
 }

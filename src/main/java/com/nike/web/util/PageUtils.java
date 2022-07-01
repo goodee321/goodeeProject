@@ -8,9 +8,15 @@ public class PageUtils {
 	   - 한 페이지에 3개씩 표시한다면
 	   - 전체 페이지는 4페이지가 된다.
 	*****************************************************************************/
+<<<<<<< HEAD
 	private int totalRecord;        // DB에서 구해온다.
 	private int recordPerPage = 5;  // 여기서 마음대로 정한다.
 	private int totalPage;          // totalRecord와 recordPerPage로 계산한다.
+=======
+	private int totalRecord;         // DB에서 구해온다.
+	private int recordPerPage = 5;  // 여기서 마음대로 정한다.
+	private int totalPage;           // totalRecord와 recordPerPage로 계산한다.
+>>>>>>> JeongHwaha
 	
 	
 	/***************************************************************************
@@ -36,8 +42,13 @@ public class PageUtils {
 		block = 3,  11 12           ,  page = 11~15, beginPage = 11, endPage = 12 (endPage = 15가 아님을 주의)
 	*****************************************************************************/
 	private int pagePerBlock = 5;  // 여기서 마음대로 정한다.
+<<<<<<< HEAD
 	private int beginPage;         // page와 pagePerBlock으로 계산한다.
 	private int endPage;           // beginPage와 pagePerBlock과 totalPage로 계산한다.
+=======
+	private int beginPage;          // page와 pagePerBlock으로 계산한다.
+	private int endPage;            // beginPage와 pagePerBlock과 totalPage로 계산한다.
+>>>>>>> JeongHwaha
 	
 	
 	// 매개변수 2개

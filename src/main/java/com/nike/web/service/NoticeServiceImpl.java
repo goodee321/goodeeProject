@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+<<<<<<< HEAD
 import com.nike.web.domain.MemberDTO;
+=======
+>>>>>>> JeongHwaha
 import com.nike.web.domain.NoticeDTO;
 import com.nike.web.mapper.NoticeMapper;
 import com.nike.web.util.PageUtils;
@@ -23,6 +26,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
 	private NoticeMapper noticeMapper;
+<<<<<<< HEAD
 
 	
 	@Override
@@ -49,6 +53,12 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	@Override
 	public NoticeDTO findNoticeByNo(HttpServletRequest request, HttpServletResponse response, Model model) {
+=======
+	
+	
+	@Override
+	public void findNoticeByNo(HttpServletRequest request, HttpServletResponse response, Model model) {
+>>>>>>> JeongHwaha
 		
 		Optional<String> opt = Optional.ofNullable(request.getParameter("noticeNo"));
 		int noticeNo = Integer.parseInt(opt.orElse("0"));
@@ -59,7 +69,11 @@ public class NoticeServiceImpl implements NoticeService {
 		}
 		
 		NoticeDTO notice = noticeMapper.selectNoticeByNo(noticeNo);
+<<<<<<< HEAD
 		
+=======
+				
+>>>>>>> JeongHwaha
 		if(notice != null) {
 			request.getSession().setAttribute("notice", notice);
 		} else {
@@ -75,10 +89,81 @@ public class NoticeServiceImpl implements NoticeService {
 				e.printStackTrace();
 			}
 		}
+<<<<<<< HEAD
 		
 		return null;
 	}
 	
+=======
+
+	}
+	
+	@Override
+	public void getNotices(HttpServletRequest request, Model model) {
+
+		Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+		int page = Integer.parseInt(opt.orElse("1"));
+		
+		int totalRecord = noticeMapper.selectNoticeCount();
+		
+		PageUtils pageUtils = new PageUtils();
+		pageUtils.setPageEntity(totalRecord, page);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("beginRecord", pageUtils.getBeginRecord() - 1);
+		map.put("recordPerPage", pageUtils.getRecordPerPage());
+		
+		List<NoticeDTO> notices = noticeMapper.selectNoticeList(map);
+		
+		model.addAttribute("notices", notices);
+		model.addAttribute("totalRecord", totalRecord);
+		model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/notice/list"));
+
+		
+	}
+
+	
+	@Override
+	public void findNotices(HttpServletRequest request, Model model) {
+		
+		Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+		int page = Integer.parseInt(opt.orElse("1"));
+		
+		// column, query 파라미터 꺼내기
+		String column = request.getParameter("column");
+		String query = request.getParameter("query");				
+
+		// column + query => Map
+		Map<String, Object> map = new HashMap<>();
+		map.put("column", column);
+		map.put("query", query);
+		
+		int findRecord = noticeMapper.selectFindCount(map);
+		
+		PageUtils pageUtils = new PageUtils();
+		pageUtils.setPageEntity(findRecord, page);
+	
+		map.put("beginRecord", pageUtils.getBeginRecord());
+		map.put("recordPerPage", pageUtils.getRecordPerPage());
+		
+		List<NoticeDTO> notices = noticeMapper.selectFindList(map);
+		
+		model.addAttribute("notices", notices);
+		model.addAttribute("beginNo", findRecord - pageUtils.getRecordPerPage() * (page - 1));
+		
+		// 검색 카테고리에 따라서 전달되는 파라미터가 다름
+		switch(column) {
+		case "NOTICE_TITLE":
+		case "NOTICE_CONTENT":
+			model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/notice/search?column=" + column + "&query=" + query));
+			break;
+					
+		}
+		
+	}
+	
+	
+>>>>>>> JeongHwaha
 	@Transactional
 	@Override
 	public int save(HttpServletRequest request) {
@@ -103,6 +188,7 @@ public class NoticeServiceImpl implements NoticeService {
 	public int remove(int noticeNo) {
 		return noticeMapper.deleteNotice(noticeNo);
 	}
+<<<<<<< HEAD
 	
 	
 		// 목록(Admin)
@@ -142,4 +228,6 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		
 		
+=======
+>>>>>>> JeongHwaha
 }
