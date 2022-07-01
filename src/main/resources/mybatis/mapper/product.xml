@@ -60,18 +60,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<!-- 제품 리스트 -->
+	<!-- 리스트 보여줄 제품 리스트 -->
 	<select id="selectProductList" parameterType="Map" resultMap="ProductMap">
 
-        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE,  PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN
-      FROM  PRODUCT P INNER JOIN PRODUCT_IMAGE PI
-      ON  P.PRO_NO = PI.PRO_NO
-      ORDER BY P.PRO_NO DESC  
+       SELECT DISTINCT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO AS PROIMG_NO , PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_QTY
+	  FROM  PRODUCT P  INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO LEFT JOIN PRODUCT_QTY PQ 
+	  ON  P.PRO_NO = PQ.PRO_NO
+	  GROUP BY P.PRO_NO
+      ORDER BY P.PRO_NO DESC 
       LIMIT #{beginRecord}, #{recordPerPage}
      
 	</select>
 
-	
 		<!-- 제품 검색 -->
 	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
 		SELECT COUNT(P.PRO_NO)
@@ -81,13 +82,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 제품 검색 리스트 -->
 	<select id="selectFindProductList" parameterType="Map" resultMap="ProductMap">
-		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_SIZE 
-		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
-  		 ON  PI.PRO_NO = P.PRO_NO  INNER JOIN PRODUCT_QTY PQ
-         ON P.PRO_NO = PQ.PRO_NO
-		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
-		 ORDER BY P.PRO_NO DESC
-		 LIMIT #{beginRecord}, #{recordPerPage}
+	
+	   SELECT DISTINCT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO AS PROIMG_NO , PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_QTY
+	  FROM  PRODUCT P  INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO LEFT JOIN PRODUCT_QTY PQ 
+	  ON  P.PRO_NO = PQ.PRO_NO
+	  WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+	  GROUP BY P.PRO_NO
+      ORDER BY P.PRO_NO DESC 
+      LIMIT #{beginRecord}, #{recordPerPage}
+		
 	</select>
 
 
@@ -148,6 +152,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   SET PRO_NAME = #{proName}, PRO_PRICE= #{proPrice}, PRO_DETAIL= #{proDetail}, PRO_DATE = SYSDATE()
 		 WHERE PRO_NO = #{proNo}
 	</update>
+	
+	<!--  제품 이미지삭제 -->
+	<delete id="deleteProductImage" parameterType="Integer">
+		DELETE 
+		FROM PRODUCT_IMAGE
+		WHERE PROIMG_NO = #{proimgNo}
+	
+	</delete>
 
 	<!-- 제품 옵션 사이즈별 확인 -->
 	<select id="changeProductOptionByNo" parameterType="Map" resultType="ProductQtyDTO">
@@ -206,4 +218,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			(#{riNo}, #{riName}, #{riPath}, #{riOrigin})
 	</select>
 	
+	<!-- 파일 삭제 -->
+	<delete id="deleteProduct" parameterType="Int">
+	DELETE
+	FROM PRODUCT
+	WHERE PRO_NO = #{proNo}
+	</delete>
+	
+
 </mapper>

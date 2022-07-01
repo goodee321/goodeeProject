@@ -37,6 +37,7 @@ public interface ProductMapper {
 		public ProductQtyDTO changeProductOptionByNo(Map<String, Object> map);
 		public int updateProductQty(ProductQtyDTO product);
 		public int updateProduct(ProductDTO product);
+		public void deleteProductImage(Integer proimgNo);
 		
 		
 		
@@ -46,5 +47,8 @@ public interface ProductMapper {
 		public int insertDetailReview(ReviewDTO review);
 		public Integer insertDetailReviewImage(ReviewImageDTO reviewImage);
 
+		
+		//갤러리 삭제
+		public int deleteProduct(Integer proNo);
 		
 }

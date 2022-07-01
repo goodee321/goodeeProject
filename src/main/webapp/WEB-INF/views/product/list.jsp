@@ -16,8 +16,10 @@
 	$(document).ready(function(){
 		
 		fnFind();
+	
 	});
 
+	
 	
 	// 검색 함수
 	function fnFind(){
@@ -65,6 +67,9 @@ h3{
 .thumb{
     flex: auto;
     background-color: #dcdcdf;
+    text-align : center;
+    align-items: center;
+
 }
 .image{
     vertical-align: top;
@@ -113,7 +118,12 @@ h3{
 	height 10px;
 	padding 10px;
 	text-align: center;
-	
+}
+
+.soldOut{
+
+	opacity: .4;
+
 
 }
 </style>
@@ -122,22 +132,27 @@ h3{
 <body>
 	
 	
-
+<jsp:include page="../layout/header.jsp"></jsp:include>
 	
 	<br>
 	
 		<div class="ui_box">
 			<h3>제품 목록</h3>
+			
 			<ul class="product_list">
 				<c:forEach var="product" items="${products}">
-			
+					
 					<li class="item">
-				
-						<div class="thumb">
-								<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="100%"></a>
-	
-						</div>
-				
+						<c:if test="${product.productQtyDTO.proQty > 0}">		
+							<div class="thumb">
+									<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="200px" height="200px"></a><!-- width="200px" height="200px" --> 
+							</div>
+						</c:if>
+						<c:if test="${product.productQtyDTO.proQty == null }">
+						<div class="thumb soldOut">
+									<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="200px" height="200px"></a><!-- width="200px" height="200px" --> 
+							</div>
+						</c:if>
 					<span class="title">
 						${product.proName}
 					</span>
@@ -152,6 +167,8 @@ h3{
 					</li>
 				</c:forEach>
 			</ul>
+			
+			
 		</div><br><br><br>
 		
 			<form id="f" method="get" action="${contextPath}/product/find">

@@ -60,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
 		// list.jsp로 보낼 데이터
 		model.addAttribute("totalRecord", totalRecord);
 		model.addAttribute("products", productMapper.selectProductList(map));
+		System.out.println(productMapper.selectProductList(map));
 		model.addAttribute("beginNo", totalRecord - (page - 1) * pageUtils.getRecordPerPage());
 		model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/product/list"));
 			
@@ -323,14 +324,49 @@ public class ProductServiceImpl implements ProductService {
 		@Override
 		public void changeProductOptionPage(HttpServletRequest request, Model model) {
 			Integer proNo = Integer.parseInt(request.getParameter("proNo"));
-			System.out.println(proNo);
+			
 			// 갤러리 정보 가져와서 model에 저장하기
 			model.addAttribute("product", productMapper.selectProductByNo(proNo));
 			
 			// 첨부 파일 정보 가져와서 model에 저장하기
 			model.addAttribute("productImages", productMapper.selectProductImageListInTheProduct(proNo));
-			System.out.println(productMapper.selectProductImageByNo(proNo));
+			
 		}
+		
+		@Override
+		public void removeProductImage(Integer proimgNo) {
+		
+			// fileAttachNo가 일치하는 FileAttachDTO 정보를 DB에서 가져오면
+			// 삭제할 파일의 경로와 이름이 있다.
+			ProductImageDTO imageProduct = productMapper.selectProductImageByNo(proimgNo);
+			
+			// 첨부 파일 알아내기
+			File file = new File(imageProduct.getProimgPath(), imageProduct.getProimgName());
+
+			try {
+				
+				// 첨부 파일이 이미지가 맞는지 확인
+				String contentType = Files.probeContentType(file.toPath());
+				if(contentType.startsWith("image")) {
+				
+					// 원본 이미지 삭제
+					if(file.exists()) {
+						file.delete();
+					}
+					
+					// 썸네일 이미지 삭제
+					File thumbnail = new File(imageProduct.getProimgPath(), "s_" +  imageProduct.getProimgName());
+					if(thumbnail.exists()) {
+						thumbnail.delete();
+					}
+				}	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				// FILE_ATTACH 테이블의 ROW 삭제
+				productMapper.deleteProductImage(proimgNo);
+			}
 		
 		@Override
 		public void findDetailReviews(HttpServletRequest request, Model model) {
@@ -466,7 +502,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		
 		
-
+				// 이미지 수정 되면 삭제될수 있게 설정
 
 		// 갤러리 수정
 		@Transactional
@@ -493,7 +529,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			// 첨부된 모든 파일들
 			List<MultipartFile> files = multipartRequest.getFiles("files");  // 파라미터 files
-			System.out.println(files);
+			
 			// 파일 첨부 결과
 			int productImageResult;
 			if(files.get(0).getOriginalFilename().isEmpty()) {  // 첨부가 없으면 files.size() == 1임. [MultipartFile[field="files", filename=, contentType=application/octet-stream, size=0]] 값을 가짐.
@@ -637,37 +673,30 @@ public class ProductServiceImpl implements ProductService {
 						}
 
 			
-	
-			
-		
-			
-			
 		}
 			
 		
-		
-		/*
+
 		
 		//삭제
 		// 갤러리 삭제
-		@Override
-		public void removeGallery(HttpServletRequest request, HttpServletResponse response) {
+		public void productDelete(HttpServletRequest request, HttpServletResponse response) {
 			
 			// 파라미터 galleryNo
-			Optional<String> opt = Optional.ofNullable(request.getParameter("galleryNo"));
-			Long galleryNo = Long.parseLong(opt.orElse("0"));
+			Optional<String> opt = Optional.ofNullable(request.getParameter("proNo"));
+			Integer proNo = Integer.parseInt(opt.orElse("0"));
 			
 			// 저장되어 있는 첨부 파일 목록 가져오기
-			List<FileAttachDTO> attaches = productMapper.selectFileAttachListInTheGallery(galleryNo);
+			List<ProductImageDTO> images = productMapper.selectProductImageListInTheProduct(proNo);
 			
 			// 저장되어 있는 첨부 파일이 있는지 확인
-			if(attaches != null && attaches.isEmpty() == false) {
+			if(images != null && images.isEmpty() == false) {
 				
 				// 하나씩 삭제
-				for(FileAttachDTO attach : attaches) {
+				for(ProductImageDTO attach : images) {
 				
 					// 첨부 파일 알아내기
-					File file = new File(attach.getPath(), attach.getSaved());
+					File file = new File(attach.getProimgPath(), attach.getProimgName());
 
 					try {
 						
@@ -681,7 +710,7 @@ public class ProductServiceImpl implements ProductService {
 							}
 							
 							// 썸네일 이미지 삭제
-							File thumbnail = new File(attach.getPath(), "s_" + attach.getSaved());
+							File thumbnail = new File(attach.getProimgPath(), "s_" +attach.getProimgName());
 							if(thumbnail.exists()) {
 								thumbnail.delete();
 							}
@@ -697,7 +726,7 @@ public class ProductServiceImpl implements ProductService {
 			}
 			
 			// GALLERY 테이블의 ROW 삭제
-			int res = productMapper.deleteGallery(galleryNo);
+			int res = productMapper.deleteProduct(proNo);
 			
 			// 응답
 			try {
@@ -705,13 +734,13 @@ public class ProductServiceImpl implements ProductService {
 				PrintWriter out = response.getWriter();
 				if(res == 1) {
 					out.println("<script>");
-					out.println("alert('갤러리가 삭제되었습니다.')");
-					out.println("location.href='" + request.getContextPath() + "/gallery/list'");
+					out.println("alert('제품이 삭제되었습니다.')");
+					out.println("location.href='" + request.getContextPath() + "/product/list'");
 					out.println("</script>");
 					out.close();
 				} else {
 					out.println("<script>");
-					out.println("alert('갤러리가 삭제되지 않았습니다.')");
+					out.println("alert('제품이 삭제되지 않았습니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 					out.close();
@@ -721,46 +750,7 @@ public class ProductServiceImpl implements ProductService {
 			}
 			
 		}
-		@Override
-		public void removeProductImage(int proimgNo) {
-			
-			// fileAttachNo가 일치하는 FileAttachDTO 정보를 DB에서 가져오면
-			// 삭제할 파일의 경로와 이름이 있다.
-			ProductImageDTO productImage = productMapper.selectProductImageByNo(proimgNo);
-			
-			// 첨부 파일 알아내기
-			File file = new File(productImage.getProimgPath(), productImage.getProimgName());
-
-			try {
-				
-				// 첨부 파일이 이미지가 맞는지 확인
-				String contentType = Files.probeContentType(file.toPath());
-				if(contentType.startsWith("image")) {
-				
-					// 원본 이미지 삭제
-					if(file.exists()) {
-						file.delete();
-					}
-					
-					// 썸네일 이미지 삭제
-					File thumbnail = new File(productImage.getProimgPath(), productImage.getProimgName());
-					if(thumbnail.exists()) {
-						thumbnail.delete();
-					}
-					
-				}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			// FILE_ATTACH 테이블의 ROW 삭제
-			productMapper.deleteProductImage(proimgNo);
-			
-		}
-
-		
-		*/
+	
 }
 
 		

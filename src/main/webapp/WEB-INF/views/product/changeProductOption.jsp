@@ -185,7 +185,7 @@ table{
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
-	<h2>제품 옵션 변경 페이지</h2>
+	<h2>제품 변경 페이지</h2>
 	
 	<div class="table">
 	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/product/changeProductOption" method="post">
