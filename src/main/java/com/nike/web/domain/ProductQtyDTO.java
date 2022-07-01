@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 
 public class ProductQtyDTO {
 
-	private Integer	proNo;				
-	private int proSize;
-	private int proQty;
-	private Double	proDiscount;
+    private Integer proNo;
+    private int proSize;
+    private int proQty;
+    private Double proDiscount;
+
 }

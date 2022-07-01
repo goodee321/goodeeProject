@@ -15,14 +15,13 @@ import lombok.NoArgsConstructor;
 
 public class ProductDTO {
 
-	private Integer	proNo;				//ProductNo   상품 번호	==galleryNo
-	private String	proName;			//productName 상품 이름 
-	private int proPrice;				
-	private String	proDetail;
-	private Date proDate;
-	
-	
-	
-	private ProductImageDTO productImageDTO;
-	private ProductQtyDTO productQtyDTO;
+    private Integer proNo;
+    private String proName;
+    private int proPrice;
+    private String proDetail;
+    private Date proDate;
+
+
+    private ProductImageDTO productImageDTO;
+    private ProductQtyDTO productQtyDTO;
 }

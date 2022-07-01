@@ -19,35 +19,41 @@ import com.nike.web.service.ProductService;
 @Controller
 public class ProductController {
 
-	@Autowired
-	private ProductService productService;
+    @Autowired
+    private ProductService productService;
 
-	
-	@GetMapping("/product/list")
-	public String list(HttpServletRequest request, Model model) {
-		productService.findProducts(request, model);
-		return "product/list";
-	}
-	
-	@GetMapping("/product/find")
-	public String find(HttpServletRequest request, Model model) {
-		productService.getFindProducts(request, model);
-		return "product/list";
-	}
-	
-	@GetMapping("/product/saveProductPage")
-	public String saveProductPage() {
-		return "product/saveProduct";
-	}
-	
-	@PostMapping("/product/saveProduct")
-	public void saveProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response, Model model) {
-		productService.save(multipartRequest, response, model);
-	}
-	
-	@ResponseBody
-	@GetMapping("/product/display")
-	public ResponseEntity<byte[]> display(@RequestParam(value="proimgNo", required=true) Integer ProimgNo, @RequestParam(value="type", required=false, defaultValue="image") String type) {
-		return productService.display(ProimgNo, type);		
-	}
+    @GetMapping("/product/list")
+    public String list(HttpServletRequest request, Model model) {
+        productService.findProducts(request, model);
+        return "product/list";
+    }
+
+    @GetMapping("/product/find")
+    public String find(HttpServletRequest request, Model model) {
+        productService.getFindProducts(request, model);
+        return "product/list";
+    }
+
+    @GetMapping("/product/saveProductPage")
+    public String saveProductPage() {
+        return "product/saveProduct";
+    }
+
+    @PostMapping("/product/saveProduct")
+    public void saveProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response, Model model) {
+        productService.save(multipartRequest, response, model);
+    }
+
+    @GetMapping("/product/detail")
+    public String detail(@RequestParam Integer proNo, HttpServletRequest request, Model model) {
+        model.addAttribute("detail", productService.getProductByNo(proNo));
+        productService.findDetailReviews(request, model);
+        return "product/detail";
+    }
+
+    @ResponseBody
+    @GetMapping("/product/display")
+    public ResponseEntity<byte[]> display(@RequestParam(value = "proimgNo", required = true) Integer ProimgNo, @RequestParam(value = "type", required = false, defaultValue = "image") String type) {
+        return productService.display(ProimgNo, type);
+    }
 }
