@@ -162,16 +162,16 @@
 									</c:if>
 								</td>
 								<td>
-									<c:if test="${qna.qnaTitle.length() gt 24}">
+									<c:if test="${qna.qnaContent.length() gt 24}">
 										${qna.qnaContent.substring(0, 24)}	
 									</c:if>
-									<c:if test="${qna.qnaTitle.length() lt 24}">
+									<c:if test="${qna.qnaContent.length() lt 24}">
 										${qna.qnaContent}
 									</c:if>
 								</td>
 								<td>${loginMember.id}</td>
 								<td>${qna.qnaDate}</td>
-								<c:if test="${loginMember.id eq 'admin'}">
+								
 									<td>
 									<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
 									<c:if test="${qna.qnaDepth eq 0}">
@@ -183,7 +183,7 @@
 										<i class="fa-solid fa-trash-can"></i>
 									</a>
 								</td>
-								</c:if>
+								
 							</tr>
 							<tr class="reply_form blind">
 								<td colspan="5">
