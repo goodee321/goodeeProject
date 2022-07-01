@@ -29,26 +29,91 @@
 		})
 	})
 </script>
+<style>
+	.qnaDetail h1 { text-align: center; }
+	
+	table {
+		border-collapse: collapse;
+		margin: auto;
+	}
+	
+	thead {
+		background-color: silver;	
+	}
+	
+	td {
+		padding: 5px;
+		border: 1px solid silver;
+	}
+	
+	td:nth-of-type(1) { background-color: #fbfafa; }
+	
+	td:nth-of-type(2) { width: 160px; }
+	
+	tfoot td { 
+		border-bottom: none; 
+		border-left: none;
+		border-right: none;
+		background-color: none;
+		text-align: right;
+	}
+	
+	input { 
+		background-color: #778899; 
+		border-color: #778899;
+		border-radius: 3px;
+		color: white;
+		}
+</style>
 </head>
 <body>
-
-	<form id="f">
-	
-		<input type="hidden" name="qnaNo" value="${qna.qnaNo}"> 
-	
-		번호 ${qna.qnaNo}<br>
-		작성자 ${qna.id}<br>
-		제목 ${qna.qnaTitle}<br>
-		내용<br>
-		<pre>${qna.qnaContent}</pre>
-		작성일 ${qna.qnaDate}<br>
+	<div class="qnaDetail">
+		<h1>질문 상세화면</h1>
+		<form id="f">
 		
-		<!-- <c:if test="${member.id eq qna.id}"></c:if>  -->
-		<input type="button" value="수정하러가기" id="btnChangePage">
-		<input type="button" value="삭제" id="btnRemove">
-		<input type="button" value="목록" id="btnList">
-		
-	</form>
-
+			<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
+				<table>
+					<tbody>
+						<tr>
+							<td>번호</td>
+							<td>${qna.qnaNo}</td>
+						</tr>
+						<tr>
+							<td>작성자</td>
+							<td>${loginMember.id}</td>
+						</tr>
+						<tr>
+							<td>제목</td>
+							<td>${qna.qnaTitle}</td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td>
+								<textarea rows="30" cols="100" readonly>
+									${qna.qnaContent}
+								</textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>작성일</td>
+							<td>${qna.qnaDate}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+							<td><!-- c:if test="${loginMember.id eq 'admin'}" -->
+								
+								<input type="button" value="수정하러가기" id="btnChangePage">
+								<input type="button" value="삭제" id="btnRemove">
+							
+							<input type="button" value="목록" id="btnList">
+							</td>
+						</tr>
+					</tfoot>
+					</table> 
+			
+		</form>
+	</div>
 </body>
 </html>

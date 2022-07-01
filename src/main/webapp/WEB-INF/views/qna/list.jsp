@@ -60,22 +60,31 @@
 	
 	table caption {
 		margin-bottom: 5px;
-		margin-left: 0;
+	
 	}
 	
 	table caption a {
-		background-color: #008bbc;
+		background-color: #6495ed;
 		color: white;
 		text-decoration: none; 
+		border-radius: 3px;
+	
 	}
 	
+	table a { text-decoration: none; }
+	
 	thead {
-		background-color: silver;	
+		background-color: #696969;	
+	}
+	
+	thead td { 
+		color: white; 
+		font-weight: 600;	
 	}
 	
 	td:nth-of-type(1) { width: 80px; }
 	td:nth-of-type(2) { width: 160px; }
-	td:nth-of-type(3) { width: 400px; }
+	td:nth-of-type(3) { width: 450px; }
 	td:nth-of-type(4) { width: 100px; }
 	td:nth-of-type(5) { width: 150px; }
 	td {
@@ -84,6 +93,8 @@
 		border-bottom: 1px solid silver;
 		text-align: center;
 	}
+	
+	tbody tr:hover { background-color: #f0ffff; }
 	
 	tfoot {
 		text-align: center;
@@ -137,24 +148,31 @@
 						<!-- 작성자or관리자 아니면 비밀글 -->
 						<!-- <tr><td><i class="fa-regular fa-lock-keyhole"></i>비밀글입니다</td></tr> -->
 							<tr>
-								<td>Q</td>
+								<td>${qna.qnaNo}</td>
 								<td>
 									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;</c:forEach>
 									
 									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-regular fa-user">관리자 답변</i></c:if>
 									<!-- 제목 -->
-									<c:if test="${qna.qnaTitle.length() gt 30}">
-										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 30)}</a>
+									<c:if test="${qna.qnaTitle.length() gt 20}">
+										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 10)}</a>
 									</c:if>
-									<c:if test="${qna.qnaTitle.length() le 30}">								
+									<c:if test="${qna.qnaTitle.length() le 20}">								
 										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
 									</c:if>
 								</td>
-								<td>${qna.qnaContent}</td>
-								<td>${qna.id}</td>
-								<td>${qna.qnaDate}</td>
-								<!-- 삭제버튼c:if test=qna.id == member.id || qna.id == 관리자/c:if -->
 								<td>
+									<c:if test="${qna.qnaTitle.length() gt 24}">
+										${qna.qnaContent.substring(0, 24)}	
+									</c:if>
+									<c:if test="${qna.qnaTitle.length() lt 24}">
+										${qna.qnaContent}
+									</c:if>
+								</td>
+								<td>${loginMember.id}</td>
+								<td>${qna.qnaDate}</td>
+								<c:if test="${loginMember.id eq 'admin'}">
+									<td>
 									<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
 									<c:if test="${qna.qnaDepth eq 0}">
 										<a class="reply_link">답변하기</a>								
@@ -165,6 +183,7 @@
 										<i class="fa-solid fa-trash-can"></i>
 									</a>
 								</td>
+								</c:if>
 							</tr>
 							<tr class="reply_form blind">
 								<td colspan="5">
