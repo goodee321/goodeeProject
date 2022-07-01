@@ -141,7 +141,6 @@ h3{
 			
 			<ul class="product_list">
 				<c:forEach var="product" items="${products}">
-					
 					<li class="item">
 						<c:if test="${product.productQtyDTO.proQty > 0}">		
 							<div class="thumb">
