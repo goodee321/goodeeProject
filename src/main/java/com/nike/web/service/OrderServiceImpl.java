@@ -9,11 +9,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -99,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
         return 0;
     }
 
-    public int orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {
+    public ResponseEntity<String> orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {
 
         String token = getToken();
 
@@ -109,8 +112,8 @@ public class OrderServiceImpl implements OrderService {
             int orderAmount = order.getOrderAmount();
 
             if (orderAmount != amount) {
-                OrderCancel(impUid, amount, "결제 금액 오류");
-                return 0;
+                OrderCancel(impUid, amount, "OrderCancel");
+                return new ResponseEntity<String>("비정상적인 결제 금액으로 인한 주문 실패", HttpStatus.BAD_REQUEST);
             }
 
             int res = orderMapper.insertOrder(order);
@@ -140,14 +143,14 @@ public class OrderServiceImpl implements OrderService {
                     for (int i = 0; i < size; i++) {
                         res += cartMapper.deleteCartOne(Integer.parseInt(cartNo[i]));
                     }
-                    return res;
+                    return new ResponseEntity<String>("주문 완료", HttpStatus.OK);
                 }
             }
         } catch (Exception e) {
-            OrderCancel(impUid, amount, "결제 에러");
-            return 0;
+            OrderCancel(impUid, amount, "OrderCancel");
+            return new ResponseEntity<String>("결제 에러", HttpStatus.BAD_REQUEST);
         }
-        return 0;
+        return null;
     }
 
     @Override
@@ -155,6 +158,55 @@ public class OrderServiceImpl implements OrderService {
 
         String token = this.getToken();
         HttpsURLConnection conn = null;
+        JSONObject result = null;
+
+        try {
+            URL url = new URL(API_URL + "/payments/cancel");
+            conn = (HttpsURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", token);
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            conn.setRequestProperty("Accept", "application/json;charset=UTF-8");
+            conn.setDoOutput(true);
+
+            JsonObject json = new JsonObject();
+
+            json.addProperty("reason", reason);
+            json.addProperty("imp_uid", impUid);
+            json.addProperty("amount", amount);
+            json.addProperty("checksum", amount);
+
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
+            bw.write(json.toString());
+            bw.flush();
+            bw.close();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            result = (JSONObject) new JSONParser().parse(sb.toString());
+            System.out.println(result);
+
+            br.close();
+            conn.disconnect();
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public int adminCancel(HttpServletRequest request) {
+
+        String token = getToken();
+        HttpsURLConnection conn = null;
+        JSONObject result = null;
+        int res;
 
         try {
             URL url = new URL(API_URL + "/payments/cancel");
@@ -167,18 +219,43 @@ public class OrderServiceImpl implements OrderService {
 
             JsonObject json = new JsonObject();
 
+            String reason = request.getParameter("orderReason");
+            String impUid = request.getParameter("orderImpUid");
+            int amount = Integer.parseInt(request.getParameter("ordreAmount"));
+
+            json.addProperty("reason", reason);
             json.addProperty("imp_uid", impUid);
             json.addProperty("amount", amount);
-            json.addProperty("reason", reason);
+            json.addProperty("checksum", amount);
 
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
             bw.write(json.toString());
             bw.flush();
             bw.close();
 
-        } catch (IOException e) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            result = (JSONObject) new JSONParser().parse(sb.toString());
+            int code = Integer.parseInt(String.valueOf(result.get("code")));
+
+            if (code == 0) {
+                res = orderMapper.cancelOrder(impUid);
+                return res;
+            }
+
+            br.close();
+            conn.disconnect();
+
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+
+        return 0;
 
     }
 

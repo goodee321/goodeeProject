@@ -17,9 +17,9 @@
 
     <insert id="insertOrder" parameterType="order">
         INSERT INTO ORDER_TB
-        (MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID, ORDER_ID)
+            (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID)
         VALUES
-            (#{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid}, #{orderId})
+            (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="orderItemDTO">
@@ -64,8 +64,8 @@
 
     <update id="cancelOrder">
         UPDATE ORDER_TB
-        SET ORDER_STATE = #{orderState}
-        WHERE ORDER_NO = #{orderNo}
+            SET ORDER_STATE = 4
+        WHERE IMP_UID = #{impUid}
     </update>
 
 </mapper>

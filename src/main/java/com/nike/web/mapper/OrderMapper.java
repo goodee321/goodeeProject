@@ -14,4 +14,6 @@ public interface OrderMapper {
 
     public OrderItemDTO selectProductByNo(int productNo);
 
+    public int cancelOrder(String impUid);
+
 }

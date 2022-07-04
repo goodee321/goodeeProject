@@ -141,14 +141,11 @@
             traditional: true,
             data: data,
             success: function (res) {
-                console.log(res);
-                if (res > 0) {
-                    location.href = "${contextPath}/order/completePage";
-                }
+                alert(res);
+                location.href = "${contextPath}/order/completePage";
             },
-            error: function (request, status, error) {
-                alert('결제가 실패하였습니다. 다시 시도해주세요.')
-                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            error: function (res) {
+                alert(res);
             }
         })
     }
@@ -251,6 +248,15 @@ ${orderList}
         </div>
     </div>
 </div>--%>
+
+<form id="cancelOrder" action="${contextPath}/order/cancelOrder" method="post">
+    <input type="hidden" id="orderImpUid" name="orderImpUid" value="imp_874799358603">
+    <input type="hidden" id="ordreAmount" name="ordreAmount" value="23000">
+    <%--								<input type="hidden" name="impUid" value="${order.impUid}">--%>
+    <input type="hidden" id="orderReason" name="orderReason" value="TEST">
+    <%--<input type="hidden" name="amount" value="${order.orderAmount}">--%>
+    <button id="btnCancel">취소</button>
+</form>
 
 </body>
 </html>
