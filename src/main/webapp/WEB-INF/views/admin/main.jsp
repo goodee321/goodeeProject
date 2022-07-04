@@ -25,7 +25,7 @@
 	
 	<a href="${contextPath}/admin/member/list">회원관리</a>
 	
-	<a href="${contextPath}/admin/notice/list">공지사항관리</a>
+	<a href="${contextPath}/admin/notice/list">공지사항관리d</a>
 	
 	
 	
