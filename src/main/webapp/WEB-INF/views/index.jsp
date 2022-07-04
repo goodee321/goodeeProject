@@ -22,6 +22,15 @@
 	<a href="${contextPath}/qna/list">QNA</a>
 	
 	<a href="${contextPath}/board/savePage">상품보러가기</a>
+	
+	
+	<a href="${contextPath}/cart/list">카트</a>
+	
+	
+	
+
+	<a href="${contextPath}/product/list">상품 리스트</a>
+	<a href="${contextPath}/product/saveProductPage">데이터 저장</a>
 
 	
 	

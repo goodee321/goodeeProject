@@ -19,24 +19,6 @@ public interface NoticeService {
 	
 	
 	
-		// 목록(Admin)
-		public void findNotices2(HttpServletRequest request, Model model);
-		
-		// 세부사항(Admin)
-		public NoticeDTO findNoticeByNo2(HttpServletRequest request);
-	
-		// 수정(Admin)
-		public int change2(HttpServletRequest request);
-		
-		
-		// 개별삭제(Admin)
-		public int removeOne(HttpServletRequest request);
-		
-		// 삽입(Admin)
-		public int save2(HttpServletRequest request);
-		
-		// 삭제(선택해서삭제, Admin)
-		public int removeList(HttpServletRequest request);
 		
 	
 	

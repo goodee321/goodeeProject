@@ -63,10 +63,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 			<!-- 목록(Admin) -->
 			<select id="selectNoticeList2" parameterType="Map" resultType="NoticeDTO">
-				SELECT *
+				SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
 				  FROM NOTICE
-				 ORDERS LIMIT #{beginRecord}, #{endRecord}
+				  LIMIT #{beginRecord}, #{recordPerPage}
 			</select>
+			
+		
+	
+		
+		
+		
+		<!-- 검색된 레코드 갯수 -->
+	<select id="selectFindCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM NOTICE
+		  WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+	</select>
+	
+	
+	
+	<!-- 검색 -->
+	<select id="selectFindList" parameterType="Map" resultType="NoticeDTO">
+		SELECT *
+		  FROM NOTICE
+		WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+		
+	</select>
+			
+			
 		
 			<!-- 상세보기 -->
 			<select id="selectNoticeByNo2" parameterType="Long" resultType="NoticeDTO">

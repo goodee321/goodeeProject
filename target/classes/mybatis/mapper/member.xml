@@ -88,11 +88,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	
  	<!-- Admin -->
  	
+ 	
  	<!-- 목록(beginRecord - endRecord) Admin -->
 	<select id="selectMemberList" parameterType="Map" resultType="MemberDTO">
 		 SELECT MEMBER_NO, ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
        	   FROM MEMBER
-       LIMIT #{beginRecord}, #{endRecord}
+       LIMIT #{beginRecord}, #{recordPerPage}
 	</select>
 	
 	
@@ -101,45 +102,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 전체 레코드 갯수(Admin) -->
 	<select id="selectMemberCount" resultType="Integer">
-		SELECT COUNT(MEMBER_NO)
+		SELECT COUNT(*)
 		  FROM MEMBER
 	</select>
 	
+ 	
+ 	
  	
 	<!-- 검색된 레코드 갯수 -->
 	<select id="selectFindCount" parameterType="Map" resultType="Integer">
 		SELECT COUNT(*)
 		  FROM MEMBER
-		  <if test="column == 'ID'">
-		WHERE ID
-		LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
-		</if>
-		<if test="column == 'NAME'">
-		WHERE NAME
-		LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
-		</if>		
+		  WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
 	</select>
+	
+	
 	
 	<!-- 검색 -->
 	<select id="selectFindList" parameterType="Map" resultType="MemberDTO">
 		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
 		  FROM MEMBER
-		  <if test="column == 'ID'">
-		WHERE ID
-		LIKE CONCAT('%', TRIM(#{query}), '%')
-		</if>
-		<if test="column == 'NAME'">
-		WHERE NAME
-		LIKE CONCAT('%', TRIM(#{query}), '%')
-		</if>		
-		LIMIT #{beginRecord}, #{endRecord} 
-	</select>
-	
-	<!-- 자동완성 -->
-	<select id="autoComplete" parameterType="Map" resultType="MemberDTO">
-		SELECT DISTINCT ${column}
-		  FROM MEMBER
-		 WHERE ${column} LIKE #{query} || '%'
+		WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+		
 	</select>
 	
 	
@@ -179,6 +163,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE
 		   	   MEMBER_NO = #{memberNo}
 	</update>
+ 	
+ 	
  	
  	
  	

@@ -1,8 +1,6 @@
 package com.nike.web.service;
 
-import java.io.Console;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
@@ -20,7 +17,6 @@ import com.nike.web.domain.QnaDTO;
 import com.nike.web.mapper.QnaMapper;
 import com.nike.web.util.PageUtils;
 
-@Service
 public class QnaServiceImpl implements QnaService {
 	
 	@Autowired
@@ -38,7 +34,7 @@ public class QnaServiceImpl implements QnaService {
 		pageUtils.setPageEntity(totalRecord, page);
 
 		Map<String, Object> map = new HashMap<>();
-		map.put("beginRecord", pageUtils.getBeginRecord());
+		map.put("beginRecord", pageUtils.getBeginRecord() - 1);
 		map.put("endRecord", pageUtils.getEndRecord());
 
 		List<QnaDTO> qnas = qnaMapper.selectQnaList(map);
@@ -49,49 +45,20 @@ public class QnaServiceImpl implements QnaService {
 	}
 	
 	@Override
-		public void findQnaByNo(HttpServletRequest request, HttpServletResponse response, Model model) {
+		public void findQnaByNo(HttpServletRequest request, Model model) {
 		Optional<String> opt = Optional.ofNullable(request.getParameter("qnaNo"));
 		Integer qnaNo = Integer.parseInt(opt.orElse("0"));
 		
 		// 게시글 
 		QnaDTO qna = qnaMapper.selectQnaByNo(qnaNo);
 		
-		if(qna != null) {	
-			request.getSession().setAttribute("qna", qna);
-		} else {
-			try {
-				response.setContentType("text/html");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('일치하는 게시글이 없습니다.')");
-				out.println("history.back()");
-				out.println("</script>");
-				out.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-			
+		model.addAttribute("qna", qnaMapper.selectQnaByNo(qnaNo));
+
 		}
 	
 	@Override
 	public int saveQna(HttpServletRequest request) {
 
-		String id = request.getParameter("id");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-
-		QnaDTO qna = new QnaDTO();
-		qna.setId(id);
-		qna.setQnaTitle(title);
-		qna.setQnaContent(content);
-				
-		return qnaMapper.insertQna(qna);
-	}
-	
-	@Override
-	public int save(HttpServletRequest request) {
-		
 		String id = request.getParameter("id");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
@@ -136,7 +103,49 @@ public class QnaServiceImpl implements QnaService {
 	}
 	
 	@Override
-	public int remove(int qnaNo) {
+	public void change(HttpServletRequest request, HttpServletResponse response) {
+		
+		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
+		String qnaTitle = request.getParameter("qnaTitle");
+		String qnaContent = request.getParameter("qnaContent");
+		
+		QnaDTO qna = QnaDTO.builder()
+				.qnaNo(qnaNo)
+				.qnaTitle(qnaTitle)
+				.qnaContent(qnaContent)
+				.build();
+		int qnaResult = qnaMapper.updateQna(qna);
+		
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			if(qnaResult == 1) {
+				out.println("<script>");
+				out.println("alert('질문이 수정되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "/qna/list?qnaNo=" + qnaNo + "'");
+				out.println("</script>");
+				out.close();
+			} else {
+				out.println("<script>");
+				out.println("alert('질문이 수정되지 않았습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public int removeQna(int qnaNo) {
 		return qnaMapper.deleteQna(qnaNo);
 	}
+	
+	
+	
+	
+	
+	
+	
 }

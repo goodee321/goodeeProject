@@ -17,7 +17,7 @@
 		fnAreaChoice();
 		fnSearchAll();
 		fnSearch();
-		fnAutoComplete();
+		
 	})
 	
 	// 함수
@@ -75,27 +75,7 @@
 		
 	}
 	
-	function fnAutoComplete(){
-		// keyup : 한 글자 입력이 끝난 뒤 동작
-		$('#query').on('keyup', function(){
-			$('#autoComplete').empty();
-			$.ajax({  // DB에서 입력한 값으로 시작하는 값을 가져와서 보여 줌
-				url: '${contextPath}/admin/member/autoComplete',
-				type: 'get',
-				data: 'column=' + $('#column').val() + '&query=' + $('#query').val(),
-				dataType: 'json',
-				success: function(result){
-					if(result.status == 200){
-						$.each(result.list, function(i, item){
-							$('<option>')
-							.val(item[result.column])
-							.appendTo('#autoComplete');
-						})
-					}
-				}
-			})
-		})
-	}
+	
 	
 </script>
 </head>
@@ -112,8 +92,7 @@
 			<option value="NAME">이름</option>
 		</select>
 		<span id="equalArea">
-			<input type="text" name="query" id="query" list="autoComplete">
-			<datalist id="autoComplete"></datalist>
+			<input type="text" name="query" id="query">
 		</span>
 		<input type="button" value="검색" id="btnSearch">
 		<input type="button" value="전체사원조회" id="btnSearchAll">
@@ -122,6 +101,8 @@
 	<br><hr><br>
 	
 	<%@ include file="list.jsp" %>
+	
+	
 	
 </body>
 </html>

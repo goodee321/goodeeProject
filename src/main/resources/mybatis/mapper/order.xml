@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nike.web.mapper.OrderMapper">
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- admin -->
+    
+    <!-- 목록(beginRecord - endRecord) Admin -->
+	<select id="selectOrderList2" parameterType="Map" resultType="OrderDTO">
+		 SELECT *
+       	   FROM ORDER_TB
+       LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+	
+	
+	
+	
+	
+	<!-- 전체 레코드 갯수(Admin) -->
+	<select id="selectOrderCount2" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM ORDER_TB
+	</select>
+	
+ 	
+ 	
+ 	
+	<!-- 검색된 레코드 갯수 -->
+	<select id="selectFindCount2" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM ORDER_TB
+		  WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+	</select>
+	
+	
+	
+	<!-- 검색 -->
+	<select id="selectFindList2" parameterType="Map" resultType="OrderDTO">
+		SELECT *
+		  FROM ORDER_TB
+		WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+		
+	</select>
+	
+	
+	
+	<!-- 상세보기(Admin) -->
+	<select id="selectOrderByNo2" parameterType="Long" resultType="OrderDTO">
+		SELECT *
+		  FROM ORDER_TB
+		 WHERE ORDER_NO = #{orderNo}
+	</select>
+	
+	
+	<!-- 수정(Admin) -->
+	<update id="updateOrder2" parameterType="OrderDTO">
+		UPDATE
+		       ORDER_TB
+		   SET
+		       ORDER_NO = #{orderNo}
+		     , ORDER_NAME = #{orderName}
+		     , ORDER_PHONE = #{orderPhone}
+		     , ORDER_ADDR = #{orderAddr}
+		     , ADDR_DETAIL = #{addrDetail}
+		     , ORDER_INVOICE = #{orderInvoice}
+		     , ORDER_DELIVERY = #{orderDelivery}
+		     , ORDER_STATE = #{orderState}
+		     
+		    
+		 WHERE
+		   	   ORDER_NO = #{orderNo}
+	</update>
+	
+	
+	
+	<!-- 다중 삭제(선택해서 삭제) Adimin -->
+	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+	<delete id="deleteOrderList2">
+		DELETE
+		  FROM ORDER_TB
+		<where> 
+		 	<foreach collection="list" item="orderNo" open="ORDER_NO IN(" separator="," close=")">
+				#{orderNo}
+			</foreach>
+		</where>
+	</delete>
+	
+	
+	
+	<!-- 개별삭제(Admin) -->
+	<delete id="deleteOrder2" parameterType="Long">
+		DELETE
+		  FROM ORDER_TB
+		 WHERE ORDER_NO = #{orderNo}
+	</delete>
+    
+    
+    
+    
+    
+
+</mapper>

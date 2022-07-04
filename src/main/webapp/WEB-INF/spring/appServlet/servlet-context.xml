@@ -32,6 +32,8 @@
 	 <beans:bean class="com.nike.web.interceptor.LoginInterceptor" id="loginInterceptor" />
 	 <beans:bean class="com.nike.web.interceptor.PreventLoginInterceptor" id="PreventLoginInterceptor" />
 	 <beans:bean class="com.nike.web.interceptor.RequiredLoginInterceptor" id="requiredLoginInterceptor" />
+	 <beans:bean class="com.nike.web.interceptor.AdminInterceptor" id="adminInterceptor" />
+	 
 	 
 	 <interceptors>
 	 	<interceptor>
@@ -48,6 +50,10 @@
 	 		<mapping path="/board/savePage" />
 	 		<beans:ref bean="requiredLoginInterceptor" />
 	 		
+	 	</interceptor>
+	 	<interceptor>
+	 		<mapping path="/admin/**" />
+	 		<beans:ref bean="adminInterceptor" />
 	 	</interceptor>
 	 	
 	 	

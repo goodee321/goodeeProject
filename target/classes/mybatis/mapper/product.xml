@@ -30,6 +30,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	</resultMap>
+<resultMap type="ReviewImageDTO" id="ReviewImageMap">
+   		<result column="RI_NO" property="riNo"/>
+   		<result column="RI_NAME" property="riName"/>
+   		<result column="RI_PATH" property="riPath"/>
+   		<result column="RI_ORIGIN" property="riOrigin"/>
+   		<result column="RI_SAVED" property="riSaved"/>
+   		<result column="REVIEW_NO" property="reviewNo"/>
+   	</resultMap>
+   
+   	<resultMap type="ReviewDTO" id="ReviewMap">
+   		<result column="REVIEW_NO" property="reviewNo"/>
+   		<result column="ORDER_NO" property="orderNo"/>
+   		<result column="PRO_NO" property="proNo"/>
+   		<result column="MEMBER_NO" property="memberNo"/>
+   		<result column="REVIEW_TITLE" property="reviewTitle"/>
+   		<result column="REVIEW_CONTENT" property="reviewContent"/>
+   		<result column="REVIEW_DATE" property="reviewDate"/>
+   		<result column="REVIEW_STAR" property="reviewStar"/>
+   		<collection resultMap="ReviewImageMap" property="ReviewImageMap"/>
+   	</resultMap>
+
 
 <!-- 갤러리 목록 -->
 	<!-- 전체 갤러리 갯수 -->
@@ -42,14 +63,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 제품 리스트 -->
 	<select id="selectProductList" parameterType="Map" resultMap="ProductMap">
 
-        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE,  PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN,PQ.PRO_SIZE, PQ.PRO_QTY, PQ.PRO_DISCOUNT
+            SELECT DISTINCT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO AS PROIMG_NO , PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN
       FROM  PRODUCT P INNER JOIN PRODUCT_IMAGE PI
-      ON  P.PRO_NO = PI.PRO_NO INNER JOIN PRODUCT_QTY PQ
-      ON P.PRO_NO = PQ.PRO_NO
+      ON  P.PRO_NO = PI.PRO_NO
+          GROUP BY P.PRO_NO
       ORDER BY P.PRO_NO DESC  
       LIMIT #{beginRecord}, #{recordPerPage}
      
 	</select>
+
 	
 		<!-- 제품 검색 -->
 	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
@@ -57,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM PRODUCT P INNER JOIN PRODUCT_QTY
 		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
 	</select>
+	
 
 	<!-- 제품 검색 리스트 -->
 	<select id="selectFindProductList" parameterType="Map" resultMap="ProductMap">
@@ -82,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   </selectKey>
 	
 	  </insert>
-	  
+	  <!-- 옵션 삽입 -->
 	  <insert id="insertProductQty" parameterType="ProductQtyDTO">
 	  INSERT
 	  INTO PRODUCT_QTY (PRO_NO, PRO_SIZE,PRO_QTY,PRO_DISCOUNT)
@@ -90,6 +113,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	(#{proNo}, #{proSize}, #{proQty}, #{proDiscount})
 	  
 	  </insert>
+	  
+	  <!-- 옵션 중복 확인 -->
+	  <select id="productQtyOverLap" parameterType="Map" resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM PRODUCT_QTY
+	  	WHERE PRO_NO = #{proNo}
+	  	AND	PRO_SIZE = #{proSize}
+	  
+	  </select>
 	  
 	  <!-- 파일 첨부 추가 -->
 	<insert id="insertProductAttach" parameterType="ProductImageDTO">
@@ -105,24 +137,153 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM PRODUCT_IMAGE
 		 WHERE  PROIMG_NO = #{proimgNo}
 	</select>
-	<!-- 디테일 정보 -->
-	<select id="selectGalleryByNo" parameterType="Integer" resultType="ProductDTO">
-			SELECT *
-			  FROM PRODUCT
+	
+	<!-- 갤러리에 첨부된 첨부 파일 목록 -->
+		<select id="selectProductImageListInTheProduct" parameterType="Int" resultType="ProductImageDTO">
+			SELECT PROIMG_NO, PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO
+			  FROM PRODUCT_IMAGE
 			 WHERE PRO_NO = #{proNo}
-	</select>
-
+		</select>
 	<!-- 제품 수정 -->
 	<update id="updateProduct" parameterType="ProductDTO">
 		UPDATE PRODUCT
 		   SET PRO_NAME = #{proName}, PRO_PRICE= #{proPrice}, PRO_DETAIL= #{proDetail}, PRO_DATE = SYSDATE()
 		 WHERE PRO_NO = #{proNo}
 	</update>
+	
+	<!--  제품 이미지삭제 -->
+	<delete id="deleteProductImage" parameterType="Integer">
+		DELETE 
+		FROM PROUCT_IMAGE
+		WHERE PROIMG_NO = #{proimgNo}
+	
+	</delete>
 
-<!-- 제품 수량 수정 -->
-	<update id="updateProductQty" parameterType="ProductQtyDTO">
+	<!-- 제품 옵션 사이즈별 확인 -->
+	<select id="changeProductOptionByNo" parameterType="Map" resultType="ProductQtyDTO">
+		SELECT PRO_NO, PRO_QTY ,PRO_DISCOUNT, PRO_SIZE
+		FROM PRODUCT_QTY
+		WHERE PRO_NO = #{proNo}
+		AND PRO_SIZE = #{proSize}
+	
+	</select>
+	
+	<!-- 제품 옵션 수정 -->
+	<update id="updateProductQty" parameterType="Map">
 		UPDATE PRODUCT_QTY
-		   SET PRO_QTY = #{proQty}, PRO_DISCOUNT = #{proDiscount}, PRO_SIZE = #{proSize}
-		 WHERE PRO_NO = #{proNo}
+		SET PRO_QTY = #{proQty} ,PRO_DISCOUNT = #{proDiscount}
+		WHERE PRO_NO = #{proNo}
+		AND PRO_SIZE = #{proSize}
+	
 	</update>
+	
+	
+<!-- 제품 상세 -->
+	<select id="selectProductByNo" parameterType="Integer" resultMap="ProductMap">
+	   SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
+		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
+  		   ON  PI.PRO_NO = P.PRO_NO
+  		WHERE  P.PRO_NO = #{proNo}
+	</select>
+	
+	<!-- 상세페이지 리뷰 갯수 -->
+	<select id="selectDetailReviewCount" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM REVIEW
+	</select>
+	
+	<!-- 상세페이지 리뷰 리스트 -->
+	<select id="selectDetailReviewList" parameterType="Map" resultMap="ReviewMap">
+		SELECT * FROM REVIEW
+		WHERE PRO_NO = #{proNo}
+		ORDER BY REVIEW_NO DESC
+		LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+	
+	<!-- 리뷰 작성 -->
+	<insert id="insertDetailReview" parameterType="ReviewDTO">
+		INSERT INTO REVIEW
+			(MEMBER_NO, PRO_NO, REVIEW_TITLE, REVIEW_CONTENT, REVIEW_DATE, REVIEW_STAR)
+		VALUES
+			(#{memberNo}, #{proNo}, #{reviewTitle}, #{reviewContent}, NOW(), #{reviewStar})
+	</insert>
+	
+	<!-- 파일첨부 추가 -->
+	<select id="insertDetailReviewImage" parameterType="ReviewImageDTO">
+		INSERT INTO REVIEW_IMAGE
+			(RI_NO, RI_NAME, RI_PATH, RI_ORIGIN)
+		VALUES
+			(#{riNo}, #{riName}, #{riPath}, #{riOrigin})
+	</select>
+	
+	<!-- 파일 삭제 -->
+	<delete id="deleteProduct" parameterType="Int">
+	DELETE
+	FROM PRODUCT
+	WHERE PRO_NO = #{proNo}
+	</delete>
+	
+	
+	
+	<!-- 제품 리스트(Admin) -->
+	<select id="selectProductList2" parameterType="Map" resultMap="ProductMap">
+
+        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE,  PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN,PQ.PRO_SIZE, PQ.PRO_QTY, PQ.PRO_DISCOUNT
+      FROM  PRODUCT P INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO INNER JOIN PRODUCT_QTY PQ
+      ON P.PRO_NO = PQ.PRO_NO
+      ORDER BY P.PRO_NO DESC  
+      LIMIT #{beginRecord}, #{endRecord}
+     
+	</select>
+	
+	
+	<!-- 제품 검색 -->
+	<select id="selectFindProductCount2" parameterType="Map" resultType="Integer">
+		SELECT COUNT(P.PRO_NO)
+		  FROM PRODUCT P INNER JOIN PRODUCT_QTY
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+	</select>
+	
+	
+	<!-- 제품 검색 리스트 -->
+	<select id="selectFindProductList2" parameterType="Map" resultMap="ProductMap">
+		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_SIZE 
+		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
+  		 ON  PI.PRO_NO = P.PRO_NO  INNER JOIN PRODUCT_QTY PQ
+         ON P.PRO_NO = PQ.PRO_NO
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+		 ORDER BY P.PRO_NO DESC
+		 LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+	
+	
+	
+	
+	
+	<!-- 다중 삭제(선택해서 삭제) Adimin -->
+	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+	<delete id="deleteProductList">
+		DELETE
+		  FROM PRODUCT
+		<where> 
+		 	<foreach collection="list" item="proNo" open="PRO_NO IN(" separator="," close=")">
+				#{proNo}
+			</foreach>
+		</where>
+	</delete>
+	
+	
+	<!-- 상세보기 admin-->
+	<select id="selectProductByNo2" parameterType="Long" resultMap="ProductMap">
+		SELECT * FROM PRODUCT P INNER JOIN PRODUCT_QTY PQ ON P.PRO_NO = PQ.PRO_NO INNER JOIN PRODUCT_IMAGE PI ON
+		PI.PRO_NO = P.PRO_NO WHERE P.PRO_NO = #{proNo}
+	</select>
+	
+	
+	
+	
+	
+	
+
 </mapper>

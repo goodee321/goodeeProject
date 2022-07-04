@@ -4,12 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script src="../resources/js/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="../resources/js/jquery-3.6.0.js"></script>
 
 <script>
 	
@@ -41,29 +41,7 @@
 				return false;
 			}
 			
-			else if(discountPass == false){
-				alert('할인율을 변경하시기 바랍니다.');
-				event.preventDefault();
-				return;
-			}
-
-			else if($("#proSize").val() == 0){
-				alert('사이즈를 선택해주시기 바랍니다.');
-				event.preventDefault();
-				return false;
-			}
-			
-			else if($('#proQty').val() == 0){
-				alert('수량을 확인하시길 바랍니다.');
-				event.preventDefault();
-				return false;
-			}
-			else if(qtyPass == false){
-				alert('수량은 숫자만 입력가능합니다.');
-				event.preventDefault();
-				return false;
-			}
-
+		
 			else if($('#files').val() == ""){
 				alert('이미지를 반드시 1개 이상 업로드해야 합니다.');
 				event.preventDefault();
@@ -101,12 +79,10 @@
 	}
 
 			let pricePass = false;
-			let discountPass = false;
-			let qtyPass = false; 
+		
 			
 	function fnRegExp(){
 			let numberRegExp = 	/^[0-9]+$/;
-			let decimalRegExp = /^[0]\.{1}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
 			
 			
 			$('#proPrice').on('keyup', function(){
@@ -120,35 +96,7 @@
 				}
 				
 			})
-			
-			
-			$('#proDiscount').on('keyup',function(){
-			
-				if(decimalRegExp.test( $('#proDiscount').val() ) == false){ 
-					$('#proDiscountError').text('할인율에는 1이하의 숫자만 입력 가능합니다.').addClass('dont').removeClass('hidden');
-					discountPass = false;
-					return;
-				}else{
-					$('#proDiscountError').addClass('hidden').removeClass('dont');
-					discountPass = true;
-				}
-				
-			})
-			
-				$('#proQty').on('keyup',function(){
-			
-				if(numberRegExp.test( $('#proQty').val() ) == false){ 
-					$('#proQtyError').text('수량에는 숫자만 넣을 수 있습니다..').addClass('dont').removeClass('hidden');
-					qtyPass = false;
-					return;
-				}else{
-					$('#proQtyError').addClass('hidden').removeClass('dont');
-					qtyPass = true;
-				}
-				
-			})
-			
-			
+	
 			
 		}
 		
@@ -218,25 +166,6 @@ table{
 		<td></td><td id="proPriceError"></td>
 		</tr><tr>
 		<td>내용</td><td>	<textarea class="form-control" name="proDetail" rows="3" placeholder="상세 내용"></textarea>
-		</tr><tr>
-		<td>할인가</td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)" value="0"></td>
-		</tr><tr>
-		<td></td><td id="proDiscountError"></td>
-		</tr><tr>
-		<td>사이즈</td><td>
-		<select name="proSize" id="proSize">
-			<option value="0" selected >사이즈 선택</option>
-			<option value="240">240</option>
-			<option value="250">250</option>
-			<option value="260">260</option>
-			<option value="270">270</option>
-			<option value="280">280</option>
-		</select>
-		</td>
-		</tr><tr>
-		<td>수량</td><td><input type="text" name="proQty" id="proQty" value="0"></td>
-		</tr><tr>
-		<td></td><td id="proQtyError"></td>
 		</tr><tr>
 		<td>첨부</td><td><input type="file" name="files" id="files" multiple="multiple"></td>
 		</tr>

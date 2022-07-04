@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class NoticeDTO {
+	
 	private int noticeNo;
 	private String noticeTitle;
 	private String noticeContent;
 	private Date noticeDate;
 	private int noticeHit;
+	
 }

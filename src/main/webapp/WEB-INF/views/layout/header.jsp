@@ -21,15 +21,17 @@
 		<a href="${contextPath}/member/agreePage">회원가입페이지</a>
 	</c:if>
 	
+	
 	<!-- 로그인 이후에 보여줄 링크 -->
 	<c:if test="${loginMember ne null}">
 		${loginMember.name} 님 반갑습니다.&nbsp;&nbsp;&nbsp;
 		<a href="${contextPath}/member/logout">로그아웃</a>
-		<a href="${contextPath}/member/signOut?memberNo=${loginMember.memberNo}">회원탈퇴하기</a>
+		<!-- <a href="${contextPath}/member/signOut?memberNo=${loginMember.memberNo}">회원탈퇴하기</a>  -->
+		
 
 		
 		<c:if test="${loginMember.id eq 'admin'}">
-			<a href="${contextPath}/admin/main">관리자페이지</a>
+			<a href="${contextPath}/admin/member/list">관리자페이지</a>
 		</c:if>
 		
 

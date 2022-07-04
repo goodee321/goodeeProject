@@ -10,7 +10,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-
 <script>
 	
 $(function(){
@@ -33,19 +32,34 @@ $(function(){
 })
 	
 </script>
+<style>
+	* {
+		box-sizing: border-box;
+	}
+	
+	h1 {
+		text-align: center;
+	}
+	
+	.regit {
+		text-align: center;
+	}
+	
+</style>
 </head>
 <body>
 
 	<h1>Q&A 작성화면</h1>
-	
-	<form id="f" action="${contextPath}/qna/save" method="post">
-		제목 <input type="text" name="title" id="title"><br>
-		작성자 <input type="text" value="${qna.id}" readonly="readonly"><br>
-		내용<br>
-		<textarea rows="7" cols="50" name="content"></textarea><br><br>
-		<button>작성완료</button>
-		<input type="button" value="목록" id="btnList">
-	</form>
+	<div class="regit">
+		<form id="f" action="${contextPath}/qna/save" method="post">
+			제목 <input type="text" name="title" id="title"><br>
+			작성자 <input type="text" value="${loginMember.id}" readonly="readonly"><br>
+			<br>
+			<textarea rows="7" cols="50" name="content" placeholder="문의 확인 후 빠르게 답변해드리겠습니다."></textarea><br><br>
+			<button>작성완료</button>
+			<input type="button" value="목록" id="btnList">
+		</form>
+	</div>
 
 </body>
 </html>
