@@ -9,6 +9,7 @@
     <title>Insert title here</title>
 </head>
 <script src="../resources/js/jquery-3.6.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <script>
 
     $(function () {
@@ -96,7 +97,7 @@
     }
 
     function fnAdd() {
-        $(".btnAdd").on('click', function () {
+        $(".btn-light").on('click', function () {
             let data = {
                 productNo: ${detail.proNo},
                 cartQty: parseInt($("#cartQty").val())
@@ -112,7 +113,7 @@
                             location.href = '${contextPath}/cart/list';
                         }
                     } else if (res == 0) {
-                        if (confirm("로그인 필요")) {
+                        if (confirm("로그인이 필요한 기능입니다. 로그인 할까요?")) {
                             location.href = '${contextPath}/member/loginPage?url=${contextPath}/Product/detailPage';
                         }
                     } else {
@@ -124,7 +125,7 @@
     }
 
 </script>
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <style>
     * {
         box-sizing: border-box;
@@ -223,11 +224,11 @@
 디테일 ${detail.proDetail}
 
 <input type="hidden" value="${detail.proPrice}" id="proPrice">
-<div class="plus"><a href="javascript:change_qty2('p')">🔼</a></div>
+<div class="plus"><a href="javascript:change_qty2('p')">▲</a></div>
 <input type="text" class="cartQty" id="cartQty" value="1" readonly="readonly">
-<div class="minus"><a href="javascript:change_qty2('m')">🔽</a></div>
-<input type="button" class="btnAdd" value="장바구니 담기">
-<button id="iamportPayment">구매하기</button>
+<div class="minus"><a href="javascript:change_qty2('m')">▼</a></div>
+<button type="button" class="btn btn-light" style="border-radius: 1rem">장바구니 담기</button>
+<button type="button" id="iamportPayment" class="btn btn-dark" style="border-radius: 1rem">구매하기</button>
 
 <div class="">
     <h2>상품후기</h2>
