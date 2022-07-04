@@ -174,7 +174,7 @@
 										${qna.qnaContent}
 									</c:if>
 								</td>
-								<td>${loginMember.id}</td>
+								<td>${qna.id}</td>
 								<td>${qna.qnaDate}</td>
 								<c:if test="${loginMember.id eq 'admin'}">
 									<td>
