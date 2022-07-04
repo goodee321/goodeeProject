@@ -53,7 +53,7 @@ $(function(){
 	<div class="regit">
 		<form id="f" action="${contextPath}/qna/save" method="post">
 			제목 <input type="text" name="title" id="title"><br>
-			작성자 <input type="text" value="${qna.id}" readonly="readonly"><br>
+			작성자 <input type="text" name="id" value="${loginMember.id}" readonly="readonly"><br>
 			<br>
 			<textarea rows="7" cols="50" name="content" placeholder="문의 확인 후 빠르게 답변해드리겠습니다."></textarea><br><br>
 			<button>작성완료</button>

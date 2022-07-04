@@ -86,7 +86,7 @@ input {
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td>${loginMember.id}</td>
+						<td>${qna.id}</td>
 					</tr>
 					<tr>
 						<td>제목</td>
@@ -107,9 +107,10 @@ input {
 					<tr>
 						<td></td>
 						<td>
-							<!-- c:if test="${loginMember.id eq 'admin'}" --> <input
-							type="button" value="수정하러가기" id="btnChangePage"> <input
-							type="button" value="목록" id="btnList">
+							<c:if test="${loginMember.id eq qna.id}" > 
+								<input type="button" value="수정하러가기" id="btnChangePage">
+							</c:if>
+							<input type="button" value="목록" id="btnList">
 						</td>
 					</tr>
 				</tfoot>

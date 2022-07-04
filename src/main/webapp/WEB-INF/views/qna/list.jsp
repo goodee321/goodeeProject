@@ -18,7 +18,6 @@
 	    	$(this).parent().parent().next().removeClass('blind');
 		})
 	
-	})
 </script>
 <style>
 	.blind {
@@ -52,7 +51,6 @@
 		display: block;
 	}
 	
-	
 	table {
 		border-collapse: collapse;
 		margin: auto;
@@ -85,6 +83,8 @@
 		text-align: center;
 	}
 	
+	tbody a { text-decoration: none; }
+	
 	tfoot {
 		text-align: center;
 	}
@@ -98,18 +98,18 @@
 </head>
 <body>
 
-	대충이미지
-
-	<hr>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
 	<div class="title">
 		<h1>Q&A</h1>
 		<p>상품 Q&A입니다.</p>
+		<p><c:if test="${loginMember.id eq null}">글 작성을 원하시면 로그인 후 접속해주세요.</c:if></p>
 	</div>
 
 		<table>
-			<!-- <c:if test="${member.id != null}"></c:if> -->
-			<caption><a href="${contextPath}/qna/saveQna">글쓰기</a><br></caption>
+			<c:if test="${loginMember.id ne null}">
+				<caption><a href="${contextPath}/qna/saveQna">글쓰기</a><br></caption>
+			</c:if>	
 			<thead>
 				<tr>
 					<td>번호</td>
@@ -130,14 +130,14 @@
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
 							<tr>
-								<td colspan="7">삭제된 게시글입니다</td>
+								<td colspan="5"><i class="fa-solid fa-ban"></i> 관리자에 의해 삭제된 게시글입니다</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
 						<!-- 작성자or관리자 아니면 비밀글 -->
 						<!-- <tr><td><i class="fa-regular fa-lock-keyhole"></i>비밀글입니다</td></tr> -->
 							<tr>
-								<td>Q</td>
+								<td>${qna.qnaNo}</td>
 								<td>
 									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;</c:forEach>
 									
@@ -149,22 +149,24 @@
 									<c:if test="${qna.qnaTitle.length() le 30}">								
 										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
 									</c:if>
+								
 								</td>
 								<td>${qna.qnaContent}</td>
 								<td>${qna.id}</td>
 								<td>${qna.qnaDate}</td>
-								<!-- 삭제버튼c:if test=qna.id == member.id || qna.id == 관리자/c:if -->
-								<td>
-									<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
-									<c:if test="${qna.qnaDepth eq 0}">
-										<a class="reply_link">답변하기</a>								
-									</c:if>
-								</td>
-								<td>
-									<a data-qna_no="${qna.qnaNo}" onclick="fnRemove(this)">
-										<i class="fa-solid fa-trash-can"></i>
-									</a>
-								</td>
+								<c:if test="${loginMember.id eq 'admin'}">
+									<td>
+										<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
+										<c:if test="${qna.qnaDepth eq 0}">
+											<a class="reply_link">답변하기</a>								
+										</c:if>
+									</td>
+									<td>
+										<a data-qna_no="${qna.qnaNo}" onclick="fnRemove(this)">
+											<i class="fa-solid fa-trash-can"></i>
+										</a>
+									</td>
+								</c:if>
 							</tr>
 							<tr class="reply_form blind">
 								<td colspan="5">

@@ -10,6 +10,27 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
+<style>
+
+	.search {
+		display: block;
+		text-align: center;
+	}
+	
+	span input:hover {
+		border: 1px solid #008bcc;
+	}
+	
+	#btnSearch { 
+		background-color: #708090; 
+		color: silver;
+		border: #708090;
+		border-radius: 3px;
+		width: 60px;
+		height: 25px;
+	}
+	
+</style>
 <script>
 	
 	// 페이지 로드 이벤트
@@ -57,18 +78,19 @@
 
 	<%@ include file="list.jsp" %>
 	
-	
-	<form id="f" method="get">
-		<select name="column" id="column">
-			<option value="">:::선택:::</option>
-			<option value="NOTICE_TITLE">제목</option>
-			<option value="NOTICE_CONTENT">내용</option>
-		</select>
-		<span id="equalArea">
-			<input type="text" name="query" id="query">
-		</span>
-		<input type="button" value="검색" id="btnSearch">
-	</form>
+	<div class="search">
+		<form id="f" method="get" >
+			<select name="column" id="column">
+				<option value="">:::선택:::</option>
+				<option value="NOTICE_TITLE">제목</option>
+				<option value="NOTICE_CONTENT">내용</option>
+			</select>
+			<span id="equalArea">
+				<input type="text" name="query" id="query">
+			</span>
+			<input type="button" value="검색" id="btnSearch">
+		</form>
+	</div>
 	
 	
 	

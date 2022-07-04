@@ -29,25 +29,90 @@
 		})
 	})
 </script>
+<style>
+
+	.detail h1 { text-align: center; }
+	
+	table {
+		border-collapse: collapse;
+		margin: auto;
+	}
+	
+	thead {
+		background-color: silver;	
+	}
+	
+	td {
+		padding: 5px;
+		border: 1px solid silver;
+	}
+	
+	td:nth-of-type(1) { background-color: #fbfafa; }
+	
+	td:nth-of-type(2) { width: 160px; }
+	
+	textarea { text-align: left; }
+	
+	tfoot td { 
+		border-bottom: none; 
+		border-left: none;
+		border-right: none;
+		background-color: none;
+		text-align: right;
+	}
+	
+</style>
 </head>
 <body>
 
-	<form id="f">
-	
-		<input type="hidden" name="noticeNo" value="${notice.noticeNo}"> 
-	
-		번호 ${notice.noticeNo}<br>
-		제목 ${notice.noticeTitle}<br>
-		내용<br>
-		<pre>${notice.noticeContent}</pre>
-		작성일 ${notice.noticeDate}<br>
-		조회수 ${notice.noticeHit}<br>
+	<div class="detail">
+		<h1>공지사항 상세화면</h1>
 		
-		<input type="button" value="수정하러가기" id="btnChangePage">
-		<input type="button" value="삭제" id="btnRemove">
-		<input type="button" value="목록" id="btnList">
+		<form id="f">
+			<input type="hidden" name="noticeNo" value="${notice.noticeNo}"> 
+			<table>
+				<tbody>
+					<tr>
+						<td>번호</td>
+						<td>${notice.noticeNo}</td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td>${notice.noticeTitle}</td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td>
+							<textarea rows="20" cols="100" readonly>
+								${notice.noticeContent}
+							</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>작성일</td>
+						<td>${notice.noticeDate}</td>
+					</tr>
+					<tr>
+						<td>조회수</td>
+						<td>${notice.noticeHit}</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td>
+							<c:if test="${loginMember.id eq 'admin'}">
+							<td><input type="button" value="수정하러가기" id="btnChangePage"></td>
+							<td><input type="button" value="삭제" id="btnRemove"></td>
+						</c:if>
+						<input type="button" value="목록" id="btnList">
+						</td>
+					</tr>
+				</tfoot>
+				</table>
+		</form>
 		
-	</form>
-
+	</div>
+	
 </body>
 </html>
