@@ -40,7 +40,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 	AdminProductMapper adminProductMapper;
 	
 	
-			// 검색햇을때 리스트 admin
+			// 검색목록(상품관리는 반대입니다.)
 			@Override
 			public void getFindProducts(HttpServletRequest request, Model model) {
 				
@@ -72,7 +72,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 			
 			
 			
-			// [Admin] 얘가 목록
+					// 전체목록 
 					@Override
 					public void findProducts(HttpServletRequest request, Model model) {
 						// TODO Auto-generated method stub
@@ -99,7 +99,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 					
 					
 					
-					// [Admin]
+					// 삽입
 					@Transactional
 					@Override
 					public void save(MultipartHttpServletRequest multipartRequest, HttpServletResponse response, Model model) {
@@ -238,7 +238,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 					}
 					
 					
-					// 선택삭제(Admin)
+							// 선택삭제
 							@Override
 							public int removeList(HttpServletRequest request) {
 								// 한 번에 여러 개 지우기
@@ -252,13 +252,13 @@ public class AdminProductServiceImpl implements AdminProductService {
 							}
 							
 							
-							// 상세보기(Admin)
+							// 상세보기
 							@Override
 							public ProductDTO findProductByNo(HttpServletRequest request) {
 								String requestURI = request.getRequestURI();  // "/ex09/notice/detail"
 								String[] arr = requestURI.split("/");         // { "", "ex09", "notice", "detail"}
 								
-								Long proNo = Long.parseLong(request.getParameter("proNo"));
+								Integer proNo = Integer.parseInt(request.getParameter("proNo"));
 								
 								return adminProductMapper.selectProductByNo(proNo); 
 							}
@@ -268,7 +268,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 							
 							
 							
-							// 갤러리 수정(Admin)
+							// 수정
 							@Transactional
 							@Override
 							public void changeProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response){
@@ -387,7 +387,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 							
 							
 							
-							//옵션 수정(Admin)
+							// 옵션 수정
 							@Override	
 							public void changeProductOption(HttpServletRequest request, HttpServletResponse response) {
 								Integer proNo = Integer.parseInt(request.getParameter("proNo"));
@@ -431,7 +431,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 			
 			
 			
-							//삭제(Admin)
+							// 삭제
 							public void productDelete(HttpServletRequest request, HttpServletResponse response) {
 								
 								// 파라미터 galleryNo
@@ -504,7 +504,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 							}
 							
 							
-							// admin
+							// 상세보기
 							@Override
 							public ProductDTO getProductByNo(Integer proNo) {
 								return adminProductMapper.selectProductByNo(proNo);
@@ -512,7 +512,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 							
 							
 							
-							// admin
+							// 옵션추가
 							@Override
 							public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response) {
 								// 전달된 파라미터
@@ -580,7 +580,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 
 
-
+							// 썸네일
 							@Override
 							public ResponseEntity<byte[]> display(Integer proimgNo, String type) {
 								
@@ -616,7 +616,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 
 
-
+							// 옵션변경
 							@Override
 							public void changeProductOptionPage(HttpServletRequest request, Model model) {
 								Integer proNo = Integer.parseInt(request.getParameter("proNo"));

@@ -11,16 +11,16 @@ public interface AdminNoticeService {
 	
 	
 	
-			// 목록(Admin)
+			// 검색목록
 			public void findNotices(HttpServletRequest request, Model model);
 			
-			
+			// 전체목록
 			public void getNotices(HttpServletRequest request, Model model);
 			
 			
 			
 			
-			// 세부사항(Admin)
+			// 세부사항
 			public NoticeDTO findNoticeByNo(HttpServletRequest request);
 		
 			// 수정(Admin)

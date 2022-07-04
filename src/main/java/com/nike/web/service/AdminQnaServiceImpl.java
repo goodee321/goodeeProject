@@ -27,8 +27,8 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 	
 	
 	
-	// [admin]
 	
+		// 전체목록
 		@Override
 		public void findQnas(HttpServletRequest request, Model model) {
 			
@@ -51,7 +51,7 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 			model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/admin/qna/list"));
 		}
 		
-		//
+		// 상세보기
 		@Override
 		public void findQnaByNo(HttpServletRequest request, Model model) {
 			
@@ -65,7 +65,7 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 		
 			}
 		
-		//
+		// 수정
 		@Override
 		public void change(HttpServletRequest request, HttpServletResponse response) {
 			
@@ -101,7 +101,7 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 			}
 		}
 		
-		
+		// 삭제
 		@Override
 		public int removeQna(int qnaNo) {
 			return adminQnaMapper.deleteQna(qnaNo);
@@ -109,7 +109,7 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 		
 		
 		
-		
+		// 삽입
 		@Override
 		public int saveQna(HttpServletRequest request) {
 
@@ -129,7 +129,7 @@ public class AdminQnaServiceImpl implements AdminQnaService {
 		
 		
 		
-		
+		// 댓글삽입
 		@Transactional
 		@Override
 		public int saveReply(HttpServletRequest request) {

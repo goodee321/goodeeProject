@@ -89,8 +89,10 @@
 		<strong>ID:</strong>&nbsp;&nbsp;&nbsp;${member.id}<br><hr>
 		<strong>이름:</strong>&nbsp;&nbsp;&nbsp;${member.name}<br><hr>
 		<strong>E-Mail:</strong>&nbsp;&nbsp;&nbsp;${member.email}<br><hr>
+		<strong>우편번호</strong>&nbsp;&nbsp;&nbsp;${member.postcode}<br><hr>
 		<strong>주소:</strong>&nbsp;&nbsp;&nbsp;${member.address}<br><hr>
 		<strong>상세주소:</strong>&nbsp;&nbsp;&nbsp;${member.addrDetail}<br><hr>
+		<strong>참고항목:</strong>&nbsp;&nbsp;&nbsp;${member.extraAddress}<br><hr>
 		<strong>휴대폰번호:</strong>&nbsp;&nbsp;&nbsp;${member.phone}<br><hr>
 		
 		

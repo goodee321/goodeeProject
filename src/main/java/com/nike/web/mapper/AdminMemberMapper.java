@@ -11,33 +11,28 @@ import com.nike.web.domain.MemberDTO;
 public interface AdminMemberMapper {
 
 	
-	// 목록(Admin)
-	
+		// 전체목록
 		public List<MemberDTO> selectMemberList(Map<String, Object> map);
 			
-		// 전체회원수(Admin)
+		// 전체회원수
 		public int selectMemberCount();
 		
+		// 검색회원수
 		public int selectFindCount(Map<String, Object> map);
 		
+		// 검색목록
 		public List<MemberDTO> selectFindList(Map<String, Object> map);
 		
-		
-		
-		
-		
-		
-			
-		// 상세보기(Admin)
+		// 상세보기
 		public MemberDTO selectMemberByNo(Long memberNo);
 			
-		// 삭제(Admin)
+		// 삭제
 		public int deleteMemberList(List<Long> list);
 			
-		// 수정(Admin)
+		// 수정
 		public int updateMember(MemberDTO member);
 		
-		// 개별삭제(Admin)
+		// 개별삭제
 		public int deleteMember(Long memberNo);
 		
 }

@@ -68,12 +68,7 @@ public class AdminController {
 	private AdminQnaService adminQnaService;
 	
 	
-//	
-//	// 메인
-//	@GetMapping("/admin/main")
-//	public String mainPage() {
-//		return "admin/main";
-//	}
+
 	
 	
 	
@@ -81,17 +76,11 @@ public class AdminController {
 	@GetMapping("/admin/member/list")
 	public String list(HttpServletRequest request, Model model) {
 		adminMemberService.getMembers(request, model);
-		return "admin/member/list";	// search.jsp를 열면 list.jsp가 포함되어 있으므로 search.jsp로 간다.
+		return "admin/member/list";	
 	}
 	
 	
-	//
-	@GetMapping("/admin/member/searchPage")
-	public String searchPage() {
-		return "admin/member/list";
-	}
-	
-	//
+	// 회원검색
 	@GetMapping("/admin/member/search")
 	public String search(HttpServletRequest request, Model model) {
 		adminMemberService.findMembers(request, model);
@@ -140,7 +129,7 @@ public class AdminController {
 	}
 	
 	
-	// 
+	// 회원수정
 	@PostMapping("/admin/member/change")
 	public String change(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("kind", "update");
@@ -161,14 +150,10 @@ public class AdminController {
 				}
 				
 				
-				// 
-				@GetMapping("/admin/notice/searchPage")
-				public String noticeSearchPage() {
-					return "admin/notice/list";
-				}
 				
 				
-				// 
+				
+				// 공지사항검색
 				@GetMapping("/admin/notice/search")
 				public String noticeSearch(HttpServletRequest request, Model model) {
 					adminNoticeService.findNotices(request, model);
@@ -230,7 +215,7 @@ public class AdminController {
 				}
 				
 				
-				// 
+				// 공지사항삽입
 				@PostMapping("/admin/notice/save")
 				public String noticeSave(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 					redirectAttributes.addFlashAttribute("insRes", adminNoticeService.save(request));
@@ -251,14 +236,14 @@ public class AdminController {
 	
 		
 	
-	// 상품 목록
+	// 상품목록
 	@GetMapping("/admin/product/list")
 	public String productList(HttpServletRequest request, Model model) {
 		adminProductService.findProducts(request, model);
 		return "/admin/product/list";
 	}
 	
-	// 썸네일 보여주기
+	// 상품썸네일
 	@ResponseBody
 	@GetMapping("/admin/product/display")
 	public ResponseEntity<byte[]> display(@RequestParam(value="proimgNo", required=true) Integer ProimgNo, @RequestParam(value="type", required=false, defaultValue="image") String type) {
@@ -267,7 +252,7 @@ public class AdminController {
 	
 	
 	
-	// 검색기능
+	// 상품검색
 	@GetMapping("/admin/product/find")
 	public String find(HttpServletRequest request, Model model) {
 		adminProductService.getFindProducts(request, model);
@@ -275,13 +260,13 @@ public class AdminController {
 	}
 	
 	
-	// 삽입
+	// 상품삽입
 	@GetMapping("/admin/product/saveProductPage")
 	public String saveProductPage() {
 		return "/admin/product/saveProduct";
 	}
 	
-	// 
+	// 상품삽입
 	@PostMapping("/admin/product/saveProduct")
 	public void saveProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response, Model model) {
 		adminProductService.save(multipartRequest, response, model);
@@ -305,7 +290,7 @@ public class AdminController {
 	
 	
 	
-	// 상품 상세보기
+	// 상품상세보기
 	@GetMapping("/admin/product/detail")
 	public String productDetail(HttpServletRequest request, Model model) {
 		model.addAttribute("product", adminProductService.findProductByNo(request));
@@ -314,7 +299,7 @@ public class AdminController {
 		
 		
 		
-	// 제품 수정
+	// 상품수정
 	@GetMapping("/admin/product/changeProductPage")
 	public String changeProductPage(HttpServletRequest request, Model model) {
 		adminProductService.changeProductOptionPage(request, model);
@@ -323,59 +308,58 @@ public class AdminController {
 		
 		
 		
-		// 
-		@PostMapping("/admin/product/changeProduct")
-		public void changeProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
-			adminProductService.changeProduct(multipartRequest, response);
-		}
+	// 상품수정
+	@PostMapping("/admin/product/changeProduct")
+	public void changeProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) {
+		adminProductService.changeProduct(multipartRequest, response);
+	}
 		
 		
 		
 		
 		
-		// 상품 옵션 수정
-		@GetMapping("/admin/product/changeProductOptionPage")
-		public String changeProductOptionPage(@RequestParam Integer proNo,HttpServletRequest request, Model model) {
-			model.addAttribute("product", adminProductService.getProductByNo(proNo));
-			return "admin/product/changeProductOption";
-		}
+	// 상품옵션 수정
+	@GetMapping("/admin/product/changeProductOptionPage")
+	public String changeProductOptionPage(@RequestParam Integer proNo,HttpServletRequest request, Model model) {
+		model.addAttribute("product", adminProductService.getProductByNo(proNo));
+		return "admin/product/changeProductOption";
+	}
 		
 		
-		// 
-		@PostMapping("/admin/product/changeProductOption")
-		public void changeProductOption(HttpServletRequest request, HttpServletResponse response) {
-			adminProductService.changeProductOption(request, response);
-		}
-		
-		
-		
-		// 상품삭제
-		@GetMapping("/admin/product/productDelete")
-		public void productDelete(HttpServletRequest request, HttpServletResponse response) {
-			adminProductService.productDelete(request,response);
-		}
+	// 상품옵션 수정
+	@PostMapping("/admin/product/changeProductOption")
+	public void changeProductOption(HttpServletRequest request, HttpServletResponse response) {
+		adminProductService.changeProductOption(request, response);
+	}
 		
 		
 		
+	// 상품삭제
+	@GetMapping("/admin/product/productDelete")
+	public void productDelete(HttpServletRequest request, HttpServletResponse response) {
+		adminProductService.productDelete(request,response);
+	}
 		
-		// 옵션추가
-		@GetMapping("/admin/product/saveProductOption")
-		public String saveProductOption(@RequestParam Integer proNo, HttpServletRequest request, Model model) {
-			model.addAttribute("product", adminProductService.getProductByNo(proNo));
-			return "admin/product/saveProductOption";
-			
-		}
+		
+		
+		
+	// 상품옵션추가
+	@GetMapping("/admin/product/saveProductOption")
+	public String saveProductOption(@RequestParam Integer proNo, HttpServletRequest request, Model model) {
+		model.addAttribute("product", adminProductService.getProductByNo(proNo));
+		return "admin/product/saveProductOption";	
+	}
 
-		// 
-		@RequestMapping(value="/admin/product/saveProductOptionOk", method= {RequestMethod.GET, RequestMethod.POST})
-		public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response) {
-			adminProductService.saveProductOptionOk(request, response);
-		}
+	// 상품옵션추가
+	@RequestMapping(value="/admin/product/saveProductOptionOk", method= {RequestMethod.GET, RequestMethod.POST})
+	public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response) {
+		adminProductService.saveProductOptionOk(request, response);
+	}
 		
 		
 		
-		// [주문]
-		// 주문목록
+		
+	    // 주문목록
 		@GetMapping("/admin/order/list")
 		public String orderList(HttpServletRequest request, Model model) {
 			adminOrderService.getOrders(request, model);
@@ -383,14 +367,10 @@ public class AdminController {
 		}
 		
 		
-		//
-		@GetMapping("/admin/order/searchPage")
-		public String orderSearchPage() {
-			return "admin/order/list";
-		}
 		
 		
-		//
+		
+		// 주문검색
 		@GetMapping("/admin/order/search")
 		public String orderSearch(HttpServletRequest request, Model model) {
 			adminOrderService.findOrders(request, model);
@@ -422,7 +402,7 @@ public class AdminController {
 		}
 		
 		
-		// 
+		// 주문수정
 		@PostMapping("/admin/order/change")
 		public String orderChange(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addFlashAttribute("kind", "update");
@@ -452,7 +432,7 @@ public class AdminController {
 		
 		
 		
-		// [qna]
+		// qna목록
 		@GetMapping("/admin/qna/list")
 		public String qnaList(HttpServletRequest request, Model model) {
 			adminQnaService.findQnas(request, model);
@@ -460,7 +440,7 @@ public class AdminController {
 		}
 		
 		
-		// qna
+		// qna상세보기
 		@GetMapping("/admin/qna/detail")
 		public String qnaDetail(HttpServletRequest request, HttpServletResponse response, Model model) {
 			adminQnaService.findQnaByNo(request, model);
@@ -468,7 +448,7 @@ public class AdminController {
 		}
 		
 		
-		// qna
+		// qna수정
 		@GetMapping("/admin/qna/changePage")
 		public String qnaChangePage(HttpServletRequest request, Model model) {
 			adminQnaService.findQnaByNo(request, model);
@@ -476,14 +456,14 @@ public class AdminController {
 		}
 		
 		
-		// qna
+		// qna수정
 		@PostMapping("/admin/qna/change")
 		public void qnaChange(HttpServletRequest request, HttpServletResponse response) {
 			adminQnaService.change(request, response);
 		}
 		
 		
-		// qna
+		// qna삭제
 		@GetMapping("/admin/qna/remove")
 		public void qnaRemove(HttpServletRequest request, HttpServletResponse response){
 			int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));
@@ -511,14 +491,14 @@ public class AdminController {
 		
 		
 		
-		//
+		// qna삽입
 		@GetMapping("/admin/qna/saveQna")
 		public String saveQna() {
 			return "admin/qna/save";
 		}
 		
 		
-		//
+		// qna삽입
 		@PostMapping("/admin/qna/save")
 		public void qnaSave(HttpServletRequest request, HttpServletResponse response) {
 			int res = adminQnaService.saveQna(request);
@@ -543,7 +523,7 @@ public class AdminController {
 		}
 		
 		
-		//
+		// 댓글삽입
 		@PostMapping("/admin/qna/saveReply")
 		public void saveReply(HttpServletRequest request, HttpServletResponse response) {
 			int res = adminQnaService.saveReply(request);

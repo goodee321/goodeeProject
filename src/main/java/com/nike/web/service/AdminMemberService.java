@@ -14,10 +14,10 @@ public interface AdminMemberService {
 	
 	
 	
-		// 목록(Admin)
+		// 전체목록
 		public void getMembers(HttpServletRequest request, Model model);
 		
-		// 
+		// 검색목록
 		public void findMembers(HttpServletRequest request, Model model);
 			
 		
@@ -26,16 +26,16 @@ public interface AdminMemberService {
 		
 		
 		
-		// 삭제(선택해서삭제, Admin)
+		// 삭제(선택해서삭제)
 		public int removeList(HttpServletRequest request);
 			
-		// 세부사항(Admin)
+		// 세부사항
 		public MemberDTO findMemberByNo(HttpServletRequest request);
 			
-		// 수정(Admin)
+		// 수정
 		public int change(HttpServletRequest request);
 		
-		// 개별삭제(Admin)
+		// 개별삭제
 		public int removeOne(HttpServletRequest request);
 		
 }

@@ -24,7 +24,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	@Autowired
 	private AdminMemberMapper AdminMemberMapper;
 	
-	// 얘가목록(Admin)
+			// 전체목록
 			@Override
 			public void getMembers(HttpServletRequest request, Model model ) {
 				// TODO Auto-generated method stub
@@ -58,7 +58,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 			}
 			
 			
-			// 검색햇을때
+			// 검색목록
 			@Override
 			public void findMembers(HttpServletRequest request, Model model) {
 				// TODO Auto-generated method stub
@@ -119,7 +119,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 			
 			
 			
-			// 선택삭제(Admin)
+			// 선택삭제
 			@Override
 			public int removeList(HttpServletRequest request) {
 				// 한 번에 여러 개 지우기
@@ -133,7 +133,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 			}
 			
 			
-			// 상세보기(Admin)
+			// 상세보기
 			@Override
 			public MemberDTO findMemberByNo(HttpServletRequest request) {
 				// TODO Auto-generated method stub
@@ -146,21 +146,23 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 				return AdminMemberMapper.selectMemberByNo(memberNo); 
 			}
 			
-			// 수정(Admin)
+			// 수정
 			@Override
 			public int change(HttpServletRequest request) {
 				MemberDTO member = new MemberDTO();
 				member.setMemberNo(Long.parseLong(request.getParameter("memberNo")));
 				member.setName(request.getParameter("name"));
 				member.setEmail(request.getParameter("email"));
+				member.setPostcode(request.getParameter("postcode"));
 				member.setAddress(request.getParameter("address"));
 				member.setAddrDetail(request.getParameter("addrDetail"));
+				member.setExtraAddress(request.getParameter("extraAddress"));
 				member.setPhone(request.getParameter("phone"));
 				return AdminMemberMapper.updateMember(member);
 			}
 		
 			
-			//개별삭제(Admin)
+			//개별삭제
 			@Override
 			public int removeOne(HttpServletRequest request) {
 				Long memberNo = Long.parseLong(request.getParameter("memberNo"));

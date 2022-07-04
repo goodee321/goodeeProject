@@ -9,25 +9,25 @@ public interface AdminQnaService {
 
 	
 	
-		// admin
+		// 전체목록
 		public void findQnas(HttpServletRequest request, Model model);
 		
 		
-		// admin
+		// 상세보기
 		public void findQnaByNo(HttpServletRequest request, Model model);
 		
 		
-		// admin
+		// 수정
 		public void change(HttpServletRequest request, HttpServletResponse response);
 		
 		
-		// admin
+		// 삭제
 		public int removeQna(int qnaNo);
 		
-		// 
+		// 삽입
 		public int saveQna(HttpServletRequest request);
 		
 		
-		//
+		// 댓글삽입
 		public int saveReply(HttpServletRequest request);
 }

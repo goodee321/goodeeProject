@@ -7,9 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Builder
 public class MemberDTO {
 	
@@ -17,9 +17,11 @@ public class MemberDTO {
 	private String id;
 	private String pw;
 	private String name;
+	private String postcode;
 	private String email;
 	private String address;
 	private String addrDetail;
+	private String extraAddress;
 	private String phone;
 	private Integer agreeState;
 	private Date signIn;

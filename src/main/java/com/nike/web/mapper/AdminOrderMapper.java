@@ -11,32 +11,33 @@ import com.nike.web.domain.OrderDTO;
 public interface AdminOrderMapper {
 	
 	
-	// 목록(Admin)
-	
+			// 전체목록
 			public List<OrderDTO> selectOrderList(Map<String, Object> map);
 				
-			
+			// 검색주문수
 			public int selectFindCount(Map<String, Object> map);
 			
+			// 검색목록
 			public List<OrderDTO> selectFindList(Map<String, Object> map);
 			
+			// 전체주문수
 			public int selectOrderCount();
 			
 			
-			// 상세보기(Admin)
+			// 상세보기
 			public OrderDTO selectOrderByNo(Long orderNo);
 			
 			
 			
-			// 수정(Admin)
+			// 수정
 			public int updateOrder(OrderDTO order);
 			
 			
-			// 삭제(Admin)
+			// 삭제
 			public int deleteOrderList(List<Long> list);
 			
 			
-			// 개별삭제(Admin)
+			// 개별삭제
 			public int deleteOrder(Long orderNo);
 
 }

@@ -58,10 +58,14 @@
 		<input type="text" name="name" id="name" value="${member.name}" placeholder="이름"><br><br>
 		<strong>E-Mail</strong><br>
 		<input type="text" name="email" id="email" value="${member.email}" placeholder="E-Mail" required><br><br>
+		<strong>우편번호</strong><br>
+		<input type="text" name="postcode" id="postcode" value="${member.postcode}" placeholder="우편번호" required><br><br>
 		<strong>주소</strong><br>
 		<input type="text" name="address" id="address" value="${member.address}" placeholder="주소" required><br><br>
 		<strong>상세주소</strong><br>
 		<input type="text" name="addrDetail" id="addrDetail" value="${member.addrDetail}" placeholder="상세주소" required><br><br>
+		<strong>참고항목</strong><br>
+		<input type="text" name="extraAddress" id="extraAddress" value="${member.extraAddress}" placeholder="참고항목" required><br><br>
 		<strong>휴대폰번호</strong><br>
 		<input type="text" name="phone" id="phone" value="${member.phone}" placeholder="휴대폰번호" required><br><br>
 		<input type="hidden" name="memberNo" value="${member.memberNo}">

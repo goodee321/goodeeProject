@@ -25,7 +25,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 	private AdminNoticeMapper adminNoticeMapper;
 	
 	
-				// Admin
+				// 검색목록
 				@Override
 				public void findNotices(HttpServletRequest request, Model model) {
 					// TODO Auto-generated method stub
@@ -82,7 +82,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		
 		
 		
-			// 목록(Admin)
+			// 전체목록
 			@Override
 			public void getNotices(HttpServletRequest request, Model model) {
 				// TODO Auto-generated method stub
@@ -106,7 +106,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 			}
 			
 			
-			// 상세보기(Admin)
+			// 상세보기
 			@Override
 			public NoticeDTO findNoticeByNo(HttpServletRequest request) {
 				String requestURI = request.getRequestURI();  // "/ex09/notice/detail"
@@ -117,7 +117,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 				return adminNoticeMapper.selectNoticeByNo(noticeNo); 
 			}
 			
-			// 수정(Admin)
+			// 수정
 			@Override
 			public int change(HttpServletRequest request) {
 				NoticeDTO notice = new NoticeDTO();
@@ -128,7 +128,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 				return adminNoticeMapper.updateNotice(notice);
 			}
 			
-			// 개별삭제(Admin)
+			// 개별삭제
 			@Override
 			public int removeOne(HttpServletRequest request) {
 				Integer noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
@@ -136,7 +136,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 			}
 			
 			
-			// 삽입(Admin)
+			// 삽입
 			@Override
 			public int save(HttpServletRequest request) {
 				
@@ -148,7 +148,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 			}
 			
 			
-			// 선택삭제(Admin)
+			// 선택삭제
 			@Override
 			public int removeList(HttpServletRequest request) {
 				// 한 번에 여러 개 지우기

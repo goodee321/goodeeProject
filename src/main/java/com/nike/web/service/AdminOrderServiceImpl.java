@@ -24,9 +24,9 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 	private AdminOrderMapper adminOrderMapper;
 	
 	
-	// admin
 	
-		// 얘가목록(Admin)
+	
+				// 전체목록
 				@Override
 				public void getOrders(HttpServletRequest request, Model model ) {
 					// TODO Auto-generated method stub
@@ -60,7 +60,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				}
 				
 				
-				// 검색햇을때
+				// 검색목록
 				@Override
 				public void findOrders(HttpServletRequest request, Model model) {
 					// TODO Auto-generated method stub
@@ -115,7 +115,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				}
 				
 				
-				// 상세보기(Admin)
+				// 상세보기
 				@Override
 				public OrderDTO findOrderByNo(HttpServletRequest request) {
 					// TODO Auto-generated method stub
@@ -130,7 +130,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				
 				
 				
-				// 수정(Admin)
+				// 수정
 				@Override
 				public int change(HttpServletRequest request) {
 					OrderDTO order = new OrderDTO();
@@ -147,7 +147,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				
 				
 				
-				// 선택삭제(Admin)
+				// 선택삭제
 				@Override
 				public int removeList(HttpServletRequest request) {
 					// 한 번에 여러 개 지우기
@@ -161,7 +161,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 				}
 				
 				
-				//개별삭제(Admin)
+				//개별삭제
 				@Override
 				public int removeOne(HttpServletRequest request) {
 					Long orderNo = Long.parseLong(request.getParameter("orderNo"));
