@@ -18,6 +18,7 @@
 	    	$(this).parent().parent().next().removeClass('blind');
 		})
 	
+	})
 </script>
 <style>
 	.blind {
@@ -50,6 +51,10 @@
 		font-size: 15px;
 		display: block;
 	}
+	.title p:nth-of-type(2) {
+		color: fuchsia;
+	}
+	
 	
 	table {
 		border-collapse: collapse;
@@ -58,22 +63,31 @@
 	
 	table caption {
 		margin-bottom: 5px;
-		margin-left: 0;
+	
 	}
 	
 	table caption a {
-		background-color: #008bbc;
+		background-color: #6495ed;
 		color: white;
 		text-decoration: none; 
+		border-radius: 3px;
+	
 	}
 	
+	table a { text-decoration: none; }
+	
 	thead {
-		background-color: silver;	
+		background-color: #696969;	
+	}
+	
+	thead td { 
+		color: white; 
+		font-weight: 600;	
 	}
 	
 	td:nth-of-type(1) { width: 80px; }
 	td:nth-of-type(2) { width: 160px; }
-	td:nth-of-type(3) { width: 400px; }
+	td:nth-of-type(3) { width: 450px; }
 	td:nth-of-type(4) { width: 100px; }
 	td:nth-of-type(5) { width: 150px; }
 	td {
@@ -83,7 +97,7 @@
 		text-align: center;
 	}
 	
-	tbody a { text-decoration: none; }
+	tbody tr:hover { background-color: #f0ffff; }
 	
 	tfoot {
 		text-align: center;
@@ -103,13 +117,15 @@
 	<div class="title">
 		<h1>Q&A</h1>
 		<p>상품 Q&A입니다.</p>
-		<p><c:if test="${loginMember.id eq null}">글 작성을 원하시면 로그인 후 접속해주세요.</c:if></p>
+		<c:if test="${loginMember.id eq null}">
+		<p>글 작성은 로그인 후 가능합니다.</p>
+		</c:if>
 	</div>
 
 		<table>
 			<c:if test="${loginMember.id ne null}">
-				<caption><a href="${contextPath}/qna/saveQna">글쓰기</a><br></caption>
-			</c:if>	
+			<caption><a href="${contextPath}/qna/saveQna">글쓰기</a><br></caption>
+			</c:if>
 			<thead>
 				<tr>
 					<td>번호</td>
@@ -130,7 +146,7 @@
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
 							<tr>
-								<td colspan="5"><i class="fa-solid fa-ban"></i> 관리자에 의해 삭제된 게시글입니다</td>
+								<td colspan="7">삭제된 게시글입니다</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
@@ -143,23 +159,29 @@
 									
 									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-regular fa-user">관리자 답변</i></c:if>
 									<!-- 제목 -->
-									<c:if test="${qna.qnaTitle.length() gt 30}">
-										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 30)}</a>
+									<c:if test="${qna.qnaTitle.length() gt 20}">
+										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 10)}</a>
 									</c:if>
-									<c:if test="${qna.qnaTitle.length() le 30}">								
+									<c:if test="${qna.qnaTitle.length() le 20}">								
 										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
 									</c:if>
-								
 								</td>
-								<td>${qna.qnaContent}</td>
-								<td>${qna.id}</td>
+								<td>
+									<c:if test="${qna.qnaContent.length() gt 24}">
+										${qna.qnaContent.substring(0, 24)}	
+									</c:if>
+									<c:if test="${qna.qnaContent.length() lt 24}">
+										${qna.qnaContent}
+									</c:if>
+								</td>
+								<td>${loginMember.id}</td>
 								<td>${qna.qnaDate}</td>
 								<c:if test="${loginMember.id eq 'admin'}">
 									<td>
-										<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
-										<c:if test="${qna.qnaDepth eq 0}">
-											<a class="reply_link">답변하기</a>								
-										</c:if>
+									<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
+									<c:if test="${qna.qnaDepth eq 0}">
+										<a class="reply_link">답변하기</a>								
+									</c:if>
 									</td>
 									<td>
 										<a data-qna_no="${qna.qnaNo}" onclick="fnRemove(this)">
