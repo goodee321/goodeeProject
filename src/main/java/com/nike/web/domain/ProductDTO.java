@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+<<<<<<< HEAD
 @Builder
 
 public class ProductDTO {
@@ -25,4 +26,18 @@ public class ProductDTO {
 	
 	private ProductImageDTO productImageDTO;
 	private ProductQtyDTO productQtyDTO;
+=======
+
+public class ProductDTO {
+
+    private Integer proNo;
+    private String proName;
+    private int proPrice;
+    private String proDetail;
+    private Date proDate;
+
+
+    private ProductImageDTO productImageDTO;
+    private ProductQtyDTO productQtyDTO;
+>>>>>>> main
 }

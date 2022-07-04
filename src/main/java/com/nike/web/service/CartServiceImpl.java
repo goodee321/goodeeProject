@@ -1,15 +1,12 @@
 package com.nike.web.service;
 
-import java.io.PrintWriter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nike.web.domain.CartDTO;
 import com.nike.web.mapper.CartMapper;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -18,64 +15,36 @@ public class CartServiceImpl implements CartService {
     private CartMapper cartMapper;
 
     @Override
-    public void addCart(HttpServletRequest request, HttpServletResponse response) {
-
-        int memberNo = 1;
-        int productNo = 1;
-        int cartQty = Integer.parseInt(request.getParameter("cartQty"));
-
-        CartDTO cart = CartDTO.builder()
-                .memberNo(memberNo)
-                .productNo(productNo)
-                .cartQty(cartQty)
-                .build();
+    public int addCart(CartDTO cart) {
 
         int res = cartMapper.insertCart(cart);
-
-        try {
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            if (res > 0) {
-                out.println("<script>");
-                out.println("if(confirm('장바구니에 상품을 담았습니다." + "\\n" + "장바구니로 이동하시겠습니까?')){");
-                out.println("location.href='" + request.getContextPath() + "/cart/list/" + memberNo + "'");
-                out.println("}");
-                out.println("</script>");
-            } else {
-                out.println("<script>");
-                out.println("alert('장바구니 담기에 실패하였습니다." + "\\n" + "다시 시도해주세요.')");
-                out.println("history.back()");
-                out.println("</script>");
-                out.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return res;
 
     }
 
     @Override
-    public CartDTO getCartByNo(int memberNo) {
+    public List<CartDTO> getCartByNo(long memberNo) {
 
         return cartMapper.selectListByMemberNo(memberNo);
 
     }
 
     @Override
-    public void updateCart(CartDTO cart) {
+    public int updateCart(CartDTO cart) {
 
-        cartMapper.updateCart(cart);
-
+        int res = cartMapper.updateCart(cart);
+        return res;
     }
 
     @Override
     public int removeCartOne(int cartNo) {
 
-        return cartMapper.deleteCartOne(cartNo);
+        int res = cartMapper.deleteCartOne(cartNo);
+        return res;
 
     }
 
-    public int removeCartAll(int memberNo) {
+    public int removeCartAll(long memberNo) {
 
         return cartMapper.deleteCartAll(memberNo);
 

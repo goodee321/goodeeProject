@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper 
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.nike.web.mapper.NoticeMapper">
 
+<<<<<<< HEAD
 	<select id="selectNoticeList" parameterType="Map" resultType="NoticeDTO">
 		SELECT *
 		  FROM NOTICE
@@ -60,5 +61,86 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		
 			
+=======
+    <select id="selectNoticeList" parameterType="Map" resultType="NoticeDTO">
+        SELECT *
+        FROM NOTICE
+          ORDER BY NOTICE_NO DESC LIMIT
+        #{beginRecord}, #{endRecord}
+        ORDER BY NOTICE_NO DESC LIMIT #{beginRecord}, #{recordPerPage}
+    </select>
+
+    <!-- 검색된 레코드 갯수 -->
+    <select id="selectFindCount" parameterType="Map" resultType="Integer">
+        SELECT COUNT(*)
+        FROM NOTICE
+    </select>
+
+    <!-- 검색 -->
+    <select id="selectFindList" parameterType="Map" resultType="NoticeDTO">
+        SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
+        FROM NOTICE
+        WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%') >>>>>>> JeongHwaha
+    </select>
+
+    <!-- 레코드 수 -->
+    <select id="selectNoticeCount" resultType="Integer">
+        SELECT COUNT(NOTICE_NO)
+        FROM NOTICE
+    </select>
+
+    <!-- 상세보기 -->
+    <select id="selectNoticeByNo" parameterType="Integer" resultType="NoticeDTO">
+        SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
+        FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo}
+    </select>
+
+    <!-- 삽입 -->
+    <insert id="insertNotice" parameterType="NoticeDTO">
+        INSERT INTO NOTICE
+        (NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
+        VALUES
+        (#{noticeTitle}, #{noticeContent}, NOW(), 0)
+        (NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
+        VALUES
+        (#{noticeNo}, #{noticeTitle}, #{noticeContent}, NOW(), 0)
+    </insert>
+
+    <update id="updateHit" parameterType="Integer">
+        UPDATE NOTICE
+        SET NOTICE_HIT = NOTICE_HIT + 1
+        WHERE NOTICE_NO = #{noticeNo}
+    </update>
+
+    <!-- 수정 -->
+    <update id="updateNotice" parameterType="NoticeDTO">
+        UPDATE NOTICE
+        SET NOTICE_TITLE   = #{noticeTitle}
+          , NOTICE_CONTENT = #{noticeContent}
+          , NOTICE_DATE    = NOW()
+        WHERE NOTICE_NO = #{noticeNo}
+    </update>
+
+    <!-- 삭제 -->
+    <delete id="deleteNotice" parameterType="Integer">
+        DELETE
+        FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo}
+    </delete>
+
+    <!-- 목록(Admin) -->
+    <select id="selectNoticeList2" parameterType="Map" resultType="NoticeDTO">
+        SELECT *
+        FROM NOTICE ORDERS LIMIT #{beginRecord}, #{endRecord}
+    </select>
+
+    <!-- 상세보기 -->
+    <select id="selectNoticeByNo2" parameterType="Long" resultType="NoticeDTO">
+        SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
+        FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo}
+    </select>
+>>>>>>> main
 
 </mapper>

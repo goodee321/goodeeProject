@@ -15,7 +15,6 @@
 	<jsp:include page="./layout/header.jsp"></jsp:include>
 	
 	<h1>MAIN PAGE</h1> 
-	
 
 	<a href="${contextPath}/notice/list">공지사항</a>
 	
@@ -29,9 +28,21 @@
 	
 	
 
+<<<<<<< HEAD
 	<a href="${contextPath}/product/list">상품 리스트</a>
 	<a href="${contextPath}/product/saveProductPage">데이터 저장</a>
+=======
+	<a href="${contextPath}/cart/list">카트</a>
+	
+	<h1>MAIN PAGE</h1>
+	
+	<a href="${contextPath}/notice/list">공지사항 바로가기</a>
+	<a href="${contextPath}/notice/savePage">새 공지 작성하기</a>
+	<a href="${contextPath}/qna/list">QNA</a>
+>>>>>>> main
 
+	<a href="${contextPath}/product/list">상품 리스트</a>
+	<a href="${contextPath}/product/saveProductPage">데이터 저장</a>
 	
 	
 	

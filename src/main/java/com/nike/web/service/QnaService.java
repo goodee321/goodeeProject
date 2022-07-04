@@ -12,6 +12,7 @@ public interface QnaService {
 	public int saveReply(HttpServletRequest request);
 	public void change(HttpServletRequest request, HttpServletResponse response);
 	public int removeQna(int qnaNo);
+<<<<<<< HEAD
 	
 	
 	
@@ -26,4 +27,6 @@ public interface QnaService {
 	
 	
 	
+=======
+>>>>>>> main
 }

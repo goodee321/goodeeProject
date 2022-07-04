@@ -1,8 +1,10 @@
 package com.nike.web.config;
 
+import com.nike.web.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+<<<<<<< HEAD
 import com.nike.web.service.AdminMemberService;
 import com.nike.web.service.AdminMemberServiceImpl;
 import com.nike.web.service.AdminNoticeService;
@@ -26,6 +28,8 @@ import com.nike.web.service.ProductServiceImpl;
 import com.nike.web.service.QnaService;
 import com.nike.web.service.QnaServiceImpl;
 
+=======
+>>>>>>> main
 @Configuration
 public class ServiceConfig {
 
@@ -39,32 +43,51 @@ public class ServiceConfig {
 		return new CartServiceImpl();
 	}
 
+<<<<<<< HEAD
 	
+=======
+	@Bean
+	public ProductService productService() {
+		return new ProductServiceImpl();
+	}
+
+>>>>>>> main
 	@Bean
 	public MemberService memberService() {
 		return new MemberServiceImpl();
 	}
+<<<<<<< HEAD
 	
 	
+=======
+
+>>>>>>> main
 	@Bean
 	public NoticeService noticeService() {
 		return new NoticeServiceImpl();
 	}
+<<<<<<< HEAD
 	
 	public ProductService productService() {
 		return new ProductServiceImpl();
 	}
 	
 	
+=======
+
+>>>>>>> main
 	@Bean
 	public QnaService qnaService() {
 		return new QnaServiceImpl();
 	}
 	
 	
+<<<<<<< HEAD
 	
 	
 	
+=======
+>>>>>>> main
 	@Bean
 	public AdminMemberService adminMemberService() {
 		return new AdminMemberServiceImpl();
@@ -96,6 +119,10 @@ public class ServiceConfig {
 	
 	
 	
+<<<<<<< HEAD
 	
 	
+=======
+
+>>>>>>> main
 }

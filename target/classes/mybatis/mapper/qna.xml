@@ -65,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="deleteQna" parameterType="Integer">
 		UPDATE QNA
 		   SET QNA_STATE = -1
+<<<<<<< HEAD
 		 WHERE QNA_GROUP_NO = #{qnaGroupNo}
 	</update>
 	
@@ -74,6 +75,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 	
+=======
+		 WHERE QNA_NO = #{qnaNo}
+	</update>
+>>>>>>> main
 
 
 </mapper>

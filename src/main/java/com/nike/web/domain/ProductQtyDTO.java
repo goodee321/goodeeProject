@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+<<<<<<< HEAD
 @Data
 @Builder
 public class ProductQtyDTO {
@@ -16,4 +17,16 @@ public class ProductQtyDTO {
 	private int proSize;
 	private int proQty;
 	private Double	proDiscount;
+=======
+@Builder
+@Data
+
+public class ProductQtyDTO {
+
+    private Integer proNo;
+    private int proSize;
+    private int proQty;
+    private Double proDiscount;
+
+>>>>>>> main
 }

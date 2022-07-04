@@ -11,9 +11,18 @@ import lombok.NoArgsConstructor;
 @Data
 
 public class ProductImageDTO {
+<<<<<<< HEAD
 	private Integer proimgNo;
 	private String proimgName;
 	private String proimgPath;
 	private String proimgOrigin;
 	private Integer proNo;
 }
+=======
+    private Integer proimgNo;
+    private String proimgName;
+    private String proimgPath;
+    private String proimgOrigin;
+    private Integer proNo;
+}
+>>>>>>> main

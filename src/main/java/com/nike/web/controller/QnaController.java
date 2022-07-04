@@ -15,7 +15,10 @@ import com.nike.web.service.QnaService;
 
 @Controller
 public class QnaController {
+<<<<<<< HEAD
 	
+=======
+>>>>>>> main
 	@Autowired
 	private QnaService qnaService;
 	
@@ -83,7 +86,10 @@ public class QnaController {
 		}
 	}
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> main
 	@GetMapping("/qna/changePage")
 	public String changePage(HttpServletRequest request, Model model) {
 		qnaService.findQnaByNo(request, model);
@@ -95,7 +101,10 @@ public class QnaController {
 		qnaService.change(request, response);
 	}
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> main
 	@GetMapping("/qna/remove")
 	public void remove(HttpServletRequest request, HttpServletResponse response){
 		int qnaNo = Integer.parseInt(request.getParameter("qnaNo"));

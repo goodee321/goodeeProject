@@ -22,6 +22,7 @@ public interface QnaMapper {
 	public int updateQna(QnaDTO qna);
 	
 	public int deleteQna(int qnaNo);
+<<<<<<< HEAD
 	
 	
 	
@@ -33,4 +34,6 @@ public interface QnaMapper {
 	
 	
 	
+=======
+>>>>>>> main
 }

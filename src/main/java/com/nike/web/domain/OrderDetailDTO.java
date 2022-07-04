@@ -12,10 +12,13 @@ import lombok.NoArgsConstructor;
 public class OrderDetailDTO {
 
 	private int orderDetailNo;
-	private int orderNo;
+	private String orderId;
 	private int productNo;
 	private int orderQty;
 	private int orderPrice;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 }

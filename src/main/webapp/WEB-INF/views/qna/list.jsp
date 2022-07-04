@@ -60,6 +60,7 @@
 	
 	table caption {
 		margin-bottom: 5px;
+<<<<<<< HEAD
 	
 	}
 	
@@ -80,11 +81,28 @@
 	thead td { 
 		color: white; 
 		font-weight: 600;	
+=======
+		margin-left: 0;
+	}
+	
+	table caption a {
+		background-color: #008bbc;
+		color: white;
+		text-decoration: none; 
+	}
+	
+	thead {
+		background-color: silver;	
+>>>>>>> main
 	}
 	
 	td:nth-of-type(1) { width: 80px; }
 	td:nth-of-type(2) { width: 160px; }
+<<<<<<< HEAD
 	td:nth-of-type(3) { width: 450px; }
+=======
+	td:nth-of-type(3) { width: 400px; }
+>>>>>>> main
 	td:nth-of-type(4) { width: 100px; }
 	td:nth-of-type(5) { width: 150px; }
 	td {
@@ -94,8 +112,11 @@
 		text-align: center;
 	}
 	
+<<<<<<< HEAD
 	tbody tr:hover { background-color: #f0ffff; }
 	
+=======
+>>>>>>> main
 	tfoot {
 		text-align: center;
 	}
@@ -141,19 +162,28 @@
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
 							<tr>
+<<<<<<< HEAD
 								<td colspan="5"><i class="fa-solid fa-ban"></i> 삭제된 게시글입니다</td>
+=======
+								<td colspan="7">삭제된 게시글입니다</td>
+>>>>>>> main
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
 						<!-- 작성자or관리자 아니면 비밀글 -->
 						<!-- <tr><td><i class="fa-regular fa-lock-keyhole"></i>비밀글입니다</td></tr> -->
 							<tr>
+<<<<<<< HEAD
 								<td>${qna.qnaNo}</td>
+=======
+								<td>Q</td>
+>>>>>>> main
 								<td>
 									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;</c:forEach>
 									
 									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-regular fa-user">관리자 답변</i></c:if>
 									<!-- 제목 -->
+<<<<<<< HEAD
 									<c:if test="${qna.qnaTitle.length() gt 20}">
 										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 10)}</a>
 									</c:if>
@@ -173,6 +203,20 @@
 								<td>${qna.qnaDate}</td>
 								
 									<td>
+=======
+									<c:if test="${qna.qnaTitle.length() gt 30}">
+										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 30)}</a>
+									</c:if>
+									<c:if test="${qna.qnaTitle.length() le 30}">								
+										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>
+									</c:if>
+								</td>
+								<td>${qna.qnaContent}</td>
+								<td>${qna.id}</td>
+								<td>${qna.qnaDate}</td>
+								<!-- 삭제버튼c:if test=qna.id == member.id || qna.id == 관리자/c:if -->
+								<td>
+>>>>>>> main
 									<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
 									<c:if test="${qna.qnaDepth eq 0}">
 										<a class="reply_link">답변하기</a>								
@@ -183,7 +227,10 @@
 										<i class="fa-solid fa-trash-can"></i>
 									</a>
 								</td>
+<<<<<<< HEAD
 								
+=======
+>>>>>>> main
 							</tr>
 							<tr class="reply_form blind">
 								<td colspan="5">

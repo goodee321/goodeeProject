@@ -18,7 +18,10 @@ import com.nike.web.mapper.QnaMapper;
 import com.nike.web.util.PageUtils;
 
 public class QnaServiceImpl implements QnaService {
+<<<<<<< HEAD
 	
+=======
+>>>>>>> main
 	@Autowired
 	private QnaMapper qnaMapper;
 	
@@ -141,6 +144,7 @@ public class QnaServiceImpl implements QnaService {
 	public int removeQna(int qnaNo) {
 		return qnaMapper.deleteQna(qnaNo);
 	}
+<<<<<<< HEAD
 	
 	
 	
@@ -148,4 +152,6 @@ public class QnaServiceImpl implements QnaService {
 	
 	
 	
+=======
+>>>>>>> main
 }

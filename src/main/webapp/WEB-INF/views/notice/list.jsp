@@ -18,8 +18,11 @@
 
 	<h1>공지사항</h1>
 	
+<<<<<<< HEAD
 	<!-- <c:if test="${memberNo == admin}"></c:if> -->
 		<a href="${contextPath}/notice/savePage">새 공지 작성</a>
+=======
+>>>>>>> JeongHwaha
 	
 	<form action="${contextPath}/notice/removeList">
 	

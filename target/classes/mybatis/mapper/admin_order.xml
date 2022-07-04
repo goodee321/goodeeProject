@@ -7,7 +7,11 @@
     
     
     <!-- 목록(beginRecord - endRecord) -->
+<<<<<<< HEAD
 	<select id="selectOrderList" parameterType="Map" resultType="OrderDTO">
+=======
+	<select id="selectOrderList" parameterType="Map" resultType="order">
+>>>>>>> main
 		 SELECT ORDER_NO, ORDER_ID, MEMBER_NO, ORDER_DATE, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_INVOICE, ORDER_DELIVERY, IMP_UID, ORDER_STATE 
        	   FROM ORDER_TB
        LIMIT #{beginRecord}, #{recordPerPage}
@@ -36,7 +40,11 @@
 	
 	
 	<!-- 검색 -->
+<<<<<<< HEAD
 	<select id="selectFindList" parameterType="Map" resultType="OrderDTO">
+=======
+	<select id="selectFindList" parameterType="Map" resultType="order">
+>>>>>>> main
 		SELECT ORDER_NO, ORDER_ID, MEMBER_NO, ORDER_DATE, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_INVOICE, ORDER_DELIVERY, IMP_UID, ORDER_STATE
 		  FROM ORDER_TB
 		WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
@@ -46,7 +54,11 @@
 	
 	
 	<!-- 상세보기 -->
+<<<<<<< HEAD
 	<select id="selectOrderByNo" parameterType="Long" resultType="OrderDTO">
+=======
+	<select id="selectOrderByNo" parameterType="Long" resultType="order">
+>>>>>>> main
 		SELECT ORDER_NO, ORDER_ID, MEMBER_NO, ORDER_DATE, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_INVOICE, ORDER_DELIVERY, IMP_UID, ORDER_STATE
 		  FROM ORDER_TB
 		 WHERE ORDER_NO = #{orderNo}
@@ -54,7 +66,11 @@
 	
 	
 	<!-- 수정 -->
+<<<<<<< HEAD
 	<update id="updateOrder" parameterType="OrderDTO">
+=======
+	<update id="updateOrder" parameterType="order">
+>>>>>>> main
 		UPDATE
 		       ORDER_TB
 		   SET
