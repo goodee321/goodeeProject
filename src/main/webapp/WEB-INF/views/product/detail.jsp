@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -17,6 +17,7 @@
         fnAdd();
         fnReviewCheck();
         fnFileCheck();
+        fnOrder();
     })
 
     function fnReviewCheck() {
@@ -124,6 +125,14 @@
         })
     }
 
+    function fnOrder() {
+        $(".btn-dark").on('click', function(){
+            let cartQty = $(".cartQty").val();
+            $(".order_form").find("input[name='cartQty']").val(cartQty);
+            $(".order_form").submit();
+        })
+    }
+
 </script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 <style>
@@ -208,106 +217,110 @@
 
 </style>
 <body>
-<jsp:include page="../layout/header.jsp"></jsp:include>
+    <jsp:include page="../layout/header.jsp"></jsp:include>
 
-<h2>제품 상세 TEST</h2>
+    <h2>제품 상세 TEST</h2>
 
-번호 ${detail.proNo}
-상품명 ${detail.proName}
-제품가격 ${detail.proPrice}
-판매가격 <span class="totalPrice">${detail.proPrice}</span>
+    번호 ${detail.proNo}
+    상품명 ${detail.proName}
+    제품가격 ${detail.proPrice}
+    판매가격 <span class="totalPrice">${detail.proPrice}</span>
 
-<!--$('ul').children('li')	$(".totalPrice").children('span')-->
+    <!--$('ul').children('li')	$(".totalPrice").children('span')-->
 
 
-이미지번호 ${detail.productImageDTO.proimgNo}
-디테일 ${detail.proDetail}
+    이미지번호 ${detail.productImageDTO.proimgNo}
+    디테일 ${detail.proDetail}
 
-<input type="hidden" value="${detail.proPrice}" id="proPrice">
-<div class="plus"><a href="javascript:change_qty2('p')">▲</a></div>
-<input type="text" class="cartQty" id="cartQty" value="1" readonly="readonly">
-<div class="minus"><a href="javascript:change_qty2('m')">▼</a></div>
-<button type="button" class="btn btn-light" style="border-radius: 1rem">장바구니 담기</button>
-<button type="button" id="iamportPayment" class="btn btn-dark" style="border-radius: 1rem">구매하기</button>
-
-<div class="">
-    <h2>상품후기</h2>
-</div>
-
-<!-- 리뷰 작성 모달창 -->
-<p><a href="#reviewModal" rel="modal:open">리뷰 작성하기</a></p>
-<div id="reviewModal" class="modal">
-    <h3>리뷰</h3>
-    <form id="f" action="${contextPath}/product/detailReviewSave" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="proNo" id="proNo" value="${detail.proNo}">
-        <input type="text" name="memberNo" placeholder="mno"><br>
-        <input type="text" name="reviewTitle" id="reviewTitle" placeholder="제목"><br>
-
-        <!-- <input type="text" name="reviewStar" id="reviewStar" placeholder="별점"><br> -->
-        <fieldset id="filedset">
-            <span class="text-bold">별점을 선택해주세요</span>
-            <input type="radio" name="reviewStar" value="5" id="rate1" class="starClass"><label
-                for="rate1">★</label>
-            <input type="radio" name="reviewStar" value="4" id="rate2" class="starClass"><label
-                for="rate2">★</label>
-            <input type="radio" name="reviewStar" value="3" id="rate3" class="starClass"><label
-                for="rate3">★</label>
-            <input type="radio" name="reviewStar" value="2" id="rate4" class="starClass"><label
-                for="rate4">★</label>
-            <input type="radio" name="reviewStar" value="1" id="rate5" class="starClass"><label
-                for="rate5">★</label>
-        </fieldset>
-        <div class="form-group col-12">
-            <div class="textLengthWrap">
-                <p class="textCount">0자</p>
-                <p class="textTotal">/200자</p>
-            </div>
-            <textarea name="reviewContent" class="col-auto form-control" type="text" id="reviewContent"
-                      placeholder="좋은 구매평을 남겨주시면 NiShoe에 큰 힘이 됩니다!"></textarea>
-        </div>
-        <!-- <textarea name="reviewContent" id="textarea" style="font-size:15px"></textarea><br> -->
-        <input type="file" id="files" name="files" multiple="multiple"><br>
-        <button>작성완료</button>
+    <input type="hidden" value="${detail.proPrice}" id="proPrice">
+    <div class="plus"><a href="javascript:change_qty2('p')">▲</a></div>
+    <input type="text" class="cartQty" id="cartQty" value="1" readonly="readonly">
+    <div class="minus"><a href="javascript:change_qty2('m')">▼</a></div>
+    <button type="button" class="btn btn-light" style="border-radius: 1rem">장바구니 담기</button>
+    <button type="button" id="iamportPayment" class="btn btn-dark" style="border-radius: 1rem">구매하기</button>
+    <form class="order_form" action="${contextPath}/order/orderPage/${loginMember.memberNo}" method="get">
+        <input type="hidden" name="productNo" value="${detail.proNo}">
+        <input type="hidden" name="cartQty" value="">
     </form>
-</div>
 
-<!-- 리뷰 리스트 -->
-<table border="1">
-    <thead>
-    <tr>
-        <td>번호</td>
-        <td>제품번호</td>
-        <td>제목</td>
-        <td>내용</td>
-        <td>별점</td>
-        <td>작성일</td>
-    </tr>
-    </thead>
-    <tbody>
+    <div class="">
+        <h2>상품후기</h2>
+    </div>
 
-    <c:forEach items="${reviews}" var="re" varStatus="vs">
+    <!-- 리뷰 작성 모달창 -->
+    <p><a href="#reviewModal" rel="modal:open">리뷰 작성하기</a></p>
+    <div id="reviewModal" class="modal">
+        <h3>리뷰</h3>
+        <form id="f" action="${contextPath}/product/detailReviewSave" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="proNo" id="proNo" value="${detail.proNo}">
+            <input type="text" name="memberNo" placeholder="mno"><br>
+            <input type="text" name="reviewTitle" id="reviewTitle" placeholder="제목"><br>
+
+            <!-- <input type="text" name="reviewStar" id="reviewStar" placeholder="별점"><br> -->
+            <fieldset id="filedset">
+                <span class="text-bold">별점을 선택해주세요</span>
+                <input type="radio" name="reviewStar" value="5" id="rate1" class="starClass"><label
+                    for="rate1">★</label>
+                <input type="radio" name="reviewStar" value="4" id="rate2" class="starClass"><label
+                    for="rate2">★</label>
+                <input type="radio" name="reviewStar" value="3" id="rate3" class="starClass"><label
+                    for="rate3">★</label>
+                <input type="radio" name="reviewStar" value="2" id="rate4" class="starClass"><label
+                    for="rate4">★</label>
+                <input type="radio" name="reviewStar" value="1" id="rate5" class="starClass"><label
+                    for="rate5">★</label>
+            </fieldset>
+            <div class="form-group col-12">
+                <div class="textLengthWrap">
+                    <p class="textCount">0자</p>
+                    <p class="textTotal">/200자</p>
+                </div>
+                <textarea name="reviewContent" class="col-auto form-control" type="text" id="reviewContent"
+                          placeholder="좋은 구매평을 남겨주시면 NiShoe에 큰 힘이 됩니다!"></textarea>
+            </div>
+            <!-- <textarea name="reviewContent" id="textarea" style="font-size:15px"></textarea><br> -->
+            <input type="file" id="files" name="files" multiple="multiple"><br>
+            <button>작성완료</button>
+        </form>
+    </div>
+
+    <!-- 리뷰 리스트 -->
+    <table border="1">
+        <thead>
         <tr>
-            <td>${startNo - vs.index}</td>
-            <td>${re.proNo}</td>
-            <td>${re.reviewTitle}</td>
-            <td>${re.reviewContent}</td>
-            <td>${re.reviewStar}</td>
-                <%-- <td>
-                    <c:forEach var="star" items="${ reviewStar }" varStatus="vs" begin="1" end="${star.reviewStar}">★</c:forEach>
-                </td> --%>
-            <td>${re.reviewDate}</td>
+            <td>번호</td>
+            <td>제품번호</td>
+            <td>제목</td>
+            <td>내용</td>
+            <td>별점</td>
+            <td>작성일</td>
         </tr>
-    </c:forEach>
+        </thead>
+        <tbody>
 
-    </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="6">
-            ${paging}
-        </td>
-    </tr>
-    </tfoot>
-</table>
+        <c:forEach items="${reviews}" var="re" varStatus="vs">
+            <tr>
+                <td>${startNo - vs.index}</td>
+                <td>${re.proNo}</td>
+                <td>${re.reviewTitle}</td>
+                <td>${re.reviewContent}</td>
+                <td>${re.reviewStar}</td>
+                    <%-- <td>
+                        <c:forEach var="star" items="${ reviewStar }" varStatus="vs" begin="1" end="${star.reviewStar}">★</c:forEach>
+                    </td> --%>
+                <td>${re.reviewDate}</td>
+            </tr>
+        </c:forEach>
+
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="6">
+                ${paging}
+            </td>
+        </tr>
+        </tfoot>
+    </table>
 
 </body>
 </html>

@@ -24,5 +24,6 @@ public interface OrderService {
     public int adminCancel(HttpServletRequest request);
 
     public List<OrderItemDTO> productInfo(List<OrderItemDTO> orders);
+    public List<OrderItemDTO> product(HttpServletRequest request);
 
 }

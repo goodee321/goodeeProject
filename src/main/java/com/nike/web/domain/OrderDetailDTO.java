@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderDetailDTO {
 
-	private int orderDetailNo;
 	private String orderId;
 	private int productNo;
 	private int orderQty;

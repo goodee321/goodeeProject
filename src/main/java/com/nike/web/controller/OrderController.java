@@ -30,6 +30,13 @@ public class OrderController {
         return "order/detail";
     }
 
+    @GetMapping(value = "order/orderPage/{memberNo}", produces = "application/json; charset=UTF-8")
+    public String orderPage(@PathVariable("memberNo") long memberNo, HttpServletRequest request, Model model) {
+        model.addAttribute("memberInfo", memberService.getMemberByNo(memberNo));
+        model.addAttribute("orderList", orderService.product(request));
+        return "order/detail";
+    }
+
     @ResponseBody
     @PostMapping("order/result")
     public ResponseEntity<String> orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {

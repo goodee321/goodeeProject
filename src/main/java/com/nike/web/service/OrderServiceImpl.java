@@ -108,6 +108,8 @@ public class OrderServiceImpl implements OrderService {
 
         int amount = paymentInfo(impUid, token);
 
+        int res = 0;
+
         try {
             int orderAmount = order.getOrderAmount();
 
@@ -116,39 +118,58 @@ public class OrderServiceImpl implements OrderService {
                 return new ResponseEntity<String>("비정상적인 결제 금액으로 인한 주문 실패", HttpStatus.BAD_REQUEST);
             }
 
-            int res = orderMapper.insertOrder(order);
+            res = orderMapper.insertOrder(order);
 
             if (res > 0) {
+
                 String[] cartNo = request.getParameterValues("cartNo");
-                int size = cartNo.length;
 
-                String[] orderPrice = request.getParameterValues("orderPrice");
-                int price = orderPrice.length;
+                if (cartNo[0].equals("0")) {
+                    OrderDetailDTO odd = OrderDetailDTO.builder()
+                            .orderId(order.getOrderId())
+                            .productNo(order.getProductNo())
+                            .orderQty(order.getCartQty())
+                            .orderPrice(order.getProPrice())
+                            .build();
 
-                OrderDetailDTO odd = new OrderDetailDTO();
 
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < price; j++) {
-                        odd = OrderDetailDTO.builder()
-                                .productNo(cartMapper.selectproductNobyCartNo(Integer.parseInt(cartNo[i])))
-                                .orderId(order.getOrderId())
-                                .orderQty(cartMapper.selectcartQtybyCartNo(Integer.parseInt(cartNo[i])))
-                                .orderPrice(Integer.parseInt(orderPrice[i]))
-                                .build();
-                    }
                     res += orderMapper.insertOrderDetail(odd);
-                }
 
-                if (res > 1) {
-                    for (int i = 0; i < size; i++) {
-                        res += cartMapper.deleteCartOne(Integer.parseInt(cartNo[i]));
+                    if (res > 1) {
+                        return new ResponseEntity<String>("주문이 완료되었습니다.", HttpStatus.OK);
                     }
-                    return new ResponseEntity<String>("주문 완료", HttpStatus.OK);
+
+                } else {
+                    int size = cartNo.length;
+
+                    String[] orderPrice = request.getParameterValues("orderPrice");
+                    int price = orderPrice.length;
+
+                    OrderDetailDTO odd = new OrderDetailDTO();
+
+                    for (int i = 0; i < size; i++) {
+                        for (int j = 0; j < price; j++) {
+                            odd = OrderDetailDTO.builder()
+                                    .productNo(cartMapper.selectproductNobyCartNo(Integer.parseInt(cartNo[i])))
+                                    .orderId(order.getOrderId())
+                                    .orderQty(cartMapper.selectcartQtybyCartNo(Integer.parseInt(cartNo[i])))
+                                    .orderPrice(Integer.parseInt(orderPrice[i]))
+                                    .build();
+                        }
+                        res += orderMapper.insertOrderDetail(odd);
+                    }
+
+                    if (res > 1) {
+                        for (int i = 0; i < size; i++) {
+                            res += cartMapper.deleteCartOne(Integer.parseInt(cartNo[i]));
+                        }
+                        return new ResponseEntity<String>("주문이 완료되었습니다.", HttpStatus.OK);
+                    }
                 }
             }
         } catch (Exception e) {
             OrderCancel(impUid, amount, "OrderCancel");
-            return new ResponseEntity<String>("결제 에러", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("에러 발생", HttpStatus.BAD_REQUEST);
         }
         return null;
     }
@@ -189,7 +210,6 @@ public class OrderServiceImpl implements OrderService {
             }
 
             result = (JSONObject) new JSONParser().parse(sb.toString());
-            System.out.println(result);
 
             br.close();
             conn.disconnect();
@@ -265,13 +285,29 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItemDTO> products = new ArrayList<>();
         for (OrderItemDTO orders : order) {
             OrderItemDTO productInfo = orderMapper.selectProductByNo(orders.getProductNo());
-            productInfo.setCartNo(orders.getCartNo());
             productInfo.setProductNo(orders.getProductNo());
+            productInfo.setCartNo(orders.getCartNo());
             productInfo.setCartQty(orders.getCartQty());
             productInfo.initSaleTotal();
             products.add(productInfo);
         }
         return products;
+
+    }
+
+    @Override
+    public List<OrderItemDTO> product(HttpServletRequest request) {
+
+        List<OrderItemDTO> product = new ArrayList<>();
+        int productNo = Integer.parseInt(request.getParameter("productNo"));
+        int cartQty = Integer.parseInt(request.getParameter("cartQty"));
+
+        OrderItemDTO productInfo = orderMapper.selectProductByNo(productNo);
+        productInfo.setProductNo(productNo);
+        productInfo.setCartQty(cartQty);
+        productInfo.initSaleTotal();
+        product.add(productInfo);
+        return product;
 
     }
 }
