@@ -19,13 +19,6 @@ public interface NoticeService {
 	
 	
 	
-		// 목록(Admin)
-		public void findNotices2(HttpServletRequest request, Model model);
-		
-		// 세부사항(Admin)
-		public NoticeDTO findNoticeByNo2(HttpServletRequest request);
-	
-		
 		
 	
 	

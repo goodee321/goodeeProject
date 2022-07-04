@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MemberDTO {
+	
 	private Long memberNo;
 	private String id;
 	private String pw;
@@ -26,4 +27,8 @@ public class MemberDTO {
 	private Date infoModified;
 	private String sessionId;
 	private Date sessionLimit;
+	
+	
+	
+	
 }

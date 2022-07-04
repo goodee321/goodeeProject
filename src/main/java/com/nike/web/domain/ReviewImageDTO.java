@@ -16,5 +16,5 @@ public class ReviewImageDTO {
 	private String riName;
 	private String riPath;
 	private String riOrigin;
-	private int rNo;
+	private int reviewNo;
 }

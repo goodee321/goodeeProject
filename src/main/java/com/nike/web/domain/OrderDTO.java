@@ -11,6 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Data
 @Builder
+
 public class OrderDTO {
 
     private int orderNo;
@@ -19,11 +20,14 @@ public class OrderDTO {
     private String orderName;
     private String orderPhone;
     private String orderAddr;
+    private String addrDetail;
     private String orderDetail;
     private int orderAmount;
-    private int orderPayment;
+    private String orderPayment;
     private int orderInvoice;
     private int orderDelivery;
     private String impUid;
+    private int orderState;
+    
 
 }

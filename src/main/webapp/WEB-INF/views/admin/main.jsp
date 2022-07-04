@@ -13,22 +13,34 @@
 
 	body {
 		background-color: #BDBDBD;
-		text-align: center;
+		
 	}
 	
 	
 </style>
 </head>
+
+	
+	<section>
+	
+	
+	</section>
 <body>
 	
-	<h1>관리자페이지</h1>
 	
-	<a href="${contextPath}/admin/member/list">회원관리</a>
 	
-	<a href="${contextPath}/admin/notice/list">공지사항관리</a>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
 	<a href="${contextPath}/">메인페이지</a>
+	
+	
 </body>
 </html>

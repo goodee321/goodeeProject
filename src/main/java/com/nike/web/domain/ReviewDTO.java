@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class ReviewDTO {
-	private int rNo;
-	private int oNo;
-	private int pNo;
-	private int mNo;
-	private String rTitle;
-	private String rContent;
-	private Date rDate;
-	private int rStar;
+	private int reviewNo;
+	private int orderNo;
+	private int proNo;
+	private int memberNo;
+	private String reviewTitle;
+	private String reviewContent;
+	private Date reviewDate;
+	private int reviewStar;
 }

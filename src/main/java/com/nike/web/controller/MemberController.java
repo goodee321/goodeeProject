@@ -117,6 +117,8 @@ public class MemberController {
 		memberService.reSignIn(request, response);
 	}
 	
+	
+	
 	// 실제 구현에서는 BoardController에 있음
 	@GetMapping("/board/savePage")
 	public String savePage() {

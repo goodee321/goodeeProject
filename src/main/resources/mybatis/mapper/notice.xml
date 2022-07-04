@@ -57,18 +57,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-		<!-- 목록(Admin) -->
-		<select id="selectNoticeList2" parameterType="Map" resultType="NoticeDTO">
-			SELECT *
-			  FROM NOTICE
-			 ORDERS LIMIT #{beginRecord}, #{endRecord}
-		</select>
 	
-		<!-- 상세보기 -->
-		<select id="selectNoticeByNo2" parameterType="Long" resultType="NoticeDTO">
-			SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
-			  FROM NOTICE
-			 WHERE NOTICE_NO = #{noticeNo}
-		</select>
+		
+			
 
 </mapper>
