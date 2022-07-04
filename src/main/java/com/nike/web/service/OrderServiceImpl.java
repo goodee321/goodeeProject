@@ -1,6 +1,7 @@
 package com.nike.web.service;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,22 @@ import com.google.gson.JsonObject;
 import com.nike.web.domain.*;
 import com.nike.web.mapper.CartMapper;
 import com.nike.web.mapper.OrderMapper;
+=======
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
+
+>>>>>>> main
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -32,15 +49,13 @@ import com.nike.web.domain.OrderDTO;
 import com.nike.web.mapper.OrderMapper;
 import com.nike.web.util.PageUtils;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.nike.web.domain.OrderDTO;
+import com.nike.web.domain.OrderDetailDTO;
+import com.nike.web.domain.OrderItemDTO;
+import com.nike.web.mapper.CartMapper;
+import com.nike.web.mapper.OrderMapper;
 
 @Service
 public class OrderServiceImpl implements OrderService {
