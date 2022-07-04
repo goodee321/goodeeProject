@@ -29,7 +29,7 @@
 
 		
 		<c:if test="${loginMember.id eq 'admin'}">
-			<a href="${contextPath}/admin/main">관리자페이지</a>
+			<a href="${contextPath}/admin/member/list">관리자페이지</a>
 		</c:if>
 		
 

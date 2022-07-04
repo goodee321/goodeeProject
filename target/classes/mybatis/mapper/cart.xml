@@ -4,48 +4,31 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nike.web.mapper.CartMapper">
 
-    <resultMap type="ProductImageDTO" id="ProductImageMap">
-        <result property="proimgNo" column="PROIMG_NO"/>
-    </resultMap>
-
-    <resultMap type="ProductDTO" id="ProductMap">
-        <result property="proName" column="PRO_NAME"/>
-        <result property="proSize" column="PRO_SIZE"/>
-        <result property="proPrice" column="PRO_PRICE"/>
-        <result property="proDiscount" column="PRO_DISCOUNT"/>
-        <result property="proDelivery" column="PRO_DELIVERY"/>
-    </resultMap>
-
-    <resultMap type="cart" id="CartMap">
-        <result property="cartNo" column="CART_NO"/>
-        <result property="memberNo" column="MEMBER_NO"/>
-        <result property="productNo" column="PRODUCT_NO"/>
-        <result property="cartQty" column="CART_QTY"/>
-        <result property="cartRegdate" column="CART_REGDATE"/>
-    </resultMap>
-
-    <select id="selectListByMemberNo" resultMap="CartMap" parameterType="int">
+    <select id="selectListByMemberNo" resultType="cart">
         SELECT C.MEMBER_NO,
+               C.PRODUCT_NO,
+               C.CART_NO,
                C.CART_QTY,
                P.PRO_NAME,
-               P.PRO_SIZE,
-               P.PRO_PRICE,
-               P.PRO_DELIVERY,
-               PI.PROIMG_NOFROM CART CINNER
-            JOIN PRODUCT PON C.PRODUCT_NO = P.PRO_NOLEFT
-            JOIN PRODUCT_IMAGE PION C.PRODUCT_NO = PI.PRO_NO
-        WHERE C.MEMBER_NO = {memberNo}
+               P.PRO_PRICE
+        FROM CART C
+                 INNER JOIN PRODUCT P ON C.PRODUCT_NO = P.PRO_NO
+        WHERE C.MEMBER_NO = #{memberNo}
     </select>
 
-    <select id="existCart" resultType="cart">
-        SELECT * FROM
-            CART
-        WHERE MEMBER_NO = #{memberNo}
-          AND
-            PRODUCT_NO = #{pNo}
+    <select id="selectproductNobyCartNo" resultType="int">
+        SELECT PRODUCT_NO
+        FROM CART
+        WHERE CART_NO = #{cartNo}
     </select>
 
-    <insert id="insertCart">
+    <select id="selectcartQtybyCartNo" resultType="int">
+        SELECT CART_QTY
+        FROM CART
+        WHERE CART_NO = #{cartNo}
+    </select>
+
+    <insert id="insertCart" parameterType="cart">
         INSERT INTO CART
             (MEMBER_NO, PRODUCT_NO, CART_QTY)
         VALUES
@@ -59,13 +42,13 @@
     </update>
 
     <delete id="deleteCartOne" parameterType="int">
-        DELETE * FROM
+        DELETE FROM
             CART
         WHERE CART_NO = #{cartNo}
     </delete>
 
-    <delete id="deleteCartAll" parameterType="int">
-        DELETE * FROM
+    <delete id="deleteCartAll" parameterType="Long">
+        DELETE FROM
             CART
         WHERE MEMBER_NO = #{memberNo}
     </delete>

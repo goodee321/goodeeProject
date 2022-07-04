@@ -27,6 +27,7 @@ public class OrderDTO {
     private int orderInvoice;
     private int orderDelivery;
     private String impUid;
+    private int orderState;
 
     //  Product
     private String proName;
