@@ -21,9 +21,8 @@ public interface OrderService {
 
     public void OrderCancel(String impUid, int amount, String reason);
 
-    public int adminCancel(HttpServletRequest request);
-
     public List<OrderItemDTO> productInfo(List<OrderItemDTO> orders);
+
     public List<OrderItemDTO> product(HttpServletRequest request);
 
 }

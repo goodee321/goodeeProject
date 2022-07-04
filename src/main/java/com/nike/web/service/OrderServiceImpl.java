@@ -109,6 +109,7 @@ public class OrderServiceImpl implements OrderService {
         return 0;
     }
 
+    @Override
     public ResponseEntity<String> orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {
 
         String token = getToken();
@@ -224,65 +225,6 @@ public class OrderServiceImpl implements OrderService {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public int adminCancel(HttpServletRequest request) {
-
-        String token = getToken();
-        HttpsURLConnection conn = null;
-        JSONObject result = null;
-        int res;
-
-        try {
-            URL url = new URL(API_URL + "/payments/cancel");
-            conn = (HttpsURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", token);
-            conn.setRequestProperty("Content-type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setDoOutput(true);
-
-            JsonObject json = new JsonObject();
-
-            String reason = request.getParameter("orderReason");
-            String impUid = request.getParameter("orderImpUid");
-            int amount = Integer.parseInt(request.getParameter("ordreAmount"));
-
-            json.addProperty("reason", reason);
-            json.addProperty("imp_uid", impUid);
-            json.addProperty("amount", amount);
-            json.addProperty("checksum", amount);
-
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
-            bw.write(json.toString());
-            bw.flush();
-            bw.close();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-            result = (JSONObject) new JSONParser().parse(sb.toString());
-            int code = Integer.parseInt(String.valueOf(result.get("code")));
-
-            if (code == 0) {
-                res = orderMapper.cancelOrder(impUid);
-                return res;
-            }
-
-            br.close();
-            conn.disconnect();
-
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
 
     }
 

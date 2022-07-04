@@ -4,100 +4,118 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nike.web.mapper.AdminOrderMapper">
 
-    
-    
     <!-- 목록(beginRecord - endRecord) -->
-	<select id="selectOrderList" parameterType="Map" resultType="order">
-		 SELECT ORDER_NO, ORDER_ID, MEMBER_NO, ORDER_DATE, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_INVOICE, ORDER_DELIVERY, IMP_UID, ORDER_STATE 
-       	   FROM ORDER_TB
-       LIMIT #{beginRecord}, #{recordPerPage}
-	</select>
-	
-	
-	
-	
-	
-	<!-- 전체 레코드 갯수 -->
-	<select id="selectOrderCount" resultType="Integer">
-		SELECT COUNT(*)
-		  FROM ORDER_TB
-	</select>
-	
- 	
- 	
- 	
-	<!-- 검색된 레코드 갯수 -->
-	<select id="selectFindCount" parameterType="Map" resultType="Integer">
-		SELECT COUNT(*)
-		  FROM ORDER_TB
-		  WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
-	</select>
-	
-	
-	
-	<!-- 검색 -->
-	<select id="selectFindList" parameterType="Map" resultType="order">
-		SELECT ORDER_NO, ORDER_ID, MEMBER_NO, ORDER_DATE, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_INVOICE, ORDER_DELIVERY, IMP_UID, ORDER_STATE
-		  FROM ORDER_TB
-		WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
-		
-	</select>
-	
-	
-	
-	<!-- 상세보기 -->
-	<select id="selectOrderByNo" parameterType="Long" resultType="order">
-		SELECT ORDER_NO, ORDER_ID, MEMBER_NO, ORDER_DATE, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_INVOICE, ORDER_DELIVERY, IMP_UID, ORDER_STATE
-		  FROM ORDER_TB
-		 WHERE ORDER_NO = #{orderNo}
-	</select>
-	
-	
-	<!-- 수정 -->
-	<update id="updateOrder" parameterType="order">
-		UPDATE
-		       ORDER_TB
-		   SET
-		       ORDER_NO = #{orderNo}
-		     , ORDER_NAME = #{orderName}
-		     , ORDER_PHONE = #{orderPhone}
-		     , ORDER_ADDR = #{orderAddr}
-		     , ADDR_DETAIL = #{addrDetail}
-		     , ORDER_INVOICE = #{orderInvoice}
-		     , ORDER_DELIVERY = #{orderDelivery}
-		     , ORDER_STATE = #{orderState}
-		     
-		    
-		 WHERE
-		   	   ORDER_NO = #{orderNo}
+    <select id="selectOrderList" parameterType="Map" resultType="order">
+        SELECT ORDER_NO,
+               ORDER_ID,
+               MEMBER_NO,
+               ORDER_DATE,
+               ORDER_NAME,
+               ORDER_PHONE,
+               ORDER_ADDR,
+               ADDR_DETAIL,
+               ORDER_AMOUNT,
+               ORDER_PAYMENT,
+               ORDER_INVOICE,
+               ORDER_DELIVERY,
+               IMP_UID,
+               ORDER_STATE
+        FROM ORDER_TB LIMIT #{beginRecord}, #{recordPerPage}
+    </select>
+
+    <!-- 전체 레코드 갯수 -->
+    <select id="selectOrderCount" resultType="Integer">
+        SELECT COUNT(*)
+        FROM ORDER_TB
+    </select>
+
+    <!-- 검색된 레코드 갯수 -->
+    <select id="selectFindCount" parameterType="Map" resultType="Integer">
+        SELECT COUNT(*)
+        FROM ORDER_TB
+        WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+    </select>
+
+    <!-- 검색 -->
+    <select id="selectFindList" parameterType="Map" resultType="order">
+        SELECT ORDER_NO,
+               ORDER_ID,
+               MEMBER_NO,
+               ORDER_DATE,
+               ORDER_NAME,
+               ORDER_PHONE,
+               ORDER_ADDR,
+               ADDR_DETAIL,
+               ORDER_AMOUNT,
+               ORDER_PAYMENT,
+               ORDER_INVOICE,
+               ORDER_DELIVERY,
+               IMP_UID,
+               ORDER_STATE
+            FROM ORDER_TB
+        WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+    </select>
+
+    <!-- 상세보기 -->
+    <select id="selectOrderByNo" parameterType="Long" resultType="order">
+        SELECT ORDER_NO,
+               ORDER_ID,
+               MEMBER_NO,
+               ORDER_DATE,
+               ORDER_NAME,
+               ORDER_PHONE,
+               ORDER_ADDR,
+               ADDR_DETAIL,
+               ORDER_AMOUNT,
+               ORDER_PAYMENT,
+               ORDER_INVOICE,
+               ORDER_DELIVERY,
+               IMP_UID,
+               ORDER_STATE
+        FROM ORDER_TB
+        WHERE ORDER_NO = #{orderNo}
+    </select>
+
+    <!-- 수정 -->
+    <update id="updateOrder" parameterType="order">
+        UPDATE
+            ORDER_TB
+        SET ORDER_NO       = #{orderNo}
+          , ORDER_NAME     = #{orderName}
+          , ORDER_PHONE    = #{orderPhone}
+          , ORDER_ADDR     = #{orderAddr}
+          , ADDR_DETAIL    = #{addrDetail}
+          , ORDER_INVOICE  = #{orderInvoice}
+          , ORDER_DELIVERY = #{orderDelivery}
+          , ORDER_STATE    = #{orderState}
+
+
+        WHERE ORDER_NO = #{orderNo}
+    </update>
+
+    <!-- 다중 삭제(선택해서 삭제) -->
+    <!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+    <delete id="deleteOrderList">
+        DELETE
+        FROM ORDER_TB
+        <where>
+            <foreach collection="list" item="orderNo" open="ORDER_NO IN(" separator="," close=")">
+                #{orderNo}
+            </foreach>
+        </where>
+    </delete>
+
+    <!-- 개별삭제 -->
+    <delete id="deleteOrder" parameterType="Long">
+        DELETE
+        FROM ORDER_TB
+        WHERE ORDER_NO = #{orderNo}
+    </delete>
+
+	<update id="cancelOrder">
+		UPDATE ORDER_TB
+			SET ORDER_STATE = 4
+		WHERE IMP_UID = #{impUid}
 	</update>
-	
-	
-	
-	<!-- 다중 삭제(선택해서 삭제) -->
-	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
-	<delete id="deleteOrderList">
-		DELETE
-		  FROM ORDER_TB
-		<where> 
-		 	<foreach collection="list" item="orderNo" open="ORDER_NO IN(" separator="," close=")">
-				#{orderNo}
-			</foreach>
-		</where>
-	</delete>
-	
-	
-	
-	<!-- 개별삭제 -->
-	<delete id="deleteOrder" parameterType="Long">
-		DELETE
-		  FROM ORDER_TB
-		 WHERE ORDER_NO = #{orderNo}
-	</delete>
-    
-    
-    
-    
-    
 
 </mapper>

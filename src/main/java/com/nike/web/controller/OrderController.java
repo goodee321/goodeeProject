@@ -48,10 +48,4 @@ public class OrderController {
         return "order/complete";
     }
 
-    @PostMapping("order/cancelOrder")
-    public String orderCancel(HttpServletRequest request) {
-        orderService.adminCancel(request);
-        return "redirect:/";
-    }
-
 }

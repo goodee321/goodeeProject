@@ -90,13 +90,18 @@
 		<strong>회원명:</strong>&nbsp;&nbsp;&nbsp;${order.orderName}<br><hr>
 		<strong>주문일:</strong>&nbsp;&nbsp;&nbsp;${order.orderDate}<br><hr>
 		<strong>휴대폰번호:</strong>&nbsp;&nbsp;&nbsp;${order.orderPhone}<br><hr>
-		<strong>주소:</strong>&nbsp;&nbsp;&nbsp;${order.orderAddr}<br><hr>
-		<strong>상세주소:</strong>&nbsp;&nbsp;&nbsp;${order.addrDetail}<br><hr>
+		<strong>주소:</strong>&nbsp;&nbsp;&nbsp;${order.orderAddr}, ${order.addrDetail}<br><hr>
 		<strong>총주문금액:</strong>&nbsp;&nbsp;&nbsp;${order.orderAmount}<br><hr>
 		<strong>결제수단:</strong>&nbsp;&nbsp;&nbsp;${order.orderPayment}<br><hr>
 		<strong>운송장번호:</strong>&nbsp;&nbsp;&nbsp;${order.orderInvoice}<br><hr>
 		<strong>배송비:</strong>&nbsp;&nbsp;&nbsp;${order.orderDelivery}<br><hr>
-		<strong>주문상태:</strong>&nbsp;&nbsp;&nbsp;${order.orderState}<br>(0:주문완료, 1:배송준비중, 2:배송중 3:배송완료, 4:주문취소)<hr>
+		<strong>주문상태:</strong>&nbsp;&nbsp;&nbsp;
+		<c:if test="${order.orderState == 0}">주문완료</c:if>
+		<c:if test="${order.orderState == 1}">배송준비중</c:if>
+		<c:if test="${order.orderState == 2}">배송중</c:if>
+		<c:if test="${order.orderState == 3}">배송완료</c:if>
+		<c:if test="${order.orderState == 4}">주문취소</c:if>
+		<br><hr>
 		
 		
 		

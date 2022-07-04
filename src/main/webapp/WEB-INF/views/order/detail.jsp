@@ -235,14 +235,5 @@
         </div>
     </div>--%>
 
-    <form id="cancelOrder" action="${contextPath}/order/cancelOrder" method="post">
-        <input type="hidden" id="orderImpUid" name="orderImpUid" value="imp_874799358603">
-        <input type="hidden" id="ordreAmount" name="ordreAmount" value="23000">
-        <%--								<input type="hidden" name="impUid" value="${order.impUid}">--%>
-        <input type="hidden" id="orderReason" name="orderReason" value="TEST">
-        <%--<input type="hidden" name="amount" value="${order.orderAmount}">--%>
-        <button id="btnCancel">취소</button>
-    </form>
-
 </body>
 </html>
