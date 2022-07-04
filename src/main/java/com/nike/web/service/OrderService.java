@@ -17,7 +17,7 @@ public interface OrderService {
 
     public int paymentInfo(String impUid, String token);
 
-    public ResponseEntity<String> orderComplete(String impUid, OrderDTO order, HttpServletRequest request);
+    public int orderComplete(String impUid, OrderDTO order, HttpServletRequest request);
 
     public void OrderCancel(String impUid, int amount, String reason);
 

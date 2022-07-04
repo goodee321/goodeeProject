@@ -42,7 +42,7 @@ public class OrderItemDTO {
     private int totalPrice;
 
     public void initSaleTotal() {
-        this.salePrice = (int) (this.proPrice * (1 - this.proDiscount));
+        this.salePrice = (int) (this.proPrice * (1 - (this.proDiscount / 10)));
         this.totalPrice = this.salePrice * this.cartQty;
     }
 

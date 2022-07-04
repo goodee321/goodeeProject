@@ -127,11 +127,12 @@
             traditional: true,
             data: data,
             success: function (res) {
-                alert(res);
-                location.href = "${contextPath}/order/completePage";
-            },
-            error: function (res) {
-                alert(res);
+                console.log(res);
+                if(res > 0){
+                    location.href = "${contextPath}/order/completePage";
+                } else {
+                    location.href = "${contextPath}/order/errorPage";
+                }
             }
         })
     }

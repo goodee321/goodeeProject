@@ -38,14 +38,19 @@ public class OrderController {
     }
 
     @ResponseBody
-    @PostMapping("order/result")
-    public ResponseEntity<String> orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {
+    @PostMapping(value = "order/result")
+    public int orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {
         return orderService.orderComplete(impUid, order, request);
     }
 
     @GetMapping("order/completePage")
     public String completePage() {
         return "order/complete";
+    }
+
+    @GetMapping("order/errorPage")
+    public String errorPage() {
+        return "order/error";
     }
 
 }

@@ -110,7 +110,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<String> orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {
+    public int orderComplete(String impUid, OrderDTO order, HttpServletRequest request) {
 
         String token = getToken();
 
@@ -123,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
 
             if (orderAmount != amount) {
                 OrderCancel(impUid, amount, "OrderCancel");
-                return new ResponseEntity<String>("비정상적인 결제 금액으로 인한 주문 실패", HttpStatus.BAD_REQUEST);
+                return 0;
             }
 
             res = orderMapper.insertOrder(order);
@@ -140,11 +140,10 @@ public class OrderServiceImpl implements OrderService {
                             .orderPrice(order.getProPrice())
                             .build();
 
-
                     res += orderMapper.insertOrderDetail(odd);
 
                     if (res > 1) {
-                        return new ResponseEntity<String>("주문이 완료되었습니다.", HttpStatus.OK);
+                        return res;
                     }
 
                 } else {
@@ -171,15 +170,15 @@ public class OrderServiceImpl implements OrderService {
                         for (int i = 0; i < size; i++) {
                             res += cartMapper.deleteCartOne(Integer.parseInt(cartNo[i]));
                         }
-                        return new ResponseEntity<String>("주문이 완료되었습니다.", HttpStatus.OK);
+                        return res;
                     }
                 }
             }
         } catch (Exception e) {
             OrderCancel(impUid, amount, "OrderCancel");
-            return new ResponseEntity<String>("에러 발생", HttpStatus.BAD_REQUEST);
+            return 0;
         }
-        return null;
+        return 0;
     }
 
     @Override
