@@ -125,6 +125,14 @@ public class ProductController {
 		ProductQtyDTO productQty = productService.changeProductOptionDetail(request);
 			return productQty;
 		}
+	// fnAjax1이 요청하는 곳
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@ResponseBody
+	@RequestMapping(value="/product/selectProductOptionDetail", method= {RequestMethod.GET, RequestMethod.POST})  
+	public ProductQtyDTO selectProductOptionDetail(HttpServletRequest request) { 
+		ProductQtyDTO productQty = productService.changeProductOptionDetail(request);
+		return productQty;
+	}
 	
 	@PostMapping("/product/changeProductOption")
 	public void changeProductOption(HttpServletRequest request, HttpServletResponse response) {

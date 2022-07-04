@@ -19,7 +19,39 @@
 	$(function(){
 		fnReviewCheck();
 		fnFileCheck();
+		fnData();
 	})
+	
+		
+	function fnData(){
+	
+$("#proSize").change(function () {
+	var proNo= $("#proNo").val();
+	var proSize= $("#proSize").val();
+	
+	  $.ajax({
+		    
+		    url: '${contextPath}/product/selectProductOptionDetail/',
+		    type: 'get',
+		    data:"proNo="+proNo+'&proSize='+proSize,
+			dataType: 'json',
+			header: {
+				"Content-Type" : "application/json"
+			},
+			contentType : "application/json",
+		    success: function (data) {
+		    	$('#proQty').val(data.proQty);
+		    	$('#proDiscount').val(data.proDiscount);
+		    
+		    },
+		    error: function () {
+		    	$('#proQty').val('0');
+		    	$('#proDiscount').val('0');
+		    }
+	  });
+	});
+	
+	}
 	
 	function fnReviewCheck(){
 		
@@ -163,19 +195,31 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
 	<h2>제품 상세 TEST</h2>
-	
+	<input type="hidden" value="${detail.proNo}" name="proNo">
 	번호 ${detail.proNo}
 	상품명 ${detail.proName}
 	제품가격 ${detail.proPrice}
 	이미지번호 ${detail.productImageDTO.proimgNo}
 	디테일 ${detail.proDetail}
+	<select class="fnData" name="proSize" id="proSize">
+	<option value="240">240</option>
+	<option value="250">250</option>
+	<option value="260">260</option>
+	<option value="270">270</option>
+	<option value="280">280</option>
+	</select>
+	남은 수량<input type="text" id="proQty" class="proQty">
+	할인가<input type="text" id="proDiscount" class="proDiscount">
+	<h2 id="proQty2" class="proQty2"></h2>
 
 	<hr>
-	<input type="button" value="제품 수정" onclick="location.href='${contextPath}/product/changeProductPage?proNo=${detail.proNo}'"/>
-	<input type="button" value="옵션 추가" onclick="location.href='${contextPath}/product/saveProductOption?proNo=${detail.proNo}'"/>
-	<input type="button" value="옵션 수정" onclick="location.href='${contextPath}/product/changeProductOptionPage?proNo=${detail.proNo}'"/>
-	<input type="button" value="제품 삭제" onclick="location.href='${contextPath}/product/productDelete?proNo=${detail.proNo}'"/>
-
+	<!-- 관리자 로그인 시 수정 내역 확인 -->
+	<c:if test="${loginMember.id eq 'admin'}">
+		<input type="button" value="제품 수정" onclick="location.href='${contextPath}/product/changeProductPage?proNo=${detail.proNo}'"/>
+		<input type="button" value="옵션 추가" onclick="location.href='${contextPath}/product/saveProductOption?proNo=${detail.proNo}'"/>
+		<input type="button" value="옵션 수정" onclick="location.href='${contextPath}/product/changeProductOptionPage?proNo=${detail.proNo}'"/>
+		<input type="button" value="제품 삭제" onclick="location.href='${contextPath}/product/productDelete?proNo=${detail.proNo}'"/>
+	</c:if>
 	
 	
 	
