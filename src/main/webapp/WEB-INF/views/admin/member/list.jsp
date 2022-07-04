@@ -9,11 +9,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- bootstrap css -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+	
 <style>
 
-	* {
-		box-sizing: border-box;
-	}
+	@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
+
+	.blind{display: none; }
+
 	.unlink, .link {
 		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
 		padding: 10px;
@@ -22,17 +28,21 @@
 		text-align: center;
 		text-decoration: none;  /* 링크 밑줄 없애기 */
 		color: gray;
+		font-weight: bold;
 	}
 	.link:hover {
 		border: 1px solid orange;
 		color: limegreen;
 	}
+
+
+
 	table {
 		border-collapse: collapse;
-		margin-left:auto; 
+		margin-left:auto;
     	margin-right:auto;
-		
 	}
+	
 	td:nth-of-type(1) { width: 80px; }
 	td:nth-of-type(2) { width: 160px; }
 	td:nth-of-type(3) { width: 240px; }
@@ -43,7 +53,6 @@
 	
 	td {
 		padding: 5px;
-		border : 1px solid;
 		text-align: center;
 	}
 	tfoot td {
@@ -52,123 +61,261 @@
 		border-bottom: 0;
 	}
 	
-	body {
-		background-color: #BDBDBD;
-		text-align: center;
-	}
-	
-	thead {
-		font-weight: bold;
-	}
-	
 	input[type="checkbox"] {
   		width: 27px; 
   		height: 27px; 
 	}
 	
-	.btnRemove {
-		width: 80px;
-		height: 50px;
+	
+	thead {
+		font-weight: bold;
+	}
+	
+	
+	section {
+		background-color: #BDBDBD;
+		text-align: center;
+		font-family: Georgia, "Malgun Gothic", serif;
+	}
+	
+	
+	
+	.kind {
+			font-family: 'Splash', cursive;
+			font-size: 40px;
+	}
+	
+	.kind2 {
+			font-family: 'Splash', cursive;
+			font-size: 27px;
 	}
 	
 </style>
+
+
+
 <script src="../../resources/js/jquery-3.6.0.js"></script>
 <script>
-	$(document).ready(function(){
-		
-		$('tbody td:not(td:first-of-type)').on('click', function(){
-			var memberNo = $(this).parent().data('member_no');
-			location.href='${contextPath}/admin/member/detail?memberNo=' + memberNo;
-		})
-		
-		
-		
-		/*
-		$('tbody tr').on('click', function(){
-			// $(this)                          : 클릭한 행을 의미한다.
-			//                                    <tr>...</tr>
-			// $(this).find('.noticeNo')        : 클릭한 행 내부에 있는 class="noticeNo" 요소를 의미한다.
-			//                                    <td class="noticeNo">1</td>
-			// $(this).find('.noticeNo').text() : 클릭한 행 내부에 있는 class="noticeNo" 요소의 텍스트를 의미한다.
-			//                                    1
-			var noticeNo = $(this).find('.noticeNo').text();
-			location.href='${contextPath}/notice/detail?noticeNo=' + noticeNo;
-		})
-		*/
-		
-		
-		// 전체 선택 클릭하기
-		// 전체 선택을 체크하면 개별 선택도 모두 체크
-		// 전체 선택을 해제하면 개별 선택도 모두 해제
-		var checkAll = $('#checkAll');
-		var checkes = $('.checkes');
-		checkAll.on('click', function(){
-			for(let i = 0; i < checkes.length; i++) {
-				// check[i].prop('checked', true);  // 전체 선택이 체크된 경우
-				// check[i].prop('checked', false); // 전체 선택이 해제된 경우
-				$(checkes[i]).prop('checked', checkAll.prop('checked'));
-			}
-			$.each(checkes, function(i, check){
-				$(check).prop('checked', checkAll.prop('checked'));
-			})
-		})
-		
-		// 개별 선택 클릭하기
-		// 개별 선택을 클릭하면
-		// 모든 개별 선택을 확인해서
-		// 모두 체크되어 있으면 전체 선택 체크하고,
-		// 하나라도 체크 해제되어 있으면 전체 선택 해제한다.
-		for(let i = 0; i < checkes.length; i++){
-			$(checkes[i]).on('click', function(){
-				for(let j = 0; j < checkes.length; j++){
-					if($(checkes[j]).prop('checked') == false){  // 하나라도 체크 해제되었다면,
-						checkAll.prop('checked', false);         // 전체 선택 해제하고,
-						return;                                  // 함수 종료(클릭 이벤트 리스너)
-					}
-				}
-				checkAll.prop('checked', true);             // 체크 해제된 것이 하나도 발견되지 않은 경우 전체 선택 체크
-			})
+
+	
+	
+	
+	
+	
+	
+	
+
+
+$(document).ready(function(){
+	
+	$('tbody td:not(td:first-of-type)').on('click', function(){
+		var memberNo = $(this).parent().data('member_no');
+		location.href='${contextPath}/admin/member/detail?memberNo=' + memberNo;
+	})
+	
+	
+	
+	/*
+	$('tbody tr').on('click', function(){
+		// $(this)                          : 클릭한 행을 의미한다.
+		//                                    <tr>...</tr>
+		// $(this).find('.noticeNo')        : 클릭한 행 내부에 있는 class="noticeNo" 요소를 의미한다.
+		//                                    <td class="noticeNo">1</td>
+		// $(this).find('.noticeNo').text() : 클릭한 행 내부에 있는 class="noticeNo" 요소의 텍스트를 의미한다.
+		//                                    1
+		var noticeNo = $(this).find('.noticeNo').text();
+		location.href='${contextPath}/notice/detail?noticeNo=' + noticeNo;
+	})
+	*/
+	
+	
+	// 전체 선택 클릭하기
+	// 전체 선택을 체크하면 개별 선택도 모두 체크
+	// 전체 선택을 해제하면 개별 선택도 모두 해제
+	var checkAll = $('#checkAll');
+	var checkes = $('.checkes');
+	checkAll.on('click', function(){
+		for(let i = 0; i < checkes.length; i++) {
+			// check[i].prop('checked', true);  // 전체 선택이 체크된 경우
+			// check[i].prop('checked', false); // 전체 선택이 해제된 경우
+			$(checkes[i]).prop('checked', checkAll.prop('checked'));
 		}
+		$.each(checkes, function(i, check){
+			$(check).prop('checked', checkAll.prop('checked'));
+		})
+	})
+	
+	// 개별 선택 클릭하기
+	// 개별 선택을 클릭하면
+	// 모든 개별 선택을 확인해서
+	// 모두 체크되어 있으면 전체 선택 체크하고,
+	// 하나라도 체크 해제되어 있으면 전체 선택 해제한다.
+	for(let i = 0; i < checkes.length; i++){
+		$(checkes[i]).on('click', function(){
+			for(let j = 0; j < checkes.length; j++){
+				if($(checkes[j]).prop('checked') == false){  // 하나라도 체크 해제되었다면,
+					checkAll.prop('checked', false);         // 전체 선택 해제하고,
+					return;                                  // 함수 종료(클릭 이벤트 리스너)
+				}
+			}
+			checkAll.prop('checked', true);             // 체크 해제된 것이 하나도 발견되지 않은 경우 전체 선택 체크
+		})
+	}
+	
+})
+
+
+
+$(function(){
+fnAreaChoice();
+fnSearchAll();
+fnSearch();
+})
+
+
+
+
+
+// 함수
+function fnAreaChoice(){
+	
+	// 초기
+	$('#equalArea').css('display', 'none');
+
+	// 선택
+	$('#column').on('change', function(){
+		if( $(this).val() == '' ) {
+			$('#equalArea').css('display', 'none');
+		} else if( $(this).val() == 'ID' || $(this).val() == 'NAME' ) {
+			$('#equalArea').css('display', 'inline');
+		} else {
+			$('#equalArea').css('display', 'none');
+		}
+	})
+	
+}
+
+function fnSearchAll(){
+	$('#btnSearchAll').on('click', function(){
+		location.href="${contextPath}/admin/member/list";
+	})
+}
+
+function fnSearch(){
+	
+	var column = $('#column');
+	var query = $('#query');
+	
+	
+	$('#btnSearch').on('click', function(){
+		
+		
+		// 사원번호 검색
+		// var regId = /^[0-9]{3}$/;  // 숫자 3자리여야 함.
+		// if( column.val() == 'ID' && regId.test(query.val()) == false) {
+			// alert('사원번호가 올바르지 않습니다.');
+			// query.focus();
+			// return;
+		// }
+		
+		
+		
+		// 검색 실행
+		// equalArea 작업은 column, query 파라미터 전송
+		if( query.val() == '') {
+			alert('검색어를 입력해주세요.');
+			event.preventDefault();
+			return false;
+		}
+		
+		else if( column.val() == 'ID' || column.val() == 'NAME' ) {
+			location.href="${contextPath}/admin/member/search?column=" + column.val() + "&query=" + query.val();
+		} 
 		
 	})
 	
+	
+}
+	
+	
+	
+	
+	
 </script>
-	<style>
-		.blind{display: none; }
-	</style>
+	
 </head>
+
+
 <body>
 
-	<a href="${contextPath}/admin/main">관리자페이지</a>
+	<nav id="nav">
+		<div id="nav_box">
+			<%@ include file="../layout/nav.jsp" %>
+		</div>
+		
+	</nav>
 	
-	<h3>회원관리</h3>
+
+
+<section>
+	<br>
 	
-	<h3>총회원: ${totalRecord - 1}</h3>
+	<div>
+	<h3 class="kind">Member Management</h3>
+	
+	<h3 class="kind2">Total Members: ${totalRecord}</h3>
+	
+	<h3 class="kind2">Search Members: ${findRecord}</h3>
+	</div>
+	
+	
 	
 	
 	<hr>
 	
-	<form action="${contextPath}/admin/member/removeList">
-
-		<button class="btnRemove">선택삭제</button><br><br>
 	
-		<table border="1"><br>
+	<form id="f" method="get">
+	
+		<select name="column" id="column">
+			<option value="">:::선택:::</option>
+			<option value="ID">ID</option>
+			<option value="NAME">NAME</option>
+		</select>
+		
+		<span id="equalArea">
+			
+			<input type="text" name="query" id="query">
+			
+		</span>
+		
+		<input type="button" value="검색" id="btnSearch" class="btn btn-secondary" >
+		<input type="button" value="전체사원조회" id="btnSearchAll" class="btn btn-secondary">
+		
+	</form>
+	
+	
+	
+	<form id="f2" action="${contextPath}/admin/member/removeList">
+
+		
+	
+		<table id="boardtable"  class="table-hover"><br>
 		
 			<thead>
 				<tr>
-					<td>
+					<td class="table-dark" scope="col">
 						<label for="checkAll">전체선택</label>
 						<input type="checkbox" id="checkAll" class="blind">
 					</td>
-					<td>회원번호</td>
-					<td>ID</td>
-					<td>이름</td>
-					<td>이메일</td>
+					<td class="table-dark">회원번호</td>
+					<td class="table-dark">ID</td>
+					<td class="table-dark">이름</td>
+					<td class="table-dark">E-Mail</td>
 					
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="table-secondary">
 				<c:forEach items="${members}" var="member">
 					<tr data-member_no="${member.memberNo}">
 						<td><input type="checkbox" name="memberNoList" id="memberNoList" value="${member.memberNo}" class="checkes"></td>
@@ -176,21 +323,39 @@
 						<td>${member.id}</td>
 						<td>${member.name}</td>
 						<td>${member.email}</td>
+						
 					</tr>
 				</c:forEach>
 			</tbody>
+			
 			<tfoot>
 			<tr>
 				 <td colspan="5">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					${paging}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="btnRemove" class="btn btn-secondary">선택삭제</button><br><br>
 				</td>
+				
 				
 			</tr>
 		</tfoot>
+		
 		</table>
+	</form><br>
+	
+	
+	
+	
+</section>
 
-	</form>
+<footer id="footer">
+	<div id="footer_box">
+		<%@ include file="../layout/footer.jsp" %>
+	</div>
+</footer>
 
 </body>
-</html>
 </html>

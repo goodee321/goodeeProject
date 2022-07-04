@@ -36,5 +36,38 @@ public class ServiceConfig {
 	public QnaService qnaService() {
 		return new QnaServiceImpl();
 	}
+	
+	
+	@Bean
+	public AdminMemberService adminMemberService() {
+		return new AdminMemberServiceImpl();
+	}
+	
+	
+	@Bean
+	public AdminNoticeService adminNoticeService() {
+		return new AdminNoticeServiceImpl();
+	}
+	
+	
+	@Bean
+	public AdminProductService adminProductService() {
+		return new AdminProductServiceImpl();
+	}
+	
+	
+	@Bean
+	public AdminOrderService adminOrderService() {
+		return new AdminOrderServiceImpl();
+	}
+	
+	
+	@Bean
+	public AdminQnaService adminQnaService() {
+		return new AdminQnaServiceImpl();
+	}
+	
+	
+	
 
 }

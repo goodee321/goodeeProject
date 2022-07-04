@@ -250,7 +250,7 @@
 
 	<nav id="nav">
 		<div id="nav_box">
-			<%@ include file="../../layout/adminNav.jsp" %>
+			<%@ include file="../layout/nav.jsp" %>
 		</div>
 		
 	</nav>
@@ -353,7 +353,7 @@
 
 <footer id="footer">
 	<div id="footer_box">
-		<%@ include file="../../layout/adminFooter.jsp" %>
+		<%@ include file="../layout/footer.jsp" %>
 	</div>
 </footer>
 

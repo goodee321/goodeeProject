@@ -9,11 +9,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- bootstrap css -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+	
 <style>
 
-	* {
-		box-sizing: border-box;
-	}
+	@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
+
+	.blind{display: none; }
+
 	.unlink, .link {
 		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
 		padding: 10px;
@@ -22,17 +28,21 @@
 		text-align: center;
 		text-decoration: none;  /* 링크 밑줄 없애기 */
 		color: gray;
+		font-weight: bold;
 	}
 	.link:hover {
 		border: 1px solid orange;
 		color: limegreen;
 	}
+
+
+
 	table {
 		border-collapse: collapse;
-		margin-left:auto; 
+		margin-left:auto;
     	margin-right:auto;
-		
 	}
+	
 	td:nth-of-type(1) { width: 80px; }
 	td:nth-of-type(2) { width: 160px; }
 	td:nth-of-type(3) { width: 240px; }
@@ -43,7 +53,6 @@
 	
 	td {
 		padding: 5px;
-		border : 1px solid;
 		text-align: center;
 	}
 	tfoot td {
@@ -52,23 +61,33 @@
 		border-bottom: 0;
 	}
 	
-	body {
-		background-color: #BDBDBD;
-		text-align: center;
-	}
-	
-	thead {
-		font-weight: bold;
-	}
-	
 	input[type="checkbox"] {
   		width: 27px; 
   		height: 27px; 
 	}
 	
-	.btnRemove {
-		width: 80px;
-		height: 50px;
+	
+	thead {
+		font-weight: bold;
+	}
+	
+	
+	section {
+		background-color: #BDBDBD;
+		text-align: center;
+		font-family: Georgia, "Malgun Gothic", serif;
+	}
+	
+	
+	
+	.kind {
+			font-family: 'Splash', cursive;
+			font-size: 40px;
+	}
+	
+	.kind2 {
+			font-family: 'Splash', cursive;
+			font-size: 27px;
 	}
 	
 </style>
@@ -132,43 +151,146 @@
 		
 	})
 	
+	
+	// 페이지 로드 이벤트
+	$(function(){
+		fnAreaChoice();
+		fnSearchAll();
+		fnSearch();
+		
+	})
+	
+	
+	// 함수
+	function fnAreaChoice(){
+		
+		// 초기
+		$('#equalArea').css('display', 'none');
+	
+		// 선택
+		$('#column').on('change', function(){
+			if( $(this).val() == '' ) {
+				$('#equalArea').css('display', 'none');
+			} else if( $(this).val() == 'NOTICE_TITLE' || $(this).val() == 'NOTICE_CONTENT' ) {
+				$('#equalArea').css('display', 'inline');
+			} else {
+				$('#equalArea').css('display', 'none');
+			}
+		})
+		
+	}
+	
+	function fnSearchAll(){
+		$('#btnSearchAll').on('click', function(){
+			location.href="${contextPath}/admin/notice/list";
+		})
+	}
+	
+	function fnSearch(){
+		
+		var column = $('#column');
+		var query = $('#query');
+		
+		
+		$('#btnSearch').on('click', function(){
+			
+			
+			// 사원번호 검색
+			// var regId = /^[0-9]{3}$/;  // 숫자 3자리여야 함.
+			// if( column.val() == 'ID' && regId.test(query.val()) == false) {
+				// alert('사원번호가 올바르지 않습니다.');
+				// query.focus();
+				// return;
+			// }
+			
+			
+			
+			// 검색 실행
+			// equalArea 작업은 column, query 파라미터 전송
+			if( query.val() == '') {
+				alert('검색어를 입력해주세요.');
+				event.preventDefault();
+				return false;
+			}
+			
+			if( column.val() == 'NOTICE_TITLE' || column.val() == 'NOTICE_CONTENT' ) {
+				location.href="${contextPath}/admin/notice/search?column=" + column.val() + "&query=" + query.val();
+			} 
+			
+		})
+		
+	}
+	
+	
+	
 </script>
-	<style>
-		.blind{display: none; }
-	</style>
+	
 </head>
+
 <body>
 
-	<a href="${contextPath}/admin/main">관리자페이지</a>
+	<nav id="nav">
+		<div id="nav_box">
+			<%@ include file="../layout/nav.jsp" %>
+		</div>
+	</nav>
+
+
 	
-	<h3>공지사항관리</h3>
+	<section>
+	<br>
 	
-	<h3>전체 공지사항 갯수: ${totalRecord}</h3>
+	<div>
 	
+	<h3 class="kind">Notice Management</h3>
+	
+	<h3 class="kind2">Total Notices: ${totalRecord}</h3>
+	
+	<h3 class="kind2">Search Notices: ${findRecord}</h3>
+	
+	
+	</div>
 	
 	<hr>
 	
+	<form id="f" method="get">
+		<select name="column" id="column">
+			<option value="">:::선택:::</option>
+			<option value="NOTICE_TITLE">제목</option>
+			<option value="NOTICE_CONTENT">내용</option>
+		</select>
+		<span id="equalArea">
+			<input type="text" name="query" id="query">
+		</span>
+		<input type="button" value="검색" id="btnSearch" class="btn btn-secondary">
+		<input type="button" value="전체공지사항조회" id="btnSearchAll" class="btn btn-secondary">
+	</form><br>
+	
+	
+	
 	<form action="${contextPath}/admin/notice/removeList">
 
-		<button class="btnRemove">선택삭제</button><br><br>
+		
+		
+		<a href="${contextPath}/admin/notice/savePage">새 공지 작성</a><br>
 	
-		<table border="1"><br>
+		<table class="table-hover"><br>
 		
 			<thead>
 				<tr>
-					<td>
+					<td  class="table-dark">
 						<label for="checkAll">전체선택</label>
 						<input type="checkbox" id="checkAll" class="blind">
 					</td>
-					<td>공지사항번호</td>
-					<td>제목</td>
-					<td>등록일</td>
-					<td>조회수</td>
+					<td  class="table-dark">공지사항번호</td>
+					<td  class="table-dark">제목</td>
+					<td  class="table-dark">등록일</td>
+					<td  class="table-dark">조회수</td>
 					
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="table-secondary">
 				<c:forEach items="${notices}" var="notice">
 					<tr data-notice_no="${notice.noticeNo}">
 						<td><input type="checkbox" name="noticeNoList" id="noticeNoList" value="${notice.noticeNo}" class="checkes"></td>
@@ -182,15 +304,30 @@
 			<tfoot>
 			<tr>
 				 <td colspan="5">
+				 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					${paging}
+					&nbsp;&nbsp;&nbsp;
+					<button id="btnRemove" class="btn btn-secondary">선택삭제</button><br><br>
 				</td>
-				
 			</tr>
 		</tfoot>
 		</table>
 
-	</form>
+	</form><br>
+	
+	
+	
+	
+	</section>
+			
+			<footer id="footer">
+	<div id="footer_box">
+		<%@ include file="../layout/footer.jsp" %>
+	</div>
+</footer>
+	
 
 </body>
-</html>
 </html>

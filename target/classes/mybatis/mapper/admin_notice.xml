@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.nike.web.mapper.AdminNoticeMapper">
+
+	
+	
+	
+		
+		
+		
+			<!-- 목록 -->
+			<select id="selectNoticeList" parameterType="Map" resultType="NoticeDTO">
+				SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
+				  FROM NOTICE
+				   ORDER BY NOTICE_NO DESC LIMIT #{beginRecord}, #{endRecord}
+			</select>
+			
+		
+	<!-- 레코드 수 -->
+	<select id="selectNoticeCount" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM NOTICE
+	</select>
+		
+		
+		
+		<!-- 검색된 레코드 갯수 -->
+	<select id="selectFindCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM NOTICE
+		  WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+	</select>
+	
+	
+	
+	<!-- 검색 -->
+	<select id="selectFindList" parameterType="Map" resultType="NoticeDTO">
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
+		  FROM NOTICE
+		WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+		
+	</select>
+			
+			
+		
+			<!-- 상세보기 -->
+			<select id="selectNoticeByNo" parameterType="Long" resultType="NoticeDTO">
+				SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
+				  FROM NOTICE
+				 WHERE NOTICE_NO = #{noticeNo}
+			</select>
+			
+			
+			<!-- 수정 -->
+		<update id="updateNotice" parameterType="NoticeDTO">
+			UPDATE
+			       NOTICE
+			   SET
+			       NOTICE_TITLE = #{noticeTitle}
+			     , NOTICE_CONTENT = #{noticeContent}
+			     , NOTICE_DATE = NOW()
+			 WHERE
+			   	   NOTICE_NO = #{noticeNo}
+		</update>
+		
+		<!-- 개별삭제 -->
+		<delete id="deleteNotice" parameterType="Integer">
+			DELETE
+			  FROM NOTICE
+			 WHERE NOTICE_NO = #{noticeNo}
+		</delete>
+		
+		
+		<!-- 삽입 -->
+		<insert id="insertNotice" parameterType="NoticeDTO">
+			INSERT INTO NOTICE
+				(NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
+			VALUES
+				(#{noticeTitle}, #{noticeContent}, NOW(), 0)
+			
+		</insert>
+		
+		
+		<!-- 다중 삭제(선택해서 삭제) -->
+	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+	<delete id="deleteNoticeList">
+		DELETE
+		  FROM NOTICE
+		<where> 
+		 	<foreach collection="list" item="noticeNo" open="NOTICE_NO IN(" separator="," close=")">
+				#{noticeNo}
+			</foreach>
+		</where>
+	</delete>
+			
+
+</mapper>
