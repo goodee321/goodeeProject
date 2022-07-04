@@ -68,7 +68,7 @@
 </head>
 <body>
 	<div class="qnaDetail">
-		<h1>질문 상세화면</h1>
+		<h1>질문 상세보기</h1>
 		<form id="f">
 		
 			<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
@@ -105,9 +105,7 @@
 							<td><!-- c:if test="${loginMember.id eq 'admin'}" -->
 								
 								<input type="button" value="수정하러가기" id="btnChangePage">
-								<input type="button" value="삭제" id="btnRemove">
-							
-							<input type="button" value="목록" id="btnList">
+								<input type="button" value="목록" id="btnList">
 							</td>
 						</tr>
 					</tfoot>

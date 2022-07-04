@@ -141,7 +141,7 @@
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
 							<tr>
-								<td colspan="7">삭제된 게시글입니다</td>
+								<td colspan="5"><i class="fa-solid fa-ban"></i> 삭제된 게시글입니다</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
