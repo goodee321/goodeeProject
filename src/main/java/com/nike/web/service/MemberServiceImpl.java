@@ -390,9 +390,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberDTO> getMemberByNo(long memberNo) {
-
         return memberMapper.getMemberByNo(memberNo);
-
     }
 
 
