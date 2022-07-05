@@ -62,10 +62,4 @@
           AND O.ORDER_NO = #{orderNo}
     </select>
 
-    <update id="cancelOrder">
-        UPDATE ORDER_TB
-            SET ORDER_STATE = 4
-        WHERE IMP_UID = #{impUid}
-    </update>
-
 </mapper>

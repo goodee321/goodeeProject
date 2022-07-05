@@ -8,9 +8,8 @@
     <select id="selectNoticeList" parameterType="Map" resultType="NoticeDTO">
         SELECT *
         FROM NOTICE
-          ORDER BY NOTICE_NO DESC LIMIT
-        #{beginRecord}, #{endRecord}
-        ORDER BY NOTICE_NO DESC LIMIT #{beginRecord}, #{recordPerPage}
+         
+        LIMIT #{beginRecord}, #{recordPerPage}
     </select>
 
     <!-- 검색된 레코드 갯수 -->
@@ -72,17 +71,6 @@
         WHERE NOTICE_NO = #{noticeNo}
     </delete>
 
-    <!-- 목록(Admin) -->
-    <select id="selectNoticeList2" parameterType="Map" resultType="NoticeDTO">
-        SELECT *
-        FROM NOTICE ORDERS LIMIT #{beginRecord}, #{endRecord}
-    </select>
-
-    <!-- 상세보기 -->
-    <select id="selectNoticeByNo2" parameterType="Long" resultType="NoticeDTO">
-        SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
-        FROM NOTICE
-        WHERE NOTICE_NO = #{noticeNo}
-    </select>
+   
 
 </mapper>

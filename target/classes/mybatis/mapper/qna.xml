@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO QNA
 			(ID, QNA_CONTENT, QNA_DATE, QNA_STATE, QNA_DEPTH, QNA_GROUP_NO, QNA_GROUP_ORD)
 		VALUES
-			(null, #{qnaContent}, NOW(), 1, #{qnaDepth}, #{qnaGroupNo}, #{qnaGroupOrd})
+			('admin', #{qnaContent}, NOW(), 1, #{qnaDepth}, #{qnaGroupNo}, #{qnaGroupOrd})
 	</insert>
 	
 	<!-- 수정 -->
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="deleteQna" parameterType="Integer">
 		UPDATE QNA
 		   SET QNA_STATE = -1
-		 WHERE QNA_NO = #{qnaNo}
+		  WHERE QNA_GROUP_NO = #{qnaGroupNo}
 	</update>
 
 
