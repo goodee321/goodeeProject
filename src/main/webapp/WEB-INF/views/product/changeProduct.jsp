@@ -192,7 +192,9 @@ table{
 				
 				<c:forEach var="productImage" items="${productImages}">	
 					<td>${productImage.proimgOrigin}<a href="${contextPath}/product/removeProductImage?proimgNo=${productImage.proimgNo}&proNo=${productImage.proNo}"><i class="fa-solid fa-circle-xmark"></i></a></td>		
+					<label>
 					<td><img alt="${productImage.proimgOrigin}" src="${contextPath}/product/display?proimgNo=${productImage.proimgNo}" width="90px"></td>
+					</label>
 				</c:forEach>
 				<br>
 			<input type="hidden" name="proNo" value="${product.proNo}">
