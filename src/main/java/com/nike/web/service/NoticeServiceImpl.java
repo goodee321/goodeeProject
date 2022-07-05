@@ -144,4 +144,44 @@ public class NoticeServiceImpl implements NoticeService {
 	public int remove(int noticeNo) {
 		return noticeMapper.deleteNotice(noticeNo);
 	}
+	
+	
+	
+	
+	
+	  // 목록(Admin)
+    @Override
+    public void findNotices2(HttpServletRequest request, Model model) {
+
+        Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+        int page = Integer.parseInt(opt.orElse("1"));
+
+        int totalRecord = noticeMapper.selectNoticeCount();
+
+        PageUtils pageUtils = new PageUtils();
+        pageUtils.setPageEntity(totalRecord, page);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("beginRecord", pageUtils.getBeginRecord());
+        map.put("endRecord", pageUtils.getEndRecord());
+
+        List<NoticeDTO> notices = noticeMapper.selectNoticeList(map);
+
+        model.addAttribute("notices", notices);
+        model.addAttribute("totalRecord", totalRecord);
+        model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/admin/notice/list"));
+    }
+
+
+    // 상세보기(Admin)
+    @Override
+    public NoticeDTO findNoticeByNo2(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();  // "/ex09/notice/detail"
+        String[] arr = requestURI.split("/");         // { "", "ex09", "notice", "detail"}
+
+        Long noticeNo = Long.parseLong(request.getParameter("noticeNo"));
+
+        return noticeMapper.selectNoticeByNo2(noticeNo);
+    }
+
 }
