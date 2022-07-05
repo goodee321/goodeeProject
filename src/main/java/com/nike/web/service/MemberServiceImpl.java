@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -378,6 +379,179 @@ public class MemberServiceImpl implements MemberService {
         member.setAddrDetail(request.getParameter("addrDetail"));
         member.setPhone(request.getParameter("phone"));
         return memberMapper.updateMember(member);
+    }
+
+    @Override
+    public void modify(HttpServletRequest request, HttpServletResponse response) {
+
+        // 파라미터
+        Long memberNo = Long.parseLong(request.getParameter("memberNo"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String postcode = request.getParameter("postcode");
+        String address = request.getParameter("address");
+        String addrDetail = request.getParameter("addrDetail");
+        String extraAddress = request.getParameter("extraAddress");
+        String phone = request.getParameter("phone");
+        // agreeState 만듬
+        String location = request.getParameter("location");
+        String promotion = request.getParameter("promotion");
+        Integer agreeState;
+        if(location.equals("off") && promotion.equals("off")) {
+            agreeState = 1;
+        } else if(location.equals("on") && promotion.equals("off")) {
+            agreeState = 2;
+        } else if(location.equals("off") && promotion.equals("on")) {
+            agreeState = 3;
+        } else {
+            agreeState = 4;
+        }
+
+        // MemberDTO
+        MemberDTO member = MemberDTO.builder()
+                .memberNo(memberNo)
+                .name(name)
+                .email(email)
+                .postcode(postcode)
+                .address(address)
+                .addrDetail(addrDetail)
+                .extraAddress(extraAddress)
+                .phone(phone)
+                .agreeState(agreeState)
+                .build();
+
+        // MEMBER 테이블에 member 저장
+        int res = memberMapper.changeMember(member);
+
+        // 응답
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            if(res == 1) {
+                out.println("<script>");
+                out.println("alert('정보를 변경했습니다.')");
+                out.println("location.href='" + request.getContextPath() + "'");
+                out.println("</script>");
+                out.close();
+                MemberDTO loginMember = memberMapper.selectMemberByNo(memberNo);
+                request.getSession().setAttribute("loginMember", loginMember);
+            } else {
+                out.println("<script>");
+                out.println("alert('정보 변경에 실패했습니다.')");
+                out.println("history.back()");
+                out.println("</script>");
+                out.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
+
+        // 파라미터
+        Long memberNo = Long.parseLong(request.getParameter("memberNo"));
+        String pw = SecurityUtils.sha256(request.getParameter("pw"));
+
+        // MemberDTO
+        MemberDTO member = MemberDTO.builder()
+                .memberNo(memberNo)
+                .pw(pw)
+                .build();
+
+        // MEMBER 테이블에 member 저장
+        int res = memberMapper.changeMemberPw(member);
+
+        // 응답
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            if(res == 1) {
+                out.println("<script>");
+                out.println("alert('비밀번호를 변경했습니다.')");
+                out.println("location.href='" + request.getContextPath() + "'");
+                out.println("</script>");
+                out.close();
+                HttpSession session = request.getSession();
+                if(session.getAttribute("loginMember") != null) {
+                    // 마이페이지에서 비밀번호 수정한 경우
+                    MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
+                    loginMember.setPw(pw);
+                } else {
+                    // 비밀번호 찾기한 경우
+                }
+            } else {
+                out.println("<script>");
+                out.println("alert('비밀번호가 변경되지 않았습니다.')");
+                out.println("history.back()");
+                out.println("</script>");
+                out.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void findId(HttpServletRequest request, HttpServletResponse response) {
+
+        String email = request.getParameter("email");
+        MemberDTO member = memberMapper.findMemberId(email);
+
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            if(member == null) {
+                out.println("<script>");
+                out.println("alert('가입된 아이디가 없습니다.')");
+                out.println("history.back();");
+                out.println("</script>");
+                out.close();
+            } else {
+                request.setAttribute("id", member.getId());
+                request.getRequestDispatcher("/member/findId/result").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void findPw(HttpServletRequest request, HttpServletResponse response) {
+
+        String id = request.getParameter("id");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+        MemberDTO member = MemberDTO.builder()
+                .id(id)
+                .email(email)
+                .phone(phone)
+                .build();
+
+        MemberDTO res = memberMapper.findMemberPw(member);
+
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            if(res == null) {
+                out.println("<script>");
+                out.println("alert('일치하는 회원 정보를 찾을 수 없습니다.')");
+                out.println("history.back();");
+                out.println("</script>");
+                out.close();
+            } else {
+                request.setAttribute("memberNo", res.getMemberNo());
+                request.getRequestDispatcher("/member/createNewPw").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
