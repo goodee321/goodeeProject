@@ -193,7 +193,9 @@
       <input type="button" value="옵션 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductOptionPage?proNo=${product.proNo}'"/>
        &nbsp;&nbsp;&nbsp;
       <input type="button" value="제품 삭제" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/productDelete?proNo=${product.proNo}'"/>
-			
+			<br>
+			<br>
+			<a href="${contextPath}/admin/product/list">목록으로가기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
 
 		

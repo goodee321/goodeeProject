@@ -202,7 +202,8 @@ section {
 			
 			
 			
-			<button id="btn" class="btn btn-secondary">수정완료</button>
+			<button id="btn" class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
 	</form>
 	<br>
 	</div>
