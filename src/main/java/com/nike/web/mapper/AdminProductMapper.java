@@ -34,6 +34,9 @@ public interface AdminProductMapper {
 			
 			public int productQtyOverLap(Map<String, Object> map);
 			
+			
+			public ProductQtyDTO changeProductOptionByNo(Map<String, Object> map);
+			
 	
 			
 			
@@ -64,6 +67,9 @@ public interface AdminProductMapper {
 			
 			// 썸네일
 			public ProductImageDTO selectProductImageByNo(Integer proimgNo);
+			
+			
+			public void deleteProductImage(Integer proimgNo);
 	
 	
 }

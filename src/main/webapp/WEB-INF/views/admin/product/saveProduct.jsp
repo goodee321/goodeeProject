@@ -106,7 +106,7 @@
 			
 	function fnRegExp(){
 			let numberRegExp = 	/^[0-9]+$/;
-			let decimalRegExp = /^[0]\.{1}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
+			let decimalRegExp = /^[0]\.{0}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
 			
 			
 			$('#proPrice').on('keyup', function(){

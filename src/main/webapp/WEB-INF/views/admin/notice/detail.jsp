@@ -87,7 +87,9 @@
 	
 		<strong>공지사항번호:</strong>&nbsp;&nbsp;&nbsp;${notice.noticeNo}<br><hr>
 		<strong>제목:</strong>&nbsp;&nbsp;&nbsp;${notice.noticeTitle}<br><hr>
-		<strong>내용:</strong>&nbsp;&nbsp;&nbsp;${notice.noticeContent}<br><hr>
+		<strong>내용:</strong><br><textarea rows="10" cols="25" readonly>
+								${notice.noticeContent}
+							</textarea><br><hr>
 		<strong>등록일:</strong>&nbsp;&nbsp;&nbsp;${notice.noticeDate}<br><hr>
 		<strong>조회수:</strong>&nbsp;&nbsp;&nbsp;${notice.noticeHit}<br><hr>
 		

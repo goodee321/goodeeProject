@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.nike.web.domain.ProductDTO;
+import com.nike.web.domain.ProductQtyDTO;
 
 public interface AdminProductService {
 	
@@ -61,6 +62,13 @@ public interface AdminProductService {
 	
 	// 상품옵션변경
 	public void changeProductOption(HttpServletRequest request, HttpServletResponse response);
+	
+	
+	
+	public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request);
+	
+	
+	public void removeProductImage(Integer proimgNo);
 	
 	
 	

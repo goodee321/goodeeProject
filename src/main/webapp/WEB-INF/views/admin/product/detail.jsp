@@ -1,7 +1,9 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
@@ -9,85 +11,243 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-
-	form {
-			padding: 50px;
-			text-align: center;
-	}
-
-	body {
-			background-color: #BDBDBD;
-			text-align: center;
-	}
-		
-</style>
-<script src="../../resources/js/jquery-3.6.0.js"></script>
-<script type="text/javascript">
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	
 	$(function(){
-		// 수정하러가기
-		// location과 파라미터 noticeNo를 활용
-		$('#btnChangePage').on('click', function(){
-			location.href='${contextPath}/admin/product/changePage?proNo=${product.proNo}';
-		})
 		
-		// 삭제
-		// 폼의 서브밋을 활용
-		$('#btnRemove').on('click', function(){
-			if(confirm('삭제할까요?')){
-				$('#f').attr('action', '${contextPath}/admin/product/removeOne');
-				$('#f').submit();
-			}
-		})
-		
-		// 목록
-		$('#btnList').on('click', function(){
-			location.href='${contextPath}/admin/product/list';
-		})
+		fnData();
 	})
+	
+	
+	
+	
+	function numCheck(){
+		
+		var sizeOption = "${product.productQtyDTO.proSize}";
+		var qtyOption = "${product.productQtyDTO.proQty}";
+		
+		if(qtyOption == "0"){
+			$("#proSize").not("option[value*= '0']").prop('disabled',true);
+			/* $("select option[value*='1']").prop('disabled',true);
+			$("select option[value*='2']").prop('disabled',true);
+			$("select option[value*='3']").prop('disabled',true);
+			$("select option[value*='4']").prop('disabled',true);
+			$("select option[value*='5']").prop('disabled',true);
+			
+			$("select[name=selectedQty]").val(); */
+		}
+		
+	
+	}
+	
+	function fnData(){
+		   
+		$("#proSize").change(function (e) {
+		   var proNo= $("#proNo").val();
+		   var proSize= $("#proSize").val();
+		   
+		   
+		   
+		     $.ajax({
+		          
+		          url: '${contextPath}/admin/product/selectProductOptionDetail/',
+		          type: 'get',
+		          data:"proNo="+proNo+'&proSize='+proSize,
+		         dataType: 'json',
+		         header: {
+		            "Content-Type" : "application/json"
+		         },
+		         contentType : "application/json",
+		          success: function (data) {
+		        	 
+		        	 let Price = "${product.proPrice}";
+		             $('#proQty').text(data.proQty);
+		             $('#proDiscount').text(data.proDiscount);
+		             // $(".finalPrice").text(Price);
+		          },
+		          error: function () {
+		        	 
+		             $('#proQty').text('0'); alert('재고가 없습니다.');
+		             // $("select[name=proSize]").attr('selected',true);
+		             $('#proDiscount').text('0');
+		          }
+		     });
+		   });
+
+	}
+	
+	function totalCheck(e2){
+		
+		let Price = "${product.proPrice}";	// 총 가격
+		let Qty = "${product.productQtyDTO.proQty}"; 	
+		
+		// 가격(총 가격 + 배송비)
+		$(".finalPrice").text(Price);
+		console.log(Qty);
+		
+	}
+	
+	
+	
 </script>
+<style>
+	* {
+		box-sizing: border-box;
+	} 
+		
+	.unlink, .link {
+		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
+		padding: 10px;
+		margin: 5px;
+		border: 1px solid white;
+		text-align: center;
+		text-decoration: none;  /* 링크 밑줄 없애기 */
+		color: gray;
+	}
+	.link:hover {
+		border: 1px solid orange;
+		color: limegreen;
+	}
+	
+	 textarea {
+	   width: 100%;
+	   height: 12em;
+	   border: 1px solid #D3D3D3;
+	   resize: none;
+	   border-radius: 4px;
+	 }
+	 
+	 
+	 
+	section {
+		background-color: #BDBDBD;
+		text-align: center;
+		font-family: Georgia, "Malgun Gothic", serif;
+	}
+	 
+	 
+	
+	
+	
+	 
+        
+      
+	
+	
+	
+</style>
+
 </head>
 <body>
 
-	<h2>상품 상세정보</h2>
-
-	<form id="f">
 	
-		<input type="hidden" name="proNo" value="${product.proNo}"> <!-- 삭제에서 활용 -->
+	<%-- <h5>테스트</h5>
+	proNo: ${detail.productQtyDTO.proNo}<br>
 	
-		<strong>상품번호:</strong> ${product.proNo}<br><hr>
-		<strong>상품명:</strong> ${product.proName}<br><hr>
-		<strong>가격:</strong> ${product.proPrice}<br><hr>
-		<strong>내용:</strong> ${product.proDetail}<br><hr>
-		<strong>할인가:</strong> ${product.productQtyDTO.proDiscount}<br><hr>
-		<strong>사이즈</strong> ${product.productQtyDTO.proSize}<br><hr>
-		<strong>수량</strong> ${product.productQtyDTO.proQty}<br><hr>
-		<c:forEach var="productImage" items="${productImages}">
+	proSize: ${detail.productQtyDTO.proSize == '240'}<br>
+	proSize: ${detail.productQtyDTO.proSize == '250'}<br>
+	proSize: ${detail.productQtyDTO.proSize == '270'}<br>
+	
+	proSize: ${detail.productQtyDTO.proSize}<br>
+	proQty: ${detail.productQtyDTO.proQty}<br>
+	proDiscount: ${detail.productQtyDTO.proDiscount}<br>
+	${detail.proNo}<br>
+	${detail.proName}<br>
+	${detail.proPrice}<br>
+	imgno: ${detail.productImageDTO.proimgNo} --%>
+	
+	
+	
+	
+	<nav id="nav">
+		<div id="nav_box">
+			<%@ include file="../layout/nav.jsp" %>
+		</div>
+	</nav>
+	
+	
+	
+	<section>
+	<div class="container" style="width: 70%; margin-bottom:100px;">
+		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;"></h1>
+			<input type="hidden" value="${product.proNo}" id="proNo" name="proNo" class="proNo">	<!-- 삭제에 이용 -->
 			
-				${productImage.proimgOrigin}<a href="${contextPath}/admin/product/removeProductImage?proimgNo=${productImage.proimgNo}&proNo=${productImage.proNo}"><i class="fa-solid fa-circle-xmark"></i></a>
-				<img alt="${productImage.proimgOrigin}" src="${contextPath}/admin/product/display?proimgNo=${productImage.proimgNo}" width="90px">
+		</div>
+		
+		<div class="row" style="float: left; text-align: center; width:50%; position:absolute;">
+		<p>
+		<br>
+		<br>
+	  <img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="60%" width="200px"><p>
+	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <input type="button" value="제품 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductPage?proNo=${product.proNo}'"/>
+	  &nbsp;&nbsp;&nbsp;
+      <input type="button" value="옵션 추가" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/saveProductOption?proNo=${product.proNo}'"/>
+       &nbsp;&nbsp;&nbsp;
+      <input type="button" value="옵션 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductOptionPage?proNo=${product.proNo}'"/>
+       &nbsp;&nbsp;&nbsp;
+      <input type="button" value="제품 삭제" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/productDelete?proNo=${product.proNo}'"/>
 			
-		</c:forEach>
+		</div>
+
+		
+		<div class="row productInfo" style="width: 40%; float: right; margin-bottom: 30px; margin-left: 150px; padding-left: 150px;">
+			<div class="form-group">
+				
+				<h3><strong>상품명:</strong> ${product.proName}</h3>
+				
+				
+			</div>
+			
+			
+			<div class="form-group" style="text-align: left;">
+			<strong>내용:</strong><p> <textarea rows="20" cols="100" readonly>${product.proDetail}</textarea><p>
+				<strong><label>가격 : </label></strong><span>&nbsp;<fmt:formatNumber value="${product.proPrice}" type="number"/></span><span>&nbsp;원</span>
+				<input type="hidden" value="${product.proPrice}" id="price"><p>		
+			</div>
 		
 		
+			<div class="form-horizontal" style="text-align: left;">
+					<strong><label>SIZE</label></strong> :
+					<select class="form-control opt_select proSize" name="proSize" id="proSize">
+						<option selected disabled>SIZE를 선택해 주세요</option>
+						<option value="240">240</option>
+						<option value="250">250</option>
+						<option value="260">260</option>
+						<option value="270">270</option>
+						<option value="280">280</option>
+					</select>
+					<br>
+					<strong>수량 :</strong> <span id="proQty" class="proQty"></span><p><br>
+				<strong>할인 :</strong> <span id="proDiscount" class="proDiscount" ></span>
+				</div>
+				</div>
+		</div>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		</section>
 		
-		
-		<input type="button" value="목록" id="btnList"><br><br>
-		
-		
-		
-	<a href="${contextPath}/admin/product/changeProductPage?proNo=${product.proNo}">제품 수정 </a>
-	<a href="${contextPath}/admin/product/saveProductOption?proNo=${product.proNo}">옵션 추가 </a>
-	<a href="${contextPath}/admin/product/changeProductOptionPage?proNo=${product.proNo}">옵션 수정 </a> 
-	<a href="${contextPath}/admin/product/productDelete?proNo=${product.proNo}">삭제 </a> 
-		
+		<footer id="footer">
+	<div id="footer_box">
+		<%@ include file="../layout/footer.jsp" %>
+	</div>
 	
-	</form>
-	
-	
-	
-	
+</footer>
+				
+			
+				
+		
+		
 	
 
+		
+		
 </body>
+		
 </html>
+

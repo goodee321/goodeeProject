@@ -155,7 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!--  제품 이미지삭제 -->
 	<delete id="deleteProductImage" parameterType="Integer">
 		DELETE 
-		FROM PROUCT_IMAGE
+		FROM PRODUCT_IMAGE
 		WHERE PROIMG_NO = #{proimgNo}
 	
 	</delete>
@@ -223,6 +223,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM PRODUCT
 	WHERE PRO_NO = #{proNo}
 	</delete>
+	
+	
+	
+	
 	
 	
 	
