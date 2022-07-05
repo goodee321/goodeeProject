@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
@@ -52,7 +53,7 @@
 		display: block;
 	}
 	.title p:nth-of-type(2) {
-		color: fuchsia;
+		color: #B22222;
 	}
 	
 	
@@ -65,15 +66,7 @@
 		margin-bottom: 5px;
 	
 	}
-	
-	table caption a {
-		background-color: #6495ed;
-		color: white;
-		text-decoration: none; 
-		border-radius: 3px;
-	
-	}
-	
+
 	table a { text-decoration: none; }
 	
 	thead {
@@ -124,7 +117,7 @@
 
 		<table>
 			<c:if test="${loginMember.id ne null}">
-			<caption><a href="${contextPath}/qna/saveQna">글쓰기</a><br></caption>
+			<caption><a href="${contextPath}/qna/saveQna" class="btn btn-success">글쓰기</a><br></caption>
 			</c:if>
 			<thead>
 				<tr>

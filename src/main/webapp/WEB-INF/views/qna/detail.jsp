@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 	$(function(){		
@@ -95,7 +96,7 @@ input {
 					<tr>
 						<td>내용</td>
 						<td>
-							<textarea rows="30" cols="100" readonly>${qna.qnaContent}</textarea>
+							<textarea rows="20" cols="100" readonly>${qna.qnaContent}</textarea>
 						</td>
 					</tr>
 					<tr>
@@ -108,9 +109,9 @@ input {
 						<td></td>
 						<td>
 							<c:if test="${loginMember.id eq qna.id}">
-								<input type="button" value="수정하러가기" id="btnChangePage"> 
+								<input type="button" value="수정하러가기" id="btnChangePage" class="btn btn-danger"> 
 							</c:if>
-							<input type="button" value="목록" id="btnList">
+							<input type="button" value="목록" id="btnList" class="btn btn-info">
 						</td>
 					</tr>
 				</tfoot>
