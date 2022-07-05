@@ -18,10 +18,12 @@ public class SignOutMemberDTO {
 	private String pw;
 	private String name;
 	private String email;
+	private String postcode;
 	private String address;
 	private String addrDetail;
+	private String extraAddress;
 	private String phone;
 	private Integer agreeState;
 	private Date signIn;
-	private Date singOutDate;
+	private Date signOutDate;
 }

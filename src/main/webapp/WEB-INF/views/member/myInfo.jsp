@@ -1,72 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
-<script>
-	
-	$(function(){
-		fnReSignIn();
-		fnPhoneCheck()
-	})
-
-	
-	function fnReSignIn(){
-		$('#f').on('submit', function(event){
-			let regPw = /^[a-zA-Z0-9!@#$%^&*]{3,15}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 10~20자 사이
-			let pwValid = /[a-z]/.test($('#pw').val()) +  // 소문자 포함이면 1
-		    /[A-Z]/.test($('#pw').val()) +  // 대문자 포함이면 1
-		    /[0-9]/.test($('#pw').val()) +  // 숫자 포함이면 1
-		    /[!@#$%^&*]/.test($('#pw').val());  // 특수문자 포함이면 1
-			if(regPw.test($('#pw').val()) && pwValid < 3){
-				/*$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
-				pwPass = true;
-			} else {*/
-				alert('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
-				event.preventDefault();
-				return false;
-			}
-			/*if(regPw.test($('#pw').val())==false){
-				alert('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
-				event.preventDefault();
-				return false;
-			}*/
-			// 비밀번호 입력확인
-			else if($('#pwConfirm').val() != '' && $('#pw').val() != $('#pwConfirm').val()){
-				alert('비밀번호를 확인하세요');
-				event.preventDefault();
-				return false;
-			}
-			return true;
-		})
-	}
-	
-	let phonePass = false;
-	function fnPhoneCheck(){
-		// 비밀번호 정규식 검사
-		$('#phone').on('keyup', function(){
-			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]+)?([0-9]{4})/,"$1-$2-$3").replace("--", "-") );
-			let regPhone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;  // 이거만 넣으면 하이픈 직접 넣기
-			if(regPhone.$('#phone').val()==false){
-				alert('휴대폰 번호를 확인하세요');
-				event.preventDefault();
-				return false;
-			} else {
-				alert('사용 가능한 번호입니다.');
-				return true;
-			}
-		})
-	}
-
-	
-</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function execDaumPostcode() {
@@ -122,32 +65,33 @@
 	
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
-	<h3>재가입 페이지입니다.</h3>
+	<a href="${contextPath}/member/signOut?memberNo=${loginMember.memberNo}" onclick="return confirm('정말로 회원탈퇴 하시겠습니까?')">회원탈퇴하기</a>
+	
+	<h3>회원정보 변경 페이지입니다.</h3>
 	
 	<div>
-		사이트를 다시 이용하기 위해 개인정보를 작성해 주세요.
+		개인정보 변경을 위해 작성해 주세요.
 	</div>
 	
 	<br>
 	
-	<form id="f" action="${contextPath}/member/reSignIn" method="post">
+	<form id="f" action="${contextPath}/member/modify" method="post">
 	
 		가입 아이디<br>
-		${member.id}<br><br>
+		${loginMember.id}<br><br>
 		
-		신규 비밀번호<br>
-		<input type="password" name="pw" id="pw"><br><br>
-		
-		비밀번호 확인<br>
-		<input type="password" id="pwConfirm"><br><br>
-		
-		
+		<input type="button" value="비밀번호 변경" id="btnEditPw"><br><br>
+		<script>
+			$('#btnEditPw').on('click', function(){
+				location.href = '${contextPath}/member/editPw';
+			})
+		</script>
 		
 		가입자명<br>
-		<input type="text" name="name" value="${member.name}"><br><br>
+		<input type="text" name="name" value="${loginMember.name}"><br><br>
 		
 		가입 당시 이메일<br>
-		${member.email.substring(0,3)}***${member.email.substring(member.email.indexOf('@'))}<br><br>
+		<input type="text" name="email" value="${loginMember.email}"><br><br>
 		
 		주소검색<br>
 		<input type="text" name="postcode" id="postcode" value="${loginMember.postcode}" placeholder="우편번호">
@@ -156,31 +100,37 @@
 		<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소">
 		<input type="text" name="extraAddress" id="extraAddress" value="${loginMember.extraAddress}" placeholder="참고항목">
 		<br><br>
-		<!--
-		신규 주소 및 상세주소<br>
-		<input type="text" name="address" value="${member.address}"><br><br>
-		<input type="text" name="addrDetail" value="${member.addrDetail}"><br><br>
-		신규 휴대폰번호<br>
-		<input type="text" name="phone" id="phone"><br><br>
-		-->
 		
 		<label for="phone">
 			휴대폰번호<br>
-			<input type="text" name="phone" id="phone"><br>
-			<span id="phoneMsg"></span>
+			<input type="text" name="phone" id="phone" value="${loginMember.phone}"><br>
 		</label><br><br>
+			
+		<div>위치정보 동의여부</div>
+		<input type="radio"	name="location" value="on">동의함
+		<input type="radio"	name="location" value="off">동의안함<br><br>
+		<script>
+			if('${loginMember.agreeState}' == '2' || '${loginMember.agreeState}' == '4'){
+				$(':radio[name="location"][value="on"]').prop('checked', true);
+			} else {
+				$(':radio[name="location"][value="off"]').prop('checked', true);
+			}
+		</script>
 		
-		탈퇴일<br>
-		${member.signOutDate}<br><br>
+		<div>프로모션 동의여부</div>
+		<input type="radio"	name="promotion" value="on">동의함
+		<input type="radio"	name="promotion" value="off">동의안함<br><br>
+		<script>
+			if('${loginMember.agreeState}' == '3' || '${loginMember.agreeState}' == '4'){
+				$(':radio[name="promotion"][value="on"]').prop('checked', true);
+			} else {
+				$(':radio[name="promotion"][value="off"]').prop('checked', true);
+			}
+		</script>
 		
-		<input type="hidden" name="memberNo" value="${member.memberNo}">
-		<input type="hidden" name="id" value="${member.id}">
-		<input type="hidden" name="email" value="${member.email}">
-		<input type="hidden" name="agreeState" value="${member.agreeState}">
+		<input type="hidden" name="memberNo" value="${loginMember.memberNo}">
 		
-		<button>사이트 다시 이용하기</button>
-		
-		
+		<button>회원정보 변경하기</button>
 	
 	</form>
 	

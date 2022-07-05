@@ -23,6 +23,8 @@
 	
 	/* 함수 */
 	
+	
+	
 	// 1. 로그인
 	function fnLogin(){
 		$('#f').on('submit', function(event){
@@ -87,8 +89,8 @@
 	
 	
 	<div>
-		<a href="${contextPath}/member/findIdPage">아이디 찾기</a> | 
-		<a href="${contextPath}/member/findPwPage">비밀번호 찾기</a>
+		<a href="${contextPath}/member/findIdForm">아이디 찾기</a> | 
+		<a href="${contextPath}/member/findPwForm">비밀번호 찾기</a>
 	
 	</div>
 	

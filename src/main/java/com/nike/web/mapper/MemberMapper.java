@@ -4,7 +4,6 @@ package com.nike.web.mapper;
 import java.util.List;
 import java.util.Map;
 
-
 import org.apache.ibatis.annotations.Mapper;
 
 import com.nike.web.domain.MemberDTO;
@@ -29,6 +28,13 @@ public interface MemberMapper {
     public int reInsertMember(MemberDTO member);
 
     public int deleteSignOutMember(String id);
+    
+    public int changeMember(MemberDTO member);
+	public MemberDTO selectMemberByNo(Long memberNo);
+	public int changeMemberPw(MemberDTO member);
+
+	public MemberDTO findMemberId(String email);
+	public MemberDTO findMemberPw(MemberDTO member);
 
     // 목록(Admin)
     public List<MemberDTO> selectMemberList(Map<String, Object> map);
@@ -37,7 +43,7 @@ public interface MemberMapper {
     public int selectMemberCount();
 
     // 상세보기(Admin)
-    public MemberDTO selectMemberByNo(Long memberNo);
+
 
     // 삭제(Admin)
     public int deleteMemberList(List<Long> list);

@@ -1,5 +1,7 @@
 package com.nike.web.controller;
 
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nike.web.domain.MemberDTO;
 import com.nike.web.service.MemberService;
+import com.nike.web.util.SecurityUtils;
 
 @Controller
 public class MemberController {
@@ -80,18 +83,40 @@ public class MemberController {
 	
 	// login() 메소드 수행 전에 LoginInterceptor의 preHandle() 메소드가 호출
 	@PostMapping("/member/login")
-	public void login(HttpServletRequest request, Model model) {
+	public void login(HttpServletRequest request, HttpServletResponse response) {
+		
+		String url = request.getParameter("url");
 		
 		// 아이디, 비밀번호가 일치하는 회원 정보 가져오기
 		MemberDTO loginMember = memberService.login(request);
 		
 		// 아이디, 비밀번호가 일치하는 회원이 있으면 (로그인 성공) LoginIntercepter의 postHandle() 메소드에 회원 정보 전달
 		if(loginMember != null) {
-			model.addAttribute("loginMember", loginMember);		// Model에 저장된 속성은 LoginInterceptor의 postHandle() 메소드의 ModelAndView 매개변수가 받는다.
+			// session에 loginMember 저장
+			request.getSession().setAttribute("loginMember", loginMember);		
+			// 로그인 이후 이동
+			try {
+				if(url.toString().isEmpty()) {	// 로그인 이전 화면 정보가 없으면 contextPath 이동
+					response.sendRedirect(request.getContextPath());
+				} else {	// 로그인 이전 화면 정보가 있으면 해당 화면으로 이동
+					response.sendRedirect(url.toString());	
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				response.setContentType("text/html");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('일치하는 정보가 없습니다. 아이디와 비밀번호를 확인하세요.')");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
-		// LoginIntercepter의 postHandle() 메소드에 로그인 이후에 이동할 경로 전달
-		model.addAttribute("url", request.getParameter("url"));
 		
 		// 로그인 유지를 체크한 경우
 		// 1) check 상태   : 파라미터 keepLogin = "keep"
@@ -135,7 +160,65 @@ public class MemberController {
 		
 	}
 	
-		
-		
+	@GetMapping("/member/myInfoPage")
+	public String myInfoPage() {
+		return "member/myInfo";
+	}
+	
+	@PostMapping("/member/modify")
+	public void modify(HttpServletRequest request, HttpServletResponse response) {
+		memberService.modify(request, response);
+	}
+	
+	@GetMapping("/member/editPw")
+	public String editPw() {
+		return "member/changePw";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/member/checkNowPw", produces="application/json")
+	public Map<String, Object> checkNowPw(HttpServletRequest request){
+		String nowPw = SecurityUtils.sha256(request.getParameter("nowPw"));
+		String pw = ((MemberDTO)request.getSession().getAttribute("loginMember")).getPw();
+		Map<String, Object> map = new HashMap<>();
+		map.put("res", nowPw.equals(pw));
+		return map;
+	}
+	
+	@PostMapping("/member/modifyPw")
+	public void modifyPw(HttpServletRequest request, HttpServletResponse response) {
+		memberService.modifyPw(request, response);
+	}
+	
+	// 아이디 찾기 폼
+	@GetMapping("/member/findIdForm")
+	public String findIdForm() {
+		return "member/findIdForm";
+	}
+	
+	@GetMapping("/member/findId")
+	public void findId(HttpServletRequest request, HttpServletResponse response) {
+		memberService.findId(request, response);
+	}
+	
+	@GetMapping("/member/findId/result")
+	public String findIdResult() {
+		return "member/findId";
+	}
+	
+	@GetMapping("/member/findPwForm")
+	public String findPwForm() {
+		return "member/findPwForm";
+	}
+	
+	@GetMapping("/member/findPw")
+	public void findPw(HttpServletRequest request, HttpServletResponse response) {
+		memberService.findPw(request, response);
+	}
+	
+	@GetMapping("/member/createNewPw")
+	public String createNewPw() {
+		return "member/createNewPw";
+	}
 	
 }

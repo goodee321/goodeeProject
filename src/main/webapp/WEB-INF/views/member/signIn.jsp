@@ -20,8 +20,6 @@
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 
-
-
 	/* 페이지 로드 이벤트 */
 	$(function(){
 		fnIdCheck();
@@ -77,12 +75,13 @@
 		})
 	}
 	
-	// 6. 휴대폰번호 정규식
+	// 8. 휴대폰번호 정규식
 	let phonePass = false;
 	function fnPhoneCheck(){
 		// 비밀번호 정규식 검사
 		$('#phone').on('keyup', function(){
-			let regPhone = /^[0-9]{11,11}$/;  // 숫자 11자
+			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]+)?([0-9]{4})/,"$1-$2-$3").replace("--", "-") );
+			let regPhone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;  // 이거만 넣으면 하이픈 직접 넣기
 			if(regPhone.test($('#phone').val())==false){
 				$('#phoneMsg').text('휴대폰 번호를 입력하세요.').addClass('dont').removeClass('ok');
 				phonePass = false;
@@ -222,15 +221,9 @@
 	function fnPwCheck(){
 		// 비밀번호 정규식 검사
 		$('#pw').on('keyup', function(){
-
-			let regPw = /^[a-zA-Z0-9!@#$%^&*]{3,16}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 3~16자 사이
-			/*if(regPw.test($('#pw').val())==false){
-				$('#pwMsg').text('3~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
-
 			let regPw = /^[a-zA-Z0-9!@#$%^&*]{3,15}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 3~15자 사이
 			/*if(regPw.test($('#pw').val())==false){
 				$('#pwMsg').text('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
-
 				pwPass = false;
 			} else {
 				$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
@@ -244,11 +237,7 @@
 				$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
 				pwPass = true;
 			} else {
-
-				$('#pwMsg').text('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
-
 				$('#pwMsg').text('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
-
 				pwPass = false;
 			}
 			
@@ -289,23 +278,25 @@
 	}
 	
 </script>
-
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    function sample6_execDaumPostcode() {
+    function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var addr = ''; // 주소 변수
                 var extraAddr = ''; // 참고항목 변수
+
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
                 }
+
                 // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if(data.userSelectedType === 'R'){
                     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -322,13 +313,14 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                    document.getElementById("extraAddress").value = extraAddr;
                 
                 } else {
-                    document.getElementById("sample6_extraAddress").value = '';
+                    document.getElementById("extraAddress").value = '';
                 }
+
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById('postcode').value = data.zonecode;
                 document.getElementById("address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("addrDetail").focus();
@@ -336,7 +328,6 @@
         }).open();
     }
 </script>
-
 </head>
 <body>
 	
@@ -380,19 +371,18 @@
 			<input type="button" value="인증번호받기" id="btnGetAuthCode"><br>
 			<span id="emailMsg"></span><br>
 			<input type="text" name="authCode" id="authCode" placeholder="인증코드 입력">
-			<input type="button" value="인증하기" id="btnVerifyAuthCode"><br><br>
+			<input type="button" value="인증하기" id="btnVerifyAuthCode"><br>
 		</label><br><br>
 		
-		
-
 		주소검색<br>
-		<input type="text" id="sample6_postcode" placeholder="우편번호">
-		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" name="address" id="address" placeholder="주소"><br>
-		<input type="text" name="addrDetail" id="addrDetail" placeholder="상세주소">
-		<input type="text" id="sample6_extraAddress" placeholder="참고항목">
-		<br><br><br>
-
+		<input type="text" name="postcode" id="postcode" value="${loginMember.postcode}" placeholder="우편번호">
+		<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+		<input type="text" name="address" id="address" value="${loginMember.address}" placeholder="주소"><br>
+		<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소">
+		<input type="text" name="extraAddress" id="extraAddress" value="${loginMember.extraAddress}" placeholder="참고항목">
+		<br><br>
+		
+		<!--
 		<label for="address">
 			주소<br>
 			<input type="text" name="address" id="address"><br>
@@ -402,7 +392,7 @@
 			상세주소<br>
 			<input type="text" name="addrDetail" id="addrDetail"><br>
 		</label><br><br>
-
+		-->
 		
 		<label for="phone">
 			휴대폰번호<br>
@@ -411,17 +401,10 @@
 		</label><br><br>
 		
 		
+		<input type="button" value="뒤로가기" onclick="history.back()">
 		<button>가입하기</button>
-		<input type="button" value="취소하기" onclick="location.href='${contextPath}'">
 	
 	</form>
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

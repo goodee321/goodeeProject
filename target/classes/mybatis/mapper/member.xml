@@ -5,214 +5,121 @@
 
 <mapper namespace="com.nike.web.mapper.MemberMapper">
 
-    <select id="selectMemberById" parameterType="String" resultType="MemberDTO">
-        SELECT MEMBER_NO,
-               ID,
-               PW,
-               NAME,
-               EMAIL,
-               ADDRESS,
-               ADDR_DETAIL,
-               PHONE,
-               AGREE_STATE,
-               SIGN_IN,
-               PW_MODIFIED,
-               INFO_MODIFIED,
-               SESSION_ID,
-               SESSION_LIMIT
-        FROM MEMBER
-        WHERE ID = #{id}
-    </select>
+	<!--  -->
+	<select id="selectMemberById" parameterType="String" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE ID = #{id}
+	</select>
 
 
-    <!--  -->
-    <select id="selectMemberByEmail" parameterType="String" resultType="MemberDTO">
-        SELECT MEMBER_NO,
-               ID,
-               PW,
-               NAME,
-               EMAIL,
-               ADDRESS,
-               ADDR_DETAIL,
-               PHONE,
-               AGREE_STATE,
-               SIGN_IN,
-               PW_MODIFIED,
-               INFO_MODIFIED,
-               SESSION_ID,
-               SESSION_LIMIT
-        FROM MEMBER
-        WHERE EMAIL = #{email}
-    </select>
+	<!--  -->
+	<select id="selectMemberByEmail" parameterType="String" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE EMAIL = #{email}
+	</select>
+	
+	
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="MemberDTO">
+		INSERT INTO MEMBER
+			(ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
+		VALUES
+			(#{id}, #{pw}, #{name}, #{email}, #{postcode}, #{address}, #{addrDetail}, #{extraAddress}, #{phone}, #{agreeState}, NOW(), NOW(), NOW())
+	</insert>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="deleteMember" parameterType="Long">
+		DELETE
+		  FROM MEMBER
+		 WHERE MEMBER_NO = #{memberNo}
+	</delete>
+	
+	<!--  -->
+	<select id="selectMemberByIdPw" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE ID = #{id}
+		   AND PW = #{pw}
+ 	</select>
+ 	
+ 	<!-- 로그인 기록 남기기 -->
+ 	<insert id="insertMemberLog" parameterType="String">
+ 		INSERT INTO MEMBER_LOG
+ 			(ID, SIGN_UP)
+ 		VALUES
+ 			(#{id}, NOW())
+ 			
+ 	</insert>
+ 	
+ 	<!-- 탈퇴한 회원 조회 -->
+ 	<select id="selectSignOutMemberById" parameterType="String" resultType="SignOutMemberDTO">
+ 		SELECT SIGN_OUT_NO, MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, SIGN_OUT_DATE
+ 		FROM SIGN_OUT_MEMBER
+ 		WHERE ID = #{id}
+ 	</select>
+ 	
+ 	<!-- 탈퇴한 회원 재가입 -->
+	<insert id="reInsertMember" parameterType="MemberDTO">
+		INSERT INTO MEMBER
+			(MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
+		VALUES
+			(#{memberNo}, #{id}, #{pw}, #{name}, #{email}, #{postcode}, #{address}, #{addrDetail}, #{extraAddress}, #{phone}, #{agreeState}, NOW(), NOW(), NOW())
+	</insert>
+ 	
+ 	<!-- 탈퇴한 회원 명단에서 제거 -->
+	<delete id="deleteSignOutMember" parameterType="String">
+		DELETE
+		  FROM SIGN_OUT_MEMBER
+		 WHERE ID = #{id}
+	</delete>
+ 	
+ 	
+ 	<!-- 나의 회원 정보 -->
+	<update id="changeMember" parameterType="MemberDTO">
+		UPDATE MEMBER
+		   SET NAME = #{name}
+		     , EMAIL = #{email}
+		     , POSTCODE = #{postcode}
+		     , ADDRESS = #{address}
+		     , ADDR_DETAIL = #{addrDetail}
+		     , EXTRA_ADDRESS = #{extraAddress}
+		     , PHONE = #{phone}
+		     , AGREE_STATE = #{agreeState}
+		     , INFO_MODIFIED = NOW()
+		 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<select id="selectMemberByNo" parameterType="Long" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 나의 비밀번호 바꾸기 -->
+	<update id="changeMemberPw" parameterType="MemberDTO">
+		UPDATE MEMBER
+		   SET PW = #{pw}, PW_MODIFIED = NOW()
+		 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findMemberId" parameterType="String" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findMemberPw" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
+		  FROM MEMBER
+		 WHERE ID = #{id} AND EMAIL = #{email} AND PHONE = #{phone}
+	</select>
 
 
-    <!-- 회원가입 -->
-    <insert id="insertMember" parameterType="MemberDTO">
-        INSERT INTO MEMBER
-        (ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED)
-        VALUES (#{id}, #{pw}, #{name}, #{email}, #{address}, #{addrDetail}, #{phone}, #{agreeState}, NOW(), NOW(),
-                NOW())
-    </insert>
-
-    <!-- 회원탈퇴 -->
-    <delete id="deleteMember" parameterType="Long">
-        DELETE
-        FROM MEMBER
-        WHERE MEMBER_NO = #{memberNo}
-    </delete>
-
-    <!--  -->
-    <select id="selectMemberByIdPw" parameterType="MemberDTO" resultType="MemberDTO">
-        SELECT MEMBER_NO,
-               ID,
-               PW,
-               NAME,
-               EMAIL,
-               ADDRESS,
-               ADDR_DETAIL,
-               PHONE,
-               AGREE_STATE,
-               SIGN_IN,
-               PW_MODIFIED,
-               INFO_MODIFIED,
-               SESSION_ID,
-               SESSION_LIMIT
-        FROM MEMBER
-        WHERE ID = #{id}
-          AND PW = #{pw}
-    </select>
-
-    <!-- 로그인 기록 남기기 -->
-    <insert id="insertMemberLog" parameterType="String">
-        INSERT INTO MEMBER_LOG
-            (ID, SIGN_UP)
-        VALUES (#{id}, NOW())
-
-    </insert>
-
-    <!-- 탈퇴한 회원 조회 -->
-    <select id="selectSignOutMemberById" parameterType="String" resultType="SignOutMemberDTO">
-        SELECT SIGN_OUT_NO,
-               MEMBER_NO,
-               ID,
-               PW,
-               NAME,
-               EMAIL,
-               ADDRESS,
-               ADDR_DETAIL,
-               PHONE,
-               AGREE_STATE,
-               SIGN_IN,
-               SIGN_OUT_DATE
-        FROM SIGN_OUT_MEMBER
-        WHERE ID = #{id}
-    </select>
-
-    <!-- 탈퇴한 회원 재가입 -->
-    <insert id="reInsertMember" parameterType="MemberDTO">
-        INSERT INTO MEMBER
-        (MEMBER_NO, ID, PW, NAME, EMAIL, ADDRESS, ADDR_DETAIL, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED)
-        VALUES (#{memberNo}, #{id}, #{pw}, #{name}, #{email}, #{address}, #{addrDetail}, #{phone}, #{agreeState}, NOW(),
-                NOW())
-    </insert>
-
-    <!-- 탈퇴한 회원 명단에서 제거 -->
-    <delete id="deleteSignOutMember" parameterType="String">
-        DELETE
-        FROM SIGN_OUT_MEMBER
-        WHERE ID = #{id}
-    </delete>
-
-
-    <!-- 협업 -->
-
-    <!-- 목록(beginRecord - endRecord) Admin -->
-    <select id="selectMemberList" parameterType="Map" resultType="MemberDTO">
-        SELECT *
-        FROM MEMBER ORDERS LIMIT #{beginRecord}, #{endRecord}
-    </select>
-
-
-    <!-- 전체 레코드 갯수 -->
-    <select id="selectMemberCount" resultType="Integer">
-        SELECT COUNT(MEMBER_NO)
-        FROM MEMBER
-    </select>
-
-
-    <!-- 다중 삭제(선택해서 삭제) -->
-    <!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
-    <delete id="deleteMemberList">
-        DELETE
-        FROM MEMBER
-        <where>
-            <foreach collection="list" item="memberNo" open="MEMBER_NO IN(" separator="," close=")">
-                #{memberNo}
-            </foreach>
-        </where>
-    </delete>
-
-
-    <!-- 상세보기 -->
-    <select id="selectMemberByNo" parameterType="Long" resultType="MemberDTO">
-        SELECT MEMBER_NO,
-               ID,
-               PW,
-               NAME,
-               EMAIL,
-               ADDRESS,
-               ADDR_DETAIL,
-               PHONE,
-               AGREE_STATE,
-               SIGN_IN,
-               PW_MODIFIED,
-               INFO_MODIFIED,
-               SESSION_ID,
-               SESSION_LIMIT
-        FROM MEMBER
-        WHERE MEMBER_NO = #{memberNo}
-    </select>
-
-
-    <!-- 수정 -->
-    <update id="updateMember" parameterType="MemberDTO">
-        UPDATE
-            MEMBER
-        SET NAME          = #{name}
-          , EMAIL         = #{email}
-          , ADDRESS       = #{address}
-          , ADDR_DETAIL   = #{addrDetail}
-          , PHONE         = #{phone}
-          , INFO_MODIFIED = NOW()
-        WHERE MEMBER_NO = #{memberNo}
-    </update>
-
-
-    <!-- 삭제 -->
-    <delete id="deleteMember2" parameterType="Long">
-        DELETE
-        FROM MEMBER
-        WHERE MEMBER_NO = #{memberNo}
-    </delete>
-
-    <select id="getMemberByNo" resultType="MemberDTO">
-        SELECT MEMBER_NO,
-               ID,
-               PW,
-               NAME,
-               EMAIL,
-               ADDRESS,
-               ADDR_DETAIL,
-               PHONE,
-               AGREE_STATE,
-               SIGN_IN,
-               PW_MODIFIED,
-               INFO_MODIFIED,
-               SESSION_ID,
-               SESSION_LIMIT
-        FROM MEMBER
-        WHERE MEMBER_NO = #{memberNo}
-    </select>
-
+   
 
 </mapper>

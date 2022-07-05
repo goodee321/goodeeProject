@@ -71,6 +71,9 @@ public class PageUtils {
 		}
 	}
 
+	
+	
+	
 
 	// 매개변수 1개
 	// path : "/employee/list", "/board/list" 등이 각 ServiceImpl에서 전달된다.

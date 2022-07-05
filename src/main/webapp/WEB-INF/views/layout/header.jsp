@@ -23,9 +23,9 @@
 	
 	<!-- 로그인 이후에 보여줄 링크 -->
 	<c:if test="${loginMember ne null}">
-		${loginMember.name} 님 반갑습니다.&nbsp;&nbsp;&nbsp;
+		<a href="${contextPath}/member/myInfoPage">${loginMember.name}</a> 님 반갑습니다.&nbsp;&nbsp;&nbsp;
 		<a href="${contextPath}/member/logout">로그아웃</a>
-		<a href="${contextPath}/member/signOut?memberNo=${loginMember.memberNo}">회원탈퇴하기</a>
+	</c:if>
 
 		
 		<c:if test="${loginMember.id eq 'admin'}">
@@ -33,7 +33,7 @@
 		</c:if>
 		
 
-	</c:if>
+
 	
 	
 	<hr>
