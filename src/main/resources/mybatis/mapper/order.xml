@@ -28,22 +28,24 @@
             (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice}, #{productSize})
     </insert>
 
-    <select id="selectOrderbyMemberNo" resultType="order">
-        SELECT O.ORDER_DATE,
-               O.ORDER_ID,
-               PI.PROIMG_NO,
+    <select id="selectOrderByMemberNo" resultType="order">
+        SELECT O.ORDER_ID,
+               O.ORDER_DATE,
                P.PRO_NAME,
+               OD.PRODUCT_SIZE,
                OD.ORDER_QTY,
-               OD.ORDER_PRICE
+               OD.ORDER_PRICE,
+               O.ORDER_STATE,
+               PI.PROIMG_NO
         FROM ORDER_TB O
-                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_NO = OD.ORDER_NO
+                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
         WHERE O.MEMBER_NO = #{memberNo}
           AND O.ORDER_NO = #{orderNo}
     </select>
 
-    <select id="selectOrderDetailbyMemberNo" parameterType="order">
+    <select id="selectOrderDetailByMemberNo" parameterType="order">
         SELECT O.ORDER_DATE,
                O.ORDER_ID,
                O.ORDER_PHONE,
