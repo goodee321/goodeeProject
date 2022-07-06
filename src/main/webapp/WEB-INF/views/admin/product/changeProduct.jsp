@@ -165,7 +165,6 @@ section {
 	<nav id="nav">
 		<div id="nav_box">
 			<%@ include file="../layout/nav.jsp" %>
-		
 		</div>
 	</nav>
 	

@@ -95,14 +95,14 @@ $("#proSize").change(function () {
 			
 	function fnRegExp(){
 			let numberRegExp = 	/^[0-9]+$/;
-			let decimalRegExp = /^[0]\.{0}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
+			let decimalRegExp = /^[0][\.]?(\d{1,1})?$/g;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
 			
 			
 			
 			$('#proDiscount').on('keyup',function(){
 			
 				if(decimalRegExp.test( $('#proDiscount').val() ) == false){ 
-					$('#proDiscountError').text('할인율에는 1이하의 숫자만 입력 가능합니다.').addClass('dont').removeClass('hidden');
+					$('#proDiscountError').text('할인율에는 1이하의 숫자와 소수점 한자리수만 가능합니다.').addClass('dont').removeClass('hidden');
 					discountPass = false;
 					return;
 				}else{
