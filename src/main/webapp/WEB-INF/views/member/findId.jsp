@@ -13,7 +13,7 @@
 <script>
 	$(function(){
 		$("#loginBtn").click(function(){
-			location.href='${contextPath}/member/login';
+			location.href='${contextPath}/member/loginPage';
 		})
 	})
 </script>
@@ -28,8 +28,8 @@
 			${id}
 		</h5>
 		<p>
-			<button type="button" id=loginBtn>Login</button>
-			<button type="button" onclick="history.back();">Cancel</button>
+			<button type="button" id=loginBtn>로그인</button>
+			<button type="button" onclick="history.back();">뒤로가기</button>
 		</p>
 	</div>
 </body>

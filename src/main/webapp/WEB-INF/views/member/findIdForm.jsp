@@ -21,8 +21,8 @@
 				<input type="text" id="email" name="email" required>
 			</p>
 			<p>
-				<button type="submit" id="findIdBtn">Find</button>
-				<button type="button" onclick="history.back()">Cancel</button>
+				<button type="submit" id="findIdBtn">찾기</button>
+				<button type="button" onclick="history.back()">취소</button>
 			</p>
 		</div>
 	</form>
