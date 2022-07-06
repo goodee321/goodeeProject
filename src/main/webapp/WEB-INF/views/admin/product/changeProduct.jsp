@@ -178,7 +178,7 @@ section {
 	<div class="table">
 	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/admin/product/changeProduct" method="post" enctype="multipart/form-data">
 				
-				<c:forEach var="productImage" items="${productImages}">	
+				<c:forEach var="productImage" items="${productImages}" begin="1">	
 					<td>${productImage.proimgOrigin}<a href="${contextPath}/admin/product/removeProductImage?proimgNo=${productImage.proimgNo}&proNo=${productImage.proNo}"><i class="fa-solid fa-circle-xmark"></i></a></td>		
 					<label>
 					<td><img alt="${productImage.proimgOrigin}" src="${contextPath}/admin/product/display?proimgNo=${productImage.proimgNo}" width="90px"></td>
