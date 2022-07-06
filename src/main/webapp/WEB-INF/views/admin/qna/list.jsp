@@ -129,7 +129,7 @@
 	}
 	
 	.kind2 {
-			font-family: 'Splash', cursive;
+			font-family: Georgia, "Malgun Gothic", serif;
 			font-size: 27px;
 	}
 	
@@ -153,9 +153,9 @@
 		<h3 class="kind">Qna Management</h3>
 		
 		<h3 class="kind2">Total Qna: ${totalRecord}</h3><br>
+		<!-- <a href="${contextPath}/admin/qna/saveQna">글쓰기</a><br>  -->
 		
-		<a href="${contextPath}/admin/qna/saveQna">글쓰기</a><br>
-		<br>
+	
 	</div>
 
 		<table>
@@ -190,9 +190,9 @@
 							<tr>
 								<td>${qna.qnaNo}</td>
 								<td>
-									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;</c:forEach>
+									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
 									
-									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-regular fa-user">관리자 답변</i></c:if>
+									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-solid fa-comment-dots"> 관리자 답변</i></c:if>
 									<!-- 제목 -->
 									<c:if test="${qna.qnaTitle.length() gt 20}">
 										<a href="${contextPath}/admin/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 10)}</a>
@@ -209,7 +209,7 @@
 										${qna.qnaContent}
 									</c:if>
 								</td>
-								<td>${loginMember.id}</td>
+								<td>${qna.id}</td>
 								<td>${qna.qnaDate}</td>
 								
 									<td>

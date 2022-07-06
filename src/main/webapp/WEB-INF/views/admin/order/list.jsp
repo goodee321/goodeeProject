@@ -108,7 +108,7 @@
         }
 
         .kind2 {
-            font-family: 'Splash', cursive;
+            font-family: Georgia, "Malgun Gothic", serif;
             font-size: 27px;
         }
 

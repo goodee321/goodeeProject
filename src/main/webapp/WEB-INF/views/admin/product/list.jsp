@@ -87,7 +87,7 @@
 	}
 	
 	.kind2 {
-			font-family: 'Splash', cursive;
+			font-family: Georgia, "Malgun Gothic", serif;
 			font-size: 27px;
 	}
 	
@@ -317,10 +317,11 @@
 				 <td colspan="5">
 				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					
+					<div>
 					 ${paging}
 					 &nbsp;&nbsp;&nbsp;
 					 <button id="btnRemove" class="btn btn-secondary">선택삭제</button><br><br> 
+					 </div>
 				</td>
 			
 			</tr>

@@ -87,7 +87,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 						
 						Map<String, Object> map = new HashMap<>();
 						map.put("beginRecord", pageUtils.getBeginRecord() - 1);
-						map.put("endRecord", pageUtils.getEndRecord());
+						map.put("recordPerPage", pageUtils.getRecordPerPage());
 						
 						List<ProductDTO> products = adminProductMapper.selectProductList(map);
 						
