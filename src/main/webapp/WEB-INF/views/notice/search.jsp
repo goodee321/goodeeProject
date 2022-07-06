@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <style>
 
@@ -17,18 +18,13 @@
 		text-align: center;
 	}
 	
-	span input:hover {
-		border: 1px solid #008bcc;
-	}
-	
 	#btnSearch { 
 		background-color: #708090; 
 		color: silver;
 		border: #708090;
 		border-radius: 3px;
-		width: 60px;
-		height: 25px;
 	}
+	
 	
 </style>
 <script>
@@ -88,7 +84,7 @@
 			<span id="equalArea">
 				<input type="text" name="query" id="query">
 			</span>
-			<input type="button" value="검색" id="btnSearch">
+			<input type="button" value="검색" id="btnSearch" class="btn btn-dark">
 		</form>
 	</div>
 	
