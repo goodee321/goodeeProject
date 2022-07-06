@@ -21,6 +21,10 @@
 		fnReviewCheck();
 		fnFileCheck();
 		fnData();
+		imageShow();
+		change_qty2();
+		fnOrder();
+		fnAdd();
 	})
 	
 	function fnReviewCheck(){
@@ -148,7 +152,6 @@
 		          }
 		     });
 		   });
-
 	}
 	
 	function totalCheck(e2){
@@ -158,10 +161,82 @@
 		
 		// 가격(총 가격 + 배송비)
 		$(".finalPrice").text(Price);
-		console.log(Qty);
 		
 	}
 	
+	function imageShow(){
+		 var bigImg = document.getElementById('big_img');
+	     var thumbnails = document.getElementsByClassName('thumbnail');
+	     
+	     for(let i = 0; i < thumbnails.length; i++) {
+	         thumbnails[i].onmouseover = function(ev){
+	             bigImg.src = this.src;
+	         }
+	     }
+	     
+	}
+	
+	function change_qty2(t) {
+		let min_qty = 1;
+		let basic_amount = $('#proPrice').val();
+		let this_qty = $("#cartQty").val() * 1;
+		if (t == "m") {
+			this_qty -= 1;
+			if (this_qty < min_qty) {
+				alert("수량은 1개 이상 입력해 주십시오.");
+				return;
+			}
+		} else if (t == "p") {
+			this_qty += 1;
+		}
+		let show_total_amount = basic_amount * this_qty;
+		$("#cartQty").val(this_qty);
+		$(".totalPrice").text(show_total_amount);
+	}
+
+	function fnAdd() {
+		$(".btn-light").on('click', function () {
+			let data = {
+				productNo: ${detail.proNo},
+				cartQty: parseInt($("#cartQty").val()),
+                productSize : parseInt($("#proSize").val())
+			}
+			$.ajax({
+				url: "${contextPath}/cart/add",
+				type: "post",
+				data: data,
+				success: function (res) {
+					console.log(res)
+					if (res > 0) {
+						if (confirm("장바구니에 상품을 담았습니다." + "\n" + "장바구니로 이동하시겠습니까?")) {
+							location.href = '${contextPath}/cart/list';
+						}
+					} else if (res == 0) {
+						if (confirm("로그인이 필요한 기능입니다. 로그인 할까요?")) {
+							location.href = '${contextPath}/member/loginPage?url=${contextPath}/Product/detailPage';
+						}
+					} else {
+						alert("장바구니 담기에 실패했습니다. 새로고침 후 다시 시도해주세요.");
+					}
+				}, error:function(request,status,error){
+                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+			})
+		})
+	}
+
+	function fnOrder() {
+		$(".btn-dark").on('click', function(){
+			let cartQty = $(".cartQty").val();
+			$(".order_form").find("input[name='cartQty']").val(cartQty);
+
+            let proSize = $("#proSize").val();
+            $(".order_form").find("input[name='productSize']").val(proSize);
+
+			$(".order_form").submit();
+
+		})
+	}
 	
 	
 </script>
@@ -314,8 +389,13 @@
 			<input type="hidden" value="${detail.proNo}" id="proNo" name="proNo" class="proNo">
 		</div>
 		<div class="row" style="float: left; text-align: center; width:35%; position:absolute;">
-			<img alt="이미지${detail.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${detail.productImageDTO.proimgNo}" width="100%" width="400px">
+			<%-- <img alt="이미지${detail.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${detail.productImageDTO.proimgNo}" width="100%" width="400px"> --%>
 		</div>
+		
+		<div>
+        <img src="${contextPath}/product/display?proimgNo=${detail.productImageDTO.proimgNo}" width="300px" height="300px" id="big_img">
+	        <img src="${contextPath}/product/display?proimgNo=${detail.productImageDTO.proimgNo}" width="40px" height="30px" class="thumbnail">
+   	    </div>
 
 		<div class="row productInfo" style="width: 40%; float: right; margin-bottom: 30px; margin-left: 150px; padding-left: 150px;">
 			<div class="form-group" style="text-align: center;">
@@ -360,18 +440,19 @@
 				</select>
 				
 			</div>	
-			<div class="sumAmount" name="sumAmount" id="price">
-				총 금액: <span class="finalPrice">원</span></div>
-			<div class="row">
-				<div class="selected_option" style="text-align: right;">
-				</div>
-				<div style="text-align: center;">
-					<button class="btn btn-default">주문하기</button>
-					<button class="btn btn-cart">장바구니</button>
-				</div>
-			</div>
+			총 금액: <span class="totalPrice">${detail.proPrice}</span></div>
+			<input type="hidden" value="${detail.proPrice}" id="proPrice">
+			<div class="plus"><a href="javascript:change_qty2('p')">▲</a></div>
+			<input type="text" class="cartQty" id="cartQty" value="1" readonly="readonly">
+			<div class="minus"><a href="javascript:change_qty2('m')">▼</a></div>
+			<button type="button" class="btn btn-light" style="border-radius: 1rem">장바구니 담기</button>
+			<button type="button" id="iamportPayment" class="btn btn-dark" style="border-radius: 1rem">구매하기</button>
+			<form class="order_form" action="${contextPath}/order/orderPage/${loginMember.memberNo}" method="get">
+				<input type="hidden" name="productNo" value="${detail.proNo}">
+				<input type="hidden" name="cartQty" value="">
+	            <input type="hidden" name="productSize" value="">
+			</form>
 		</div>
-	</div>
 	
 	<div class="container">
 		
@@ -482,4 +563,3 @@
 	
 </body>
 </html>
-
