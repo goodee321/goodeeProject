@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<select id="selectNoticeList" parameterType="Map" resultType="NoticeDTO">
 				SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
 				  FROM NOTICE
-				   ORDER BY NOTICE_NO DESC LIMIT #{beginRecord}, #{endRecord}
+				 ORDER BY NOTICE_NO DESC LIMIT #{beginRecord}, #{recordPerPage}
 			</select>
 			
 		

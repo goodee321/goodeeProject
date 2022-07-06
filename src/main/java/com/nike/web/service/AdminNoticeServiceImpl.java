@@ -57,7 +57,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 					
 					// beginRecord + endRecord => Map
 					map.put("beginRecord", pageUtils.getBeginRecord() - 1);
-					map.put("endRecord", pageUtils.getEndRecord());
+					map.put("recordPerPage", pageUtils.getRecordPerPage());
 					
 					// beginRecord ~ endRecord 사이 검색된 목록 가져오기
 					List<NoticeDTO> notices = adminNoticeMapper.selectFindList(map);
@@ -96,7 +96,7 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 				
 				Map<String, Object> map = new HashMap<>();
 				map.put("beginRecord", pageUtils.getBeginRecord() - 1);
-				map.put("endRecord", pageUtils.getEndRecord());
+				map.put("recordPerPage", pageUtils.getRecordPerPage());
 				
 				List<NoticeDTO> notices = adminNoticeMapper.selectNoticeList(map);
 				
