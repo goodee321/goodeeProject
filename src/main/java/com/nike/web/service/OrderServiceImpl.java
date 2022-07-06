@@ -128,9 +128,13 @@ public class OrderServiceImpl implements OrderService {
 
             res = orderMapper.insertOrder(order);
 
+            System.out.println("res : " + res);
+
             if (res > 0) {
 
                 String[] cartNo = request.getParameterValues("cartNo");
+
+                System.out.println("order.getProductSize() : " + order.getProductSize());
 
                 if (cartNo[0].equals("0")) {
                     OrderDetailDTO odd = OrderDetailDTO.builder()
@@ -138,6 +142,7 @@ public class OrderServiceImpl implements OrderService {
                             .productNo(order.getProductNo())
                             .orderQty(order.getCartQty())
                             .orderPrice(order.getProPrice())
+                            .productSize(order.getProductSize())
                             .build();
 
                     res += orderMapper.insertOrderDetail(odd);
@@ -161,6 +166,7 @@ public class OrderServiceImpl implements OrderService {
                                     .orderId(order.getOrderId())
                                     .orderQty(cartMapper.selectcartQtybyCartNo(Integer.parseInt(cartNo[i])))
                                     .orderPrice(Integer.parseInt(orderPrice[i]))
+                                    .productSize(order.getProductSize())
                                     .build();
                         }
                         res += orderMapper.insertOrderDetail(odd);
@@ -236,6 +242,7 @@ public class OrderServiceImpl implements OrderService {
             productInfo.setProductNo(orders.getProductNo());
             productInfo.setCartNo(orders.getCartNo());
             productInfo.setCartQty(orders.getCartQty());
+            productInfo.setProductSize(orders.getProductSize());
             productInfo.initSaleTotal();
             products.add(productInfo);
         }
@@ -249,10 +256,12 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItemDTO> product = new ArrayList<>();
         int productNo = Integer.parseInt(request.getParameter("productNo"));
         int cartQty = Integer.parseInt(request.getParameter("cartQty"));
+        int productSize = Integer.parseInt(request.getParameter("productSize"));
 
         OrderItemDTO productInfo = orderMapper.selectProductByNo(productNo);
         productInfo.setProductNo(productNo);
         productInfo.setCartQty(cartQty);
+        productInfo.setProductSize(productSize);
         productInfo.initSaleTotal();
         product.add(productInfo);
         return product;

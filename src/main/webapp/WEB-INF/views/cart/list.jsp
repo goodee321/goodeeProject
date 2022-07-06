@@ -70,6 +70,7 @@
                         let productNo = parseInt($(element).find(".hide_productNo_input").val());
                         let cartQty = $(element).find(".hide_cartQty_input").val();
                         let cartNo = parseInt($(element).find(".hide_cartNo_input").val());
+                        let productSize = parseInt($(element).find(".hide_productSize_input").val());
 
                         let productNo_input = "<input name='orders[" + orderNo + "].productNo' type='hidden' value='" + productNo + "'>";
                         form_contents += productNo_input;
@@ -80,9 +81,13 @@
                         let cartNo_input = "<input name='orders[" + orderNo + "].cartNo' type='hidden' value='" + cartNo + "'>";
                         form_contents += cartNo_input;
 
+                        let productSize_input = "<input name='orders[" + orderNo + "].productSize' type='hidden' value='" + productSize + "'>";
+                        form_contents += productSize_input;
+
                         orderNo += 1;
                     }
                 });
+
                 $(".order_form").append(form_contents);
                 $(".order_form").submit();
             });
@@ -246,6 +251,7 @@
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"></jsp:include>
+${cartList}
 <div class="container">
     <div id="contents">
         <div class="width_column100">
@@ -266,6 +272,7 @@
                                         </th>
                                         <th scope="col" class="thumb" style="font-family: 'YG730'">이미지</th>
                                         <th scope="col" class="product">상품명</th>
+                                        <th scope="col" class="option">옵션</th>
                                         <th scope="col" class="price">판매가</th>
                                         <th scope="col" class="quantity">수량</th>
                                         <th scope="col" class="total">합계</th>
@@ -292,6 +299,7 @@
                                             <input type="hidden" class="hide_cartQty_input" value="${cart.cartQty}">
                                             <input type="hidden" class="hide_totalPrice_input" value="${cart.proPrice * cart.cartQty}">
                                             <input type="hidden" class="hide_productNo_input" value="${cart.productNo}">
+                                            <input type="hidden" class="hide_productSize_input" value="${cart.productSize}">
                                         </td>
                                         <td class="thumb">
                                             이미지
@@ -300,6 +308,9 @@
                                             <input type="hidden" class="cartNo" value="${cart.cartNo}"
                                                    name="cartNo">
                                             <a href="${contextPath}/product/detail?proNo=${cart.productNo}">${cart.proName}</a>
+                                        </td>
+                                        <td>
+                                            ${cart.productSize}
                                         </td>
                                         <td class="price">
                                             <fmt:formatNumber value="${cart.proPrice}"></fmt:formatNumber>원

@@ -22,7 +22,7 @@ public class CartDTO {
 
 	//	Product
 	private String proName;
-	private int proSize;
+	private int productSize;
 	private int proPrice;
 	private long proDiscount;
 

@@ -119,7 +119,24 @@
 		 WHERE ID = #{id} AND EMAIL = #{email} AND PHONE = #{phone}
 	</select>
 
-
+	<select id="getMemberByNo" resultType="MemberDTO">
+		SELECT MEMBER_NO,
+			   ID,
+			   PW,
+			   NAME,
+			   EMAIL,
+			   ADDRESS,
+			   ADDR_DETAIL,
+			   PHONE,
+			   AGREE_STATE,
+			   SIGN_IN,
+			   PW_MODIFIED,
+			   INFO_MODIFIED,
+			   SESSION_ID,
+			   SESSION_LIMIT
+		FROM MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
    
 
 </mapper>

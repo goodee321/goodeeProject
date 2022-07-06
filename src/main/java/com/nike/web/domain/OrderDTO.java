@@ -42,7 +42,7 @@ public class OrderDTO {
     private int orderPrice;
 
     //  PRODUCT_QTY
-    private int proSize;
+    private int productSize;
 
     private int orderFinalSalePrice;
 

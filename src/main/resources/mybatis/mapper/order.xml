@@ -10,23 +10,22 @@
                         P.PRO_PRICE,
                         PQ.PRO_DISCOUNT
         FROM PRODUCT P
-                 INNER JOIN PRODUCT_QTY PQ
-                            ON P.PRO_NO = PQ.PRO_NO
+                 INNER JOIN PRODUCT_QTY PQ ON P.PRO_NO = PQ.PRO_NO
         WHERE P.PRO_NO = #{productNo}
     </select>
 
     <insert id="insertOrder" parameterType="order">
         INSERT INTO ORDER_TB
-            (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID)
+        (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID)
         VALUES
             (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="orderItemDTO">
         INSERT INTO ORDER_DETAIL
-            (ORDER_ID, PRODUCT_NO, ORDER_QTY, ORDER_PRICE)
+            (ORDER_ID, PRODUCT_NO, ORDER_QTY, ORDER_PRICE, PRODUCT_SIZE)
         VALUES
-            (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice})
+            (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice}, #{productSize})
     </insert>
 
     <select id="selectOrderbyMemberNo" resultType="order">

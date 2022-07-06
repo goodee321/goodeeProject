@@ -96,6 +96,7 @@
                 productNo : $(".orderDetail_productNo").val(),
                 cartQty: $(".orderDetail_cartQty").val(),
                 proPrice : $(".orderDetail_totalPrice").val(),
+                productSize : $(".orderDetail_productSize").val(),
                 merchant_uid: createOrderId(),
             }
 
@@ -126,13 +127,13 @@
             method: "post",
             traditional: true,
             data: data,
-            success: function (res) {
-                console.log(res);
+            success: function (res,request) {
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"\n"+"res"+res);
                 if(res > 0){
                     location.href = "${contextPath}/order/completePage";
-                } else {
-                    location.href = "${contextPath}/order/errorPage";
                 }
+            }, error:function(request,status,error){
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         })
     }
@@ -162,7 +163,7 @@
             <tr>
                 <td>이미지</td>
                 <td>${order.proName}</td>
-                <td>옵션</td>
+                <td>${order.productSize}</td>
                 <td>${order.cartQty}</td>
                 <td>${order.proPrice}</td>
 
@@ -171,6 +172,7 @@
                     <input type="hidden" class="orderDetail_productNo" name="productNo" value="${order.productNo}">
                     <input type="hidden" class="orderDetail_cartQty" name="orderQty" value="${order.cartQty}">
                     <input type="hidden" class="orderDetail_totalPrice" name="orderPrice" value="${order.totalPrice}">
+                    <input type="hidden" class="orderDetail_productSize" name="productSize" value="${order.productSize}">
                 </td>
             </tr>
         </c:forEach>
