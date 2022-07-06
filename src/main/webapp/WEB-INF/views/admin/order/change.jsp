@@ -69,7 +69,7 @@
 		<strong>배송비</strong><br>
 		<input type="text" name="orderDelivery" id="orderDelivery" value="${order.orderDelivery}" placeholder="배송비" required><br><br>
 		<strong>주문상태</strong><br>
-		<input type="text" name="orderState" id="orderState" value="${order.orderState}" placeholder="주문상태" required><br><br>
+		<input type="text" name="orderState" id="orderState" value="${order.orderState}" placeholder="주문상태" readonly="readonly"><br><br>
 		(0:주문완료, 1:배송준비중, 2:배송중 3:배송완료, 4:주문취소)<br>
 		<input type="hidden" name="orderNo" value="${order.orderNo}">
 		

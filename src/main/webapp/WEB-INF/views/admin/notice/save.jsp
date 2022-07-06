@@ -67,7 +67,7 @@ $(function(){
 	<form id="f" action="${contextPath}/admin/notice/save" method="post">
 		<strong>제목:</strong> <input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목"><br><br>
 		<strong>내용:</strong><br><br>
-		<textarea rows="3" cols="30" name="noticeContent" id="noticeContent" placeholder="내용" required class="form-control col-sm-5" style="margin: 0 auto"></textarea><br><br>
+		<textarea rows="10" cols="30" name="noticeContent" id="noticeContent" placeholder="내용" required class="form-control col-sm-5" style="margin: 0 auto"></textarea><br><br>
 		<button class="btn btn-secondary">작성완료</button>&nbsp;&nbsp;&nbsp;
 		<input type="button" value="목록" id="btnList" class="btn btn-secondary">
 	</form>

@@ -161,7 +161,7 @@
 		<table>
 			<!-- <c:if test="${member.id != null}"></c:if> -->
 			
-			<thead>
+			<thead class="table-dark">
 				<tr>
 					<td>번호</td>
 					<td>제목</td>
