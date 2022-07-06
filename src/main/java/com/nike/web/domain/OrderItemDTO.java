@@ -35,6 +35,8 @@ public class OrderItemDTO {
 
     private double proDiscount;
 
+    private int proimgNo;
+
     private List<OrderItemDTO> orders;
 
     private int salePrice;
@@ -48,15 +50,23 @@ public class OrderItemDTO {
 
     @Override
     public String toString() {
-        return "OrderItemDTO [" +
-                "cartNo=" + cartNo +
-                ", productNo=" + productNo +
+        return "OrderItemDTO{" +
+                "productNo=" + productNo +
                 ", cartQty=" + cartQty +
+                ", cartNo=" + cartNo +
+                ", orderId='" + orderId + '\'' +
+                ", productSize=" + productSize +
+                ", orderNo=" + orderNo +
+                ", orderQty=" + orderQty +
+                ", orderPrice=" + orderPrice +
                 ", proName='" + proName + '\'' +
                 ", proPrice=" + proPrice +
                 ", proDiscount=" + proDiscount +
+                ", proimgNo=" + proimgNo +
+                ", orders=" + orders +
                 ", salePrice=" + salePrice +
                 ", totalPrice=" + totalPrice +
-                ']';
+                '}';
     }
+
 }

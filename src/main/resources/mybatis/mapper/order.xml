@@ -8,10 +8,12 @@
         SELECT DISTINCT P.PRO_NO,
                         P.PRO_NAME,
                         P.PRO_PRICE,
-                        PQ.PRO_DISCOUNT
+                        PQ.PRO_DISCOUNT,
+                        MAX(PI.PROIMG_NO) AS PROIMG_NO
         FROM PRODUCT P
                  INNER JOIN PRODUCT_QTY PQ ON P.PRO_NO = PQ.PRO_NO
-        WHERE P.PRO_NO = #{productNo}
+                 INNER JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
+        WHERE P.PRO_NO = #{productNo};
     </select>
 
     <insert id="insertOrder" parameterType="order">

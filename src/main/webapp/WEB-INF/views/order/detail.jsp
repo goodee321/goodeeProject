@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -161,11 +159,19 @@
         <tbody>
         <c:forEach items="${orderList}" var="order">
             <tr>
-                <td>이미지</td>
+                <td>
+                    <a href="${contextPath}/product/detail?proNo=${order.productNo}">
+                        <img
+                                alt="이미지${order.proimgNo}"
+                                src="${contextPath}/product/display?proimgNo=${order.proimgNo}"
+                                width="100px" height="100px"
+                        >
+                    </a>
+                </td>
                 <td>${order.proName}</td>
                 <td>${order.productSize}</td>
                 <td>${order.cartQty}</td>
-                <td>${order.proPrice}</td>
+                <td><fmt:formatNumber value="${order.salePrice}"></fmt:formatNumber></td>
 
                 <td class="orderDetail_td" colspan="5">
                     <input type="hidden" class="orderDetail_cartNo" name="cartNo" value="${order.cartNo}">
@@ -193,14 +199,18 @@
         <c:set var="total" value="${total + (result.totalPrice)}"/>
     </c:forEach>
 
+
+
     <c:if test="${total >= 50000}">
-        배송비 <input type="number" id="orderDelivery" name="orderDelivery" value="0"><br>
-        합계 <input type="number" class="totalPrice" name="totalPrice" value="${total}"><br>
+        배송비 0원
+        합계 <fmt:formatNumber value="${total}"></fmt:formatNumber>원<br>
     </c:if>
 
+
+
     <c:if test="${total <= 50000}">
-        배송비 <input type="number" id="orderDelivery" name="orderDelivery" value="3000"><br>
-        합계 <input type="number" class="totalPrice" name="totalPrice" value="${total + 3000}"><br>
+        배송비 <fmt:formatNumber value="3000"></fmt:formatNumber>원</span>
+        합계 <fmt:formatNumber value="${total + 3000}"></fmt:formatNumber>원<br>
     </c:if>
 
     결제수단

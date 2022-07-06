@@ -11,10 +11,22 @@
                C.CART_QTY,
                C.PRODUCT_SIZE,
                P.PRO_NAME,
-               P.PRO_PRICE
-        FROM CART C
-                 INNER JOIN PRODUCT P ON C.PRODUCT_NO = P.PRO_NO
-        WHERE C.MEMBER_NO = #{memberNo}
+               P.PRO_PRICE,
+               MAX(PI.PROIMG_NO) AS PROIMG_NO,
+               PQ.PRO_DISCOUNT
+            FROM CART C
+                INNER JOIN PRODUCT P ON C.PRODUCT_NO = P.PRO_NO
+                INNER JOIN PRODUCT_IMAGE PI ON C.PRODUCT_NO = PI.PRO_NO
+                INNER JOIN PRODUCT_QTY PQ ON C.PRODUCT_NO = PQ.PRO_NO
+        WHERE C.MEMBER_NO = #{memberNo} GROUP BY C.CART_NO
+    </select>
+
+    <select id="selectImageListByProductNo" resultType="ProductImageDTO">
+        SELECT DISTINCT
+            PI.*
+        FROM PRODUCT_IMAGE PI
+            INNER JOIN CART C ON PI.PRO_NO = C.PRODUCT_NO
+        WHERE C.PRODUCT_NO = #{productNo}
     </select>
 
     <select id="selectproductNobyCartNo" resultType="int">

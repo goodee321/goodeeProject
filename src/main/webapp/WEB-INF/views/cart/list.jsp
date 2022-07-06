@@ -55,6 +55,11 @@
                     setTotalInfo($(".cart_info_td"));
                 })
             })
+
+            let price = Math.round($(".hide_salePrice_input").val());
+            let salePrice = $("#salePrice").val();
+            salePrice(price);
+
         })
 
         function order() {
@@ -180,7 +185,7 @@
             $(".cart_info_td").each(function (i, element) {
 
                 if ($(element).find(".hide_cart_checkbox").is(":checked") === true) {
-                    totalPrice += parseInt($(element).find(".hide_totalPrice_input").val());
+                    totalPrice += parseInt($(element).find(".hide_salePrice_input").val());
                     totalCount += parseInt($(element).find(".hide_cartQty_input").val());
                 }
             });
@@ -266,7 +271,8 @@ ${cartList}
                                     <tr>
                                         <th>
                                             <div class="all_check_input_div">
-                                                <input type="checkbox" class="all_check_input input_size" checked="checked">
+                                                <input type="checkbox" class="all_check_input input_size"
+                                                       checked="checked">
                                                 <span class="all_chcek_span"></span>
                                             </div>
                                         </th>
@@ -292,17 +298,30 @@ ${cartList}
                                         <c:if test="${not empty cartList}">
                                         <c:forEach items="${cartList}" var="cart" varStatus="vs">
                                         <td class="td_width_1 cart_info_td">
-                                            <input type="checkbox" class="hide_cart_checkbox input_size" checked="checked">
-                                            <input type="hidden" class="hide_productPrice_input" value="${cart.proPrice}">
+                                            <input type="checkbox" class="hide_cart_checkbox input_size"
+                                                   checked="checked">
+                                            <input type="hidden" class="hide_productPrice_input"
+                                                   value="${cart.proPrice}">
                                             <input type="hidden" class="hide_cartNo_input" value="${cart.cartNo}">
-                                            <input type="hidden" class="hide_salePrice_input" value="${cart.proDiscount}">
+                                            <input type="hidden" class="hide_Discount_input"
+                                                   value="${cart.proDiscount}">
                                             <input type="hidden" class="hide_cartQty_input" value="${cart.cartQty}">
-                                            <input type="hidden" class="hide_totalPrice_input" value="${cart.proPrice * cart.cartQty}">
+                                            <input type="hidden" class="hide_totalPrice_input"
+                                                   value="${cart.proPrice * cart.cartQty}">
+                                            <input type="hidden" class="hide_salePrice_input"
+                                                   value="${cart.proPrice * (1 - (cart.proDiscount / 10)) * cart.cartQty}">
                                             <input type="hidden" class="hide_productNo_input" value="${cart.productNo}">
-                                            <input type="hidden" class="hide_productSize_input" value="${cart.productSize}">
+                                            <input type="hidden" class="hide_productSize_input"
+                                                   value="${cart.productSize}">
                                         </td>
                                         <td class="thumb">
-                                            이미지
+                                            <a href="${contextPath}/product/detail?proNo=${cart.productNo}">
+                                                <img
+                                                        alt="이미지${cart.proimgNo}"
+                                                        src="${contextPath}/product/display?proimgNo=${cart.proimgNo}"
+                                                        width="100px" height="100px"
+                                                >
+                                            </a>
                                         </td>
                                         <td class="price">
                                             <input type="hidden" class="cartNo" value="${cart.cartNo}"
@@ -310,29 +329,32 @@ ${cartList}
                                             <a href="${contextPath}/product/detail?proNo=${cart.productNo}">${cart.proName}</a>
                                         </td>
                                         <td>
-                                            ${cart.productSize}
+                                                ${cart.productSize}
                                         </td>
                                         <td class="price">
                                             <fmt:formatNumber value="${cart.proPrice}"></fmt:formatNumber>원
                                         </td>
                                         <td>
-                                        <div class="table_text_align_center qty_div">
-                                                    <input type="number" value="${cart.cartQty}" class="qty_input">
-                                                    <button class="qty_btn plus_btn">+</button>
-                                                    <button class="qty_btn minus_btn">-</button>
-                                        </div>
-                                        <button class="qty_modify_btn" value="${cart.cartNo}" id="button_${vs.index}">수정
-                                        </button>
-                                        <%--<input type="number" value="${cart.cartQty}" size="2" class="qty_input">
-                                        <a class="qty_btn plus_btn"><img
-                                                src="https://jimo.co.kr/images/order/btn_quantity_up.gif"></a>
-                                        <a class="qty_btn minus_btn"><img
-                                                src="https://jimo.co.kr/images/order/btn_quantity_down.gif"></a>
-                                    </span>
-                                            <a class="btn" value="${cart.cartNo}" id="button_${vs.index}">수정</a>--%>
+                                            <div class="table_text_align_center qty_div">
+                                                <input type="number" value="${cart.cartQty}" class="qty_input">
+                                                <button class="qty_btn plus_btn">+</button>
+                                                <button class="qty_btn minus_btn">-</button>
+                                            </div>
+                                            <button class="qty_modify_btn" value="${cart.cartNo}"
+                                                    id="button_${vs.index}">수정
+                                            </button>
+                                                <%--<input type="number" value="${cart.cartQty}" size="2" class="qty_input">
+                                                <a class="qty_btn plus_btn"><img
+                                                        src="https://jimo.co.kr/images/order/btn_quantity_up.gif"></a>
+                                                <a class="qty_btn minus_btn"><img
+                                                        src="https://jimo.co.kr/images/order/btn_quantity_down.gif"></a>
+                                            </span>
+                                                    <a class="btn" value="${cart.cartNo}" id="button_${vs.index}">수정</a>--%>
                                         </td>
-                                        <td class="total"><fmt:formatNumber
-                                                value="${cart.cartQty * cart.proPrice}"></fmt:formatNumber>원
+                                        <td class="total">
+                                            <fmt:formatNumber type="number" maxFractionDigits="0"
+                                                    value="${cart.proPrice * (1 - (cart.proDiscount / 10)) * cart.cartQty}">
+                                            </fmt:formatNumber>원
                                         </td>
                                         <td class="button">
                                             <input type="button" class="delete_btn" value="삭제"
@@ -403,7 +425,8 @@ ${cartList}
                                     <input type="hidden" name="cartQty" class="update_cartQty">
                                     <input type="hidden" name="cartNo" class="update_cartNo">
                                 </form>
-                                <form action="${contextPath}/order/detailPage/${loginMember.memberNo}" class="order_form" method="get">
+                                <form action="${contextPath}/order/detailPage/${loginMember.memberNo}"
+                                      class="order_form" method="get">
                                 </form>
                                 <br><br>
                                 <hr>
@@ -473,9 +496,9 @@ ${cartList}
                                         </table>
                                     </div>
                                 </div>
-                               <%-- <c:if test="${empty cartList}">
-                                    <button class="shop_btn">쇼핑하기</button>
-                                </c:if>--%>
+                                <%-- <c:if test="${empty cartList}">
+                                     <button class="shop_btn">쇼핑하기</button>
+                                 </c:if>--%>
                                 <c:if test="${not empty cartList}">
                                     <div class="content_btn_section">
                                         <button class="order_btn">주문하기</button>
