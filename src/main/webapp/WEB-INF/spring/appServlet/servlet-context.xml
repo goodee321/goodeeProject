@@ -49,6 +49,7 @@
 	 	</interceptor>
 	 	<interceptor>
 	 		<mapping path="/board/savePage" />
+			<mapping path="/cart/list" />
 	 		<beans:ref bean="requiredLoginInterceptor" />
 	 		
 	 	</interceptor>

@@ -228,7 +228,7 @@
                             }
                         } else if (res == 0) {
                             if (confirm("로그인이 필요한 기능입니다. 로그인 할까요?")) {
-                                location.href = '${contextPath}/member/loginPage?url=${contextPath}/Product/detailPage';
+                                location.href = '${contextPath}/member/loginPage?url=${contextPath}/product/detail?proNo=${detail.proNo}';
                             }
                         } else {
                             alert("장바구니 담기에 실패했습니다. 새로고침 후 다시 시도해주세요.");
@@ -242,7 +242,16 @@
 
         function fnOrder() {
             $(".btn-dark").on('click', function () {
+
 				fnSizeCheck();
+
+                if(${loginMember == null}){
+                    if(confirm('로그인이 필요한 기능입니다. 로그인 할까요?')){
+                        location.href = '${contextPath}/member/loginPage?url=${contextPath}/product/detail?proNo=${detail.proNo}';
+                    }
+                    return false;
+                }
+
                 let cartQty = $(".cartQty").val();
                 $(".order_form").find("input[name='cartQty']").val(cartQty);
 
@@ -463,7 +472,7 @@ imgno: ${detail.productImageDTO.proimgNo} --%>
         </div>
         총 금액: <span class="totalPrice">${detail.proPrice}</span>
 		<button type="button" class="btn btn-light" style="border-radius: 1rem">장바구니 담기</button>
-		<button type="button" id="iamportPayment" class="btn btn-dark" style="border-radius: 1rem">구매하기</button>
+		<button type="button" class="btn btn-dark" style="border-radius: 1rem">구매하기</button>
 	</div>
     <form class="order_form" action="${contextPath}/order/orderPage/${loginMember.memberNo}" method="get">
         <input type="hidden" name="productNo" value="${detail.proNo}">
@@ -576,8 +585,6 @@ imgno: ${detail.productImageDTO.proimgNo} --%>
         <button>작성완료</button>
     </form>
 </div>
-
-testtest
 
 
 <p><a href="${contextPath}/product/list">상품 리스트</a></p>
