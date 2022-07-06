@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import com.nike.web.domain.OrderDTO;
 import org.springframework.ui.Model;
 
 
@@ -45,4 +46,7 @@ public interface MemberService {
 
     public List<MemberDTO> getMemberByNo(long memberNo);
 
+	public List<OrderDTO> getOrderByMemberNo(long memberNo);
+
+	public List<OrderDTO> selectOrderDetailByOrderId(String OrderId);
 }

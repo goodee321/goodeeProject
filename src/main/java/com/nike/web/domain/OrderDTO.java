@@ -40,9 +40,13 @@ public class OrderDTO {
 
     //  OrderDetail
     private int orderPrice;
+    private int orderQty;
 
     //  PRODUCT_QTY
     private int productSize;
+    private double proDiscount;
+
+    private int proimgNo;
 
     private int orderFinalSalePrice;
 
@@ -63,4 +67,34 @@ public class OrderDTO {
         orderFinalSalePrice = orderAmount + orderDelivery;
     }
 
+    @Override
+    public String toString() {
+        return "OrderDTO{" +
+                "orderNo=" + orderNo +
+                ", orderId='" + orderId + '\'' +
+                ", memberNo=" + memberNo +
+                ", orderDate=" + orderDate +
+                ", orderName='" + orderName + '\'' +
+                ", orderPhone='" + orderPhone + '\'' +
+                ", orderAddr='" + orderAddr + '\'' +
+                ", addrDetail='" + addrDetail + '\'' +
+                ", orderAmount=" + orderAmount +
+                ", orderPayment='" + orderPayment + '\'' +
+                ", orderInvoice=" + orderInvoice +
+                ", orderDelivery=" + orderDelivery +
+                ", impUid='" + impUid + '\'' +
+                ", orderState=" + orderState +
+                ", proName='" + proName + '\'' +
+                ", proPrice=" + proPrice +
+                ", cartNo=" + cartNo +
+                ", cartQty=" + cartQty +
+                ", productNo=" + productNo +
+                ", orderPrice=" + orderPrice +
+                ", orderQty=" + orderQty +
+                ", productSize=" + productSize +
+                ", proimgNo=" + proimgNo +
+                ", orderFinalSalePrice=" + orderFinalSalePrice +
+                ", orders=" + orders +
+                '}';
+    }
 }
