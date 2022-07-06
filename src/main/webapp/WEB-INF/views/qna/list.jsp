@@ -52,8 +52,9 @@
 		font-size: 15px;
 		display: block;
 	}
-	.title p:nth-of-type(2) {
+	.title a {
 		color: #B22222;
+		font-size: 15px;
 	}
 	
 	
@@ -79,7 +80,7 @@
 	}
 	
 	td:nth-of-type(1) { width: 80px; }
-	td:nth-of-type(2) { width: 160px; }
+	td:nth-of-type(2) { width: 260px; }
 	td:nth-of-type(3) { width: 450px; }
 	td:nth-of-type(4) { width: 100px; }
 	td:nth-of-type(5) { width: 150px; }
@@ -91,6 +92,8 @@
 	}
 	
 	tbody tr:hover { background-color: #f0ffff; }
+	
+	tbody tr i { text-align: right; }
 	
 	tfoot {
 		text-align: center;
@@ -111,7 +114,7 @@
 		<h1>Q&A</h1>
 		<p>상품 Q&A입니다.</p>
 		<c:if test="${loginMember.id eq null}">
-		<p>글 작성은 로그인 후 가능합니다.</p>
+		<a href="${contextPath}/member/loginPage">글 작성은 로그인 후 가능합니다.</a>
 		</c:if>
 	</div>
 
@@ -148,12 +151,12 @@
 							<tr>
 								<td>${qna.qnaNo}</td>
 								<td>
-									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;</c:forEach>
+									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
 									
-									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-regular fa-user">관리자 답변</i></c:if>
+									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-solid fa-comment-dots">관리자 답변</i></c:if>
 									<!-- 제목 -->
 									<c:if test="${qna.qnaTitle.length() gt 20}">
-										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 10)}</a>
+										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 20)}</a>
 									</c:if>
 									<c:if test="${qna.qnaTitle.length() le 20}">								
 										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>

@@ -54,7 +54,12 @@ td:nth-of-type(1) {
 }
 
 td:nth-of-type(2) {
-	width: 160px;
+	width: 600px;
+}
+
+tr:nth-of-type(4){
+	height: 500px;
+	vertical-align: top;
 }
 
 tfoot td {
@@ -71,6 +76,7 @@ input {
 	border-radius: 3px;
 	color: white;
 }
+
 </style>
 </head>
 <body>
@@ -95,9 +101,7 @@ input {
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td>
-							<textarea rows="20" cols="100" readonly>${qna.qnaContent}</textarea>
-						</td>
+						<td>${qna.qnaContent}</td>
 					</tr>
 					<tr>
 						<td>작성일</td>
