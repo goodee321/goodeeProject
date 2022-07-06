@@ -87,7 +87,7 @@
 	}
 	
 	.kind2 {
-			font-family: 'Splash', cursive;
+			font-family: Georgia, "Malgun Gothic", serif;
 			font-size: 27px;
 	}
 	
@@ -254,7 +254,7 @@
 	
 	<h3 class="kind2">Total Products: ${totalRecord}</h3>
 	
-	<h3 class="kind2">Search Products: ${findRecord}</h3>
+	
 	
 	
 	</div>
@@ -303,7 +303,7 @@
 					<tr data-pro_no="${product.proNo}">
 						<td><input type="checkbox" name="productNoList" id="productNoList" value="${product.proNo}" class="checkes"></td>
 						<td>${product.proNo}</td>
-						<td><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="100%"></a>
+						<td><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="80%"></a>
 						<td>${product.proName}</td>
 						<td>${product.proDate}</td>
 					</tr>
@@ -317,10 +317,11 @@
 				 <td colspan="5">
 				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					
+					<div>
 					 ${paging}
 					 &nbsp;&nbsp;&nbsp;
 					 <button id="btnRemove" class="btn btn-secondary">선택삭제</button><br><br> 
+					 </div>
 				</td>
 			
 			</tr>

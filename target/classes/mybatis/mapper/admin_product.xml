@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 갤러리 목록 -->
 	<!-- 전체 갤러리 갯수 -->
 	<select id="selectProductCount" resultType="Integer">
-		SELECT COUNT(PRO_NO)
+		SELECT COUNT(*)
 		  FROM PRODUCT
 	</select>
 	
@@ -68,16 +68,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       ON  P.PRO_NO = PI.PRO_NO INNER JOIN PRODUCT_QTY PQ
       ON P.PRO_NO = PQ.PRO_NO
       ORDER BY P.PRO_NO DESC  
-      LIMIT #{beginRecord}, #{endRecord}
+      LIMIT #{beginRecord}, #{recordPerPage}
      
 	</select>
 
 	
-		<!-- 제품 검색 -->
+		<!-- 제품 검색 레코드 갯수-->
 	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
-		SELECT COUNT(P.PRO_NO)
+		SELECT COUNT(*)
 		  FROM PRODUCT P INNER JOIN PRODUCT_QTY
-		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+		 WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
 	</select>
 	
 
@@ -88,9 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
   		 ON  PI.PRO_NO = P.PRO_NO  INNER JOIN PRODUCT_QTY PQ
          ON P.PRO_NO = PQ.PRO_NO
-		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
-		 ORDER BY P.PRO_NO DESC
-		 LIMIT #{beginRecord}, #{recordPerPage}
+		 WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
 	</select>
 
 

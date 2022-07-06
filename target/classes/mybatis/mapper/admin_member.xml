@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMemberList" parameterType="Map" resultType="MemberDTO">
 		 SELECT MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, PW_MODIFIED, INFO_MODIFIED, SESSION_ID, SESSION_LIMIT
        	   FROM MEMBER
+       	   ORDER BY MEMBER_NO DESC
        LIMIT #{beginRecord}, #{recordPerPage}
 	</select>
 	
