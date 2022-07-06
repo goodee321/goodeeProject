@@ -23,7 +23,8 @@
 	<a href="${contextPath}/board/savePage">상품보러가기</a>
 
 	<a href="${contextPath}/cart/list">카트</a>
-	
+	<a href="${contextPath}/member/order/list">주문</a>
+
 	<h1>MAIN PAGE</h1>
 	
 	<a href="${contextPath}/notice/list">공지사항 바로가기</a>
