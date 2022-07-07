@@ -60,7 +60,6 @@
         <td>옵션</td>
         <td>수량</td>
         <td>상품구매금액</td>
-        <td>주문상태</td>
     </tr>
     <c:forEach items="${detailList}" var="detail">
     <tr>
@@ -69,13 +68,6 @@
         <td>${detail.productSize}</td>
         <td>${detail.orderQty}</td>
         <td>${detail.proPrice}</td>
-        <td>
-            <c:if test="${detail.orderState == 0}">주문완료</c:if>
-            <c:if test="${detail.orderState == 1}">배송준비중</c:if>
-            <c:if test="${detail.orderState == 2}">배송중</c:if>
-            <c:if test="${detail.orderState == 3}">배송완료</c:if>
-            <c:if test="${detail.orderState == 4}">주문취소</c:if>
-        </td>
     </tr>
     </c:forEach>
 </table>

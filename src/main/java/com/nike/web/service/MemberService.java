@@ -48,5 +48,5 @@ public interface MemberService {
 
 	public List<OrderDTO> getOrderByMemberNo(long memberNo);
 
-	public List<OrderDTO> selectOrderDetailByOrderId(String OrderId);
+	public void OrderDetail(String OrderId, Model model);
 }

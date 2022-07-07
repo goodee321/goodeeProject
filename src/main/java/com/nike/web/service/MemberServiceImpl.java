@@ -576,8 +576,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<OrderDTO> selectOrderDetailByOrderId(String orderId){
-        return orderMapper.selectOrderDetailByOrderId(orderId);
+    public void OrderDetail(String orderId, Model model) {
+        model.addAttribute("products", orderMapper.selectOrderDetailByOrderId(orderId));
+
     }
 
 }

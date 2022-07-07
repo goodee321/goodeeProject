@@ -47,11 +47,13 @@
         GROUP BY ORDER_ID
     </select>
 
-    <select id="selectOrderDetailByOrderId" resultType="order">
-        SELECT O.*,
-               OD.*,
-               PI.PROIMG_NO,
+    <select id="selectProductDetailByOrderId" resultType="order">
+        SELECT PI.PROIMG_NO,
                P.PRO_NAME,
+               OD.PRODUCT_SIZE,
+               OD.ORDER_QTY,
+               OD.ORDER_PRICE,
+               P.PRO_PRICE,
                PQ.PRO_DISCOUNT
         FROM ORDER_TB O
                  INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
@@ -59,6 +61,22 @@
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
                  LEFT JOIN PRODUCT_QTY PQ ON PQ.PRO_NO = OD.PRODUCT_NO
         WHERE O.ORDER_ID = #{orderId}
+    </select>
+
+    <select id="selectInfoByOrderId" resultType="order">
+        SELECT ORDER_ID,
+               ORDER_DATE,
+               ORDER_NAME,
+               ORDER_STATE,
+               ORDER_AMOUNT,
+               ORDER_PAYMENT,
+               ORDER_NAME,
+               ORDER_POSTCODE,
+               ORDER_ADDR,
+               ORDER_PHONE,
+               ORDER_MESSAGE
+            FROM ORDER_TB
+        WHERE ORDER_ID = #{orderId}
     </select>
 
 </mapper>

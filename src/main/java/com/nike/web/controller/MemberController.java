@@ -230,7 +230,7 @@ public class MemberController {
 
     @GetMapping("/member/order/detail/{orderId}")
     public String orderDetail(@PathVariable("orderId") String orderId, Model model) {
-        model.addAttribute("detailList", memberService.selectOrderDetailByOrderId(orderId));
+        memberService.OrderDetail(orderId, model);
         return "member/order/detail";
     }
 
