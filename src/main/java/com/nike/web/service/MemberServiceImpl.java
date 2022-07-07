@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import java.util.HashMap;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -23,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nike.web.domain.OrderDTO;
+import com.nike.web.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +43,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberMapper memberMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Override
     public Map<String, Object> idCheck(String id) {
@@ -567,5 +570,14 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.getMemberByNo(memberNo);
     }
 
+    @Override
+    public List<OrderDTO> getOrderByMemberNo(long memberNo) {
+        return orderMapper.selectOrderByMemberNo(memberNo);
+    }
+
+    @Override
+    public List<OrderDTO> selectOrderDetailByOrderId(String orderId){
+        return orderMapper.selectOrderDetailByOrderId(orderId);
+    }
 
 }

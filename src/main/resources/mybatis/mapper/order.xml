@@ -18,16 +18,16 @@
 
     <insert id="insertOrder" parameterType="order">
         INSERT INTO ORDER_TB
-        (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID)
-        VALUES
-            (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid})
+        (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT,
+         ORDER_DELIVERY, IMP_UID)
+        VALUES (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount},
+                #{orderPayment}, #{orderDelivery}, #{impUid})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="orderItemDTO">
         INSERT INTO ORDER_DETAIL
             (ORDER_ID, PRODUCT_NO, ORDER_QTY, ORDER_PRICE, PRODUCT_SIZE)
-        VALUES
-            (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice}, #{productSize})
+        VALUES (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice}, #{productSize})
     </insert>
 
     <select id="selectOrderByMemberNo" resultType="order">
@@ -38,31 +38,27 @@
                OD.ORDER_QTY,
                OD.ORDER_PRICE,
                O.ORDER_STATE,
-               PI.PROIMG_NO
+               MAX(PI.PROIMG_NO) AS PROIMG_NO
         FROM ORDER_TB O
                  INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
         WHERE O.MEMBER_NO = #{memberNo}
-          AND O.ORDER_NO = #{orderNo}
+        GROUP BY ORDER_ID
     </select>
 
-    <select id="selectOrderDetailByMemberNo" parameterType="order">
-        SELECT O.ORDER_DATE,
-               O.ORDER_ID,
-               O.ORDER_PHONE,
-               O.ORDER_ADDR,
-               O.ADDR_DETAIL,
+    <select id="selectOrderDetailByOrderId" resultType="order">
+        SELECT O.*,
+               OD.*,
                PI.PROIMG_NO,
                P.PRO_NAME,
-               OD.ORDER_QTY,
-               OD.ORDER_PRICE
+               PQ.PRO_DISCOUNT
         FROM ORDER_TB O
-                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_NO = OD.ORDER_NO
+                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
-        WHERE O.MEMBER_NO = #{memberNo}
-          AND O.ORDER_NO = #{orderNo}
+                 LEFT JOIN PRODUCT_QTY PQ ON PQ.PRO_NO = OD.PRODUCT_NO
+        WHERE O.ORDER_ID = #{orderId}
     </select>
 
 </mapper>
