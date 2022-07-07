@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 		model.addAttribute("products", productMapper.selectProductList(map));
 		model.addAttribute("beginNo", totalRecord - (page - 1) * pageUtils.getRecordPerPage());
 		model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/product/list"));
-			
+			System.out.println(totalRecord);
 		
 	}
 	
@@ -88,12 +88,12 @@ public class ProductServiceImpl implements ProductService {
 		
 		map.put("beginRecord", pageUtils.getBeginRecord() - 1);
 		map.put("recordPerPage", pageUtils.getRecordPerPage());
-		
+		System.out.println(productMapper.selectFindProductList(map));
 		model.addAttribute("productRecord",totalRecord);
 		model.addAttribute("products", productMapper.selectFindProductList(map));
 		model.addAttribute("startNo", totalRecord - (page - 1) * pageUtils.getRecordPerPage());
 		model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/product/find?column=" + column + "&query=" + query));
-		
+		System.out.println(totalRecord);
 	}
 	
 	@Override

@@ -29,37 +29,53 @@
             (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice})
     </insert>
 
-    <select id="selectOrderbyMemberNo" resultType="order">
-        SELECT O.ORDER_DATE,
-               O.ORDER_ID,
-               PI.PROIMG_NO,
+    <select id="selectOrderByMemberNo" resultType="order">
+        SELECT O.ORDER_ID,
+               O.ORDER_DATE,
                P.PRO_NAME,
+               OD.PRODUCT_SIZE,
                OD.ORDER_QTY,
-               OD.ORDER_PRICE
+               OD.ORDER_PRICE,
+               O.ORDER_STATE,
+               MAX(PI.PROIMG_NO) AS PROIMG_NO
         FROM ORDER_TB O
-                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_NO = OD.ORDER_NO
+                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
         WHERE O.MEMBER_NO = #{memberNo}
-          AND O.ORDER_NO = #{orderNo}
+        GROUP BY ORDER_ID
     </select>
 
-    <select id="selectOrderDetailbyMemberNo" parameterType="order">
-        SELECT O.ORDER_DATE,
-               O.ORDER_ID,
-               O.ORDER_PHONE,
-               O.ORDER_ADDR,
-               O.ADDR_DETAIL,
-               PI.PROIMG_NO,
+    <select id="selectProductDetailByOrderId" resultType="order">
+        SELECT PI.PROIMG_NO,
                P.PRO_NAME,
+               OD.PRODUCT_SIZE,
                OD.ORDER_QTY,
-               OD.ORDER_PRICE
+               OD.ORDER_PRICE,
+               P.PRO_PRICE,
+               PQ.PRO_DISCOUNT
         FROM ORDER_TB O
-                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_NO = OD.ORDER_NO
+                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
-        WHERE O.MEMBER_NO = #{memberNo}
-          AND O.ORDER_NO = #{orderNo}
+                 LEFT JOIN PRODUCT_QTY PQ ON PQ.PRO_NO = OD.PRODUCT_NO
+        WHERE O.ORDER_ID = #{orderId}
+    </select>
+
+    <select id="selectInfoByOrderId" resultType="order">
+        SELECT ORDER_ID,
+               ORDER_DATE,
+               ORDER_NAME,
+               ORDER_STATE,
+               ORDER_AMOUNT,
+               ORDER_PAYMENT,
+               ORDER_NAME,
+               ORDER_POSTCODE,
+               ORDER_ADDR,
+               ORDER_PHONE,
+               ORDER_MESSAGE
+        FROM ORDER_TB
+        WHERE ORDER_ID = #{orderId}
     </select>
 
 </mapper>
