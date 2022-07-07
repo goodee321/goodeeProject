@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import com.nike.web.domain.OrderDTO;
 import org.springframework.ui.Model;
 
 
@@ -24,25 +25,13 @@ public interface MemberService {
 	public void reSignIn(HttpServletRequest request, HttpServletResponse response);
 	public void modify(HttpServletRequest request, HttpServletResponse response);
 	public void modifyPw(HttpServletRequest request, HttpServletResponse response);
-	
+
 	public void findId(HttpServletRequest request, HttpServletResponse response);
 	public void findPw(HttpServletRequest request, HttpServletResponse response);
 
-    // 목록(Admin)
-    public void findMembers(HttpServletRequest request, Model model);
+	public List<MemberDTO> getMemberByNo(long memberNo);
 
-    // 삭제(선택해서삭제, Admin)
-    public int removeList2(HttpServletRequest request);
+	public List<OrderDTO> getOrderByMemberNo(long memberNo);
 
-    // 세부사항(Admin)
-    public MemberDTO findMemberByNo(HttpServletRequest request);
-
-    // 수정(Admin)
-    public int change(HttpServletRequest request);
-
-    // 개별삭제(Admin)
-    public int removeOne(HttpServletRequest request);
-
-    public List<MemberDTO> getMemberByNo(long memberNo);
-
+	public List<OrderDTO> selectOrderDetailByOrderId(String OrderId);
 }
