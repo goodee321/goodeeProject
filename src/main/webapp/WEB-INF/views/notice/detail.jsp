@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 	$(function(){		
@@ -49,7 +50,12 @@
 	
 	td:nth-of-type(1) { background-color: #fbfafa; }
 	
-	td:nth-of-type(2) { width: 160px; }
+	td:nth-of-type(2) { width: 600px; }
+	
+	tr:nth-of-type(3){
+	height: 500px;
+	vertical-align: top;
+	}
 	
 	textarea { text-align: left; }
 	
@@ -82,11 +88,7 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td>
-							<textarea rows="20" cols="100" readonly>
-								${notice.noticeContent}
-							</textarea>
-						</td>
+						<td>${notice.noticeContent}</td>
 					</tr>
 					<tr>
 						<td>작성일</td>
@@ -102,10 +104,10 @@
 						<td></td>
 						<td>
 							<c:if test="${loginMember.id eq 'admin'}">
-							<td><input type="button" value="수정하러가기" id="btnChangePage"></td>
-							<td><input type="button" value="삭제" id="btnRemove"></td>
-						</c:if>
-						<input type="button" value="목록" id="btnList">
+								<input type="button" value="수정하러가기" id="btnChangePage" class="btn btn-danger">
+								<input type="button" value="삭제" id="btnRemove" class="btn btn-light">
+							</c:if>
+						<input type="button" value="목록" id="btnList" class="btn btn-info">
 						</td>
 					</tr>
 				</tfoot>

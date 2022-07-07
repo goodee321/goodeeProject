@@ -17,6 +17,7 @@
 	
 	.changeTitle { text-align: center; }
 </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 

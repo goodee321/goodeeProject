@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
@@ -32,14 +33,17 @@
 		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
 		padding: 10px;
 		margin: 5px;
-		border: 1px solid white;
+		background-color: white;
 		text-align: center;
-		text-decoration: none;  /* 링크 밑줄 없애기 */
-		color: gray;
+		text-decoration: none;
+		color: black;
+		
 	}
 	
 	.link:hover {
-		color: #008bcc;
+		border: 1px solid #c0c0c0;
+		background-color: #c0c0c0;
+		color: #e6e6fa;
 	}
 	
 	.title {
@@ -51,8 +55,10 @@
 		font-size: 15px;
 		display: block;
 	}
-	.title p:nth-of-type(2) {
-		color: fuchsia;
+	.title a {
+		color: #B22222;
+		font-size: 15px;
+		margin: 10px;
 	}
 	
 	
@@ -65,19 +71,14 @@
 		margin-bottom: 5px;
 	
 	}
-	
-	table caption a {
-		background-color: #6495ed;
-		color: white;
+
+	table a { 
 		text-decoration: none; 
-		border-radius: 3px;
-	
+		color: black;
 	}
 	
-	table a { text-decoration: none; }
-	
 	thead {
-		background-color: #696969;	
+		background-color: black;	
 	}
 	
 	thead td { 
@@ -86,7 +87,7 @@
 	}
 	
 	td:nth-of-type(1) { width: 80px; }
-	td:nth-of-type(2) { width: 160px; }
+	td:nth-of-type(2) { width: 260px; }
 	td:nth-of-type(3) { width: 450px; }
 	td:nth-of-type(4) { width: 100px; }
 	td:nth-of-type(5) { width: 150px; }
@@ -97,7 +98,11 @@
 		text-align: center;
 	}
 	
-	tbody tr:hover { background-color: #f0ffff; }
+	tbody tr { height: 50px; }
+	
+	tbody tr:hover { background-color: #e6e6fa; }
+	
+	tbody tr i { text-align: right; }
 	
 	tfoot {
 		text-align: center;
@@ -118,13 +123,13 @@
 		<h1>Q&A</h1>
 		<p>상품 Q&A입니다.</p>
 		<c:if test="${loginMember.id eq null}">
-		<p>글 작성은 로그인 후 가능합니다.</p>
+		<a href="${contextPath}/member/loginPage" class="btn btn-outline-warning">로그인 후 글 작성</a>
 		</c:if>
 	</div>
 
 		<table>
 			<c:if test="${loginMember.id ne null}">
-			<caption><a href="${contextPath}/qna/saveQna">글쓰기</a><br></caption>
+			<caption><a href="${contextPath}/qna/saveQna" class="btn btn-success">글쓰기</a><br></caption>
 			</c:if>
 			<thead>
 				<tr>
@@ -145,8 +150,11 @@
 				<c:if test="${not empty qnas}">
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
-							<tr>
-								<td colspan="7">삭제된 게시글입니다</td>
+							<tr class="text-muted">
+								<td>${qna.qnaNo}</td>
+								<td colspan="2">삭제된 게시글입니다</td>
+								<td>${qna.id}</td>
+								<td>${qna.qnaDate}</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
@@ -155,12 +163,12 @@
 							<tr>
 								<td>${qna.qnaNo}</td>
 								<td>
-									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;</c:forEach>
+									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
 									
-									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-regular fa-user">관리자 답변</i></c:if>
+									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-solid fa-comment-dots">관리자 답변</i></c:if>
 									<!-- 제목 -->
 									<c:if test="${qna.qnaTitle.length() gt 20}">
-										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 10)}</a>
+										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle.substring(0, 20)}</a>
 									</c:if>
 									<c:if test="${qna.qnaTitle.length() le 20}">								
 										<a href="${contextPath}/qna/detail?qnaNo=${qna.qnaNo}">${qna.qnaTitle}</a>

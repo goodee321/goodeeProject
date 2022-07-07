@@ -6,15 +6,15 @@
 <mapper namespace="com.nike.web.mapper.NoticeMapper">
 
     <select id="selectNoticeList" parameterType="Map" resultType="NoticeDTO">
-        SELECT *
+        SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
         FROM NOTICE
-         
+        ORDER BY NOTICE_NO DESC 
         LIMIT #{beginRecord}, #{recordPerPage}
     </select>
 
     <!-- 검색된 레코드 갯수 -->
     <select id="selectFindCount" parameterType="Map" resultType="Integer">
-        SELECT COUNT(*)
+        SELECT COUNT(NOTICE_NO)
         FROM NOTICE
     </select>
 
@@ -22,7 +22,7 @@
     <select id="selectFindList" parameterType="Map" resultType="NoticeDTO">
         SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT
         FROM NOTICE
-        WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%') >>>>>>> JeongHwaha
+        WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
     </select>
 
     <!-- 레코드 수 -->

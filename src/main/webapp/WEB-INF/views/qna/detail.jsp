@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 	$(function(){		
@@ -46,21 +47,28 @@ thead {
 td {
 	padding: 5px;
 	border: 1px solid silver;
+	
 }
 
-td:nth-of-type(1) {
-	background-color: #fbfafa;
+tbody td:nth-of-type(1) {
+	background-color: black;
+	color: white;
 }
 
 td:nth-of-type(2) {
-	width: 160px;
+	width: 600px;
+}
+
+tr:nth-of-type(4){
+	height: 500px;
+	vertical-align: top;
 }
 
 tfoot td {
 	border-bottom: none;
 	border-left: none;
 	border-right: none;
-	background-color: none;
+	background: none;
 	text-align: right;
 }
 
@@ -70,6 +78,7 @@ input {
 	border-radius: 3px;
 	color: white;
 }
+
 </style>
 </head>
 <body>
@@ -94,9 +103,7 @@ input {
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td><textarea rows="30" cols="100" readonly>
-									${qna.qnaContent}
-								</textarea></td>
+						<td>${qna.qnaContent}</td>
 					</tr>
 					<tr>
 						<td>작성일</td>
@@ -107,9 +114,10 @@ input {
 					<tr>
 						<td></td>
 						<td>
-							<!-- c:if test="${loginMember.id eq 'admin'}" --> <input
-							type="button" value="수정하러가기" id="btnChangePage"> <input
-							type="button" value="목록" id="btnList">
+							<c:if test="${loginMember.id eq qna.id}">
+								<input type="button" value="수정하러가기" id="btnChangePage" class="btn btn-danger"> 
+							</c:if>
+							<input type="button" value="목록" id="btnList" class="btn btn-info">
 						</td>
 					</tr>
 				</tfoot>
