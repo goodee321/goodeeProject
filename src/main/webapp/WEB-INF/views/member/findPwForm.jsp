@@ -29,7 +29,7 @@
 	// 휴대폰번호 정규식
 	let phonePass = false;
 	function fnPhoneCheck(){
-		// 비밀번호 정규식 검사
+		// 휴대폰 번호 정규식 검사
 		$('#phone').on('keyup', function(){
 			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]+)?([0-9]{4})/,"$1-$2-$3").replace("--", "-") );
 			let regPhone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;  // 이거만 넣으면 하이픈 직접 넣기
