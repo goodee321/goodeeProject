@@ -176,5 +176,7 @@ h3{
 					${paging}
 	
 		</div>
+		
+		<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </body>
 </html>

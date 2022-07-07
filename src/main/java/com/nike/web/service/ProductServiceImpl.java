@@ -29,7 +29,6 @@ import com.nike.web.domain.ReviewDTO;
 import com.nike.web.domain.ReviewImageDTO;
 import com.nike.web.mapper.ProductMapper;
 import com.nike.web.util.FileUtils;
-import com.nike.web.util.PageUtils;
 import com.nike.web.util.PageUtils2;
 
 import net.coobird.thumbnailator.Thumbnails;
@@ -381,7 +380,7 @@ public class ProductServiceImpl implements ProductService {
 			Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
 			int page = Integer.parseInt(opt.orElse("1"));
 			
-			PageUtils pageUtils = new PageUtils();
+			PageUtils2 pageUtils = new PageUtils2();
 			pageUtils.setPageEntity(totalRecord, page);
 			
 			Map<String, Object> map = new HashMap<String, Object>();

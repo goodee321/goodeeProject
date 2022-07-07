@@ -9,6 +9,7 @@
                C.PRODUCT_NO,
                C.CART_NO,
                C.CART_QTY,
+               C.PRODUCT_SIZE,
                P.PRO_NAME,
                P.PRO_PRICE
         FROM CART C
@@ -18,26 +19,26 @@
 
     <select id="selectproductNobyCartNo" resultType="int">
         SELECT PRODUCT_NO
-        FROM CART
+            FROM CART
         WHERE CART_NO = #{cartNo}
     </select>
 
     <select id="selectcartQtybyCartNo" resultType="int">
         SELECT CART_QTY
-        FROM CART
+            FROM CART
         WHERE CART_NO = #{cartNo}
     </select>
 
     <insert id="insertCart" parameterType="cart">
         INSERT INTO CART
-            (MEMBER_NO, PRODUCT_NO, CART_QTY)
+            (MEMBER_NO, PRODUCT_NO, CART_QTY, PRODUCT_SIZE)
         VALUES
-            (#{memberNo}, #{productNo}, #{cartQty})
+            (#{memberNo}, #{productNo}, #{cartQty}, #{productSize})
     </insert>
 
     <update id="updateCart" parameterType="cart">
         UPDATE CART
-        SET CART_QTY = #{cartQty}
+            SET CART_QTY = #{cartQty}
         WHERE CART_NO = #{cartNo}
     </update>
 

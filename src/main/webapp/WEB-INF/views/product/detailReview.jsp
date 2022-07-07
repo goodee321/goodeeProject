@@ -22,17 +22,25 @@
 		function fnRemove(){
 		$('#btnRemove').on('click', function(){
 			
+			var memberNo = "${reviewbyno.memberNo}";
+			var sessionNo = "${loginMember.memberNo}";
+			
 			if(${loginMember eq null}){
 				
 				alert('로그인 후 이용해주세요');
 				
 			} else {
 				
-				if (confirm('삭제하시겠습니까?')) {
-					location.href='${contextPath}/product/deleteReview?reviewNo=${reviewbyno.reviewNo}';
-					//location.href='${contextPath}/product/detail?proNo=${reviewbyno.proNo}';
-					//location.href='${contextPath}/product/deleteReview?reviewNo=' + $('#reviewNo').val();
+				if(memberNo == sessionNo){
+					if (confirm('삭제하시겠습니까?')) {
+						location.href='${contextPath}/product/deleteReview?reviewNo=${reviewbyno.reviewNo}';
+						//location.href='${contextPath}/product/deleteReview?proNo=${reviewbyno.proNo}';
+						//location.href='${contextPath}/product/deleteReview?reviewNo=' + $('#reviewNo').val();
+					}
+				} else {
+					alert('작성자만 삭제 가능합니다.');
 				}
+				
 			}
 			
 		})
@@ -41,7 +49,27 @@
 	
 	function fnChange(){
 		$('#btnChangePage').on('click', function(){
-			location.href='${contextPath}/product/changeReviewPage?reviewNo=${reviewbyno.reviewNo}';
+			
+			var memberNo = "${reviewbyno.memberNo}";
+			var sessionNo = "${loginMember.memberNo}";
+			
+			if(${loginMember eq null}){
+				
+				alert('로그인 후 이용해주세요');
+				
+			} else {
+				
+				if(memberNo == sessionNo){
+					if (confirm('수정하시겠습니까?')) {
+						location.href='${contextPath}/product/changeReviewPage?reviewNo=${reviewbyno.reviewNo}';
+						//location.href='${contextPath}/product/detail?proNo=${reviewbyno.proNo}';
+						//location.href='${contextPath}/product/deleteReview?reviewNo=' + $('#reviewNo').val();
+					}
+				} else {
+					alert('작성자만 수정 가능합니다.');
+				}
+				
+			}
 		})
 	}
 	

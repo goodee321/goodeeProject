@@ -15,6 +15,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="../resources/css/bootstrap-grid.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <script>
 	
 	$(function(){
@@ -63,7 +70,7 @@
 			if(${loginMember eq null}){
 				
 				if (confirm("로그인이 필요한 기능입니다. 로그인 하시겠습니까?")) {
-                    location.href = '${contextPath}/member/loginPage?url=${contextPath}/Product/detailPage';
+                    location.href = '${contextPath}/member/loginPage?url=${contextPath}/product/list';
                     
                 } return false; res.preventDefault();
 			} else {
@@ -147,7 +154,7 @@
 		          error: function () {
 		        	 
 		             $('#proQty').text('0'); alert('재고가 없습니다.');
-		             // $("select[name=proSize]").attr('selected',true);
+		             // $("select[name=proSize]").attr('disabled',true);
 		             $('#proDiscount').text('0');
 		          }
 		     });
@@ -252,7 +259,7 @@
 		border: 1px solid white;
 		text-align: center;
 		text-decoration: none;  /* 링크 밑줄 없애기 */
-		color: gray;
+		color: gray; */
 	}
 	.link:hover {
 		border: 1px solid orange;
@@ -276,9 +283,9 @@
 	 }
 	 
 	  table {    
-	 	width:70%;     
-	 	margin-left:15%;     
-	 	margin-right:15%;
+	 	width:100%;     
+	 	margin-left:1%;     
+	 	margin-right:1%;
 	 } 
 	 
 	 
@@ -291,6 +298,7 @@
     direction: rtl;
     border:0;
 	}
+	
 	#f fieldset legend{
 	    text-align: right;
 	}
@@ -350,7 +358,35 @@
             background: #DCDBD7;
         }
 	
+		.card {
+	    margin-bottom: 30px;
+		}
+		.card {
+		    position: relative;
+		    display: flex;
+		    flex-direction: column;
+		    min-width: 0;
+		    word-wrap: break-word;
+		    background-color: #fff;
+		    background-clip: border-box;
+		    border: 0 solid transparent;
+		    border-radius: 0;
+		}
+		.card .card-subtitle {
+		    font-weight: 300;
+		    margin-bottom: 10px;
+		    color: #8898aa;
+		}
+		.table-product.table-striped tbody tr:nth-of-type(odd) {
+		    background-color: #f3f8fa!important
+		}
+		.table-product td{
+		    border-top: 0px solid #dee2e6 !important;
+		    color: #728299!important;
+		}
 	
+	
+		
 	
 </style>
 
@@ -381,15 +417,255 @@
       <input type="button" value="옵션 수정" onclick="location.href='${contextPath}/product/changeProductOptionPage?proNo=${detail.proNo}'"/>
       <input type="button" value="제품 삭제" onclick="location.href='${contextPath}/product/productDelete?proNo=${detail.proNo}'"/>
    </c:if>
+   
+	   <div class="container">
+	    <div class="card">
+	        <div class="card-body">
+	            <h1 class="card-title">${detail.proName}</h1>
+	            <h6 class="card-subtitle">NIKE</h6>
+	            <div class="row">
+	                <div class="col-lg-5 col-md-5 col-sm-6">
+	                    <div class="white-box text-center"><img alt="이미지${detail.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${detail.productImageDTO.proimgNo}" style="width: 470px; height: 380px" class="img-responsive"></div>
+	                </div>
+	                <div class="col-lg-7 col-md-7 col-sm-6">
+	                    <h4 class="description-title" style="margin:1px 1px 1px 40px;">Product description</h4>
+	                    <p style="margin: 10px 1px 1px 40px;">${detail.proDetail}</p>
+	                    <h3 class="price-title" style="margin: 20px 1px 1px 40px">
+	                        <fmt:formatNumber value="${detail.proPrice}" pattern="#,###"/>원<small class="text-success">(<span id="proDiscount" class="proDiscount" ></span>% OFF</small>)
+	                    </h3>
+	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;구매 가능수량 : <span id="proQty" class="proQty"></span>
+						<div class="form-horizontal" style="text-align: left; margin:1px 1px 1px 40px;">
+							<label>사이즈 : </label>
+							<select class="form-control opt_select proSize" name="proSize" id="proSize">
+								<option selected disabled>사이즈를 선택해 주세요</option>
+								<option value="240">240</option>
+								<option value="250">250</option>
+								<option value="260">260</option>
+								<option value="270">270</option>
+								<option value="280">280</option>
+							</select>
+						</div>
+	                    <div class="plus" style="margin:1px 1px 1px 40px;"><a href="javascript:change_qty2('p')"><i class="fa-solid fa-square-caret-up" style="color:black;"></i></a></div>
+						<input type="text" class="cartQty" id="cartQty" value="1" readonly="readonly" style="margin:1px 1px 1px 40px;">
+						<div class="minus" style="margin:1px 1px 1px 40px;"><a href="javascript:change_qty2('m')"><i class="fa-solid fa-square-caret-down" style="color:black;"></i></a></div>
+	                    <button type="button" class="btn btn-light" style="margin:1px 1px 1px 40px;">장바구니 담기</button>
+	                    <button type="button" id="iamportPayment" class="btn btn-dark" style="margin:1px 1px 1px 40px;">구매하기</button><br>
+	                    <h2 style="margin: 20px 1px 1px 390px">총 금액: <span class="totalPrice"><fmt:formatNumber value="${detail.proPrice}" pattern="#,###"/></span>원</h2>
+	                    <input type="hidden" value="${detail.proPrice}" id="proPrice">
+	                    
+						<form class="order_form" action="${contextPath}/order/orderPage/${loginMember.memberNo}" method="get">
+							<input type="hidden" name="productNo" value="${detail.proNo}">
+							<input type="hidden" name="cartQty" value="">
+				            <input type="hidden" name="productSize" value="">
+						</form>
+	                </div>
+	                <div class="col-lg-12 col-md-12 col-sm-12">
+	                    <h1 class="box-title mt-5" style="">General Info</h1>
+	                    <div class="table-responsive">
+	                        <table class="table table-striped table-product">
+	                            <tbody>
+	                                <tr>
+	                                    <td width="390">Brand</td>
+	                                    <td>Stellar</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Delivery Condition</td>
+	                                    <td>Knock Down</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Seat Lock Included</td>
+	                                    <td>Yes</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Type</td>
+	                                    <td>Office Chair</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Style</td>
+	                                    <td>Contemporary&amp;Modern</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Wheels Included</td>
+	                                    <td>Yes</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Upholstery Included</td>
+	                                    <td>Yes</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Upholstery Type</td>
+	                                    <td>Cushion</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Head Support</td>
+	                                    <td>No</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Suitable For</td>
+	                                    <td>Study&amp;Home Office</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Adjustable Height</td>
+	                                    <td>Yes</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Model Number</td>
+	                                    <td>F01020701-00HT744A06</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Armrest Included</td>
+	                                    <td>Yes</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Care Instructions</td>
+	                                    <td>Handle With Care,Keep In Dry Place,Do Not Apply Any Chemical For Cleaning.</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                                <tr>
+	                                    <td>Finish Type</td>
+	                                    <td>Matte</td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                </div><br><br><hr>
+	                <div class="col-lg-12 col-md-12 col-sm-12">
+	                    <h1 class="box-title mt-5" style="">Review</h1>
+	                    <p><a href="#reviewModal" rel="modal:open" class="WriteReview" style="margin-left: 1000px;">리뷰 작성하기</a></p>
+	                    <div class="table-responsive">
+	                        <table class="table table-striped table-product">
+	                            <thead>
+									<tr>
+										<td>제목</td>
+										<td>내용</td>
+										<td>별점</td>
+										<td>작성일</td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${reviews}" var="re" varStatus="vs">
+											<input type="hidden" name="proNo" id="proNo" value="${re.proNo}">
+											<input type="hidden" name="reviewNo" id="reviewNo" value="${re.reviewNo}">
+										<tr>
+											<td>${re.reviewTitle}</td>
+											<td>
+												<a href="${contextPath}/product/detailReview?reviewNo=${re.reviewNo}" rel="modal:open">${re.reviewContent}</a>
+											</td>
+											<td>
+											    <c:forEach var="reviewStar" items="${ ratingOptions }" varStatus="vs" begin="1" end="${ re.reviewStar }"><img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/84580/preview.svg" style="width:30px"></c:forEach>
+											</td>
+											<td>
+												<fmt:formatDate value="${re.reviewDate}" pattern="yyyy-MM-dd E HH:mm:ss"/>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+								<tfoot>
+									<tr>
+										<%-- <td colspan="5">
+											${paging}
+										</td> --%>
+									</tr>
+								</tfoot>
+	                            
+	                        </table>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	         <div id="reviewModal" class="modal">
+	         <h3>리뷰</h3>
+	         <form id="f" action="${contextPath}/product/detailReviewSave" method="post" enctype="multipart/form-data">
+	             <input type="hidden" name="proNo" id="proNo" value="${detail.proNo}">
+	             <input type="hidden" name="memberNo" id="memberNo" value="${loginMember.memberNo}">
+	             <fieldset id="filedset">
+	                 <span class="text-bold">별점을 선택해주세요</span> 
+	                 <input type="radio" name="reviewStar" value="5" id="rate1" class="starClass"><label
+	                     for="rate1">★</label>
+	                 <input type="radio" name="reviewStar" value="4" id="rate2" class="starClass"><label
+	                     for="rate2">★</label>
+	                 <input type="radio" name="reviewStar" value="3" id="rate3" class="starClass"><label
+	                     for="rate3">★</label>
+	                 <input type="radio" name="reviewStar" value="2" id="rate4" class="starClass"><label
+	                     for="rate4">★</label>
+	                 <input type="radio" name="reviewStar" value="1" id="rate5" class="starClass" checked><label
+	                     for="rate5">★</label>
+	             </fieldset>
+	             <div class="form-group col-12" >
+	             <input type="text" name="reviewTitle" id="reviewTitle" placeholder="제목"><br>
+	             <textarea name="reviewContent" class="col-auto form-control" type="text" id="reviewContent"
+	                     placeholder="좋은 구매평을 남겨주시면 NiShoe에 큰 힘이 됩니다!"></textarea>	
+	             <div class="textLengthWrap">
+	                 <p class="textCount">0자</p>
+	                 <p class="textTotal">/200자</p>
+	             </div>
+	             </div>
+	             <input type="file" id="files" name="files" multiple="multiple"><br>			
+	             <button>작성완료</button>
+	         </form>
+	     	</div>   
+   
 	
 	
 	
-	<div class="container" style="width: 70%; margin-bottom:100px;">
+	<%-- <div class="container" style="width: 70%; margin-bottom:100px;">
 		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;"></h1>
 			<input type="hidden" value="${detail.proNo}" id="proNo" name="proNo" class="proNo">
 		</div>
 		<div class="row" style="float: left; text-align: center; width:35%; position:absolute;">
-			<%-- <img alt="이미지${detail.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${detail.productImageDTO.proimgNo}" width="100%" width="400px"> --%>
+			<img alt="이미지${detail.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${detail.productImageDTO.proimgNo}" width="100%" width="400px">
 		</div>
 		
 		<div>
@@ -427,10 +703,10 @@
 				</div>
 			<div class="form-horizontal" style="text-align: left;">
 				<label>수량 : </label>
-				<%-- <select class="form-control" id="selectedQty">
+				<select class="form-control" id="selectedQty">
 				<c:forEach begin="1" end="10" var="count">
 					<option>${count}</option></c:forEach>
-				</select> --%>
+				</select>
 				<select class="form-control opt_select" name="selectedQty" id="selectedQty">
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -507,9 +783,9 @@
 							</tfoot>
 						</table>
 						<!-- 추후에는 주문자만 작성 가능하게 -->
-						<%-- <c:if test="${loginMember ne null}"> --%>
+						<c:if test="${loginMember ne null}">
 							<p><a href="#reviewModal" rel="modal:open" class="WriteReview">리뷰 작성하기</a></p>
-						<%-- </c:if> --%>
+						</c:if>
 					</div>
 					
 					<div class="panel-body">
@@ -553,14 +829,13 @@
 			<input type="file" id="files" name="files" multiple="multiple"><br>			
 			<button>작성완료</button>
 		</form>
-	</div>
+	</div> --%>
     
-    testtest
 	
 	
 	
 	<p><a href="${contextPath}/product/list">상품 리스트</a></p>
 	
-	
 </body>
+	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>
