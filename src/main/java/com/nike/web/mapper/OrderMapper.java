@@ -18,6 +18,6 @@ public interface OrderMapper {
 
     public List<OrderDTO> selectOrderByMemberNo(long memberNo);
 
-    public List<OrderDTO> selectProductDetailByOrderId(String OrderId);
+    public List<OrderDTO> selectOrderDetailByOrderId(String orderId);
 
 }

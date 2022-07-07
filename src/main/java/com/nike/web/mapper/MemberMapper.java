@@ -3,6 +3,7 @@ package com.nike.web.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.nike.web.domain.OrderDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.nike.web.domain.MemberDTO;
