@@ -6,6 +6,7 @@ import com.nike.web.domain.OrderItemDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -18,6 +19,8 @@ public interface OrderMapper {
 
     public List<OrderDTO> selectOrderByMemberNo(long memberNo);
 
-    public List<OrderDTO> selectOrderDetailByOrderId(String orderId);
+    public List<OrderDTO> selectProductDetailByOrderId(String orderId);
+
+    public List<OrderDTO> selectInfoByOrderId(String orderId);
 
 }
