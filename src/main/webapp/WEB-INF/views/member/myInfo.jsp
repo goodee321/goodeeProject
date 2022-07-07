@@ -10,6 +10,29 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../resources/js/jquery-3.6.0.js"></script>
+<script>
+
+	$(function(){
+		fnPhoneCheck();
+	})
+	
+	let phonePass = false;
+	function fnPhoneCheck(){
+		// 휴대폰 번호 정규식 검사
+		$('#phone').on('keyup', function(){
+			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]+)?([0-9]{4})/,"$1-$2-$3").replace("--", "-") );
+			let regPhone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;  // 이거만 넣으면 하이픈 직접 넣기
+			if(regPhone.test($('#phone').val())==false){
+				$('#phoneMsg').text('휴대폰 번호를 입력하세요.').addClass('dont').removeClass('ok');
+				phonePass = false;
+			} else {
+				$('#phoneMsg').text('사용 가능한 번호입니다.').addClass('ok').removeClass('dont');
+				phonePass = true;
+			}
+		})
+	}
+
+</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function execDaumPostcode() {
@@ -59,6 +82,8 @@
             }
         }).open();
     }
+    
+    
 </script>
 </head>
 <body>
@@ -104,6 +129,7 @@
 		<label for="phone">
 			휴대폰번호<br>
 			<input type="text" name="phone" id="phone" value="${loginMember.phone}"><br>
+			<span id="phoneMsg"></span>
 		</label><br><br>
 			
 		<div>위치정보 동의여부</div>

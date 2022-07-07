@@ -113,7 +113,8 @@
                     data.impUid = rsp.imp_uid;
                     orderComplete(data);
                 } else {
-                    alert('결제가 실패하였습니다. 다시 시도해주세요.')
+                    console.log(rsp.fail)
+                    console.log(rsp)
                 }
             })
         })
@@ -140,6 +141,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+    <button id="test">test</button>
+
     ${orderList}
     <input type="hidden" id="memberNo" value="${loginMember.memberNo}">
 
@@ -161,12 +165,7 @@
             <tr>
                 <td>
                     <a href="${contextPath}/product/detail?proNo=${order.productNo}">
-                        <img
-                                alt="이미지${order.proimgNo}"
-                                src="${contextPath}/product/display?proimgNo=${order.proimgNo}"
-                                width="100px" height="100px"
-                        >
-                    </a>
+                    </a>이미지
                 </td>
                 <td>${order.proName}</td>
                 <td>${order.productSize}</td>
@@ -202,20 +201,21 @@
 
 
     <c:if test="${total >= 50000}">
-        배송비 0원
-        합계 <fmt:formatNumber value="${total}"></fmt:formatNumber>원<br>
+        배송비 0원<br>
+        <input type="hidden" class="totalPrice" value="${total}">
+        합계 <span class="totalPrice"><fmt:formatNumber value="${total}"></fmt:formatNumber></span>원<br>
     </c:if>
 
 
 
     <c:if test="${total <= 50000}">
-        배송비 <fmt:formatNumber value="3000"></fmt:formatNumber>원</span>
-        합계 <fmt:formatNumber value="${total + 3000}"></fmt:formatNumber>원<br>
+        배송비 <fmt:formatNumber value="3000"></fmt:formatNumber>원</span><br>
+        <input type="hidden" class="totalPrice" value="${total + 3000}">
+        합계 <fmt:formatNumber value="${total + 3000}"></fmt:formatNumber></span>원<br>
     </c:if>
 
     결제수단
     <input type="radio" name="payment" value="kakaopay" checked="checked">카카오페이
-    <input type="radio" name="payment" value="tosspay">토스
     <input type="radio" name="payment" value="html5_inicis">신용카드
     <input type="radio" name="payment" value="settle">세틀뱅크
     <button id="iamportPayment">구매하기</button>

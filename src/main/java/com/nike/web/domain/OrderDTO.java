@@ -17,7 +17,7 @@ public class OrderDTO {
     private int orderNo;
     private String orderId;
     private long memberNo;
-    private Date orderDate;
+    private String orderDate;
     private String orderName;
     private String orderPhone;
     private String orderAddr;
@@ -28,6 +28,8 @@ public class OrderDTO {
     private int orderDelivery;
     private String impUid;
     private int orderState;
+    private int postcode;
+    private String orderMessage;
 
     //  Product
     private String proName;
@@ -45,7 +47,6 @@ public class OrderDTO {
     //  PRODUCT_QTY
     private int productSize;
     private double proDiscount;
-
     private int proimgNo;
 
     private int orderFinalSalePrice;

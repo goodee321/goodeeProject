@@ -11,29 +11,30 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-	<jsp:include page="./layout/header.jsp"></jsp:include>
-	
-	<h1>MAIN PAGE</h1> 
+  <body onload="javascript:window_onload()">  <!-- body에 onload를 이용, 페이지 load 후 스크립트 함수를 호출-->
 
-	<a href="${contextPath}/notice/list">공지사항</a>
-	
-	<a href="${contextPath}/qna/list">QNA</a>
-	
-	<a href="${contextPath}/board/savePage">상품보러가기</a>
+  
 
-	<a href="${contextPath}/cart/list">카트</a>
-	<a href="${contextPath}/member/order/list">주문</a>
+  <script language="javascript">
 
-	<h1>MAIN PAGE</h1>
-	
-	<a href="${contextPath}/notice/list">공지사항 바로가기</a>
-	<a href="${contextPath}/notice/savePage">새 공지 작성하기</a>
-	<a href="${contextPath}/qna/list">QNA</a>
+  <!--
 
-	<a href="${contextPath}/product/list">상품 리스트</a>
-	<a href="${contextPath}/product/saveProductPage">데이터 저장</a>
-	
-	
+      function window_onload(){
+
+         setTimeout('go_url()',200)  // 5초후 go_url() 함수를 호출한다.
+
+      }
+
+ 
+
+      function go_url(){
+
+         location.href="${contextPath}/product/list"  // 페이지 이동...
+
+      }
+
+
+  </script>
+
 </body>
 </html>

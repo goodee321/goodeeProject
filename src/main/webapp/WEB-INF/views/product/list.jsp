@@ -91,11 +91,19 @@ h3{
     font-weight: bold;
     color : #666666;
 }
-.paging {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-     letter-spacing: 2px;
+	.unlink, .link {
+	padding: 10px;
+	margin: 5px;
+	border: 1px solid white;
+	text-align: center;
+	text-decoration: none;
+	color: #555555;
+	align-items:center;
+	text-decoration: none;  /* 링크 밑줄 없애기 */
+}
+  
+  
+ 
 }
 .priceX{
 	color: red;
@@ -116,6 +124,24 @@ h3{
 .soldOut{
 	opacity: .4;
 }
+
+.image-box {
+    width:1500px;
+    height:560px;
+    overflow:hidden;
+    margin:0 auto;
+}
+
+.main-image {
+    width:1920px;
+    height:100%;
+    object-fit:cover;
+    background-image: url("../resources/images/main.jpg");
+    background-position: center;
+}
+
+
+
 </style>
 
 </head>
@@ -124,24 +150,28 @@ h3{
 	
 <jsp:include page="../layout/header.jsp"></jsp:include>
 	
+
+		<div class="image-box">
+			<img class="main-image">
+		</div>
+		
+	<hr>
+	
+	
 	<br>
 	
 		<div class="ui_box">
 			<h3>제품 목록</h3>
 			
 			<ul class="product_list">
-				<c:forEach var="product" items="${products}">
+				<c:forEach var="product" items="${products}" begin="1">
 					<li class="item">
-						<c:if test="${product.productQtyDTO.proQty > 0}">		
+							
 							<div class="thumb">
 									<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="200px" height="200px"></a><!-- width="200px" height="200px" --> 
 							</div>
-						</c:if>
-						<c:if test="${product.productQtyDTO.proQty == null }">
-						<div class="thumb soldOut">
-									<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="200px" height="200px"></a><!-- width="200px" height="200px" --> 
-							</div>
-						</c:if>
+						
+						
 					<span class="title">
 						${product.proName}
 					</span>
@@ -172,9 +202,11 @@ h3{
 	
 
 		<!-- 페이지 꾸며야 함 -->
-		<div class="paging">
+		<div class="unlink">
 					${paging}
 	
 		</div>
+		
+	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </body>
 </html>

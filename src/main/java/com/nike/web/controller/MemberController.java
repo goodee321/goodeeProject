@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.nike.web.domain.OrderDTO;
-import com.nike.web.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -224,14 +223,14 @@ public class MemberController {
 	public void orderList(HttpSession session, Model model) {
 		MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
 		long memberNo = loginMember.getMemberNo();
-        List<OrderDTO> orderList = memberService.getOrderByMemberNo(memberNo);
-        model.addAttribute("orderList", orderList);
+		List<OrderDTO> orderList = memberService.getOrderByMemberNo(memberNo);
+		model.addAttribute("orderList", orderList);
 	}
 
-    @GetMapping("/member/order/detail/{orderId}")
-    public String orderDetail(@PathVariable("orderId") String orderId, Model model) {
-        model.addAttribute("detailList", memberService.selectOrderDetailByOrderId(orderId));
-        return "member/order/detail";
-    }
+	@GetMapping("/member/order/detail/{orderId}")
+	public String orderDetail(@PathVariable("orderId") String orderId, Model model) {
+		memberService.OrderDetail(orderId, model);
+		return "member/order/detail";
+	}
 
 }

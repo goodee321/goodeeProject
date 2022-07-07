@@ -4,30 +4,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nike.web.mapper.OrderMapper">
 
+    <resultMap id="DateMap" type="java.util.HashMap">
+        <result property="ORDER_DATE" column="orderDate" javaType="java.util.Date"/>
+    </resultMap>
+
     <select id="selectProductByNo" resultType="orderItemDTO">
         SELECT DISTINCT P.PRO_NO,
                         P.PRO_NAME,
                         P.PRO_PRICE,
-                        PQ.PRO_DISCOUNT,
-                        MAX(PI.PROIMG_NO) AS PROIMG_NO
+                        PQ.PRO_DISCOUNT
         FROM PRODUCT P
-                 INNER JOIN PRODUCT_QTY PQ ON P.PRO_NO = PQ.PRO_NO
-                 INNER JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
-        WHERE P.PRO_NO = #{productNo};
+                 INNER JOIN PRODUCT_QTY PQ
+                            ON P.PRO_NO = PQ.PRO_NO
+        WHERE P.PRO_NO = #{productNo}
     </select>
 
     <insert id="insertOrder" parameterType="order">
         INSERT INTO ORDER_TB
-        (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT,
-         ORDER_DELIVERY, IMP_UID)
-        VALUES (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount},
-                #{orderPayment}, #{orderDelivery}, #{impUid})
+            (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID)
+        VALUES
+            (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="orderItemDTO">
         INSERT INTO ORDER_DETAIL
-            (ORDER_ID, PRODUCT_NO, ORDER_QTY, ORDER_PRICE, PRODUCT_SIZE)
-        VALUES (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice}, #{productSize})
+            (ORDER_ID, PRODUCT_NO, ORDER_QTY, ORDER_PRICE)
+        VALUES
+            (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice})
     </insert>
 
     <select id="selectOrderByMemberNo" resultType="order">
@@ -47,18 +50,35 @@
         GROUP BY ORDER_ID
     </select>
 
-    <select id="selectOrderDetailByOrderId" resultType="order">
-        SELECT O.*,
-               OD.*,
-               PI.PROIMG_NO,
+    <select id="selectProductDetailByOrderId" resultType="order">
+        SELECT PI.PROIMG_NO,
                P.PRO_NAME,
+               OD.PRODUCT_SIZE,
+               OD.ORDER_QTY,
+               OD.ORDER_PRICE,
+               P.PRO_PRICE,
                PQ.PRO_DISCOUNT
-        FROM ORDER_TB O
-                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
+        FROM ORDER_DETAIL OD
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
-                 LEFT JOIN PRODUCT_QTY PQ ON PQ.PRO_NO = OD.PRODUCT_NO
-        WHERE O.ORDER_ID = #{orderId}
+                 LEFT JOIN PRODUCT_QTY PQ ON PQ.PRO_NO = OD.PRODUCT_NO AND PQ.PRO_SIZE = OD.PRODUCT_SIZE
+        WHERE OD.ORDER_ID = #{orderId}
+    </select>
+
+    <select id="selectInfoByOrderId" resultType="order">
+        SELECT ORDER_ID,
+               ORDER_DATE,
+               ORDER_NAME,
+               ORDER_STATE,
+               ORDER_AMOUNT,
+               ORDER_PAYMENT,
+               ORDER_NAME,
+               ORDER_POSTCODE,
+               ORDER_ADDR,
+               ORDER_PHONE,
+               ORDER_MESSAGE
+            FROM ORDER_TB
+        WHERE ORDER_ID = #{orderId}
     </select>
 
 </mapper>

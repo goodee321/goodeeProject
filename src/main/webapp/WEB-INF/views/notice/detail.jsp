@@ -50,7 +50,12 @@
 	
 	td:nth-of-type(1) { background-color: #fbfafa; }
 	
-	td:nth-of-type(2) { width: 160px; }
+	td:nth-of-type(2) { width: 600px; }
+	
+	tr:nth-of-type(3){
+	height: 500px;
+	vertical-align: top;
+	}
 	
 	textarea { text-align: left; }
 	
@@ -83,11 +88,7 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td>
-							<textarea rows="20" cols="100" readonly>
-								${notice.noticeContent}
-							</textarea>
-						</td>
+						<td>${notice.noticeContent}</td>
 					</tr>
 					<tr>
 						<td>작성일</td>
