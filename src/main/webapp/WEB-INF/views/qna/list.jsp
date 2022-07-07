@@ -33,14 +33,17 @@
 		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
 		padding: 10px;
 		margin: 5px;
-		border: 1px solid white;
+		background-color: white;
 		text-align: center;
-		text-decoration: none;  /* 링크 밑줄 없애기 */
-		color: gray;
+		text-decoration: none;
+		color: black;
+		
 	}
 	
 	.link:hover {
-		color: #008bcc;
+		border: 1px solid #c0c0c0;
+		background-color: #c0c0c0;
+		color: #e6e6fa;
 	}
 	
 	.title {
@@ -55,6 +58,7 @@
 	.title a {
 		color: #B22222;
 		font-size: 15px;
+		margin: 10px;
 	}
 	
 	
@@ -68,10 +72,13 @@
 	
 	}
 
-	table a { text-decoration: none; }
+	table a { 
+		text-decoration: none; 
+		color: black;
+	}
 	
 	thead {
-		background-color: #696969;	
+		background-color: black;	
 	}
 	
 	thead td { 
@@ -91,7 +98,9 @@
 		text-align: center;
 	}
 	
-	tbody tr:hover { background-color: #f0ffff; }
+	tbody tr { height: 50px; }
+	
+	tbody tr:hover { background-color: #e6e6fa; }
 	
 	tbody tr i { text-align: right; }
 	
@@ -114,7 +123,7 @@
 		<h1>Q&A</h1>
 		<p>상품 Q&A입니다.</p>
 		<c:if test="${loginMember.id eq null}">
-		<a href="${contextPath}/member/loginPage">글 작성은 로그인 후 가능합니다.</a>
+		<a href="${contextPath}/member/loginPage" class="btn btn-outline-warning">로그인 후 글 작성</a>
 		</c:if>
 	</div>
 
@@ -141,8 +150,11 @@
 				<c:if test="${not empty qnas}">
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
-							<tr>
-								<td colspan="7">삭제된 게시글입니다</td>
+							<tr class="text-muted">
+								<td>${qna.qnaNo}</td>
+								<td colspan="2">삭제된 게시글입니다</td>
+								<td>${qna.id}</td>
+								<td>${qna.qnaDate}</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">

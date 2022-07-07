@@ -26,6 +26,7 @@
 	}
 	
 	
+	
 </style>
 <script>
 	
@@ -84,7 +85,7 @@
 			<span id="equalArea">
 				<input type="text" name="query" id="query">
 			</span>
-			<input type="button" value="검색" id="btnSearch" class="btn btn-dark">
+			<input type="button" value="검색" id="btnSearch" class="btn btn-dark btn-sm">
 		</form>
 	</div>
 	

@@ -89,7 +89,7 @@ $(function(){
 				<tbody>
 					<tr>
 						<td>제목</td>
-						<td><input type="text" name="title" id="title" class="form-control"></td>
+						<td><input type="text" name="title" id="title" class="form-control" placeholder="제목을 작성해주세요."></td>
 					</tr>
 					<tr>
 						<td>작성자</td>
@@ -97,7 +97,7 @@ $(function(){
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td><textarea rows="20" cols="100" name="content" placeholder="문의 확인 후 빠르게 답변해드리겠습니다."></textarea></td>
+						<td><textarea rows="20" cols="100" name="content" placeholder="문의 확인 후 빠르게 답변해드리겠습니다." ></textarea></td>
 					</tr>
 				</tbody>
 				<tfoot>

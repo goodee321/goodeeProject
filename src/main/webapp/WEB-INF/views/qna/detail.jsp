@@ -47,10 +47,12 @@ thead {
 td {
 	padding: 5px;
 	border: 1px solid silver;
+	
 }
 
-td:nth-of-type(1) {
-	background-color: #fbfafa;
+tbody td:nth-of-type(1) {
+	background-color: black;
+	color: white;
 }
 
 td:nth-of-type(2) {
@@ -66,7 +68,7 @@ tfoot td {
 	border-bottom: none;
 	border-left: none;
 	border-right: none;
-	background-color: none;
+	background: none;
 	text-align: right;
 }
 

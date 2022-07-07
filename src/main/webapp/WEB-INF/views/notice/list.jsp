@@ -70,6 +70,8 @@
 		background-color: #fbfafa;	
 	}
 	
+	tbody tr { height: 50px; }
+	
 	td:nth-of-type(1) { width: 80px; }
 	td:nth-of-type(2) { width: 400px; }
 	td:nth-of-type(3) { width: 200px; }
