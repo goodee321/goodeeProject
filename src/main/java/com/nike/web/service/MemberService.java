@@ -15,23 +15,34 @@ import com.nike.web.domain.MemberDTO;
 import com.nike.web.domain.SignOutMemberDTO;
 
 public interface MemberService {
-	public Map<String, Object> idCheck(String id);
-	public Map<String, Object> emailCheck(String email);
-	public Map<String, Object> sendAuthCode(String email);
-	public void signIn(HttpServletRequest request, HttpServletResponse response);
-	public void signOut(HttpServletRequest request, HttpServletResponse response);
-	public MemberDTO login(HttpServletRequest request);
-	public SignOutMemberDTO findSignOutMember(String id);
-	public void reSignIn(HttpServletRequest request, HttpServletResponse response);
-	public void modify(HttpServletRequest request, HttpServletResponse response);
-	public void modifyPw(HttpServletRequest request, HttpServletResponse response);
+    public Map<String, Object> idCheck(String id);
 
-	public void findId(HttpServletRequest request, HttpServletResponse response);
-	public void findPw(HttpServletRequest request, HttpServletResponse response);
+    public Map<String, Object> emailCheck(String email);
 
-	public List<MemberDTO> getMemberByNo(long memberNo);
+    public Map<String, Object> sendAuthCode(String email);
 
-	public List<OrderDTO> getOrderByMemberNo(long memberNo);
+    public void signIn(HttpServletRequest request, HttpServletResponse response);
 
-	public List<OrderDTO> selectOrderDetailByOrderId(String OrderId);
+    public void signOut(HttpServletRequest request, HttpServletResponse response);
+
+    public MemberDTO login(HttpServletRequest request);
+
+    public SignOutMemberDTO findSignOutMember(String id);
+
+    public void reSignIn(HttpServletRequest request, HttpServletResponse response);
+
+    public void modify(HttpServletRequest request, HttpServletResponse response);
+
+    public void modifyPw(HttpServletRequest request, HttpServletResponse response);
+
+    public void findId(HttpServletRequest request, HttpServletResponse response);
+
+    public void findPw(HttpServletRequest request, HttpServletResponse response);
+
+    public List<MemberDTO> getMemberByNo(long memberNo);
+
+    public List<OrderDTO> getOrderByMemberNo(long memberNo);
+
+    public void OrderDetail(String OrderId, Model model);
+
 }

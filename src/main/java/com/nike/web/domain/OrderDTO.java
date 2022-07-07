@@ -45,7 +45,6 @@ public class OrderDTO {
     //  PRODUCT_QTY
     private int productSize;
     private double proDiscount;
-
     private int proimgNo;
 
     private int orderFinalSalePrice;
