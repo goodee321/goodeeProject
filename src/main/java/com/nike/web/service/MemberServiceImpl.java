@@ -309,81 +309,6 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-
-    // 목록(Admin)
-    @Override
-    public void findMembers(HttpServletRequest request, Model model) {
-        // TODO Auto-generated method stub
-
-        Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
-        int page = Integer.parseInt(opt.orElse("1"));
-
-        int totalRecord = memberMapper.selectMemberCount();
-
-        PageUtils pageUtils = new PageUtils();
-        pageUtils.setPageEntity(totalRecord, page);
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("beginRecord", pageUtils.getBeginRecord());
-        map.put("endRecord", pageUtils.getEndRecord());
-
-        List<MemberDTO> members = memberMapper.selectMemberList(map);
-
-        model.addAttribute("members", members);
-        model.addAttribute("totalRecord", totalRecord);
-        model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/admin/member/list"));
-
-
-//			int page = 1;
-//			String strPage = request.getParameter("page");
-//			if(strPage != null) {
-//				page = Integer.parseInt(strPage);
-//			}
-
-
-    }
-
-
-    // 삭제(Admin)
-    @Override
-    public int removeList2(HttpServletRequest request) {
-        // 한 번에 여러 개 지우기
-        // DELETE FROM NOTICE WHERE NOTICE_NO IN(1, 4)
-        String[] memberNoList = request.getParameterValues("memberNoList");  // {"1", "4"}
-        List<Long> list = new ArrayList<>();
-        for (int i = 0; i < memberNoList.length; i++) {
-            list.add(Long.parseLong(memberNoList[i]));  // list.add(1) -> list.add(4)
-        }
-        return memberMapper.deleteMemberList(list);
-    }
-
-
-    // 상세보기(Admin)
-    @Override
-    public MemberDTO findMemberByNo(HttpServletRequest request) {
-        // TODO Auto-generated method stub
-
-        String requestURI = request.getRequestURI();  // "/ex09/notice/detail"
-        String[] arr = requestURI.split("/");         // { "", "ex09", "notice", "detail"}
-
-        Long memberNo = Long.parseLong(request.getParameter("memberNo"));
-
-        return memberMapper.selectMemberByNo(memberNo);
-    }
-
-    // 수정(Admin)
-    @Override
-    public int change(HttpServletRequest request) {
-        MemberDTO member = new MemberDTO();
-        member.setMemberNo(Long.parseLong(request.getParameter("memberNo")));
-        member.setName(request.getParameter("name"));
-        member.setEmail(request.getParameter("email"));
-        member.setAddress(request.getParameter("address"));
-        member.setAddrDetail(request.getParameter("addrDetail"));
-        member.setPhone(request.getParameter("phone"));
-        return memberMapper.updateMember(member);
-    }
-
     @Override
     public void modify(HttpServletRequest request, HttpServletResponse response) {
 
@@ -400,11 +325,11 @@ public class MemberServiceImpl implements MemberService {
         String location = request.getParameter("location");
         String promotion = request.getParameter("promotion");
         Integer agreeState;
-        if(location.equals("off") && promotion.equals("off")) {
+        if (location.equals("off") && promotion.equals("off")) {
             agreeState = 1;
-        } else if(location.equals("on") && promotion.equals("off")) {
+        } else if (location.equals("on") && promotion.equals("off")) {
             agreeState = 2;
-        } else if(location.equals("off") && promotion.equals("on")) {
+        } else if (location.equals("off") && promotion.equals("on")) {
             agreeState = 3;
         } else {
             agreeState = 4;
@@ -430,7 +355,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            if(res == 1) {
+            if (res == 1) {
                 out.println("<script>");
                 out.println("alert('정보를 변경했습니다.')");
                 out.println("location.href='" + request.getContextPath() + "'");
@@ -471,16 +396,16 @@ public class MemberServiceImpl implements MemberService {
         try {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            if(res == 1) {
+            if (res == 1) {
                 out.println("<script>");
                 out.println("alert('비밀번호를 변경했습니다.')");
                 out.println("location.href='" + request.getContextPath() + "'");
                 out.println("</script>");
                 out.close();
                 HttpSession session = request.getSession();
-                if(session.getAttribute("loginMember") != null) {
+                if (session.getAttribute("loginMember") != null) {
                     // 마이페이지에서 비밀번호 수정한 경우
-                    MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
+                    MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
                     loginMember.setPw(pw);
                 } else {
                     // 비밀번호 찾기한 경우
@@ -507,7 +432,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            if(member == null) {
+            if (member == null) {
                 out.println("<script>");
                 out.println("alert('가입된 아이디가 없습니다.')");
                 out.println("history.back();");
@@ -541,7 +466,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            if(res == null) {
+            if (res == null) {
                 out.println("<script>");
                 out.println("alert('일치하는 회원 정보를 찾을 수 없습니다.')");
                 out.println("history.back();");
@@ -557,14 +482,6 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-
-    //개별삭제(Admin)
-    @Override
-    public int removeOne(HttpServletRequest request) {
-        Long memberNo = Long.parseLong(request.getParameter("memberNo"));
-        return memberMapper.deleteMember2(memberNo);
-    }
-
     @Override
     public List<MemberDTO> getMemberByNo(long memberNo) {
         return memberMapper.getMemberByNo(memberNo);
@@ -577,8 +494,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void OrderDetail(String orderId, Model model) {
-        model.addAttribute("products", orderMapper.selectOrderDetailByOrderId(orderId));
-
+        model.addAttribute("products", orderMapper.selectProductDetailByOrderId(orderId));
     }
 
 }

@@ -220,13 +220,13 @@ public class MemberController {
         return "member/createNewPw";
     }
 
-	@GetMapping("/member/order/list")
-	public void orderList(HttpSession session, Model model) {
-		MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
-		long memberNo = loginMember.getMemberNo();
+    @GetMapping("/member/order/list")
+    public void orderList(HttpSession session, Model model) {
+        MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
+        long memberNo = loginMember.getMemberNo();
         List<OrderDTO> orderList = memberService.getOrderByMemberNo(memberNo);
         model.addAttribute("orderList", orderList);
-	}
+    }
 
     @GetMapping("/member/order/detail/{orderId}")
     public String orderDetail(@PathVariable("orderId") String orderId, Model model) {
