@@ -76,17 +76,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		<!-- 제품 검색 -->
 	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
-		SELECT COUNT(P.PRO_NO)
-		  FROM PRODUCT P INNER JOIN PRODUCT_QTY
+		SELECT COUNT(*)
+		  FROM PRODUCT P
 		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
 	</select>
 
 	<!-- 제품 검색 리스트 -->
 	<select id="selectFindProductList" parameterType="Map" resultMap="ProductMap">
 		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_SIZE 
-		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
-  		 ON  PI.PRO_NO = P.PRO_NO  INNER JOIN PRODUCT_QTY PQ
-         ON P.PRO_NO = PQ.PRO_NO
+		 FROM  PRODUCT P  INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO LEFT JOIN PRODUCT_QTY PQ 
+	  ON  P.PRO_NO = PQ.PRO_NO
 		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
 		 ORDER BY P.PRO_NO DESC
 		 LIMIT #{beginRecord}, #{recordPerPage}

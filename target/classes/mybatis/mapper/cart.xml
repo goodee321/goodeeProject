@@ -9,35 +9,48 @@
                C.PRODUCT_NO,
                C.CART_NO,
                C.CART_QTY,
+               C.PRODUCT_SIZE,
                P.PRO_NAME,
-               P.PRO_PRICE
-        FROM CART C
-                 INNER JOIN PRODUCT P ON C.PRODUCT_NO = P.PRO_NO
-        WHERE C.MEMBER_NO = #{memberNo}
+               P.PRO_PRICE,
+               MAX(PI.PROIMG_NO) AS PROIMG_NO,
+               PQ.PRO_DISCOUNT
+            FROM CART C
+                INNER JOIN PRODUCT P ON C.PRODUCT_NO = P.PRO_NO
+                INNER JOIN PRODUCT_IMAGE PI ON C.PRODUCT_NO = PI.PRO_NO
+                INNER JOIN PRODUCT_QTY PQ ON C.PRODUCT_NO = PQ.PRO_NO
+        WHERE C.MEMBER_NO = #{memberNo} GROUP BY C.CART_NO
+    </select>
+
+    <select id="selectImageListByProductNo" resultType="ProductImageDTO">
+        SELECT DISTINCT
+            PI.*
+        FROM PRODUCT_IMAGE PI
+            INNER JOIN CART C ON PI.PRO_NO = C.PRODUCT_NO
+        WHERE C.PRODUCT_NO = #{productNo}
     </select>
 
     <select id="selectproductNobyCartNo" resultType="int">
         SELECT PRODUCT_NO
-        FROM CART
+            FROM CART
         WHERE CART_NO = #{cartNo}
     </select>
 
     <select id="selectcartQtybyCartNo" resultType="int">
         SELECT CART_QTY
-        FROM CART
+            FROM CART
         WHERE CART_NO = #{cartNo}
     </select>
 
     <insert id="insertCart" parameterType="cart">
         INSERT INTO CART
-            (MEMBER_NO, PRODUCT_NO, CART_QTY)
+            (MEMBER_NO, PRODUCT_NO, CART_QTY, PRODUCT_SIZE)
         VALUES
-            (#{memberNo}, #{productNo}, #{cartQty})
+            (#{memberNo}, #{productNo}, #{cartQty}, #{productSize})
     </insert>
 
     <update id="updateCart" parameterType="cart">
         UPDATE CART
-        SET CART_QTY = #{cartQty}
+            SET CART_QTY = #{cartQty}
         WHERE CART_NO = #{cartNo}
     </update>
 
