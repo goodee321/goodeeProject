@@ -154,7 +154,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
 		if(loginMember != null) {
-			session.invalidate();
+			session.invalidate();  // session에 있는 정보 무효화
 		}
 		return "redirect:/";	// contextPath 이동  
 		
@@ -221,4 +221,8 @@ public class MemberController {
 		return "member/createNewPw";
 	}
 	
+	@GetMapping("/member/myOrderPage")
+	public String myOrder() {
+		return "member/myOrder";
+	}
 }

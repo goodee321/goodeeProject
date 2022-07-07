@@ -20,7 +20,7 @@
 	
 	function fnReSignIn(){
 		$('#f').on('submit', function(event){
-			let regPw = /^[a-zA-Z0-9!@#$%^&*]{3,15}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 10~20자 사이
+			let regPw = /^[a-zA-Z0-9!@#$%^&*]{8,15}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 10~20자 사이
 			let pwValid = /[a-z]/.test($('#pw').val()) +  // 소문자 포함이면 1
 		    /[A-Z]/.test($('#pw').val()) +  // 대문자 포함이면 1
 		    /[0-9]/.test($('#pw').val()) +  // 숫자 포함이면 1
@@ -29,7 +29,7 @@
 				/*$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
 				pwPass = true;
 			} else {*/
-				alert('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
+				alert('8~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
 				event.preventDefault();
 				return false;
 			}
@@ -50,7 +50,7 @@
 	
 	let phonePass = false;
 	function fnPhoneCheck(){
-		// 비밀번호 정규식 검사
+		// 휴대폰 번호 정규식 검사
 		$('#phone').on('keyup', function(){
 			$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^[0-9]{3})([0-9]+)?([0-9]{4})/,"$1-$2-$3").replace("--", "-") );
 			let regPhone = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/;  // 이거만 넣으면 하이픈 직접 넣기

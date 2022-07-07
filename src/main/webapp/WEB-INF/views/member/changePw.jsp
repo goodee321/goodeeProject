@@ -48,7 +48,7 @@
 	function fnPwCheck(){
 		// 비밀번호 정규식 검사
 		$('#pw').on('keyup', function(){
-			let regPw = /^[a-zA-Z0-9!@#$%^&*]{3,15}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 3~15자 사이
+			let regPw = /^[a-zA-Z0-9!@#$%^&*]{8,15}$/;  // 대소문자, 숫자, 특수문자!@#$%^&* 3~15자 사이
 			let pwValid = /[a-z]/.test($('#pw').val()) +  // 소문자 포함이면 1
 		    /[A-Z]/.test($('#pw').val()) +  // 대문자 포함이면 1
 		    /[0-9]/.test($('#pw').val()) +  // 숫자 포함이면 1
@@ -57,7 +57,7 @@
 				$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
 				pwPass = true;
 			} else {
-				$('#pwMsg').text('3~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
+				$('#pwMsg').text('8~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
 				pwPass = false;
 			}
 		})
