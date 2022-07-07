@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.nike.web.mapper.OrderMapper">
 
+    <resultMap id="DateMap" type="java.util.HashMap">
+        <result property="ORDER_DATE" column="orderDate" javaType="java.util.Date"/>
+    </resultMap>
+
     <select id="selectProductByNo" resultType="orderItemDTO">
         SELECT DISTINCT P.PRO_NO,
                         P.PRO_NAME,
@@ -54,12 +58,11 @@
                OD.ORDER_PRICE,
                P.PRO_PRICE,
                PQ.PRO_DISCOUNT
-        FROM ORDER_TB O
-                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
+        FROM ORDER_DETAIL OD
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
                  LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
-                 LEFT JOIN PRODUCT_QTY PQ ON PQ.PRO_NO = OD.PRODUCT_NO
-        WHERE O.ORDER_ID = #{orderId}
+                 LEFT JOIN PRODUCT_QTY PQ ON PQ.PRO_NO = OD.PRODUCT_NO AND PQ.PRO_SIZE = OD.PRODUCT_SIZE
+        WHERE OD.ORDER_ID = #{orderId}
     </select>
 
     <select id="selectInfoByOrderId" resultType="order">
@@ -74,7 +77,7 @@
                ORDER_ADDR,
                ORDER_PHONE,
                ORDER_MESSAGE
-        FROM ORDER_TB
+            FROM ORDER_TB
         WHERE ORDER_ID = #{orderId}
     </select>
 
