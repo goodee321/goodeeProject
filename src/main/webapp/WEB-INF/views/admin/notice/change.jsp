@@ -59,7 +59,7 @@
 		<strong>제목:</strong>
 		<input type="text" name="noticeTitle" id="noticeTitle" value="${notice.noticeTitle}" placeholder="제목" required style="margin: 0 auto"><br><br>
 		<strong>내용:</strong><br><br>
-		<textarea  rows="5" name="noticeContent" id="noticeContent" placeholder="내용" required class="form-control col-sm-5" style="margin: 0 auto">${notice.noticeContent}</textarea><br><br>
+		<textarea  rows="10" cols="30" name="noticeContent" id="noticeContent" placeholder="내용" required class="form-control col-sm-5" style="margin: 0 auto">${notice.noticeContent}</textarea><br><br>
 		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 		
 		

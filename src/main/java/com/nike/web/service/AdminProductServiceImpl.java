@@ -87,7 +87,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 						
 						Map<String, Object> map = new HashMap<>();
 						map.put("beginRecord", pageUtils.getBeginRecord() - 1);
-						map.put("endRecord", pageUtils.getEndRecord());
+						map.put("recordPerPage", pageUtils.getRecordPerPage());
 						
 						List<ProductDTO> products = adminProductMapper.selectProductList(map);
 						
@@ -628,6 +628,57 @@ public class AdminProductServiceImpl implements AdminProductService {
 								model.addAttribute("productImages", adminProductMapper.selectProductImageListInTheProduct(proNo));
 								
 							}
+							
+							
+							@Override	//옵션 수정 페이지 정보
+							public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request) {
+								Integer proNo = Integer.parseInt(request.getParameter("proNo"));
+								Integer proSize = Integer.parseInt(request.getParameter("proSize"));
+								
+								Map<String, Object> map = new HashMap<>();
+								map.put("proNo", proNo );
+								map.put("proSize", proSize );
+								
+								ProductQtyDTO productQty = adminProductMapper.changeProductOptionByNo(map);
+								return productQty;
+							}
+							
+							
+							// 사진변경
+							@Override
+							public void removeProductImage(Integer proimgNo) {
+							
+								// fileAttachNo가 일치하는 FileAttachDTO 정보를 DB에서 가져오면
+								// 삭제할 파일의 경로와 이름이 있다.
+								ProductImageDTO imageProduct = adminProductMapper.selectProductImageByNo(proimgNo);
+								
+								// 첨부 파일 알아내기
+								File file = new File(imageProduct.getProimgPath(), imageProduct.getProimgName());
+
+								try {
+									
+									// 첨부 파일이 이미지가 맞는지 확인
+									String contentType = Files.probeContentType(file.toPath());
+									if(contentType.startsWith("image")) {
+									
+										// 원본 이미지 삭제
+										if(file.exists()) {
+											file.delete();
+										}
+										
+										// 썸네일 이미지 삭제
+										File thumbnail = new File(imageProduct.getProimgPath(), "s_" +  imageProduct.getProimgName());
+										if(thumbnail.exists()) {
+											thumbnail.delete();
+										}
+									}	
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+									
+									// FILE_ATTACH 테이블의 ROW 삭제
+									adminProductMapper.deleteProductImage(proimgNo);
+								}
 							
 			
 	

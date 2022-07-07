@@ -108,7 +108,7 @@
         }
 
         .kind2 {
-            font-family: 'Splash', cursive;
+            font-family: Georgia, "Malgun Gothic", serif;
             font-size: 27px;
         }
 
@@ -294,9 +294,11 @@
 
             <thead>
             <tr>
-                <td class="table-dark" scope="col">
+               		<!-- 
+               		<td class="table-dark" scope="col">
                     <label for="checkAll">전체선택</label>
                     <input type="checkbox" id="checkAll" class="blind">
+                      --> 
                 </td>
                 <td class="table-dark">주문번호</td>
                 <td class="table-dark">회원번호</td>
@@ -309,7 +311,9 @@
             <tbody class="table-secondary">
             <c:forEach items="${orders}" var="order">
                 <tr data-order_no="${order.orderNo}">
-                    <td><input type="checkbox" name="orderNoList" id="orderNoList" value="${order.orderNo}" class="checkes"></td>
+                 <!-- 
+                	<td><input type="checkbox" name="orderNoList" id="orderNoList" value="${order.orderNo}" class="checkes"></td>
+                  --> 
                     <td>${order.orderNo}</td>
                     <td>${order.memberNo}</td>
                     <td>${order.orderName}</td>
@@ -336,10 +340,15 @@
                 <td colspan="5">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
                     ${paging}
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!-- 
                     <button id="btnRemove" class="btn btn-secondary">선택삭제</button>
+                     -->
                     <br><br>
                 </td>
             </tr>

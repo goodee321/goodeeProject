@@ -86,7 +86,7 @@
 	}
 	
 	.kind2 {
-			font-family: 'Splash', cursive;
+			font-family: Georgia, "Malgun Gothic", serif;
 			font-size: 27px;
 	}
 	
@@ -263,9 +263,9 @@ function fnSearch(){
 	<div>
 	<h3 class="kind">Member Management</h3>
 	
-	<h3 class="kind2">Total Members: ${totalRecord}</h3>
+	<h3 class="kind2">Total Member: ${totalRecord}</h3>
 	
-	<h3 class="kind2">Search Members: ${findRecord}</h3>
+	<h3 class="kind2">Search Member: ${findRecord}</h3>
 	</div>
 	
 	

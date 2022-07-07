@@ -3,54 +3,9 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="../../resources/js/jquery-3.6.0.js"></script>
-<script type="text/javascript">
-	$(function(){
-		
-		// 수정완료
-		$('#f').on('submit', function(event){
-			if($('#title').val() == '${gallery.title}' && $('#content').val() == '${gallery.content}' && $('#files').val() == ''){
-				alert('변경된 내용이 없습니다.');
-				event.preventDefault();
-				return false;
-			}
-			return true;
-		})
-		
-		// 첨부파일 사전점검(확장자, 크기)
-		$('#files').on('change', function(){
-			// 첨부 규칙
-			let regExt = /(.*)\.(jpg|png|gif)$/;
-			let maxSize = 1024 * 1024 * 10;  // 하나당 최대 크기
-			// 첨부 가져오기
-			let files = $(this)[0].files;
-			// 각 첨부의 순회
-			for(let i = 0; i < files.length; i++){
-				// 확장자 체크
-				if(regExt.test(files[i].name) == false){
-					alert('이미지만 첨부할 수 있습니다.');
-					$(this).val('');  // 첨부된 파일이 모두 없어짐
-					return;
-				}
-				// 크기 체크
-				if(files[i].size > maxSize){
-					alert('10MB 이하의 파일만 첨부할 수 있습니다.');
-					$(this).val('');  // 첨부된 파일이 모두 없어짐
-					return;
-				}
-			}
-		})
-		
-		// 목록
-		$('#btnList').on('click', function(){
-			location.href='${contextPath}/gallery/list';
-		})
-		
-	})
-</script>
-</head>
+
+
+
 
 
 <!DOCTYPE html>
@@ -58,8 +13,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="../resources/js/jquery-3.6.0.js"></script>
-
+<script src="../../resources/js/jquery-3.6.0.js"></script>
+<!-- bootstrap css -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script>
 	
 	$(function(){
@@ -84,7 +41,6 @@
 				return false;
 			}
 	
-
 	})
 	
 	}
@@ -113,7 +69,6 @@
 			}
 		})
 	}
-
 			let pricePass = false;
 			let discountPass = false;
 			let qtyPass = false; 
@@ -146,6 +101,7 @@
 </script>
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
 #f {
   width:70%; 
     margin-left:15%; 
@@ -162,16 +118,13 @@
   appearance: none;
   display: block;
 }
-
 table{
  width:80%; 
-
    font-family: inherit;  /* 폰트 상속 */
    border-collapse: separate;
   border-spacing: 0 10px;
   color: gray;
 }
-
 .btn{
   width: 50%;  /* 원하는 너비 설정 */ 
   height: auto;  /* 높이값 초기화 */
@@ -181,48 +134,87 @@ table{
   font-size: large;
   font-weight: bold;  
 }
-
 .hidden{
  display: none;
 }
-
-
 .dont {
 	color: crimson;
 }
+
+
+section {
+		background-color: #BDBDBD;
+		
+		font-family: Georgia, "Malgun Gothic", serif;
+		}
+		
+		
+		footer {
+		background-color: #BDBDBD;
+		}
+		
+		.kind {
+			font-family: 'Splash', cursive;
+			font-size: 40px;
+	}
 </style>
 </head>
 <body>
 	
 	
-	<h1>제품 수정 화면</h1>
+	<nav id="nav">
+		<div id="nav_box">
+			<%@ include file="../layout/nav.jsp" %>
+		</div>
+	</nav>
+	
+	<section>
+	<br>
+	<h3 class="kind">Product Modify</h3><br>
+	
+	
+	
+	
 	<div class="table">
 	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/admin/product/changeProduct" method="post" enctype="multipart/form-data">
-		<c:forEach var="productImage" items="${productImages}">
-			<tr>
-				<td>${productImage.proimgOrigin}<a href="${contextPath}/admin/product/removeProductImage?proimgNo=${productImage.proimgNo}&proNo=${productImage.proNo}"><i class="fa-solid fa-circle-xmark"></i></a></td>
-				<td><img alt="${productImage.proimgOrigin}" src="${contextPath}/admin/product/display?proimgNo=${productImage.proimgNo}" width="90px"></td>
-			<tr>
-		</c:forEach>
-		<br>
-		<input type="hidden" name="proNo" value="${product.proNo}">
-		<tr>	
-		<td>제품명</td><td>	<input type="text" name="proName" id="proName" class="form-control" placeholder="제품명" value="${product.proName}"></td>
-		</tr><tr>
-		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${product.proPrice}" placeholder="가격"></td>
-		</tr><tr>
-		<td></td><td id="proPriceError"></td>
-		</tr><tr>
-		<td>내용</td><td>	<textarea class="form-control" name="proDetail"  "${product.proDetail}"rows="3" placeholder="상세 내용"></textarea>
-		</tr><tr>
-		<td>첨부</td><td><input type="file" name="files" id="files" multiple="multiple"></td>
-		 
-		<tr><tr><td></td><td></td>
-		
-		
-		
-		<button class="btn">수정완료</button>
+				
+				<c:forEach var="productImage" items="${productImages}" begin="1">	
+					<td>${productImage.proimgOrigin}<a href="${contextPath}/admin/product/removeProductImage?proimgNo=${productImage.proimgNo}&proNo=${productImage.proNo}"><i class="fa-solid fa-circle-xmark"></i></a></td>		
+					<label>
+					<td><img alt="${productImage.proimgOrigin}" src="${contextPath}/admin/product/display?proimgNo=${productImage.proimgNo}" width="90px"></td>
+					</label>
+				</c:forEach>
+				<br>
+			<input type="hidden" name="proNo" value="${product.proNo}">
+			<tr>	
+			<td><strong>제품명</strong><p><p><p></td><td>	<input type="text" name="proName" id="proName" class="form-control" placeholder="제품명" value="${product.proName}"></td>
+			</tr><tr><p>
+			<td><strong>가격</strong></td><td><p>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${product.proPrice}" placeholder="가격"></td>
+			</tr><tr>
+			<td></td><td id="proPriceError"></td>
+			</tr><tr><p>
+			<td><strong>내용</strong><p></td><td>	<textarea class="form-control" name="proDetail"  "${product.proDetail}"rows="3" placeholder="상세 내용"></textarea>
+			</tr><tr><p>
+			<td>첨부</td><td><input type="file" name="files" id="files" multiple="multiple"></td>
+			
+			
+			
+			
+			
+			<button id="btn" class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
 	</form>
+	<br>
 	</div>
+	<br>
+	</section>
+	
+	<footer id="footer">
+	<div id="footer_box">
+		<%@ include file="../layout/footer.jsp" %>
+	</div>
+</footer>
+	
+	
 </body>
 </html>

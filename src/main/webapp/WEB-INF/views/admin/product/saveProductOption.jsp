@@ -4,12 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="../../resources/js/jquery-3.6.0.js"></script>
 
 
@@ -59,14 +61,14 @@
 			
 	function fnRegExp(){
 			let numberRegExp = 	/^[0-9]+$/;
-			let decimalRegExp = /^[0]\.{0}\d*$/;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
+			let decimalRegExp = /^[0][\.]?(\d{1,1})?$/g;	// 소수점 한자리까지
 			
 			
 			
 			$('#proDiscount').on('keyup',function(){
 			
 				if(decimalRegExp.test( $('#proDiscount').val() ) == false){ 
-					$('#proDiscountError').text('할인율에는 1이하의 숫자만 입력 가능합니다.').addClass('dont').removeClass('hidden');
+					$('#proDiscountError').text('할인율에는 1이하의 숫자와 소수점 한자리수만 가능합니다.').addClass('dont').removeClass('hidden');
 					discountPass = false;
 					return;
 				}else{
@@ -99,6 +101,9 @@
 
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
+
+
 
 #f {
   width:70%; 
@@ -123,7 +128,7 @@ table{
    font-family: inherit;  /* 폰트 상속 */
    border-collapse: separate;
   border-spacing: 0 10px;
-  color: gray;
+  
 }
 
 .btn{
@@ -145,25 +150,53 @@ table{
 	color: crimson;
 }
 
+	section {
+		background-color: #BDBDBD;
+	
+		font-family: Georgia, "Malgun Gothic", serif;
+		}
+		
+		#btn {
+			margin: 0 auto;
+		}
+
+
+	.kind {
+			font-family: 'Splash', cursive;
+			font-size: 40px;
+	}
+	
+	
+	footer {
+		background-color: #BDBDBD;
+	}
+
 	 </style>
 
 </head>
 <body>
 
-	<jsp:include page="../../layout/header.jsp"></jsp:include>
+	<nav id="nav">
+		<div id="nav_box">
+			<%@ include file="../layout/nav.jsp" %>
+		</div>
+	</nav>
 	
-	<h2>옵션 저장 페이지</h2>
+	<section>
+	<br>
+	<h3 class="kind">Product Option Insert</h3><br>
+	
 	
 	<div class="table">
 	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/admin/product/saveProductOptionOk" method="post">
 		<table>
 		<input type="hidden" name="proNo" value="${product.proNo}" readonly="readonly">
 		<tr>	
-		<td>제품명</td><td>	<input type="text" name="proName" id="proName" value="${product.proName}" class="form-control" placeholder="제품명" readonly="readonly"></td>
+		<td><strong>제품명</strong></td><td>	<input type="text" name="proName" id="proName" value="${product.proName}" class="form-control" placeholder="제품명" readonly="readonly"></td>
 		</tr><tr>
-		<td>가격</td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${product.proPrice}" placeholder="가격" readonly="readonly"></td>
+		<td><strong>가격</strong></td><td>	<input type="text" name="proPrice" id="proPrice"class="form-control" value="${product.proPrice}" placeholder="가격" readonly="readonly"></td>
 		</tr><tr>
-		<td>사이즈</td><td>
+		<td><strong>사이즈</strong></td><td>
 		<select class="my-select selectpicker" name="proSize" id="proSize" >
 			<option value="0" selected >사이즈 선택</option>
 			<option value="240">240</option>
@@ -174,19 +207,35 @@ table{
 		</select>
 		</td>
 		</tr><tr>
-		<td>수량</td><td><input type="text" name="proQty" id="proQty" value="0"  class="form-control"></td>
+		<td><strong>수량</strong></td><td><input type="text" name="proQty" id="proQty" value="0"  class="form-control"></td>
 		</tr><tr>
 		<td></td><td id="proQtyError"></td>
 		</tr><tr>
-		<td>할인가</td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)" value="0"></td>
+		<td><strong>할인가</strong></td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)" value="0"></td>
 		</tr><tr>
 		<td></td><td id="proDiscountError"></td>
 		</table>
 		
-		<button class="btn">작성완료</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button id="btn" class="btn btn-secondary" style="margin: 0 auto;">작성완료</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
+		<br>
 		<br>
 	</form>
 	</div>
+	<br>
+	</section>
+	
+	
+	<footer id="footer">
+	<div id="footer_box">
+		<%@ include file="../layout/footer.jsp" %>
+	</div>
+</footer>
 	
 </body>
 </html>

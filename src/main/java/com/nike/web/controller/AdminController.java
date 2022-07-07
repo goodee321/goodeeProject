@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.web.domain.MemberDTO;
+import com.nike.web.domain.ProductQtyDTO;
 import com.nike.web.service.AdminMemberService;
 import com.nike.web.service.AdminNoticeService;
 import com.nike.web.service.AdminOrderService;
@@ -273,6 +275,28 @@ public class AdminController {
     public void saveProductOptionOk(HttpServletRequest request, HttpServletResponse response) {
         adminProductService.saveProductOptionOk(request, response);
     }
+    
+    // 상품이미지제거
+    @GetMapping("/admin/product/removeProductImage")
+	public String removeProductImage(@RequestParam Integer proNo, Integer proimgNo) {
+		adminProductService.removeProductImage(proimgNo);
+		return "redirect:/admin/product/detail?proNo=" + proNo;
+	}
+    
+    
+    
+    // fnAjax1이 요청하는 곳
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ResponseBody
+    @RequestMapping(value="/admin/product/selectProductOptionDetail", method= {RequestMethod.GET, RequestMethod.POST})  
+    public ProductQtyDTO selectProductOptionDetail(HttpServletRequest request) {
+       ProductQtyDTO productQty = adminProductService.changeProductOptionDetail(request);
+       return productQty;
+    }
+    
+    
+    
+    
 
     // 주문목록
     @GetMapping("/admin/order/list")
