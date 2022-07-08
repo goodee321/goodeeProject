@@ -87,8 +87,8 @@
 	}
 	
 	.kind2 {
-			font-family: Georgia, "Malgun Gothic", serif;
-			font-size: 27px;
+			font-family: 'Splash', cursive;
+			font-size: 32px;
 	}
 	
 </style>
@@ -160,6 +160,7 @@
 		fnAreaChoice();
 		fnSearchAll();
 		fnSearch();
+		fnRemove();
 	})
 	
 	
@@ -168,6 +169,25 @@
 			location.href="${contextPath}/admin/product/list";
 		})
 	}
+	
+	
+	
+	function fnRemove(){
+		
+		$('#btnRemove').on('click', function(){
+			
+			var result = confirm("정말 삭제할까요?");
+			
+			if(result == true){
+					$('#f2').submit();
+				}
+			else {
+				event.preventDefault();
+				return false;
+				}
+			})
+		}
+	
 	
 	
 	// 함수
@@ -252,7 +272,7 @@
 	
 	<h3 class="kind">Product Management</h3>
 	
-	<h3 class="kind2">Total Products: ${totalRecord}</h3>
+	<h3 class="kind2">Total Product	: ${totalRecord}</h3>
 	
 	
 	

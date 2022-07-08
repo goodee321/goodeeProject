@@ -129,8 +129,8 @@
 	}
 	
 	.kind2 {
-			font-family: Georgia, "Malgun Gothic", serif;
-			font-size: 27px;
+			font-family: 'Splash', cursive;
+			font-size: 32px;
 	}
 	
 	
@@ -152,7 +152,7 @@
 	<div>
 		<h3 class="kind">Qna Management</h3>
 		
-		<h3 class="kind2">Total Qna: ${totalRecord}</h3><br>
+		<h3 class="kind2">Total Qna	: ${totalRecord}</h3><br>
 		<!-- <a href="${contextPath}/admin/qna/saveQna">글쓰기</a><br>  -->
 		
 	

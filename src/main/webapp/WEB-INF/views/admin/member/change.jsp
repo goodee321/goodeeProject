@@ -145,7 +145,7 @@
 		<strong>주소</strong><br>
 		<input type="text" name="address" id="address" value="${loginMember.address}" placeholder="주소"><br><br>
 		<strong>상세주소</strong><br>
-		<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소"><br>
+		<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소"><br><br>
 		<strong>참고항목</strong><br>
 		<input type="text" name="extraAddress" id="extraAddress" value="${loginMember.extraAddress}" placeholder="참고항목">
 		<br><br>

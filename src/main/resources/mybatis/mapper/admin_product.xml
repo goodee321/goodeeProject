@@ -179,7 +179,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 제품 상세 -->
 	<select id="selectProductByNo" parameterType="Integer" resultMap="ProductMap">
-	   SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
+	   SELECT P.PRO_NO, P.PRO_NAME, P.PRO_DETAIL, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN  
 		 FROM  PRODUCT_IMAGE PI INNER JOIN PRODUCT P
   		   ON  PI.PRO_NO = P.PRO_NO
   		WHERE  P.PRO_NO = #{proNo}
