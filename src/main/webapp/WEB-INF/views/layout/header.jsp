@@ -15,7 +15,6 @@
 </head>
 <style>
  
-
 .b-example-divider {
   height: 3rem;
   background-color: rgba(0, 0, 0, .1);
@@ -23,7 +22,6 @@
   border-width: 1px 0;
   box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
-
 .form-control-dark {
   color: #fff;
   background-color: var(--bs-dark);
@@ -35,21 +33,16 @@
   border-color: #fff;
   box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
 }
-
 .bi {
   vertical-align: -.125em;
   fill: currentColor;
 }
-
 .text-small {
   font-size: 85%;
 }
-
 .dropdown-toggle {
   outline: 0;
 }
-
-
   
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -58,7 +51,6 @@
         -moz-user-select: none;
         user-select: none;
       }
-
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;
@@ -100,7 +92,8 @@
   <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">
-        <li class="nav-item"><a href="${contextPath}/product/list" class="nav-link link-dark px-2 active" aria-current="page">홈</a></li>
+      	<li class="nav-item"><a href="${contextPath}" class="nav-link link-dark px-2">로고</a></li>
+        <li class="nav-item"><a href="${contextPath}/product/list" class="nav-link link-dark px-2 active" aria-current="page">상품</a></li>
         <li class="nav-item"><a href="${contextPath}/notice/list" class="nav-link link-dark px-2">공지사항</a></li>
         <li class="nav-item"><a href="${contextPath}/qna/list" class="nav-link link-dark px-2">Q&A</a></li>
         <c:if test="${loginMember.id eq 'admin'}">
@@ -114,9 +107,10 @@
         <li class="nav-item"><a href="${contextPath}/member/agreePage" class="nav-link link-dark px-2">회원 가입</a></li>
    		</c:if>
    		<c:if test="${loginMember ne null}">
-   		 <li class="nav-item"><a href="${contextPath}/member/logout" class="nav-link link-dark px-2">로그아웃</a></li>
-        <li class="nav-item"><a href="${contextPath}/member/myInfoPage" class="nav-link link-dark px-2">내정보</a></li>
+        <li class="nav-item"><a href="${contextPath}/member/myInfoPage" class="btn btn-secondary">${loginMember.name} 님</a> 반갑습니다.&nbsp;&nbsp;&nbsp;</li>
+        <li class="nav-item"><a href="${contextPath}/member/order/list" class="nav-link link-dark px-2">나의주문</a>
         <li class="nav-item"><a href="${contextPath}/cart/list" class="nav-link link-dark px-2">장바구니</a></li>
+   		<li class="nav-item"><a href="${contextPath}/member/logout" class="nav-link link-dark px-2">로그아웃</a></li>
    		</c:if>
       </ul>
     </div>
@@ -135,8 +129,36 @@
     </div>
   </header>
 
+	<!--
+	<h1><a href="${contextPath}/">로고</a></h1>
+	-->
 	
+	<!-- 로그인 이전에 보여줄 링크 --><!--
+	<c:if test="${loginMember eq null}">
+		<a href="${contextPath}/member/loginPage">로그인페이지</a>
+		<a href="${contextPath}/member/agreePage">회원가입페이지</a>
+	</c:if>
+	-->
 	
+	<!-- 로그인 이후에 보여줄 링크 --><!--
+	<c:if test="${loginMember ne null}">
+		<a href="${contextPath}/member/myInfoPage">${loginMember.name}</a> 님 반갑습니다.&nbsp;&nbsp;&nbsp;
+		<a href="${contextPath}/member/order/list">나의주문</a>
+		<a href="${contextPath}/cart/list">장바구니</a>
+		<a href="${contextPath}/member/logout">로그아웃</a>
+	</c:if>
+
+		
+		
+		
+		<c:if test="${loginMember.id eq 'admin'}">
+			<a href="${contextPath}/admin/member/list">관리자페이지</a>
+		</c:if>
+	-->
+
+
 	
+
+
 </body>
 </html>
