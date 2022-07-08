@@ -60,6 +60,7 @@
  		FROM SIGN_OUT_MEMBER
  		WHERE ID = #{id}
  	</select>
+
  	
  	<!-- 탈퇴한 회원 재가입 -->
 	<insert id="reInsertMember" parameterType="MemberDTO">
@@ -119,14 +120,24 @@
 		 WHERE ID = #{id} AND EMAIL = #{email} AND PHONE = #{phone}
 	</select>
 
+	<!-- 재가입 직전 -->
+	<select id="beforeMemberReSign" parameterType="SignOutMemberDTO" resultType="SignOutMemberDTO">
+		SELECT SIGN_OUT_NO, MEMBER_NO, ID, PW, NAME, EMAIL, POSTCODE, ADDRESS, ADDR_DETAIL, EXTRA_ADDRESS, PHONE, AGREE_STATE, SIGN_IN, SIGN_OUT_DATE
+		  FROM SIGN_OUT_MEMBER
+		 WHERE NAME = #{name} AND EMAIL = #{email} AND PHONE = #{phone}
+	</select>
+	
+
 	<select id="getMemberByNo" resultType="MemberDTO">
 		SELECT MEMBER_NO,
 			   ID,
 			   PW,
 			   NAME,
 			   EMAIL,
+			   POSTCODE,
 			   ADDRESS,
 			   ADDR_DETAIL,
+			   EXTRA_ADDRESS,
 			   PHONE,
 			   AGREE_STATE,
 			   SIGN_IN,
