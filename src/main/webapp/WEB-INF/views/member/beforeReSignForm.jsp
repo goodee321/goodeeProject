@@ -31,7 +31,6 @@
 <script>
 
 	$(function(){
-		fnIdCheck();
 		fnEmailCheck();
 		fnPhoneCheck();
 	})
@@ -69,23 +68,6 @@
 			}
 		})
 	}
-	
-	
-	// 아이디 정규식
-	let idPass = false;
-	function fnIdCheck(){
-		$('#id').on('keyup', function(){
-			// 정규식 체크하기
-			let regId = /^[a-z0-9_-]{4,12}$/;  // 소문자, 숫자, 특수문자(_-) 4~12자 사이
-			if(regId.test($('#id').val())==false){
-				$('#idMsg').text('아이디는 4~12자리 입니다.').addClass('dont').removeClass('ok');
-				idPass = false;
-			} else {
-				$('#idMsg').text('').addClass('ok').removeClass('dont');
-				idPass = true;
-			}
-		})
-	}
 
 
 </script>
@@ -94,13 +76,13 @@
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 
-	<form action="${contextPath}/member/findPw" class="box">
-		<h3 class="shadow p-3 mb-5 bg-body rounded">비밀번호 재설정</h3>
+	<form action="${contextPath}/member/beforeReSign" method="post" class="box">
+		<h3 class="shadow p-3 mb-5 bg-body rounded">재가입 조건</h3>
 		<div class="shadow p-3 mb-5 bg-body rounded">
 			<p class="input-group mb-3">
-				<input type="text" class="form-control" name="id" id="id" placeholder="ID" required>
+				<input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
 			</p>
-				<span id="idMsg"></span>
+				<span></span>
 			<p class="input-group mb-3">
 				<input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
 			</p>

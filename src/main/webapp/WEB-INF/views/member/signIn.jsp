@@ -9,12 +9,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
 	.ok {
 		color: limegreen;
 	}
 	.dont {
 		color: crimson;
+	}
+	.box {
+		margin: 0 auto;
+		text-align: center;
+		width: 500px;
+		padding-top: 0px;
+	}
+	.box3 {
+		text-align: left;
 	}
 </style>
 <script src="../resources/js/jquery-3.6.0.js"></script>
@@ -86,7 +96,7 @@
 				$('#phoneMsg').text('휴대폰 번호를 입력하세요.').addClass('dont').removeClass('ok');
 				phonePass = false;
 			} else {
-				$('#phoneMsg').text('사용 가능한 번호입니다.').addClass('ok').removeClass('dont');
+				$('#phoneMsg').text('').addClass('ok').removeClass('dont');
 				phonePass = true;
 			}
 		})
@@ -234,7 +244,7 @@
 		    /[0-9]/.test($('#pw').val()) +  // 숫자 포함이면 1
 		    /[!@#$%^&*]/.test($('#pw').val());  // 특수문자 포함이면 1
 			if(regPw.test($('#pw').val()) && pwValid >= 3){
-				$('#pwMsg').text('사용 가능한 비밀번호입니다.').addClass('ok').removeClass('dont');
+				$('#pwMsg').text('').addClass('ok').removeClass('dont');
 				pwPass = true;
 			} else {
 				$('#pwMsg').text('8~15자 영문 대 소문자, 숫자, 특수문자를 사용하세요.').addClass('dont').removeClass('ok');
@@ -262,7 +272,7 @@
 				dataType: 'json',
 				success: function(obj){
 					if(obj.res == null){
-						$('#idMsg').text('사용가능한 ID입니다.').addClass('ok').removeClass('dont');
+						$('#idMsg').text('').addClass('ok').removeClass('dont');
 						idPass = true;
 					} else {
 						$('#idMsg').text('이미 사용중이거나 탈퇴한 아이디입니다.').addClass('dont').removeClass('ok');
@@ -333,81 +343,72 @@
 	
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
-	<h3>회원 가입</h3>
 	
-	<form id="f" action="${contextPath}/member/signIn" method="post">
+	<form id="f" action="${contextPath}/member/signIn" method="post" class="box">
+	<h3 class="shadow p-3 mb-5 bg-body rounded">회원 가입</h3>
 	
 		<input type="hidden" name="location" value="${agreements[0]}">
 		<input type="hidden" name="promotion" value="${agreements[1]}">
 		
+		<div class="shadow p-3 mb-5 bg-body rounded">
+			<br>
+			<div class="box3">
+				<label for="id">
+					<span class="fw-bold">아이디</span><br>
+					<input type="text" name="id" id="id" required><br>
+					<span id="idMsg"></span>
+				</label><br><br>
+				
+				<label for="pw">
+					<span class="fw-bold">비밀번호</span><br>
+					<input type="password" name="pw" id="pw" required><br>
+					<span id="pwMsg"></span>
+				</label><br><br>
+				
+				<label for="pwConfirm">
+					<span class="fw-bold">비밀번호 재확인</span><br>
+					<input type="password" id="pwConfirm" required><br>
+					<span id="pwConfirmMsg"></span>
+				</label><br><br>
+				
+				<label for="name">
+					<span class="fw-bold">이름</span><br>
+					<input type="text" name="name" id="name" required><br>
+				</label><br><br>
+				
+				<label for="email">
+					<span class="fw-bold">이메일</span><br>
+					<input type="text" name="email" id="email" required>
+					<input type="button" value="인증번호받기" id="btnGetAuthCode"><br>
+					<span id="emailMsg"></span><br>
+					<input type="text" name="authCode" id="authCode" placeholder="인증코드 입력" required>
+					<input type="button" value="인증하기" id="btnVerifyAuthCode"><br>
+				</label><br><br>
+				
+				<span class="fw-bold">주소검색</span><br>
+				<input type="text" name="postcode" id="postcode" value="${loginMember.postcode}" placeholder="우편번호">
+				<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+				<input type="text" name="address" id="address" value="${loginMember.address}" placeholder="주소"><br>
+				<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소">
+				<input type="text" name="extraAddress" id="extraAddress" value="${loginMember.extraAddress}" placeholder="참고항목">
+				<br><br>
+				
+				
+				<label for="phone">
+					<span class="fw-bold">휴대폰번호</span><br>
+					<input type="text" name="phone" id="phone" required><br>
+					<span id="phoneMsg"></span>
+				</label><br><br><hr>
+			</div>
+		</div>
 		
-		
-		<label for="id">
-			아이디<br>
-			<input type="text" name="id" id="id"><br>
-			<span id="idMsg"></span>
-		</label><br><br>
-		
-		<label for="pw">
-			비밀번호<br>
-			<input type="password" name="pw" id="pw"><br>
-			<span id="pwMsg"></span>
-		</label><br><br>
-		
-		<label for="pwConfirm">
-			비밀번호 재확인<br>
-			<input type="password" id="pwConfirm"><br>
-			<span id="pwConfirmMsg"></span>
-		</label><br><br>
-		
-		<label for="name">
-			이름<br>
-			<input type="text" name="name" id="name"><br>
-		</label><br><br>
-		
-		<label for="email">
-			이메일<br>
-			<input type="text" name="email" id="email">
-			<input type="button" value="인증번호받기" id="btnGetAuthCode"><br>
-			<span id="emailMsg"></span><br>
-			<input type="text" name="authCode" id="authCode" placeholder="인증코드 입력">
-			<input type="button" value="인증하기" id="btnVerifyAuthCode"><br>
-		</label><br><br>
-		
-		주소검색<br>
-		<input type="text" name="postcode" id="postcode" value="${loginMember.postcode}" placeholder="우편번호">
-		<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" name="address" id="address" value="${loginMember.address}" placeholder="주소"><br>
-		<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소">
-		<input type="text" name="extraAddress" id="extraAddress" value="${loginMember.extraAddress}" placeholder="참고항목">
-		<br><br>
-		
-		<!--
-		<label for="address">
-			주소<br>
-			<input type="text" name="address" id="address"><br>
-		</label><br><br>
-		
-		<label for="addrDetail">
-			상세주소<br>
-			<input type="text" name="addrDetail" id="addrDetail"><br>
-		</label><br><br>
-		-->
-		
-		<label for="phone">
-			휴대폰번호<br>
-			<input type="text" name="phone" id="phone"><br>
-			<span id="phoneMsg"></span>
-		</label><br><br>
-		
-		
-		<input type="button" value="뒤로가기" onclick="history.back()">
-		<button>가입하기</button>
-	
+		<button class="btn btn-dark">가입하기</button>
+		<input type="button" value="뒤로가기" onclick="history.back()" class="btn btn-secondary">
+		<hr><br><br><br>
 	</form>
 	
 	
 	
-	
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

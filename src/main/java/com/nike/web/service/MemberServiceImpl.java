@@ -1,11 +1,8 @@
 package com.nike.web.service;
 
 import java.io.PrintWriter;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -21,20 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.nike.web.domain.OrderDTO;
-import com.nike.web.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.ui.Model;
 
 import com.nike.web.domain.MemberDTO;
+import com.nike.web.domain.OrderDTO;
 import com.nike.web.domain.SignOutMemberDTO;
 import com.nike.web.mapper.MemberMapper;
-
-import com.nike.web.util.PageUtils;
-
+import com.nike.web.mapper.OrderMapper;
 import com.nike.web.util.SecurityUtils;
 
 @Service
@@ -44,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
     private MemberMapper memberMapper;
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OrderMapper orderMapper;  // nyk
 
     @Override
     public Map<String, Object> idCheck(String id) {
@@ -75,8 +68,8 @@ public class MemberServiceImpl implements MemberService {
         props.put("mail.smtp.starttls.enable", "true"); // TLS 허용한다.
 
         // 메일을 보내는 사용자 정보
-        final String USERNAME = "forspringlec@gmail.com";
-        final String PASSWORD = "ukpiajijxfirdgcz"; // 발급 받은 앱 비밀번호
+        final String USERNAME = "ejrrn7437@gmail.com";
+        final String PASSWORD = "jgktzrribdatykjw"; // 발급 받은 앱 비밀번호
 
         // 사용자 정보를 javax.mail.Session에 저장
         Session session = Session.getInstance(props, new Authenticator() {
@@ -87,9 +80,15 @@ public class MemberServiceImpl implements MemberService {
         });
 
         /*
-         * 이메일 보내기 1. 사용자 정보는 구글 메일만 가능합니다. 2. 가급적 구글 부계정을 만들어서 사용하세요. 3. 구글 로그인 -
-         * Google 계정 - 보안 1) 2단계 인증 - 사용 2) 앱 비밀번호 (1) 앱 선택 - 기타 (앱 이름은 마음대로) (2) 기기 선택
-         * - Windows 컴퓨터 (3) 생성 버튼 - 16자리 비밀번호를 생성해 줌
+		이메일 보내기
+		1. 사용자 정보는 구글 메일만 가능합니다.
+		2. 가급적 구글 부계정을 만들어서 사용하세요.
+		3. 구글 로그인 - Google 계정 - 보안
+		    1) 2단계 인증 - 사용
+		    2) 앱 비밀번호
+		        (1) 앱 선택 - 기타 (앱 이름은 마음대로)
+		        (2) 기기 선택 - Windows 컴퓨터
+		        (3) 생성 버튼 - 16자리 비밀번호를 생성해 줌
          */
 
         // 이메일 전송하기
@@ -123,8 +122,10 @@ public class MemberServiceImpl implements MemberService {
         String pw = SecurityUtils.sha256(request.getParameter("pw")); // SHA-256 암호화
         String name = SecurityUtils.xss(request.getParameter("name")); // 크로스 사이트 스크립팅
         String email = SecurityUtils.xss(request.getParameter("email")); // 크로스 사이트 스크립팅
+        String postcode = request.getParameter("postcode");
         String address = request.getParameter("address");
         String addrDetail = request.getParameter("addrDetail");
+        String extraAddress = request.getParameter("extraAddress");
         String phone = request.getParameter("phone");
         String location = request.getParameter("location");
         String promotion = request.getParameter("promotion");
@@ -138,9 +139,19 @@ public class MemberServiceImpl implements MemberService {
         }
 
         // MemberDTO
-        MemberDTO member = MemberDTO.builder().id(id).pw(pw).name(name).email(email).address(address)
-                .addrDetail(addrDetail).phone(phone).agreeState(agreeState).build();
-
+		MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.pw(pw)
+				.name(name)
+				.email(email)
+				.postcode(postcode)
+				.address(address)
+				.addrDetail(addrDetail)
+				.extraAddress(extraAddress)
+				.phone(phone)
+				.agreeState(agreeState)
+				.build();
+		
         // MEMBER 테이블에 member 저장
         int res = memberMapper.insertMember(member);
 
@@ -185,7 +196,7 @@ public class MemberServiceImpl implements MemberService {
             if (res == 1) {
                 request.getSession().invalidate(); // session 초기화
                 out.println("<script>");
-                out.println("alert('Good Bye!')");
+                out.println("alert('회원 탈퇴 하였습니다.')");
                 out.println("location.href='" + request.getContextPath() + "'");
                 out.println("</script>");
                 out.close();
@@ -211,7 +222,10 @@ public class MemberServiceImpl implements MemberService {
         String pw = SecurityUtils.sha256(request.getParameter("pw"));
 
         // MemberDTO
-        MemberDTO member = MemberDTO.builder().id(id).pw(pw).build();
+        MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.pw(pw)
+				.build();
 
         // ID/Password가 일치하는 회원 조회
         MemberDTO loginMember = memberMapper.selectMemberByIdPw(member);
@@ -225,7 +239,8 @@ public class MemberServiceImpl implements MemberService {
         return loginMember;
 
     }
-
+    
+    // 탈퇴한 회원인지 체크
     @Override
     public SignOutMemberDTO findSignOutMember(String id) {
         // TODO Auto-generated method stub
@@ -243,14 +258,27 @@ public class MemberServiceImpl implements MemberService {
         String pw = SecurityUtils.sha256(request.getParameter("pw"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        String address = request.getParameter("address");
-        String addrDetail = request.getParameter("addrDetail");
+        String postcode = request.getParameter("postcode");
+		String address = request.getParameter("address");
+		String addrDetail = request.getParameter("addrDetail");
+		String extraAddress = request.getParameter("extraAddress");
         String phone = request.getParameter("phone");
         Integer agreeState = Integer.parseInt(request.getParameter("agreeState"));
 
         // MemberDTO
-        MemberDTO member = MemberDTO.builder().memberNo(memberNo).id(id).pw(pw).name(name).email(email).address(address)
-                .addrDetail(addrDetail).phone(phone).agreeState(agreeState).build();
+ 		MemberDTO member = MemberDTO.builder()
+ 				.memberNo(memberNo)
+ 				.id(id)
+ 				.pw(pw)
+ 				.name(name)
+ 				.email(email)
+ 				.postcode(postcode)
+ 				.address(address)
+ 				.addrDetail(addrDetail)
+ 				.extraAddress(extraAddress)
+ 				.phone(phone)
+ 				.agreeState(agreeState)
+ 				.build();
 
         // MEMBER 테이블에 member 저장
         int res1 = memberMapper.reInsertMember(member);
@@ -305,10 +333,18 @@ public class MemberServiceImpl implements MemberService {
             agreeState = 4;
         }
 
-        // MemberDTO
-        MemberDTO member = MemberDTO.builder().memberNo(memberNo).name(name).email(email).postcode(postcode)
-                .address(address).addrDetail(addrDetail).extraAddress(extraAddress).phone(phone).agreeState(agreeState)
-                .build();
+     // MemberDTO
+     		MemberDTO member = MemberDTO.builder()
+     				.memberNo(memberNo)
+     				.name(name)
+     				.email(email)
+     				.postcode(postcode)
+     				.address(address)
+     				.addrDetail(addrDetail)
+     				.extraAddress(extraAddress)
+     				.phone(phone)
+     				.agreeState(agreeState)
+     				.build();
 
         // MEMBER 테이블에 member 저장
         int res = memberMapper.changeMember(member);
@@ -345,8 +381,11 @@ public class MemberServiceImpl implements MemberService {
         Long memberNo = Long.parseLong(request.getParameter("memberNo"));
         String pw = SecurityUtils.sha256(request.getParameter("pw"));
 
-        // MemberDTO
-        MemberDTO member = MemberDTO.builder().memberNo(memberNo).pw(pw).build();
+     // MemberDTO
+     		MemberDTO member = MemberDTO.builder()
+     				.memberNo(memberNo)
+     				.pw(pw)
+     				.build();
 
         // MEMBER 테이블에 member 저장
         int res = memberMapper.changeMemberPw(member);
@@ -406,7 +445,8 @@ public class MemberServiceImpl implements MemberService {
         }
 
     }
-
+    
+    // 비밀번호 찾기 과정
     @Override
     public void findPw(HttpServletRequest request, HttpServletResponse response) {
 
@@ -414,7 +454,11 @@ public class MemberServiceImpl implements MemberService {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
 
-        MemberDTO member = MemberDTO.builder().id(id).email(email).phone(phone).build();
+        MemberDTO member = MemberDTO.builder()
+				.id(id)
+				.email(email)
+				.phone(phone)
+				.build();
 
         MemberDTO res = memberMapper.findMemberPw(member);
 
@@ -436,7 +480,46 @@ public class MemberServiceImpl implements MemberService {
         }
 
     }
+    
+    // 재가입 중간 과정
+    @Override
+    public void beforeReSign(HttpServletRequest request, HttpServletResponse response) {
 
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+        SignOutMemberDTO member = SignOutMemberDTO.builder()
+				.name(name)
+				.email(email)
+				.phone(phone)
+				.build();
+
+        SignOutMemberDTO res = memberMapper.beforeMemberReSign(member);
+        System.out.println(res);
+        
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            if (res == null) {
+                out.println("<script>");
+                out.println("alert('일치하는 회원 정보를 찾을 수 없습니다.')");
+                out.println("history.back();");
+                out.println("</script>");
+                out.close();
+            } else {
+                request.setAttribute("member", res);
+                request.getRequestDispatcher("/member/reSignInPage").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    
+    // nyk
+    
     @Override
     public List<MemberDTO> getMemberByNo(long memberNo) {
         return memberMapper.getMemberByNo(memberNo);
@@ -451,6 +534,13 @@ public class MemberServiceImpl implements MemberService {
     public void OrderDetail(String orderId, Model model) {
         model.addAttribute("products", orderMapper.selectProductDetailByOrderId(orderId));
         model.addAttribute("memberInfo", orderMapper.selectInfoByOrderId(orderId));
+    }
+    
+    @Override
+    public void findOrderList(HttpServletRequest request, Model model) {  // 페이지 만들기
+    	
+    	
+    	
     }
 
 }

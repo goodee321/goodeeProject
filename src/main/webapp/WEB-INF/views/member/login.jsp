@@ -7,10 +7,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<style>
+
+  .box {
+  	margin: 0 auto;
+  	width: 400px;
+  	padding-top: 150px;
+  }
+</style>
+
+    
 <!-- jquery -->
- <script src="../resources/js/jquery-3.6.0.js"></script>
+<script src="../resources/js/jquery-3.6.0.js"></script>
 <!-- jquery-cookie -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
@@ -27,7 +36,7 @@
 	
 	// 1. 로그인
 	function fnLogin(){
-		$('#f').on('submit', function(event){
+		$('#ffff').on('submit', function(event){
 			// 아이디, 비밀번호 입력 확인
 			if($('#id').val() == '' || $('#pw').val() == ''){
 				alert('아이디와 비밀번호를 모두 입력하세요.');
@@ -61,43 +70,46 @@
 	
 </script>
 </head>
-<body>
+<body class="text-center">
+    
+    <jsp:include page="../layout/header.jsp"></jsp:include>
+    
+<main class="form-signin">
+  <form id="ffff" action="${contextPath}/member/login" method="post" class="box">
+  	<div class="shadow p-3 mb-5 bg-body rounded">
+	    <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+	    <h1 class="h3 mb-3 fw-normal">NiShoe</h1>
+	    
+	    <input type="hidden" name="url" value="${url}">
 	
-	<jsp:include page="../layout/header.jsp"></jsp:include>
-	
-	<h3>로그인</h3>
-	
-	<form id="f" action="${contextPath}/member/login" method="post">
-		
-		<input type="hidden" name="url" value="${url}">
-		
-		아이디<br>
-		<input type="text" name="id" id="id"><br><br>
-		
-		비밀번호<br>
-		<input type="password" name="pw" id="pw"><br><br>
-		
-		<button>로그인</button><br><br>
-		
-		<label for="rememberId"><input type="checkbox" id="rememberId">아이디 저장</label>
-		<label for="keepLogin"><input type="checkbox" name="keepLogin" value="keep" id="keepLogin">로그인 유지</label>
-	
-	</form>
-	
-	<br>
-	
-	
-	
+	    <div class="form-floating">
+	      <input type="text" class="form-control" name="id" id="id" placeholder="아이디" required>
+	      <label for="id">ID</label>
+	    </div>
+	    <div class="form-floating">
+	      <input type="password" class="form-control" name="pw" id="pw" placeholder="비밀번호" required>
+	      <label for="pw">PW</label>
+	    </div>
+		<br>
+	    <div class="checkbox mb-3">
+	      <label>
+	        <input type="checkbox" value="remember-me"><span class="fw-bold">아이디 저장</span>
+	      </label>
+	    </div>
+    </div>
+    <button class="w-100 btn btn-lg btn-dark" type="submit">로그인</button>
+    <p class="mt-5 mb-3 text-muted"></p>
+  	<hr>
+  </form>
 	<div>
-		<a href="${contextPath}/member/findIdForm">아이디 찾기</a> | 
-		<a href="${contextPath}/member/findPwForm">비밀번호 찾기</a>
-	
+		<a href="${contextPath}/member/findIdForm" class="btn btn-secondary">아이디 찾기</a> | 
+		<a href="${contextPath}/member/findPwForm" class="btn btn-secondary">비밀번호 찾기</a>
 	</div>
+</main>
+
+
 	
-	<hr>
 	
-	
-	
-	
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

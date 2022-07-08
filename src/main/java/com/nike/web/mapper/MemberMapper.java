@@ -38,7 +38,9 @@ public interface MemberMapper {
 	public MemberDTO findMemberId(String email);
 
 	public MemberDTO findMemberPw(MemberDTO member);
+	
+	public SignOutMemberDTO beforeMemberReSign(SignOutMemberDTO member);
 
-	public List<MemberDTO> getMemberByNo(long memberNo);
+	public List<MemberDTO> getMemberByNo(long memberNo);  // nyk
 
 }
