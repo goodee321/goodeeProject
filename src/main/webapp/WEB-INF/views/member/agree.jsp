@@ -138,7 +138,7 @@
 			
 			<input type="checkbox" id="service" class="blind checkOne">
 			<label for="service" class="item"><span class="fw-bold">이용약관에 동의합니다.(필수)</span></label><br>
-			<textarea>제 1 조 (목적)
+			<textarea readOnly>제 1 조 (목적)
 이 약관은 나이슈 주식회사(이하 “회사”)가 운영하는 사이버몰에서 제공하는 서비스와 이를 이용하는 회원의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
 
 제 2 조 (용어의 정의)
@@ -221,14 +221,14 @@
 			
 			<input type="checkbox" id="privacy" class="blind checkOne">
 			<label for="privacy" class="item"><span class="fw-bold">개인정보 수집에 동의합니다.(필수)</span></label><br>
-			<textarea>수집 항목  1. 아이디(이메일), 비밀번호, 이름, 휴대전화번호  2. 배송 정보(이름,연락처,주소)  3. 서비스 이용기록, 접속로그, 쿠키, 접속IP정보, 결제기록, 단말기 정보(OS종류 및 버전)
+			<textarea readOnly>수집 항목  1. 아이디(이메일), 비밀번호, 이름, 휴대전화번호  2. 배송 정보(이름,연락처,주소)  3. 서비스 이용기록, 접속로그, 쿠키, 접속IP정보, 결제기록, 단말기 정보(OS종류 및 버전)
 수집 목적  1. 서비스 가입 및 이용자 식별, 회원 관리 및 커뮤니케이션  2. 상품/서비스의 배송 및 고객 상담, 맞춤형 컨텐츠 및 서비스 제공  3. 이상행위 탐지 및 이용자의 관심, 기호, 성향의 추정을 통한 맞춤형 컨텐츠 및 서비스 제공
 보유 기간  환불 목적으로 회원탈퇴 후 90일간 보관 후 지체없이 파기</textarea>
 			<br><br>
 			
 			<input type="checkbox" name="agreements" value="location" id="location" class="blind checkOne">
 			<label for="location" class="item"><span class="fw-bold">위치정보 수집에 동의합니다.(선택)</span></label><br>
-			<textarea>제 1 조 (목적)
+			<textarea readOnly>제 1 조 (목적)
 이 약관은 나이슈 주식회사 (이하 “회사”)가 제공하는 위치기반서비스와 관련하여 회사와 개인위치정보주체와의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
 
 제 2 조 (약관 외 준칙)
@@ -269,7 +269,7 @@
 			
 			<input type="checkbox" name="agreements" value="promotion" id="promotion" class="blind checkOne">
 			<label for="promotion" class="item"><span class="fw-bold">프로모션 정보 수신에 동의합니다.(선택)</span></label><br>
-			<textarea>나이슈은 회원님이 수집 및 이용에 동의한 개인정보를 이용하여 SMS, MMS, 이메일,푸시 알림 등 다양한 전자적 전송 매체를 통해 오전 8시부터 오후 9시까지 개인 맞춤형 광고 및 정보를 전송할 수 있습니다.
+			<textarea readOnly>나이슈은 회원님이 수집 및 이용에 동의한 개인정보를 이용하여 SMS, MMS, 이메일,푸시 알림 등 다양한 전자적 전송 매체를 통해 오전 8시부터 오후 9시까지 개인 맞춤형 광고 및 정보를 전송할 수 있습니다.
 본 동의는 거부하실 수 있으나, 거부 시 이벤트 및 프로모션 안내를 받아보실 수 없습니다.
 광고성정보수신의 변경은
 1) 나이슈 고객센터(1112-2233)로 요청하거나
