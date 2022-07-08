@@ -42,7 +42,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/member/idCheck", produces = "application/json")
+    @GetMapping(value="/member/idCheck", produces = "application/json")
     public Map<String, Object> idCheck(@RequestParam String id) {
         return memberService.idCheck(id);
         // {"res": null}
@@ -50,7 +50,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/member/emailCheck", produces = "application/json")
+    @GetMapping(value="/member/emailCheck", produces = "application/json")
     public Map<String, Object> emailCheck(@RequestParam String email) {
         return memberService.emailCheck(email);
         // {"res": null}
@@ -58,7 +58,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/member/sendAuthCode", produces = "application/json")
+    @GetMapping(value="/member/sendAuthCode", produces = "application/json")
     public Map<String, Object> sendAuthCode(@RequestParam String email) {
         return memberService.sendAuthCode(email);
     }
@@ -150,7 +150,7 @@ public class MemberController {
 
     @GetMapping("/member/logout")
     public String logout(HttpSession session) {
-        MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
+        MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
         if (loginMember != null) {
             session.invalidate();
         }
@@ -174,7 +174,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/member/checkNowPw", produces = "application/json")
+    @PostMapping(value="/member/checkNowPw", produces="application/json")
     public Map<String, Object> checkNowPw(HttpServletRequest request) {
         String nowPw = SecurityUtils.sha256(request.getParameter("nowPw"));
         String pw = ((MemberDTO) request.getSession().getAttribute("loginMember")).getPw();
@@ -218,7 +218,19 @@ public class MemberController {
     public String createNewPw() {
         return "member/createNewPw";
     }
+    
+    @PostMapping("/member/beforeReSignForm")
+    public String beforeReSignForm() {
+    	return "member/beforeReSignForm";
+    }
+    
+    @PostMapping("/member/beforeReSign")
+    public void beforeReSign(HttpServletRequest request, HttpServletResponse response) {
+    	memberService.beforeReSign(request, response);
+    }
 
+    // nyk
+    
 	@GetMapping("/member/order/list")
 	public void orderList(HttpSession session, Model model) {
 		MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
@@ -232,5 +244,11 @@ public class MemberController {
 		memberService.OrderDetail(orderId, model);
 		return "member/order/detail";
 	}
-
+	/*
+	@GetMapping("/member/order/list")
+	public String orderList(HttpServletRequest request, Model model) {
+		memberService.findOrderList(request, model);  // 페이지 만들기
+		return "member/order/list";
+	}
+	*/
 }

@@ -40,9 +40,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if(member != null) {	// 탈퇴한 회원이면 
 			// 탈퇴한 회원의 정보를 가지고 재가입 페이지로 이동
 			request.setAttribute("member", member);
-			request.getRequestDispatcher("/member/reSignInPage").forward(request, response);
+			request.getRequestDispatcher("/member/beforeReSignForm").forward(request, response);
 			return false;
 		}
+		
 		
 		return true;
 		

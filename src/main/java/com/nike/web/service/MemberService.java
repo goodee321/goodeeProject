@@ -38,11 +38,16 @@ public interface MemberService {
     public void findId(HttpServletRequest request, HttpServletResponse response);
 
     public void findPw(HttpServletRequest request, HttpServletResponse response);
+    
+    public void beforeReSign(HttpServletRequest request, HttpServletResponse response);
 
+    // nyk
     public List<MemberDTO> getMemberByNo(long memberNo);
 
     public List<OrderDTO> getOrderByMemberNo(long memberNo);
 
     public void OrderDetail(String OrderId, Model model);
+    
+    public void findOrderList(HttpServletRequest request, Model model);  // 페이지 만들기
 
 }
