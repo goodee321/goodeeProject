@@ -108,8 +108,8 @@
         }
 
         .kind2 {
-            font-family: Georgia, "Malgun Gothic", serif;
-            font-size: 27px;
+            font-family: 'Splash', cursive;
+			font-size: 32px;
         }
 
     </style>
@@ -182,6 +182,7 @@
             fnSearchAll();
             fnSearch();
             fnCancel();
+            fnRemove();
         })
 
 
@@ -209,6 +210,26 @@
                 location.href = "${contextPath}/admin/order/list";
             })
         }
+        
+        
+        function fnRemove(){
+        	
+        	$('#btnRemove').on('click', function(){
+        		
+        		var result = confirm("정말 삭제할까요?");
+        		
+        		if(result == true){
+        				$('#f2').submit();
+        			}
+        		else {
+        			event.preventDefault();
+        			return false;
+        			}
+        		})
+        	}
+        
+        
+        
 
         function fnSearch() {
 
@@ -265,8 +286,8 @@
 
     <div>
         <h3 class="kind">Order Management</h3>
-        <h3 class="kind2">Total Orders: ${totalRecord}</h3>
-        <h3 class="kind2">Search Orders: ${findRecord}</h3>
+        <h3 class="kind2">Total Order	: ${totalRecord}</h3>
+        <h3 class="kind2">Search Order	: ${findRecord}</h3>
     </div>
 
     <hr>

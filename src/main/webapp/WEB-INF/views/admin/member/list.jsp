@@ -86,8 +86,8 @@
 	}
 	
 	.kind2 {
-			font-family: Georgia, "Malgun Gothic", serif;
-			font-size: 27px;
+			font-family: 'Splash', cursive;
+			font-size: 32px;
 	}
 	
 </style>
@@ -170,6 +170,7 @@ $(function(){
 fnAreaChoice();
 fnSearchAll();
 fnSearch();
+fnRemove();
 })
 
 
@@ -200,6 +201,25 @@ function fnSearchAll(){
 		location.href="${contextPath}/admin/member/list";
 	})
 }
+
+
+function fnRemove(){
+	
+	$('#btnRemove').on('click', function(){
+		
+		var result = confirm("정말 삭제할까요?");
+		
+		if(result == true){
+				$('#f2').submit();
+			}
+		else {
+			event.preventDefault();
+			return false;
+			}
+		})
+	}
+
+
 
 function fnSearch(){
 	
@@ -263,9 +283,9 @@ function fnSearch(){
 	<div>
 	<h3 class="kind">Member Management</h3>
 	
-	<h3 class="kind2">Total Member: ${totalRecord}</h3>
+	<h3 class="kind2">Total Member : ${totalRecord}</h3>
 	
-	<h3 class="kind2">Search Member: ${findRecord}</h3>
+	<h3 class="kind2">Search Member : ${findRecord}</h3>
 	</div>
 	
 	
