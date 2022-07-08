@@ -17,6 +17,8 @@
 	
 	.noticeTitle {
 		text-align: center;
+		padding-bottom: 10px;
+		font-size: xx-large;
 	}
 	
 	p {
@@ -33,13 +35,16 @@
 		color: #555555;
 	}
 	
-	a {
-		text-decoration: none;
-		color: #555555;
+	tbody td a { 
+		text-decoration: none; 
+		color: #2E2E2E;
+		font-weight: 600;
 	}
 	
 	a:hover {
 		color: #008bcc;
+		text-decoration: none;
+		font-weight: 600;
 	}
 	
 	.link:hover {
@@ -49,10 +54,11 @@
 	table {
 	border-collapse: collapse;
 	margin: auto;
+	width: 50%;
 	}
 	
 	tbody tr:hover {
-		background-color: #fff0f5;
+		background-color: #F5F5F5;
 	}
 	
 	table caption {
@@ -66,23 +72,27 @@
 		text-decoration: none; 
 	}
 	
-	thead {
-		background-color: #fbfafa;	
+	thead td {
+		background-color: #778899;	
+		color: white; 
+		font-weight: 600;
+		text-align: center;
+		height: 35px;
 	}
 	
 	tbody tr { height: 50px; }
 	
 	td:nth-of-type(1) { width: 80px; }
-	td:nth-of-type(2) { width: 400px; }
+	td:nth-of-type(2) { width: 450px; }
 	td:nth-of-type(3) { width: 200px; }
 	td:nth-of-type(4) { width: 150px; }
 
-	td {
+	table tbody td {
 		padding: 5px;
 		border-top: 1px solid silver;
 		border-bottom: 1px solid silver;
 		text-align: center;
-		color: #555555;
+		color: #2E2E2E;
 	}
 	
 	tfoot {
@@ -99,14 +109,15 @@
 </style>
 </head>
 <body>
-
-	대충이미지
-
-	<hr>
+	<!-- 헤더 검색부분때문에 공지사항 검색이 안먹음 
+	
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	
+	-->
+	<jsp:include page="../layout/header2.jsp"></jsp:include>
 	
 	<div class="noticeTitle">
 		<h1>공지사항</h1>
-		<p>공지사항입니다</p>
 	</div>
 	
 	<form action="${contextPath}/notice/removeList">
@@ -140,6 +151,7 @@
 		</table>
 
 	</form>
+	
 
 </body>
 </html>

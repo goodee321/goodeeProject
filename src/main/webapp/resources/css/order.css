@@ -107,13 +107,20 @@ th, td, tr, span {
 
 .xans-order-basketpackage .boardList {
     background-color: white;
-    background-color: #fff;
     border-radius: 20px;
     table-layout: fixed;
     margin: 0px;
     color: #353535;
     line-height: 1.5;
 }
+
+.xans-order-basketpackage .boardList table {
+    border-collapse: separate;
+    border-color: #fbfbfb;
+    border-radius: 20px;
+    line-height: 1.5;
+}
+
 
 .xans-order-basketpackage .boardList th {
     padding: 13px 0 13px;

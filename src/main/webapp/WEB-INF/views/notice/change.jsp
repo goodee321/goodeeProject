@@ -9,6 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="../resources/js/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<script src="../resources/summernote-0.8.18-dist/summernote-lite.js"></script>
+<script src="../resources/summernote-0.8.18-dist/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="../resources/summernote-0.8.18-dist/summernote-lite.css"/>
 <style>
 	
 	* {
@@ -16,9 +21,16 @@
 	}
 	
 	.changeTitle { text-align: center; }
+	
+	table {
+		margin: auto;
+		border-collapse: collapse;
+	}
+	
+	td:nth-of-type(2) {
+		width: 400px;
+	}
 </style>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-<script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 
 	$(function(){
@@ -39,6 +51,26 @@
 		$('#btnList').on('click', function(){
 			location.href='${contextPath}/notice/list';
 			})
+			
+		// summernote
+		$('#noticeContent').summernote({
+			width: 800,
+			height: 500,
+			lang: 'ko-KR',
+		// 툴바 수정
+		toolbar: [
+			   ['fontname', ['fontname']],
+			   ['fontsize', ['fontsize']],
+			   ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			   ['color', ['forecolor','color']],
+			   ['table', ['table']],
+			   ['para', ['ul', 'ol', 'paragraph']],
+			   ['height', ['height']],
+			   ['view', ['fullscreen', 'help']]
+		],
+		fontNames: ['Arial', 'Arial Black', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','36','48','72']
+	})
 	
 	})
 </script>
@@ -49,11 +81,28 @@
 	</div>
 		
 		<form id="f" action="${contextPath}/notice/change" method="post">
-			제목 <input type="text" name="noticeTitle" id="noticeTitle" value="${notice.noticeTitle}" required><br>
-			내용 <textarea rows="10" cols="30" name="noticeContent" id="noticeContent">${notice.noticeContent}</textarea><br>
-			<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
-			<button>수정완료</button>
-			<input type="button" value="목록" id="btnList">
+			<table>
+				<tbody>
+					<tr>
+						<td>제목</td>
+						<td><input type="text" name="noticeTitle" value="${notice.noticeTitle}" required class="form-control" placeholder="Default input" id="inputDefault"></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td><textarea name="noticeContent" id="noticeContent">${notice.noticeContent}</textarea></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td>
+							<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
+							<button class="btn btn-primary">수정완료</button>
+							<input type="button" value="목록" id="btnList" class="btn btn-info">
+						</td>
+					</tr>
+				</tfoot>
+			</table>
 		</form>
 
 </body>

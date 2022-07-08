@@ -20,6 +20,13 @@
 		})
 	
 	})
+	
+	function fnRemove(a) {
+			if(confirm('게시글을 삭제할까요?')){
+				a.href='${contextPath}/qna/remove?qnaNo=' + $(a).data('qna_no');
+			}
+		}
+	
 </script>
 <style>
 	.blind {
@@ -30,25 +37,34 @@
 		box-sizing: border-box;
 	}
 	.unlink, .link {
-		display: inline-block;  /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
+		display: inline-block; 
 		padding: 10px;
 		margin: 5px;
-		background-color: white;
+		border: 1px solid white;
 		text-align: center;
 		text-decoration: none;
-		color: black;
-		
+		color: #555555;
 	}
 	
 	.link:hover {
-		border: 1px solid #c0c0c0;
-		background-color: #c0c0c0;
-		color: #e6e6fa;
+		color: #008bcc;
+	}
+	
+	a:hover {
+		color: #008bcc;
+		text-decoration: none;
+		font-weight: 600;
+		
 	}
 	
 	.title {
 		font-size: 20px;
 		text-align: center;
+	}
+	
+	h1 { 
+		padding-bottom: 10px; 
+		font-size: xx-large;
 	}
 	
 	.title p {
@@ -65,6 +81,7 @@
 	table {
 		border-collapse: collapse;
 		margin: auto;
+		width: 60%;
 	}
 	
 	table caption {
@@ -74,33 +91,38 @@
 
 	table a { 
 		text-decoration: none; 
-		color: black;
+		color: #2E2E2E;
 	}
 	
 	thead {
-		background-color: black;	
+		background-color: #778899;	
 	}
 	
 	thead td { 
 		color: white; 
-		font-weight: 600;	
+		font-weight: 600;
+		text-align: center;
 	}
 	
-	td:nth-of-type(1) { width: 80px; }
-	td:nth-of-type(2) { width: 260px; }
-	td:nth-of-type(3) { width: 450px; }
-	td:nth-of-type(4) { width: 100px; }
-	td:nth-of-type(5) { width: 150px; }
-	td {
+	thead td:nth-of-type(2) { width: 230px; }
+	thead td:nth-of-type(3) { width: 440px; }
+	thead td:nth-of-type(4) { width: 120px; }
+	
+	tbody tr:nth-of-type(3) td:nth-of-type(2) { line-height: 1.5; }
+	
+	table td {
 		padding: 5px;
 		border-top: 1px solid silver;
 		border-bottom: 1px solid silver;
-		text-align: center;
+		
 	}
 	
 	tbody tr { height: 50px; }
 	
-	tbody tr:hover { background-color: #e6e6fa; }
+	tbody tr:hover { 
+		background-color: #F5F5F5; 
+		
+	}
 	
 	tbody tr i { text-align: right; }
 	
@@ -113,6 +135,7 @@
 		border-right: 0;
 		border-bottom: 0;
 	}
+
 </style>
 </head>
 <body>
@@ -121,7 +144,6 @@
 	
 	<div class="title">
 		<h1>Q&A</h1>
-		<p>상품 Q&A입니다.</p>
 		<c:if test="${loginMember.id eq null}">
 		<a href="${contextPath}/member/loginPage" class="btn btn-outline-warning">로그인 후 글 작성</a>
 		</c:if>
@@ -144,27 +166,26 @@
 			<tbody>
 				<c:if test="${empty qnas}">
 					<tr>
-						<td colspan="5">첫 게시글을 작성해 주세요.</td>
+						<td colspan="5" class="text-center">첫 게시글을 작성해 주세요.</td>
 					</tr>
 				</c:if>
 				<c:if test="${not empty qnas}">
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
 							<tr class="text-muted">
-								<td>${qna.qnaNo}</td>
-								<td colspan="2">삭제된 게시글입니다</td>
-								<td>${qna.id}</td>
-								<td>${qna.qnaDate}</td>
+								<td class="text-center">${qna.qnaNo}</td>
+								<td colspan="2" class="text-center">관리자에 의해 삭제된 게시글입니다</td>
+								<td class="text-center">${qna.id}</td>
+								<td class="text-center">${qna.qnaDate}</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
-						<!-- 작성자or관리자 아니면 비밀글 -->
-						<!-- <tr><td><i class="fa-regular fa-lock-keyhole"></i>비밀글입니다</td></tr> -->
 							<tr>
-								<td>${qna.qnaNo}</td>
-								<td>
-									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
-									
+								<td class="text-center">${qna.qnaNo}</td>
+								<td class="text-center">
+									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</c:forEach>
 									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-solid fa-comment-dots">관리자 답변</i></c:if>
 									<!-- 제목 -->
 									<c:if test="${qna.qnaTitle.length() gt 20}">
@@ -175,21 +196,20 @@
 									</c:if>
 								</td>
 								<td>
-									<c:if test="${qna.qnaContent.length() gt 24}">
-										${qna.qnaContent.substring(0, 24)}	
+									<c:if test="${qna.qnaContent.length() gt 36}">
+										${qna.qnaContent.substring(0, 36)}	
 									</c:if>
-									<c:if test="${qna.qnaContent.length() lt 24}">
+									<c:if test="${qna.qnaContent.length() lt 36}">
 										${qna.qnaContent}
 									</c:if>
 								</td>
-								<td>${qna.id}</td>
-								<td>${qna.qnaDate}</td>
+								<td class="text-center">${qna.id}</td>
+								<td class="text-center">${qna.qnaDate}</td>
 								<c:if test="${loginMember.id eq 'admin'}">
 									<td>
 									<!-- 답글달기(if 있으면 1단 댓글만 허용, if 없으면 다단 댓글 허용) -->
-									<c:if test="${qna.qnaDepth eq 0}">
+
 										<a class="reply_link">답변하기</a>								
-									</c:if>
 									</td>
 									<td>
 										<a data-qna_no="${qna.qnaNo}" onclick="fnRemove(this)">
@@ -199,15 +219,15 @@
 								</c:if>
 							</tr>
 							<tr class="reply_form blind">
-								<td colspan="5">
+								<td colspan="5" class="text-center">
 									<form action="${contextPath}/qna/saveReply" method="post">
 										<input type="text" name="id" value="${qna.id}" size="4" readonly="readonly">
-										<input type="text" name="qnaContent" placeholder="내용" size="40">
+										<input type="text" name="qnaContent" placeholder="답변을 작성해주세요." size="40">
 										<!-- <input type="text" name="qnaDate" value="${qna.qnaDate}"> -->
 										<input type="hidden" name="qnaDepth" value="${qna.qnaDepth}">
 										<input type="hidden" name="qnaGroupNo" value="${qna.qnaGroupNo}">
 										<input type="hidden" name="qnaGroupOrd" value="${qna.qnaGroupOrd}">
-										<button>답글달기</button>
+										<button class="btn btn-light">답글달기</button>
 									</form>
 								</td>
 							</tr>
@@ -224,16 +244,9 @@
 				</tr>
 			</tfoot>
 		</table>
+		
+		<jsp:include page="../layout/Footer.jsp"></jsp:include>
 
-	<script>
-		function fnRemove(a) {
-			if(confirm('게시글을 삭제할까요?')){
-				a.href='${contextPath}/qna/remove?qnaNo=' + $(a).data('qna_no');
-			}
-		}
-	</script>		
-
-
-
+	
 </body>
 </html>

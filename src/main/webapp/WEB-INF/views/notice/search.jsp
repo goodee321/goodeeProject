@@ -18,11 +18,26 @@
 		text-align: center;
 	}
 	
+	#column { 
+		height: 25px;
+		font-size: 15px; 
+		color: gray;	
+	}
+	
 	#btnSearch { 
 		background-color: #708090; 
 		color: silver;
 		border: #708090;
 		border-radius: 3px;
+		height: 25px;
+		margin-bottom: 4px;
+		padding: 3px 8px;
+	}
+	
+	#query { 
+		font-size: 13px;
+		height: 23px; 
+		margin-bottom: 6px;
 	}
 	
 	
@@ -58,6 +73,14 @@
 		
 		$('#btnSearch').on('click', function(){
 			// equalArea 작업은 column, query 파라미터 전송
+			/*
+			if(query.val() == '') {
+				alert('확인테스ㅡ');
+				event.preventDefault();
+				return false;
+			}
+			
+			*/
 			if( column.val() == 'NOTICE_TITLE' || column.val() == 'NOTICE_CONTENT' ) {
 				location.href="${contextPath}/notice/search?column=" + column.val() + "&query=" + query.val();
 			} 
@@ -83,13 +106,13 @@
 				<option value="NOTICE_CONTENT">내용</option>
 			</select>
 			<span id="equalArea">
-				<input type="text" name="query" id="query">
+				<input type="text" name="query" id="query" placeholder="제목 또는 내용">
 			</span>
 			<input type="button" value="검색" id="btnSearch" class="btn btn-dark btn-sm">
 		</form>
 	</div>
 	
-	
+	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 	
 	
 </body>

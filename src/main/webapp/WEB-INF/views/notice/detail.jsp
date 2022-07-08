@@ -32,29 +32,57 @@
 </script>
 <style>
 
-	.detail h1 { text-align: center; }
+	.detail h1 { 
+		text-align: center; 
+		font-size: xx-large;
+		padding-bottom: 10px;
+	}
 	
 	table {
-		border-collapse: collapse;
 		margin: auto;
+		border-collapse: collapse;
+		width: 50%;
 	}
 	
 	thead {
 		background-color: silver;	
 	}
 	
-	td {
+	table td {
 		padding: 5px;
-		border: 1px solid silver;
+		border-top: 1px solid silver;
+		
 	}
 	
-	td:nth-of-type(1) { background-color: #fbfafa; }
+	tbody td:nth-of-type(1) { 
+		color: #1C1C1C;
+		background-color: #F2F2F2; 
+		text-align: center;
+	}
 	
-	td:nth-of-type(2) { width: 600px; }
+	td:nth-of-type(2) { 
+		background-color: none;
+		
+	}
 	
-	tr:nth-of-type(3){
-	height: 500px;
+	tbody tr:nth-of-type(1) { border-top: 2px solid #17a2b8; }
+	
+	tr:nth-of-type(2) td:nth-of-type(3) { 
+		color: #1C1C1C;
+		text-align: center;
+		background-color: #F2F2F2; 
+	}
+	
+	tr:nth-of-type(2) td:nth-of-type(5) { 
+		color: #1C1C1C;
+		text-align: center;
+		background-color: #F2F2F2; 
+	}
+	
+	tr:nth-of-type(3) td:nth-of-type(2) {
+	height: 300px;
 	vertical-align: top;
+	width: 600px; 
 	}
 	
 	textarea { text-align: left; }
@@ -71,38 +99,41 @@
 </head>
 <body>
 
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	
 	<div class="detail">
-		<h1>공지사항 상세화면</h1>
+		<h1>공지사항 상세보기</h1>
 		
 		<form id="f">
 			<input type="hidden" name="noticeNo" value="${notice.noticeNo}"> 
 			<table>
 				<tbody>
 					<tr>
+						<td>제목</td>
+						<td colspan="5">${notice.noticeTitle}</td>
+					</tr>
+					<tr>
 						<td>번호</td>
 						<td>${notice.noticeNo}</td>
-					</tr>
-					<tr>
-						<td>제목</td>
-						<td>${notice.noticeTitle}</td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td>${notice.noticeContent}</td>
-					</tr>
-					<tr>
-						<td>작성일</td>
-						<td>${notice.noticeDate}</td>
-					</tr>
-					<tr>
+						<td>작성자</td>
+						<td>관리자</td>
 						<td>조회수</td>
 						<td>${notice.noticeHit}</td>
 					</tr>
+					<tr>
+						<td>내용</td>
+						<td colspan="5">${notice.noticeContent}</td>
+					</tr>
+					<tr>
+						<td>작성일</td>
+						<td colspan="5">${notice.noticeDate}</td>
+					</tr>
+					
 				</tbody>
 				<tfoot>
 					<tr>
 						<td></td>
-						<td>
+						<td colspan="5">
 							<c:if test="${loginMember.id eq 'admin'}">
 								<input type="button" value="수정하러가기" id="btnChangePage" class="btn btn-danger">
 								<input type="button" value="삭제" id="btnRemove" class="btn btn-light">
@@ -115,6 +146,8 @@
 		</form>
 		
 	</div>
+	
+	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 	
 </body>
 </html>

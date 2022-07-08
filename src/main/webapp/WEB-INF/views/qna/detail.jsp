@@ -31,57 +31,64 @@
 	})
 </script>
 <style>
-.qnaDetail h1 {
-	text-align: center;
-}
-
-table {
-	border-collapse: collapse;
-	margin: auto;
-}
-
-thead {
-	background-color: silver;
-}
-
-td {
-	padding: 5px;
-	border: 1px solid silver;
+	.qnaDetail h1 {
+		text-align: center;
+		padding-bottom: 10px;
+		font-size: xx-large;
+	}
 	
-}
+	table {
+		border-collapse: collapse;
+		margin: auto;
+	}
+	
+	table td {
+		padding: 5px;
+		border-top: 1px solid #848484;
+	}
+	
+	tbody td:nth-of-type(1) {
+		background-color: #F2F2F2;
+		color: #1C1C1C;
+	}
+	
+	tr:nth-of-type(2) td:nth-of-type(3) { 
+		background-color: #F2F2F2; 
+		width: 80px;
+	}
+	
+	tr:nth-of-type(2) td:nth-of-type(2) { 
+		width: 250px;
+	}
+	
+	tr:nth-of-type(3) td:nth-of-type(2) {
+		width: 600px;
+		height: 500px;
+		vertical-align: top;
+	}
 
-tbody td:nth-of-type(1) {
-	background-color: black;
-	color: white;
-}
-
-td:nth-of-type(2) {
-	width: 600px;
-}
-
-tr:nth-of-type(4){
-	height: 500px;
-	vertical-align: top;
-}
-
-tfoot td {
-	border-bottom: none;
-	border-left: none;
-	border-right: none;
-	background: none;
-	text-align: right;
-}
-
-input {
-	background-color: #778899;
-	border-color: #778899;
-	border-radius: 3px;
-	color: white;
-}
+	
+	tfoot td {
+		border-bottom: none;
+		border-left: none;
+		border-right: none;
+		background: none;
+		text-align: right;
+	}
+	
+	input {
+		background-color: #778899;
+		border-color: #778899;
+		border-radius: 3px;
+		color: white;
+	}
 
 </style>
 </head>
 <body>
+	
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+
 	<div class="qnaDetail">
 		<h1>질문 상세보기</h1>
 		<form id="f">
@@ -90,30 +97,28 @@ input {
 			<table>
 				<tbody>
 					<tr>
+						<td>제목</td>
+						<td colspan="3">${qna.qnaTitle}</td>
+					</tr>
+					<tr>
 						<td>번호</td>
 						<td>${qna.qnaNo}</td>
-					</tr>
-					<tr>
 						<td>작성자</td>
-						<td>${loginMember.id}</td>
-					</tr>
-					<tr>
-						<td>제목</td>
-						<td>${qna.qnaTitle}</td>
+						<td>${qna.id}</td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td>${qna.qnaContent}</td>
+						<td colspan="3">${qna.qnaContent}</td>
 					</tr>
 					<tr>
 						<td>작성일</td>
-						<td>${qna.qnaDate}</td>
+						<td colspan="3">${qna.qnaDate}</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td></td>
-						<td>
+						<td colspan="3">
 							<c:if test="${loginMember.id eq qna.id}">
 								<input type="button" value="수정하러가기" id="btnChangePage" class="btn btn-danger"> 
 							</c:if>
@@ -125,5 +130,7 @@ input {
 
 		</form>
 	</div>
+	
+	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </body>
 </html>

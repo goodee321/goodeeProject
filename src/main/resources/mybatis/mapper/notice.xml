@@ -40,13 +40,10 @@
 
     <!-- 삽입 -->
     <insert id="insertNotice" parameterType="NoticeDTO">
-        INSERT INTO NOTICE
-        (NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
-        VALUES
-        (#{noticeTitle}, #{noticeContent}, NOW(), 0)
-        (NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
-        VALUES
-        (#{noticeNo}, #{noticeTitle}, #{noticeContent}, NOW(), 0)
+       INSERT INTO NOTICE
+			(NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_HIT)
+		VALUES
+			(#{noticeNo}, #{noticeTitle}, #{noticeContent}, NOW(), 0)
     </insert>
 
     <update id="updateHit" parameterType="Integer">

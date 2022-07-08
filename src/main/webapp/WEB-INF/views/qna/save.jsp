@@ -9,29 +9,53 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script src="../resources/js/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/summernote-0.8.18-dist/summernote-lite.css"/>
+<script src="../resources/summernote-0.8.18-dist/summernote-lite.js"></script>
+<script src="../resources/summernote-0.8.18-dist/lang/summernote-ko-KR.js"></script>
 <script>
 	
-$(function(){
+	$(function(){
 	
-	// 서브밋
-	$('#f').on('submit', function(event){
-		if($('#title').val() == ''){
-			alert("제목은 필수입니다.");
-			$('#title').focus();
-			event.preventDefault();
-			return;
-		}
-
+		// 서브밋
+		$('#f').on('submit', function(event){
+			if($('#title').val() == ''){
+				alert("제목은 필수입니다.");
+				$('#title').focus();
+				event.preventDefault();
+				return;
+			}
+	
+		})
+		
+		// 목록
+		$('#btnList').on('click', function(){
+			location.href='${contextPath}/qna/list';
+		})
+		
+		// summernote
+		$('#content').summernote({
+			width: 800,
+			height: 500,
+			lang: 'ko-KR',
+			placeholder: '문의 확인 후 빠르게 답변해드리겠습니다.',
+			// 툴바 수정
+			toolbar: [
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['view', ['fullscreen', 'help']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','36','48','72']
+		})
+	
 	})
-	
-	// 목록
-	$('#btnList').on('click', function(){
-		location.href='${contextPath}/qna/list';
-	})
-	
-})
 	
 </script>
 <style>
@@ -41,12 +65,17 @@ $(function(){
 	
 	h1 {
 		text-align: center;
+		padding-bottom: 10px;
+		font-size: xx-large;
 	}
 	
 	table {
-	border-collapse: collapse;
+	padding: 20px;
 	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
 	}
+	
 	
 	thead {
 		background-color: silver;
@@ -81,9 +110,10 @@ $(function(){
 </style>
 </head>
 <body>
-
-	<h1>Q&A 작성화면</h1>
+	<jsp:include page="../layout/header2.jsp"></jsp:include>
 	
+	<h1>Q&A 작성화면</h1>
+
 	<form id="f" action="${contextPath}/qna/save" method="post">
 			<table>
 				<tbody>
@@ -97,7 +127,7 @@ $(function(){
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td><textarea rows="20" cols="100" name="content" placeholder="문의 확인 후 빠르게 답변해드리겠습니다." ></textarea></td>
+						<td><textarea name="content" id="content"></textarea></td>
 					</tr>
 				</tbody>
 				<tfoot>
@@ -112,6 +142,7 @@ $(function(){
 			</table>
 	</form>
 	
+	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 
 </body>
 </html>

@@ -197,8 +197,9 @@
 
             $(".totalPrice_span").text(totalPrice.toLocaleString());
             $(".totalCount_span").text(totalCount);
-            $(".delivery_price").text(deliveryPrice);
+            $(".delivery_price").text(deliveryPrice.toLocaleString());
             $(".finalTotalPrice_span").text(finalTotalPrice.toLocaleString());
+            $(".lastTotalPrice_span").text(finalTotalPrice.toLocaleString());
         }
 
     </script>
@@ -210,35 +211,53 @@
     <style>
         .xans-order-basketpackage .boardList {
             background-color: white;
-            background-color: #fff;
             border-radius: 20px;
             table-layout: fixed;
             margin: 0px;
             color: #353535;
             line-height: 1.5;
-        }
-
-        body {
-            font-family: "YG730";
-        }
-
-        table {
             width: 100%;
             border: 0;
             border-spacing: 0;
             border-collapse: collapse;
             box-sizing: border-box;
             text-indent: initial;
+            box-shadow: 0px 3px 9px rgb(0 0 0 / 8%);
+        }
+
+        body {
+            font-family: "YG730";
         }
 
         thead {
             display: table-header-group;
             vertical-align: middle;
             border-color: inherit;
+            border-top-width: 15px;
         }
 
-        td, tr, th, span {
+        th {
+            font-size: 14px;
+        }
+
+        td, tr, span, button {
+            font-size: 13px;
+        }
+
+        .delete_btn_All {
+            border: 1px solid #ddd;
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            width: 70px;
+            height: 30px;
             font-size: 12px;
+            border-color: white;
+            float: right;
+            margin-top: 10px;
+        }
+
+        .delete_btn_All :hover {
+            color: #ccc;
         }
 
         tr {
@@ -246,8 +265,16 @@
             border-color: #FFFFFF;
         }
 
-        h2 {
-            font-size: 20px;
+        img {
+            vertical-align: middle;
+            display: block;
+            margin: auto;
+        }
+
+        .emptyCart {
+            margin-top: 5px;
+            margin-bottom: 3px;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #333333;
         }
@@ -258,11 +285,25 @@
             color: #888888;
         }
 
+        .delete_btn {
+            color: #cccccc;
+            text-decoration: none;
+        }
+
+        .delete_btn:hover {
+            color: black;
+            text-decoration: none;
+        }
+
         .shop_btn {
-            margin-top: 20px;
             font-size: 15px;
             font-weight: bold;
             color: #222222;
+            border: 1px solid #e1e1e1;
+            line-height: 35px;
+            display: inline-block;
+            padding: 0 31px;
+            margin-bottom: 20px;
         }
 
         .bg-gray-100 {
@@ -273,27 +314,38 @@
             width: 50px;
         }
 
+        .xans-order-basketpackage .boardList .thumb {
+            text-align: center;
+            width: 125px;
+        }
+
         .xans-order-basketpackage .boardList .product {
+            text-align: center;
             width: 250px;
         }
 
         .xans-order-basketpackage .boardList .option {
+            text-align: center;
             width: 150px;
         }
 
         .xans-order-basketpackage .boardList .price {
+            text-align: center;
             width: 100px;
         }
 
         .xans-order-basketpackage .boardList .quantity {
+            text-align: center;
             width: 260px;
         }
 
         .xans-order-basketpackage .boardList .total {
+            text-align: center;
             width: 200px;
         }
 
         .xans-order-basketpackage .boardList .button {
+            text-align: center;
             width: 125px;
         }
 
@@ -304,6 +356,93 @@
             margin: 0 auto;
             display: table;
         }
+
+        .lastTotalPrice_span, .totalCount_span {
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .finalTotalPrice_span {
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fa671c;
+        }
+
+        .order_btn  {
+            background-color: #ffffff;
+            border: #ccc 1px;
+            line-height: 54px;
+            width: 540px;
+            padding: 0 10px;
+            margin: 33px auto 0;
+            border-radius: 6px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .tdTitle {
+            text-align: center;
+            font-size: 14px;
+            line-height: 21px;
+            font-weight: bold;
+            color: #222222;
+            letter-spacing: -0.5px;
+            width: 110px;
+        }
+
+        .tdIcon {
+            text-align: center;
+            font-size: 14px;
+            line-height: 21px;
+            font-weight: bold;
+            color: #222222;
+            letter-spacing: -0.5px;
+            width: 50px;
+        }
+
+        .tdContent, .totalPrice_span, .delivery_price {
+            text-align: center;
+            margin-top: 3px;
+            padding-left: 0;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 20px;
+            color: #222222;
+        }
+
+        .totalSalePrice {
+            text-align: center;
+            margin-top: 3px;
+            padding-left: 0;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #fa671c;
+        }
+
+        .totalOrder {
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .cartQty {
+            width: 38px;
+            margin-bottom: 10px;
+            border-left-width: 14px;
+            border-color: #FFFFFF;
+        }
+
+        .line {
+            text-align: center;
+            border-bottom-width: 40px;
+            border-color: #FFFFFF;
+            border-top-width: 15px;
+        }
+
     </style>
 </head>
 <body>
@@ -316,9 +455,8 @@
                     <div class="orderListArea themoon85-discount-app-msg">
                         <div class="orderListArea">
                             <div class=".xans-order-basketpackage .orderListArea .title">
-                                <table border="1" summary
-                                       class="xans-element- xans-order xans-order-normnormal boardList">
-                                    <thead style="text-align: center; border-bottom-width: 40px; border-color: #FFFFFF">
+                                <table class="xans-element- xans-order xans-order-normnormal boardList">
+                                    <thead class="line">
                                     <tr>
                                         <th>
                                             <div class="all_check_input_div">
@@ -327,81 +465,84 @@
                                                 <span class="all_chcek_span"></span>
                                             </div>
                                         </th>
-                                        <th scope="col" class="thumb" style="width: 120px;">이미지</th>
+                                        <th scope="col" class="thumb">이미지</th>
                                         <th scope="col" class="product">상품명</th>
                                         <th scope="col" class="option">옵션</th>
                                         <th scope="col" class="price">판매가</th>
                                         <th scope="col" class="quantity">수량</th>
                                         <th scope="col" class="total">합계</th>
-                                        <th scope="col" class="button">삭제</th>
+                                        <th scope="col" class="button"></th>
                                     </tr>
                                     </thead>
                                     <tbody class="xsans-element- xans-order xans-order-list price_checker"
                                            style="text-align: center">
-                                    <tr class="xans-record">
-                                        <c:if test="${empty cartList}">
-                                            <td colspan="7">
-                                                <i class="fa-solid fa-cart-plus"></i>
-                                                <h2>장바구니에 담긴 상품이 없습니다.</h2>
-                                                <p>원하는 상품을 장바구니에 담아보세요!</p>
-                                                <button class="shop_btn">쇼핑하러 가기 ></button>
-                                            </td>
-                                        </c:if>
-                                        <c:if test="${not empty cartList}">
-                                        <c:forEach items="${cartList}" var="cart" varStatus="vs">
-                                        <td class="td_width_1 cart_info_td">
-                                            <input type="checkbox" class="hide_cart_checkbox input_size"
-                                                   checked="checked">
-                                            <input type="hidden" class="hide_productPrice_input"
-                                                   value="${cart.proPrice}">
-                                            <input type="hidden" class="hide_cartNo_input" value="${cart.cartNo}">
-                                            <input type="hidden" class="hide_salePrice_input"
-                                                   value="${cart.proDiscount}">
-                                            <input type="hidden" class="hide_cartQty_input" value="${cart.cartQty}">
-                                            <input type="hidden" class="hide_totalPrice_input"
-                                                   value="${cart.proPrice * cart.cartQty}">
-                                            <input type="hidden" class="hide_productNo_input" value="${cart.productNo}">
-                                            <input type="hidden" class="hide_productSize_input"
-                                                   value="${cart.productSize}">
-                                        </td>
-                                        <td class="thumb" style="text-align: center">
-                                            <a href="${contextPath}/product/detail?proNo=${cart.productNo}">
-                                                <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                                                     alt="" style="width: 120px; height: 120px"></a>
-                                        </td>
-                                        <td class="price">
-                                            <input type="hidden" class="cartNo" value="${cart.cartNo}"
-                                                   name="cartNo">
-                                            <a href="${contextPath}/product/detail?proNo=${cart.productNo}">${cart.proName}</a>
-                                        </td>
-                                        <td class="option">
-                                                ${cart.productSize}
-                                        </td>
-                                        <td class="price">
-                                            <fmt:formatNumber value="${cart.proPrice}"></fmt:formatNumber>원
-                                        </td>
-                                        <td class="quantity">
-                                            <div class="table_text_align_center qty_div">
-                                                <button class="font-semibold_minus_btn">-</button>
-                                                <input type="number" value="${cart.cartQty}" class="cartQty"
-                                                       style="width: 38px; margin-bottom: 10px; border-left-width: 14px; border-color: #FFFFFF">
-                                                <button class="font-semibold_plus_btn">+</button>
-                                            </div>
-                                            <button class="qty_modify_btn" value="${cart.cartNo}"
-                                                    id="button_${vs.index}"><b>수정</b>
+                                    <c:if test="${empty cartList}">
+                                        <td colspan="8">
+                                            <img src="../resources/images/cart/sneakers.png" width="60px">
+                                            <h2 class="emptyCart">장바구니에 담긴 상품이 없습니다.</h2>
+                                            <p>원하는 상품을 장바구니에 담아보세요!</p>
+                                            <button class="shop_btn">쇼핑하러 가기 <i class="fa-solid fa-angle-right"></i>
                                             </button>
                                         </td>
-                                        <td class="total"><fmt:formatNumber
-                                                value="${cart.cartQty * cart.proPrice}"></fmt:formatNumber>원
-                                        </td>
-                                        <td class="button">
-                                            <input type="button" class="delete_btn" value="삭제"
-                                                   data-cartno="${cart.cartNo}">
-                                        </td>
-                                    </tr>
-                                    </c:forEach>
                                     </c:if>
+                                    <c:if test="${not empty cartList}">
+                                    <c:forEach items="${cartList}" var="cart" varStatus="vs">
+                                        <tr style="border-bottom-width: 10px; border-color: white">
+                                            <td class="td_width_1 cart_info_td">
+                                                <input type="checkbox" class="hide_cart_checkbox input_size"
+                                                       checked="checked">
+                                                <input type="hidden" class="hide_productPrice_input"
+                                                       value="${cart.proPrice}">
+                                                <input type="hidden" class="hide_cartNo_input"
+                                                       value="${cart.cartNo}">
+                                                <input type="hidden" class="hide_salePrice_input"
+                                                       value="${cart.proDiscount}">
+                                                <input type="hidden" class="hide_cartQty_input"
+                                                       value="${cart.cartQty}">
+                                                <input type="hidden" class="hide_totalPrice_input"
+                                                       value="${cart.proPrice * cart.cartQty}">
+                                                <input type="hidden" class="hide_productNo_input"
+                                                       value="${cart.productNo}">
+                                                <input type="hidden" class="hide_productSize_input"
+                                                       value="${cart.productSize}">
+                                            </td>
+                                            <td class="thumb">
+                                                <a href="${contextPath}/product/detail?proNo=${cart.productNo}">
+                                                    <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                                         alt="" style="width: 120px; height: 120px"></a>
+                                            </td>
+                                            <td class="price">
+                                                <input type="hidden" class="cartNo" value="${cart.cartNo}"
+                                                       name="cartNo">
+                                                <a href="${contextPath}/product/detail?proNo=${cart.productNo}">${cart.proName}</a>
+                                            </td>
+                                            <td class="option">
+                                                    ${cart.productSize}
+                                            </td>
+                                            <td class="price">
+                                                <fmt:formatNumber value="${cart.proPrice}"></fmt:formatNumber>원
+                                            </td>
+                                            <td class="quantity">
+                                                <div class="table_text_align_center qty_div">
+                                                    <button class="font-semibold_minus_btn">-</button>
+                                                    <input type="number" value="${cart.cartQty}" class="cartQty">
+                                                    <button class="font-semibold_plus_btn">+</button>
+                                                </div>
+                                                <button class="qty_modify_btn" value="${cart.cartNo}"
+                                                        id="button_${vs.index}"><b>수정</b>
+                                                </button>
+                                            </td>
+                                            <td class="total"><fmt:formatNumber
+                                                    value="${cart.cartQty * cart.proPrice}"></fmt:formatNumber>원
+                                            </td>
+                                            <td class="button">
+                                                <a class="delete_btn" data-cartno="${cart.cartNo}"><i
+                                                        class="fa-solid fa-xmark" style="cursor: pointer"></i></a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
+                                    </c:if>
                                 </table>
                                 <button class="delete_btn_All" value="${loginMember.memberNo}">전체삭제</button>
                                 <form action="${contextPath}/cart/update" method="post" class="qty_update_form">
@@ -412,77 +553,40 @@
                                       class="order_form" method="get">
                                 </form>
                                 <br><br>
-                                <hr>
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <td>총 상품금액</td>
-                                        <td>배송비</td>
-                                        <td>결제예정금액</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td><span class="totalPrice_span">70000</span>원</td>
-                                        <td><span class="delivery_price">3000</span>원</td>
-                                        <td><span class="finalTotalPrice_span">70000</span>원</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="content_total_section">
-                                    <div class="total_wrap">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <table>
-                                                        <tr>
-                                                            <td>총 상품 가격</td>
-                                                            <td>총 주문 상품수</td>
-                                                            <td>배송비</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="totalPrice_span">70000</span> 원
-                                                            </td>
-                                                            <td>
-                                                                <span class="totalKind_span"></span>총 <span
-                                                                    class="totalCount_span"></span>개
-                                                            </td>
-                                                            <td>
-                                                                <span class="delivery_price">3000</span>원
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <hr>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <table>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <strong>총 결제 예상 금액</strong>
-                                                            </td>
-                                                            <td>
-                                                                <span class="finalTotalPrice_span">70000</span> 원
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                                <td>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
                                 <c:if test="${not empty cartList}">
-                                    <div class="content_btn_section">
-                                        <button class="order_btn">주문하기</button>
-                                    </div>
+                                    <table style="margin-left:auto; margin-right:auto; margin-top: 80px">
+                                        <thead>
+                                        <tr>
+                                            <td class="tdTitle">총 선택상품금액</td>
+                                            <td rowspan="2" class="tdIcon"><i class="fa-solid fa-plus"></i></td>
+                                            <td class="tdTitle">배송비</td>
+                                            <td rowspan="2" class="tdIcon"><i class="fa-solid fa-minus"></i></td>
+                                            <td class="tdTitle">할인금액</td>
+                                            <td rowspan="2" class="tdIcon"><i class="fa-solid fa-equals"></i></td>
+                                            <td rowspan="2" class="totalOrder"> 총 주문금액 <span class="finalTotalPrice_span"></span>원</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tdContent"><span class="totalPrice_span"></span>원</td>
+                                            <td class="tdContent"><span class="delivery_price">3000</span>원</td>
+                                            <c:set var="sale" value="0"/>
+                                            <c:forEach var="cart" items="${cartList}" varStatus="status">
+                                                <c:set var="sale"
+                                                       value="${sale + (cart.proPrice * cart.proDiscount * cart.cartQty)}"/>
+                                            </c:forEach>
+                                            <td class="totalSalePrice"><fmt:formatNumber value="${sale}"></fmt:formatNumber>원</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="7" style="text-align: center">
+                                                <button class="order_btn">총 <span
+                                                        class="totalCount_span"></span>건 (<span
+                                                        class="lastTotalPrice_span"></span>원) 주문하기
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </c:if>
                             </div>
                         </div>
