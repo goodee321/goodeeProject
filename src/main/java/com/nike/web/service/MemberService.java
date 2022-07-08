@@ -48,6 +48,6 @@ public interface MemberService {
 
     public void OrderDetail(String OrderId, Model model);
     
-    public void findOrderList(HttpServletRequest request, Model model);  // 페이지 만들기
+    /*public void findOrderList(HttpServletRequest request, Model model);  // 페이지 만들기*/
 
 }

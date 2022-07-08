@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
     private MemberMapper memberMapper;
 
     @Autowired
-    private OrderMapper orderMapper;  // nyk
+    private OrderMapper orderMapper;
 
     @Override
     public Map<String, Object> idCheck(String id) {
@@ -139,19 +139,19 @@ public class MemberServiceImpl implements MemberService {
         }
 
         // MemberDTO
-		MemberDTO member = MemberDTO.builder()
-				.id(id)
-				.pw(pw)
-				.name(name)
-				.email(email)
-				.postcode(postcode)
-				.address(address)
-				.addrDetail(addrDetail)
-				.extraAddress(extraAddress)
-				.phone(phone)
-				.agreeState(agreeState)
-				.build();
-		
+        MemberDTO member = MemberDTO.builder()
+                .id(id)
+                .pw(pw)
+                .name(name)
+                .email(email)
+                .postcode(postcode)
+                .address(address)
+                .addrDetail(addrDetail)
+                .extraAddress(extraAddress)
+                .phone(phone)
+                .agreeState(agreeState)
+                .build();
+
         // MEMBER 테이블에 member 저장
         int res = memberMapper.insertMember(member);
 
@@ -223,9 +223,9 @@ public class MemberServiceImpl implements MemberService {
 
         // MemberDTO
         MemberDTO member = MemberDTO.builder()
-				.id(id)
-				.pw(pw)
-				.build();
+                .id(id)
+                .pw(pw)
+                .build();
 
         // ID/Password가 일치하는 회원 조회
         MemberDTO loginMember = memberMapper.selectMemberByIdPw(member);
@@ -239,7 +239,7 @@ public class MemberServiceImpl implements MemberService {
         return loginMember;
 
     }
-    
+
     // 탈퇴한 회원인지 체크
     @Override
     public SignOutMemberDTO findSignOutMember(String id) {
@@ -259,26 +259,26 @@ public class MemberServiceImpl implements MemberService {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String postcode = request.getParameter("postcode");
-		String address = request.getParameter("address");
-		String addrDetail = request.getParameter("addrDetail");
-		String extraAddress = request.getParameter("extraAddress");
+        String address = request.getParameter("address");
+        String addrDetail = request.getParameter("addrDetail");
+        String extraAddress = request.getParameter("extraAddress");
         String phone = request.getParameter("phone");
         Integer agreeState = Integer.parseInt(request.getParameter("agreeState"));
 
         // MemberDTO
- 		MemberDTO member = MemberDTO.builder()
- 				.memberNo(memberNo)
- 				.id(id)
- 				.pw(pw)
- 				.name(name)
- 				.email(email)
- 				.postcode(postcode)
- 				.address(address)
- 				.addrDetail(addrDetail)
- 				.extraAddress(extraAddress)
- 				.phone(phone)
- 				.agreeState(agreeState)
- 				.build();
+        MemberDTO member = MemberDTO.builder()
+                .memberNo(memberNo)
+                .id(id)
+                .pw(pw)
+                .name(name)
+                .email(email)
+                .postcode(postcode)
+                .address(address)
+                .addrDetail(addrDetail)
+                .extraAddress(extraAddress)
+                .phone(phone)
+                .agreeState(agreeState)
+                .build();
 
         // MEMBER 테이블에 member 저장
         int res1 = memberMapper.reInsertMember(member);
@@ -333,18 +333,18 @@ public class MemberServiceImpl implements MemberService {
             agreeState = 4;
         }
 
-     // MemberDTO
-     		MemberDTO member = MemberDTO.builder()
-     				.memberNo(memberNo)
-     				.name(name)
-     				.email(email)
-     				.postcode(postcode)
-     				.address(address)
-     				.addrDetail(addrDetail)
-     				.extraAddress(extraAddress)
-     				.phone(phone)
-     				.agreeState(agreeState)
-     				.build();
+        // MemberDTO
+        MemberDTO member = MemberDTO.builder()
+                .memberNo(memberNo)
+                .name(name)
+                .email(email)
+                .postcode(postcode)
+                .address(address)
+                .addrDetail(addrDetail)
+                .extraAddress(extraAddress)
+                .phone(phone)
+                .agreeState(agreeState)
+                .build();
 
         // MEMBER 테이블에 member 저장
         int res = memberMapper.changeMember(member);
@@ -381,11 +381,11 @@ public class MemberServiceImpl implements MemberService {
         Long memberNo = Long.parseLong(request.getParameter("memberNo"));
         String pw = SecurityUtils.sha256(request.getParameter("pw"));
 
-     // MemberDTO
-     		MemberDTO member = MemberDTO.builder()
-     				.memberNo(memberNo)
-     				.pw(pw)
-     				.build();
+        // MemberDTO
+        MemberDTO member = MemberDTO.builder()
+                .memberNo(memberNo)
+                .pw(pw)
+                .build();
 
         // MEMBER 테이블에 member 저장
         int res = memberMapper.changeMemberPw(member);
@@ -445,7 +445,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
     }
-    
+
     // 비밀번호 찾기 과정
     @Override
     public void findPw(HttpServletRequest request, HttpServletResponse response) {
@@ -455,10 +455,10 @@ public class MemberServiceImpl implements MemberService {
         String phone = request.getParameter("phone");
 
         MemberDTO member = MemberDTO.builder()
-				.id(id)
-				.email(email)
-				.phone(phone)
-				.build();
+                .id(id)
+                .email(email)
+                .phone(phone)
+                .build();
 
         MemberDTO res = memberMapper.findMemberPw(member);
 
@@ -480,7 +480,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
     }
-    
+
     // 재가입 중간 과정
     @Override
     public void beforeReSign(HttpServletRequest request, HttpServletResponse response) {
@@ -490,14 +490,14 @@ public class MemberServiceImpl implements MemberService {
         String phone = request.getParameter("phone");
 
         SignOutMemberDTO member = SignOutMemberDTO.builder()
-				.name(name)
-				.email(email)
-				.phone(phone)
-				.build();
+                .name(name)
+                .email(email)
+                .phone(phone)
+                .build();
 
         SignOutMemberDTO res = memberMapper.beforeMemberReSign(member);
         System.out.println(res);
-        
+
         try {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
@@ -517,9 +517,6 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-    
-    // nyk
-    
     @Override
     public List<MemberDTO> getMemberByNo(long memberNo) {
         return memberMapper.getMemberByNo(memberNo);
@@ -535,12 +532,11 @@ public class MemberServiceImpl implements MemberService {
         model.addAttribute("products", orderMapper.selectProductDetailByOrderId(orderId));
         model.addAttribute("memberInfo", orderMapper.selectInfoByOrderId(orderId));
     }
-    
-    @Override
+
+    /*@Override
     public void findOrderList(HttpServletRequest request, Model model) {  // 페이지 만들기
-    	
-    	
-    	
-    }
+
+
+    }*/
 
 }

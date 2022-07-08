@@ -205,9 +205,211 @@
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link href="../../../resources/css/order.css" ref="stylesheet">
+    <link href="../resources/css/order.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .xans-order-basketpackage .boardList {
+            background-color: white;
+            border-radius: 20px;
+            table-layout: fixed;
+            margin: 0px;
+            color: #353535;
+            line-height: 1.5;
+            width: 100%;
+            border: 0;
+            border-spacing: 0;
+            border-collapse: collapse;
+            box-sizing: border-box;
+            text-indent: initial;
+            box-shadow: 0px 3px 9px rgb(0 0 0 / 8%);
+        }
+        body {
+            font-family: "YG730";
+        }
+        thead {
+            display: table-header-group;
+            vertical-align: middle;
+            border-color: inherit;
+            border-top-width: 15px;
+        }
+        th {
+            font-size: 14px;
+        }
+        td, tr, span, button {
+            font-size: 13px;
+        }
+        .delete_btn_All {
+            border: 1px solid #ddd;
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            width: 70px;
+            height: 30px;
+            font-size: 12px;
+            border-color: white;
+            float: right;
+            margin-top: 10px;
+        }
+        .delete_btn_All :hover {
+            color: #ccc;
+        }
+        tr {
+            border-top-width: 10px;
+            border-color: #FFFFFF;
+        }
+        img {
+            vertical-align: middle;
+            display: block;
+            margin: auto;
+        }
+        .emptyCart {
+            margin-top: 5px;
+            margin-bottom: 3px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333333;
+        }
+        p {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #888888;
+        }
+        .delete_btn {
+            color: #cccccc;
+            text-decoration: none;
+        }
+        .delete_btn:hover {
+            color: black;
+            text-decoration: none;
+        }
+        .shop_btn {
+            font-size: 15px;
+            font-weight: bold;
+            color: #222222;
+            border: 1px solid #e1e1e1;
+            line-height: 35px;
+            display: inline-block;
+            padding: 0 31px;
+            margin-bottom: 20px;
+        }
+        .bg-gray-100 {
+            --tw-bg-opacity: 0;
+        }
+        .td_width_1 cart_info_td {
+            width: 50px;
+        }
+        .xans-order-basketpackage .boardList .thumb {
+            text-align: center;
+            width: 125px;
+        }
+        .xans-order-basketpackage .boardList .product {
+            text-align: center;
+            width: 250px;
+        }
+        .xans-order-basketpackage .boardList .option {
+            text-align: center;
+            width: 150px;
+        }
+        .xans-order-basketpackage .boardList .price {
+            text-align: center;
+            width: 100px;
+        }
+        .xans-order-basketpackage .boardList .quantity {
+            text-align: center;
+            width: 260px;
+        }
+        .xans-order-basketpackage .boardList .total {
+            text-align: center;
+            width: 200px;
+        }
+        .xans-order-basketpackage .boardList .button {
+            text-align: center;
+            width: 125px;
+        }
+        #white_container {
+            padding: 0px;
+            width: 1296px;
+            min-height: 700px;
+            margin: 0 auto;
+            display: table;
+        }
+        .lastTotalPrice_span, .totalCount_span {
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .finalTotalPrice_span {
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fa671c;
+        }
+        .order_btn  {
+            background-color: #ffffff;
+            border: #ccc 1px;
+            line-height: 54px;
+            width: 540px;
+            padding: 0 10px;
+            margin: 33px auto 0;
+            border-radius: 6px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .tdTitle {
+            text-align: center;
+            font-size: 14px;
+            line-height: 21px;
+            font-weight: bold;
+            color: #222222;
+            letter-spacing: -0.5px;
+            width: 110px;
+        }
+        .tdIcon {
+            text-align: center;
+            font-size: 14px;
+            line-height: 21px;
+            font-weight: bold;
+            color: #222222;
+            letter-spacing: -0.5px;
+            width: 50px;
+        }
+        .tdContent, .totalPrice_span, .delivery_price {
+            text-align: center;
+            margin-top: 3px;
+            padding-left: 0;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 20px;
+            color: #222222;
+        }
+        .totalSalePrice {
+            text-align: center;
+            margin-top: 3px;
+            padding-left: 0;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #fa671c;
+        }
+        .totalOrder {
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .cartQty {
+            width: 38px;
+            margin-bottom: 10px;
+            border-left-width: 14px;
+            border-color: #FFFFFF;
+        }
+        .line {
+            text-align: center;
+            border-bottom-width: 40px;
+            border-color: #FFFFFF;
+            border-top-width: 15px;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"></jsp:include>

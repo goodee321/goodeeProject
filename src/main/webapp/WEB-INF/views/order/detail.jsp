@@ -87,7 +87,7 @@
                 addrDetail: $("#addrDetail").val(),
                 orderAmount: parseInt($(".totalPrice").val()),
                 orderPayment: $('input[name="payment"]:checked').val(),
-                orderDelivery: parseInt($("#orderDelivery").val()),
+                orderDelivery: parseInt($(".orderDelivery").val()),
                 orderId: createOrderId(),
                 cartNo: cartData,
                 orderPrice: priceData,
@@ -109,6 +109,16 @@
                 buyer_tel: $("#orderPhone").val(),
                 buyer_addr: $("#orderAddr").val()
             }, function (rsp) {
+                console.log(
+                    $("input[name='payment']:checked").val(),
+                    data.merchant_uid,
+                    data.orderName,
+                    data.orderAmount,
+                    "${loginMember.email}",
+                    $("#orderName").val(),
+                    $("#orderPhone").val(),
+                    $("#orderAddr").val()
+                )
                 if (rsp.success) {
                     data.impUid = rsp.imp_uid;
                     orderComplete(data);
@@ -201,7 +211,7 @@
 
 
     <c:if test="${total >= 50000}">
-        배송비 0원<br>
+        배송비 <span class="orderDelivery">0원</span><br>
         <input type="hidden" class="totalPrice" value="${total}">
         합계 <span class="totalPrice"><fmt:formatNumber value="${total}"></fmt:formatNumber></span>원<br>
     </c:if>
@@ -209,7 +219,8 @@
 
 
     <c:if test="${total <= 50000}">
-        배송비 <fmt:formatNumber value="3000"></fmt:formatNumber>원</span><br>
+        배송비 <fmt:formatNumber value="3000"></fmt:formatNumber>원<br>
+        <input type="hidden" class="orderDelivery" value="3000">
         <input type="hidden" class="totalPrice" value="${total + 3000}">
         합계 <fmt:formatNumber value="${total + 3000}"></fmt:formatNumber></span>원<br>
     </c:if>
