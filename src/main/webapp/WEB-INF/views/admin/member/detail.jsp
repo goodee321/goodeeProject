@@ -79,7 +79,7 @@
 		// 삭제
 		// 폼의 서브밋을 활용
 		$('#btnRemove').on('click', function(){
-			if(confirm('삭제할까요?')){
+			if(confirm('정말 삭제하시겠습니까?')){
 				$('#f').attr('action', '${contextPath}/admin/member/removeOne');
 				$('#f').submit();
 			}

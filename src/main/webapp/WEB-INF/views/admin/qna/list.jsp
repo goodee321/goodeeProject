@@ -265,7 +265,7 @@
 <br>
 	<script>
 		function fnRemove(a) {
-			if(confirm('게시글을 삭제할까요?')){
+			if(confirm('게시글을 삭제하시겠습니까?')){
 				a.href='${contextPath}/admin/qna/remove?qnaNo=' + $(a).data('qna_no');
 			}
 		}

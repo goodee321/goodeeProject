@@ -55,6 +55,8 @@
 	td {
 		padding: 5px;
 		text-align: center;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
 	}
 	tfoot td {
 		border-left: 0;

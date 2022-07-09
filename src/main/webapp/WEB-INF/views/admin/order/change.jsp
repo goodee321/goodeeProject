@@ -33,7 +33,7 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
-	font-size: 18px;
+	font-size: 19px;
 	}
   	
 	
@@ -105,7 +105,7 @@
 			$('#orderInvoice').on('keyup',function(){
 			
 				if(numberRegExp.test( $('#orderInvoice').val() ) == false){ 
-					$('#proDiscountError').text('12자리 숫자 입력').addClass('dont').removeClass('hidden');
+					$('#proDiscountError').text('12자리 번호 입력').addClass('dont').removeClass('hidden');
 					Pass = false;
 					return;
 				}else{
@@ -200,7 +200,7 @@
 	
 	<section>
 	<br>
-	<h3 class="kind">Order Modify</h3>
+	<h3 class="kind">Order Modify</h3><br>
 
 
 	<form id="f" action="${contextPath}/admin/order/change" method="post">
@@ -230,7 +230,7 @@
 				</tr>
 				<tr>
 					<td class="table-dark">운송장번호</td>
-					<td class="table-secondary"><input type="text" name="orderInvoice" id="orderInvoice" value="${order.orderInvoice}" placeholder="송장번호" required>
+					<td class="table-secondary"><input type="text" name="orderInvoice" id="orderInvoice" value="${order.orderInvoice}" placeholder="운송장번호" required>
 					<span id="proDiscountError"></span>
 					</td>
 					

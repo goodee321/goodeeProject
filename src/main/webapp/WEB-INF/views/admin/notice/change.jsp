@@ -130,7 +130,7 @@
 
 	<section>
 	<br>
-	<h3 class="kind">Notice Modify</h3>
+	<h3 class="kind">Notice Modify</h3><br>
 	
 	
 	

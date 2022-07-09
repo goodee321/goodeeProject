@@ -19,7 +19,7 @@
 		})
 		// 삭제
 		$('#btnRemove').on('click', function(){
-			if(confirm('삭제할까요?')){
+			if(confirm('정말 삭제하시겠습니까?')){
 				$('#f').attr('action', '${contextPath}/admin/notice/removeOne');
 				$('#f').submit();
 			}
@@ -128,7 +128,7 @@
 	
 	<section>
 	<br>
-	<h3 class="kind">Notice Detail</h3>
+	<h3 class="kind">Notice Detail</h3><br>
 		
 		<form id="f">
 			<input type="hidden" name="noticeNo" value="${notice.noticeNo}"> 
@@ -161,7 +161,7 @@
 						<td></td>
 						<td colspan="5">
 							<c:if test="${loginMember.id eq 'admin'}">
-								<input type="button" value="수정하러가기" id="btnChangePage" class="btn btn-secondary">
+								<input type="button" value="수정" id="btnChangePage" class="btn btn-secondary">
 								<input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">
 							</c:if>
 						<input type="button" value="목록" id="btnList" class="btn btn-secondary">

@@ -26,9 +26,10 @@
 		margin-top: 5%;
 	}
 	
-	table {
-	border-collapse: collapse;
-	margin: auto;
+	table td {
+		padding: 5px;
+		border-top: 1px solid gray;
+		
 	}
 	
 	table {
@@ -147,7 +148,7 @@
 				</tr>
 				<tr>
 					<td class="table-dark">내용</td>
-					<td><textarea name="qnaContent" id="qnaContent" required>${qna.qnaContent}</textarea></td>
+					<td class="table-secondary"><textarea name="qnaContent" id="qnaContent" required>${qna.qnaContent}</textarea></td>
 				</tr>
 			</tbody>
 			<tfoot>

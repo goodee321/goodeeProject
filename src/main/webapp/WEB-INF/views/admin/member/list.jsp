@@ -54,6 +54,8 @@
 	td {
 		padding: 5px;
 		text-align: center;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
 	}
 	tfoot td {
 		border-left: 0;
@@ -216,7 +218,7 @@ function fnRemove(){
 	
 	$('#btnRemove').on('click', function(){
 		
-		var result = confirm("정말 삭제할까요?");
+		var result = confirm("선택한 회원을 삭제하시겠습니까?");
 		
 		if(result == true){
 				$('#f2').submit();

@@ -19,7 +19,7 @@
 		})
 		// 삭제
 		$('#btnRemove').on('click', function(){
-			if(confirm('삭제할까요?')){
+			if(confirm('정말 삭제하시겠습니까?')){
 				$('#f').attr('action', '${contextPath}/admin/qna/remove');
 				$('#f').submit();
 			}
@@ -177,13 +177,15 @@
 								<input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">&nbsp;&nbsp;
 							
 							<input type="button" value="목록" id="btnList" class="btn btn-secondary">
-							<br>
+							
 		</form>
-
+<br>
 	</section>
+	
 	
 	<footer id="footer">
 	<div id="footer_box">
+	
 		<%@ include file="../layout/footer.jsp" %>
 	</div>
 </footer>

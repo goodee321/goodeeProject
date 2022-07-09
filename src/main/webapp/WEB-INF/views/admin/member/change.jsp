@@ -204,7 +204,7 @@
 	
 	<section>
 	<br>
-	<h3 class="kind">Member Modify</h3>
+	<h3 class="kind">Member Modify</h3><br>
 
 
 	<form id="f" action="${contextPath}/admin/member/change" method="post">

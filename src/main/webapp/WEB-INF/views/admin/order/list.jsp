@@ -78,6 +78,8 @@
         td {
             padding: 5px;
             text-align: center;
+            border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
         }
 
         tfoot td {
@@ -220,7 +222,7 @@
         	
         	$('#btnRemove').on('click', function(){
         		
-        		var result = confirm("정말 삭제할까요?");
+        		var result = confirm("선택한 주문을 삭제하시겠습니까?");
         		
         		if(result == true){
         				$('#f2').submit();
