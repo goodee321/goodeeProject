@@ -99,7 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  INSERT 
 	  INTO PRODUCT(PRO_NAME, PRO_PRICE, PRO_DETAIL, PRO_DATE)
 	   VALUES
-	   (#{proName}, #{proPrice}, #{proDetail}, SYSDATE())
+	   (#{proName}, #{proPrice}, #{proDetail}, NOW())
 	   <selectKey keyProperty="proNo" resultType="Integer" order="AFTER">
 	   	SELECT LAST_INSERT_ID();
 	   </selectKey>

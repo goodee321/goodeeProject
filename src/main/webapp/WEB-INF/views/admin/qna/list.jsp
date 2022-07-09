@@ -13,6 +13,7 @@
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <script src="../../resources/js/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
@@ -200,7 +201,7 @@
 							<tr>
 								<td>${qna.qnaNo}</td>
 								<td>
-									<c:forEach begin="1" end="${qna.qnaDepth}" step="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach>
+									<c:forEach begin="1" end="${qna.qnaDepth}" step="1"></c:forEach>
 									
 									<c:if test="${qna.qnaDepth gt 0}"><i class="fa-solid fa-comment-dots"> 관리자 답변</i></c:if>
 									<!-- 제목 -->

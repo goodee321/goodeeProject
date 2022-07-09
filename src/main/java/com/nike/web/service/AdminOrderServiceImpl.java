@@ -115,6 +115,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
         switch (column) {
             case "ORDER_NO":
             case "MEMBER_NO":
+            case "ORDER_NAME":
                 model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/admin/order/search?column=" + column + "&query=" + query));
                 break;
 
@@ -144,8 +145,6 @@ public class AdminOrderServiceImpl implements AdminOrderService {
         order.setOrderAddr(request.getParameter("orderAddr"));
         order.setAddrDetail(request.getParameter("addrDetail"));
         order.setOrderInvoice(Integer.parseInt(request.getParameter("orderInvoice")));
-        order.setOrderDelivery(Integer.parseInt(request.getParameter("orderDelivery")));
-        order.setOrderState(Integer.parseInt(request.getParameter("orderState")));
         return adminOrderMapper.updateOrder(order);
     }
 

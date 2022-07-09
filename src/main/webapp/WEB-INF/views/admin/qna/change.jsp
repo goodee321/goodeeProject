@@ -138,22 +138,23 @@
 	
 	
 	<form id="f" action="${contextPath}/admin/qna/change" method="post">
+	<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
 		<table>
 			<tbody>
 				<tr>
 					<td class="table-dark">제목</td>
-					<td><input type="text" name="qnaTitle" id="qnaTitle" value="${qna.qnaTitle}" required="required" class="form-control"></td>
+					<td><input type="text" name="qnaTitle" id="qnaTitle" value="${qna.qnaTitle}" required class="form-control"></td>
 				</tr>
 				<tr>
 					<td class="table-dark">내용</td>
-					<td><textarea name="qnaContent" id="qnaContent">${qna.qnaContent}</textarea></td>
+					<td><textarea name="qnaContent" id="qnaContent" required>${qna.qnaContent}</textarea></td>
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
 					<td></td>
 					<td>
-						<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
+						
 						<button class="btn btn-secondary">수정완료</button>
 						<input type="button" value="취소" id="btnList" class="btn btn-secondary">
 					</td>

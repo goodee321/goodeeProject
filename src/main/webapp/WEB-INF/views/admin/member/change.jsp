@@ -33,6 +33,8 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
+	font-size: 18px;
+	 
 	}
   	
 	
@@ -45,7 +47,16 @@
 	text-align: left;
   	width:100%;
   	height:30px;
+  }
   
+	  .hidden{
+	 display: none;
+	}
+
+
+.dont {
+	color: crimson;
+}
   	
  
 }
@@ -67,8 +78,50 @@
 	$(function(){
 		
 		fnPhoneCheck();
-		
+		fnRegExp();
+		fnIn();
 	})
+	
+	function fnIn(){
+		$('#f').on('submit', function(event){
+			if(Pass == false){
+				alert('이메일을 확인하세요.');
+				event.preventDefault();
+				return false;
+			}
+			
+			return true;
+		})
+		
+	}
+	
+	
+	
+	let Pass = true;
+	function fnRegExp(){
+		
+		let numberRegExp = 	/^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+(\.[a-zA-Z]{2,}){1,2}$/;
+			
+			
+			
+			
+			$('#email').on('keyup',function(){
+			
+				if(numberRegExp.test( $('#email').val() ) == false){ 
+					$('#proDiscountError').text('올바른 이메일 형식이 아닙니다.').addClass('dont').removeClass('hidden');
+					Pass = false;
+					return;
+				}else{
+					$('#proDiscountError').addClass('hidden').removeClass('dont');
+					Pass = true;
+				}
+				
+			})
+	}
+
+	
+	
+	
 	
 	// 8. 휴대폰번호 정규식
 	let phonePass = false;
@@ -154,9 +207,9 @@
 	<h3 class="kind">Member Modify</h3>
 
 
-	<form action="${contextPath}/admin/member/change" method="post">
+	<form id="f" action="${contextPath}/admin/member/change" method="post">
 	
-	
+	<input type="hidden" name="memberNo" value="${member.memberNo}">
 		<table border="1">
 			<tbody>
 				<tr>
@@ -165,7 +218,9 @@
 				</tr>
 				<tr>
 					<td class="table-dark">E-Mail</td>
-					<td class="table-secondary"><input type="text" name="email" id="email" value="${member.email}" placeholder="E-Mail" required></td>
+					<td class="table-secondary"><input type="text" name="email" id="email" value="${member.email}" placeholder="E-Mail" required>
+					<span id="proDiscountError"></span>
+					</td>
 				</tr>
 				<tr>
 					<td class="table-dark">우편번호</td>
@@ -187,7 +242,7 @@
 				<tr>
 					<td class="table-dark">휴대폰번호</td>
 					<td class="table-secondary"><input type="text" name="phone" id="phone" value="${member.phone}" placeholder="휴대폰번호" ></td>
-					<input type="hidden" name="memberNo" value="${member.memberNo}">
+					
 				</tr>
 			</tbody>
 			

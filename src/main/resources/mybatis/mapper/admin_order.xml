@@ -89,8 +89,7 @@
           , ORDER_ADDR     = #{orderAddr}
           , ADDR_DETAIL    = #{addrDetail}
           , ORDER_INVOICE  = #{orderInvoice}
-          , ORDER_DELIVERY = #{orderDelivery}
-          , ORDER_STATE    = #{orderState}
+        
 
 
         WHERE ORDER_NO = #{orderNo}

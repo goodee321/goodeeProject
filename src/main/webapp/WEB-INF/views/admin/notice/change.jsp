@@ -30,6 +30,13 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
+	
+	}
+	
+	table td {
+		padding: 5px;
+		border-top: 1px solid gray;
+		
 	}
 	
 	thead {
@@ -131,22 +138,23 @@
 	
 		
 		<form id="f" action="${contextPath}/admin/notice/change" method="post">
+		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 			<table>
 				<tbody>
 					<tr>
 						<td class="table-dark">제목</td>
-						<td><input type="text" name="noticeTitle" value="${notice.noticeTitle}" required class="form-control" placeholder="Default input" id="inputDefault"></td>
+						<td><input type="text" name="noticeTitle" value="${notice.noticeTitle}" required class="form-control" placeholder="Default input" id="inputDefault" required></td>
 					</tr>
 					<tr>
 						<td class="table-dark">내용</td>
-						<td class="table-secondary"><textarea name="noticeContent" id="noticeContent">${notice.noticeContent}</textarea></td>
+						<td class="table-secondary"><textarea name="noticeContent" id="noticeContent" required>${notice.noticeContent}</textarea></td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td></td>
 						<td>
-							<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
+							
 							<button class="btn btn-secondary">수정완료</button>
 							<input type="button" value="목록" id="btnList" class="btn btn-secondary">
 						</td>

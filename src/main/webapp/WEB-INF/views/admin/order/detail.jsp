@@ -127,7 +127,7 @@
 				<td class="table-secondary">${order.memberNo}</td>
 			</tr>
 			<tr>
-				<td class="table-dark">NAME</td>
+				<td class="table-dark">회원명</td>
 				<td class="table-secondary">${order.orderName}</td>
 			</tr>
 			

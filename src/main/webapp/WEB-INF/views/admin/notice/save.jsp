@@ -126,11 +126,11 @@ $(function(){
 				<tbody>
 					<tr>
 						<td class="table-dark">제목</td>
-						<td><input type="text" name="title" class="form-control" placeholder="제목" id="inputDefault"></td>
+						<td><input type="text" name="title" class="form-control" placeholder="제목" id="inputDefault" required></td>
 					</tr>
 					<tr>
 						<td class="table-dark">내용</td>
-						<td class="table-secondary"><textarea name="content" id="content"></textarea></td>
+						<td class="table-secondary"><textarea name="content" id="content" required></textarea></td>
 					</tr>
 				</tbody>
 				<tfoot>

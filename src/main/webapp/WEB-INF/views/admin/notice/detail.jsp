@@ -46,6 +46,7 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
+	
 	}
 	
 	thead {
@@ -54,7 +55,7 @@
 	
 	table td {
 		padding: 5px;
-		border-top: 1px solid silver;
+		border-top: 1px solid black;
 		
 	}
 	

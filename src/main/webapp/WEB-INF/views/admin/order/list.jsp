@@ -200,7 +200,7 @@
             $('#column').on('change', function () {
                 if ($(this).val() == '') {
                     $('#equalArea').css('display', 'none');
-                } else if ($(this).val() == 'ORDER_NO' || $(this).val() == 'MEMBER_NO') {
+                } else if ($(this).val() == 'ORDER_NO' || $(this).val() == 'MEMBER_NO' || $(this).val() == 'ORDER_NAME') {
                     $('#equalArea').css('display', 'inline');
                 } else {
                     $('#equalArea').css('display', 'none');
@@ -256,7 +256,7 @@
                     alert('검색어를 입력해주세요.');
                     event.preventDefault();
                     return false;
-                } else if (column.val() == 'ORDER_NO' || column.val() == 'MEMBER_NO') {
+                } else if (column.val() == 'ORDER_NO' || column.val() == 'MEMBER_NO' || column.val() == 'ORDER_NAME') {
                     location.href = "${contextPath}/admin/order/search?column=" + column.val() + "&query=" + query.val();
                 }
             })
@@ -301,6 +301,7 @@
             <option value="">:::선택:::</option>
             <option value="ORDER_NO">주문번호</option>
             <option value="MEMBER_NO">회원번호</option>
+            <option value="ORDER_NAME">회원명</option>
         </select>
 
         <span id="equalArea">
