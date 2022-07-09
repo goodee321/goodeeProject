@@ -32,8 +32,8 @@
 		font-weight: bold;
 	}
 	.link:hover {
-		border: 1px solid orange;
-		color: limegreen;
+		border: 1px solid black;
+		color: green;
 	}
 
 

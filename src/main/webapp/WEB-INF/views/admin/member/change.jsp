@@ -21,10 +21,36 @@
 		text-align: center;
 		font-family: Georgia, "Malgun Gothic", serif;
 		}
-		.kind {
-			font-family: 'Splash', cursive;
-			font-size: 40px;
+		
+	.kind {
+		font-family: 'Splash', cursive;
+		font-size: 40px;
+		text-shadow: 2px 4px 2px gray;
+		}	
+		
+		table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
 	}
+  	
+	
+	table td {
+		padding: 10px;
+		border-top: 1px solid #848484;
+	}
+	
+	input {
+	text-align: left;
+  	width:100%;
+  	height:30px;
+  
+  	
+ 
+}
+			
+	
 </style>
 <script src="../../resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
@@ -131,31 +157,51 @@
 	<form action="${contextPath}/admin/member/change" method="post">
 	
 	
-		<strong>이름</strong><br>
-		<input type="text" name="name" id="name" value="${member.name}" placeholder="이름"><br><br>
-		<strong>E-Mail</strong><br>
-		<input type="text" name="email" id="email" value="${member.email}" placeholder="E-Mail" required><br><br>
-		<strong>우편번호</strong><br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;
-		<input type="text" name="postcode" id="postcode" value="${loginMember.postcode}" placeholder="우편번호">
-		<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br><br>
-		<strong>주소</strong><br>
-		<input type="text" name="address" id="address" value="${loginMember.address}" placeholder="주소"><br><br>
-		<strong>상세주소</strong><br>
-		<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소"><br><br>
-		<strong>참고항목</strong><br>
-		<input type="text" name="extraAddress" id="extraAddress" value="${loginMember.extraAddress}" placeholder="참고항목">
-		<br><br>
-		<strong>휴대폰번호</strong><br>
-		<input type="text" name="phone" id="phone" value="${member.phone}" placeholder="휴대폰번호" required><br><br>
-		<input type="hidden" name="memberNo" value="${member.memberNo}">
+		<table border="1">
+			<tbody>
+				<tr>
+					<td class="table-dark">NAME</td>
+					<td class="table-secondary"><input type="text" name="name" id="name" value="${member.name}" placeholder="NAME" required></td>
+				</tr>
+				<tr>
+					<td class="table-dark">E-Mail</td>
+					<td class="table-secondary"><input type="text" name="email" id="email" value="${member.email}" placeholder="E-Mail" required></td>
+				</tr>
+				<tr>
+					<td class="table-dark">우편번호</td>
+					<td class="table-secondary"><input type="text" name="postcode" id="postcode" value="${member.postcode}" placeholder="우편번호" required>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
+				</tr>
+				<tr>
+					<td class="table-dark">주소</td>
+					<td class="table-secondary"><input type="text" name="address" id="address" value="${member.address}" placeholder="주소" required></td>
+				</tr>
+				<tr>
+					<td class="table-dark">상세주소</td>
+					<td class="table-secondary"><input type="text" name="addrDetail" id="addrDetail" value="${member.addrDetail}" placeholder="상세주소" required></td>
+				</tr>
+				<tr>
+					<td class="table-dark">참고항목</td>
+					<td class="table-secondary"><input type="text" name="extraAddress" id="extraAddress" value="${member.extraAddress}" placeholder="참고항목"></td>
+				</tr>
+				<tr>
+					<td class="table-dark">휴대폰번호</td>
+					<td class="table-secondary"><input type="text" name="phone" id="phone" value="${member.phone}" placeholder="휴대폰번호" ></td>
+					<input type="hidden" name="memberNo" value="${member.memberNo}">
+				</tr>
+			</tbody>
+			
+		</table>
 		
+		<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="btn btn-secondary">수정완료</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
 		
-		<button class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;
-		<input type="button" value="목록" id="btnList" class="btn btn-secondary">
+		<a href="${contextPath}/admin/member/list">목록으로가기</a>
 		
 	
 

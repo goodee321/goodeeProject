@@ -9,27 +9,77 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- bootstrap css -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<script src="../../resources/js/jquery-3.6.0.js"></script>
+<script src="../../resources/summernote-0.8.18-dist/summernote-lite.js"></script>
+<script src="../../resources/summernote-0.8.18-dist/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="../../resources/summernote-0.8.18-dist/summernote-lite.css"/>
 <style>
 
 	@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
+
+
+	h3 { 
+		text-align: center; 
+		font-size: xx-large;
+		padding-bottom: 10px;
+		margin-top: 5%;
+	}
+	
+	table {
+	border-collapse: collapse;
+	margin: auto;
+	}
+	
+	table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
+	}
+	
+	
+	thead {
+		background-color: silver;
+	}
+	
+	td {
+		padding: 5px;
+
+	}
+	
+	td:nth-of-type(1) {
+		
+	}
+	
+	td:nth-of-type(2) {
+		width: 160px;
+	}
+	
+	tfoot td {
+		border-bottom: none;
+		border-left: none;
+		border-right: none;
+		background-color: none;
+		text-align: right;
+	}
+	
+	textarea {
+		border:  1px solid #ced4da;
+	}
 	
 	section {
 		background-color: #BDBDBD;
-		text-align: center;
+		text-align: left;
 		font-family: Georgia, "Malgun Gothic", serif;
 		}
-		
-		.kind {
+	
+	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
 	}
 	
-	
 </style>
-<script src="../../resources/js/jquery-3.6.0.js"></script>
 <script>
 
 	$(function(){
@@ -50,41 +100,75 @@
 		$('#btnList').on('click', function(){
 			location.href='${contextPath}/admin/qna/list';
 			})
+			
+		// summernote
+		$('#qnaContent').summernote({
+			width: 800,
+			height: 500,
+			lang: 'ko-KR',
+			// 툴바 수정
+			toolbar: [
+				   ['fontname', ['fontname']],
+				   ['fontsize', ['fontsize']],
+				   ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				   ['color', ['forecolor','color']],
+				   ['table', ['table']],
+				   ['para', ['ul', 'ol', 'paragraph']],
+				   ['height', ['height']],
+				   ['view', ['fullscreen', 'help']]
+			],
+			fontNames: ['Arial', 'Arial Black', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','36','48','72']
+		})
+			
 	
 	})
 </script>
 </head>
 <body>
-
 	<nav id="nav">
 		<div id="nav_box">
 			<%@ include file="../layout/nav.jsp" %>
 		</div>
 	</nav>
-
-
+	
 	<section>
 	<br>
 	<h3 class="kind">Qna Modify</h3>
-	<br>
 	
 	
 	<form id="f" action="${contextPath}/admin/qna/change" method="post">
-		제목: <input type="text" name="qnaTitle" id="qnaTitle" value="${qna.qnaTitle}" required><br><br>
-		내용<br> <textarea rows="20" cols="30" name="qnaContent" id="qnaContent" class="form-control col-sm-5" style="margin: 0 auto">${qna.qnaContent}</textarea><br>
-		<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
-		<button class="btn btn-secondary">수정완료</button>
-		<input type="button" value="취소" id="btnList" class="btn btn-secondary">
-	</form><br>
+		<table>
+			<tbody>
+				<tr>
+					<td class="table-dark">제목</td>
+					<td><input type="text" name="qnaTitle" id="qnaTitle" value="${qna.qnaTitle}" required="required" class="form-control"></td>
+				</tr>
+				<tr>
+					<td class="table-dark">내용</td>
+					<td><textarea name="qnaContent" id="qnaContent">${qna.qnaContent}</textarea></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td></td>
+					<td>
+						<input type="hidden" name="qnaNo" value="${qna.qnaNo}">
+						<button class="btn btn-secondary">수정완료</button>
+						<input type="button" value="취소" id="btnList" class="btn btn-secondary">
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</form>
+	</section>
 	
-</section>
+	<footer id="footer">
 
+		<div id="footer_box">
+			<%@ include file="../layout/footer.jsp" %>
+		</div>
+	</footer>
 
-<footer id="footer">
-
-	<div id="footer_box">
-		<%@ include file="../layout/footer.jsp" %>
-	</div>
-</footer>
 </body>
 </html>

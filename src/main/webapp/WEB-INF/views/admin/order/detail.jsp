@@ -35,10 +35,34 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 	#f {
 		font-size: 18px;
+	}
+	
+	
+	table {
+		border-collapse: collapse;
+		margin: auto;
+		text-align: center;
+	}
+	
+	table td {
+		padding: 10px;
+		border-top: 1px solid #848484;
+	}
+	
+	form {
+		padding-top: 10px;
+	}
+	
+	table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
 	}
 		
 </style>
@@ -67,6 +91,7 @@
 		})
 	})
 </script>
+
 </head>
 <body>
 
@@ -79,37 +104,74 @@
 
     <section>
     <br>
+   
+ 
+  
 	<h3 class="kind">Order Detail</h3>
+	
+
+	
 
 	<form id="f">
 	
-		<input type="hidden" name="orderNo" value="${order.orderNo}"> <!-- 삭제에서 활용 -->
+		
 	
-		<strong>주문번호:</strong>&nbsp;&nbsp;&nbsp;${order.orderNo}<br><hr>
-		<strong>회원번호:</strong>&nbsp;&nbsp;&nbsp;${order.memberNo}<br><hr>
-		<strong>회원명:</strong>&nbsp;&nbsp;&nbsp;${order.orderName}<br><hr>
-		<strong>주문일:</strong>&nbsp;&nbsp;&nbsp;${order.orderDate}<br><hr>
-		<strong>휴대폰번호:</strong>&nbsp;&nbsp;&nbsp;${order.orderPhone}<br><hr>
-		<strong>주소:</strong>&nbsp;&nbsp;&nbsp;${order.orderAddr}, ${order.addrDetail}<br><hr>
-		<strong>총주문금액:</strong>&nbsp;&nbsp;&nbsp;${order.orderAmount}<br><hr>
-		<strong>결제수단:</strong>&nbsp;&nbsp;&nbsp;${order.orderPayment}<br><hr>
-		<strong>운송장번호:</strong>&nbsp;&nbsp;&nbsp;${order.orderInvoice}<br><hr>
-		<strong>배송비:</strong>&nbsp;&nbsp;&nbsp;${order.orderDelivery}<br><hr>
-		<strong>주문상태:</strong>&nbsp;&nbsp;&nbsp;
-		<c:if test="${order.orderState == 0}">주문완료</c:if>
+		<table border="1">
+			<tbody>
+			<tr>
+				<td class="table-dark">주문번호</td>
+				<td class="table-secondary">${order.orderNo}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">회원번호</td>
+				<td class="table-secondary">${order.memberNo}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">NAME</td>
+				<td class="table-secondary">${order.orderName}</td>
+			</tr>
+			
+			<tr>
+				<td class="table-dark">주문일</td>
+				<td class="table-secondary">${order.orderDate}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">주소</td>
+				<td class="table-secondary">${order.orderAddr}, ${order.addrDetail}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">총주문금액</td>
+				<td class="table-secondary">${order.orderAmount}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">운송장번호</td>
+				<td class="table-secondary">${order.orderInvoice}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">배송비</td>
+				<td class="table-secondary">${order.orderDelivery}</td>
+				<input type="hidden" name="orderNo" value="${order.orderNo}"> <!-- 삭제에서 활용 -->
+			</tr>
+			<tr>
+				<td class="table-dark">주문번호</td>
+				<td class="table-secondary"><c:if test="${order.orderState == 0}">주문완료</c:if>
 		<c:if test="${order.orderState == 1}">배송준비중</c:if>
 		<c:if test="${order.orderState == 2}">배송중</c:if>
 		<c:if test="${order.orderState == 3}">배송완료</c:if>
-		<c:if test="${order.orderState == 4}">주문취소</c:if>
-		<br><hr>
+		<c:if test="${order.orderState == 4}">주문취소</c:if></td>
+			</tr>
+			</tbody>
+			
+			
+		</table>
 		
-		
-		
-		
+		<br>
+		<div>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" value="수정" id="btnChangePage" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;
 		<input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;
 		<input type="button" value="목록" id="btnList" class="btn btn-secondary"><br><br>
-		
+		</div>
 	
 	</form>
 	</section>

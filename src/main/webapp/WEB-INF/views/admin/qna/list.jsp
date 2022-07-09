@@ -48,7 +48,8 @@
 	}
 	
 	.link:hover {
-		color: #008bcc;
+		border: 1px solid black;
+		color: green;
 	}
 	
 	.title {
@@ -63,9 +64,13 @@
 	
 	
 	table {
-		border-collapse: collapse;
-		margin: auto;
+	border-collapse: collapse;
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
 	}
+
 	
 	table caption {
 		margin-bottom: 5px;
@@ -98,8 +103,8 @@
 	td:nth-of-type(5) { width: 150px; }
 	td {
 		padding: 5px;
-		border-top: 1px solid silver;
-		border-bottom: 1px solid silver;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
 		text-align: center;
 	}
 	
@@ -118,7 +123,7 @@
 	section {
 		background-color: #BDBDBD;
 		text-align: center;
-		font-family: Georgia, "Malgun Gothic", serif;
+		
 	}
 	
 	
@@ -126,11 +131,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 	
@@ -157,6 +164,8 @@
 		
 	
 	</div>
+	
+	
 
 		<table>
 			<!-- <c:if test="${member.id != null}"></c:if> -->
@@ -168,7 +177,8 @@
 					<td>내용</td>
 					<td>작성자</td>
 					<td>작성일</td>
-					<td></td>
+					<td>답변기능</td>
+					<td>X</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -181,7 +191,7 @@
 					<c:forEach var="qna" items="${qnas}">
 						<c:if test="${qna.qnaState == -1}">
 							<tr>
-								<td colspan="5"><i class="fa-solid fa-ban"></i> 삭제된 게시글입니다</td>
+								<td colspan="7">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-ban"></i> 삭제된 게시글입니다</td>
 							</tr>
 						</c:if>
 						<c:if test="${qna.qnaState == 1}">
@@ -228,8 +238,8 @@
 							<tr class="reply_form blind">
 								<td colspan="5">
 									<form action="${contextPath}/admin/qna/saveReply" method="post">
-										<input type="text" name="id" value="${qna.id}" size="4" readonly="readonly">
-										<input type="text" name="qnaContent" placeholder="내용" size="40">
+										<input type="text" name="id" value="${loginMember.id}" size="4" readonly="readonly">
+										<input type="text" name="qnaContent" placeholder="답글을 달아주세요" size="40">
 										<!-- <input type="text" name="qnaDate" value="${qna.qnaDate}"> -->
 										<input type="hidden" name="qnaDepth" value="${qna.qnaDepth}">
 										<input type="hidden" name="qnaGroupNo" value="${qna.qnaGroupNo}">

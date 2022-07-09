@@ -89,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		 ON  PI.PRO_NO = P.PRO_NO  INNER JOIN PRODUCT_QTY PQ
          ON P.PRO_NO = PQ.PRO_NO
 		 WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+		 LIMIT #{beginRecord}, #{recordPerPage}
 	</select>
 
 

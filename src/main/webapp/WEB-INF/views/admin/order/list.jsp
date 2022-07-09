@@ -34,16 +34,18 @@
         }
 
         .link:hover {
-            border: 1px solid orange;
-            color: limegreen;
+            border: 1px solid black;
+            color: green;
         }
 
 
         table {
-            border-collapse: collapse;
-            margin-left: auto;
-            margin-right: auto;
-        }
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
+	}
+
 
         td:nth-of-type(1) {
             width: 80px;
@@ -105,11 +107,13 @@
         .kind {
             font-family: 'Splash', cursive;
             font-size: 40px;
+            text-shadow: 2px 4px 2px gray;
         }
 
         .kind2 {
             font-family: 'Splash', cursive;
 			font-size: 32px;
+			text-shadow: 2px 4px 2px gray;
         }
 
     </style>
@@ -259,7 +263,7 @@
         }
 
         function fnCancel() {
-            $(".btnCancel").on('click', function () {
+            $("#btnCancel").on('click', function () {
                 if (confirm("주문을 취소하시겠습니까? 취소된 주문은 복구할 수 없습니다.")) {
                     $("#cancelOrder").submit();
                 }
@@ -287,7 +291,7 @@
     <div>
         <h3 class="kind">Order Management</h3>
         <h3 class="kind2">Total Order	: ${totalRecord}</h3>
-        <h3 class="kind2">Search Order	: ${findRecord}</h3>
+        
     </div>
 
     <hr>
@@ -345,7 +349,7 @@
                                 <input type="hidden" id="orderImpUid" name="orderImpUid" value="${order.impUid}">
                                 <input type="hidden" id="orderAmount" name="orderAmount" value="${order.orderAmount}">
                                 <input type="hidden" id="orderReason" name="orderReason" value="RequestCancel">
-                                <button class="btnCancel">주문취소</button>
+                                <button id="btnCancel" class="btn btn-secondary">주문취소</button>
                             </form>
                         </c:if>
                         <c:if test="${order.orderState == 4}">

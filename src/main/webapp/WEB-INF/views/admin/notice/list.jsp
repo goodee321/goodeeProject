@@ -31,16 +31,17 @@
 		font-weight: bold;
 	}
 	.link:hover {
-		border: 1px solid orange;
-		color: limegreen;
+		border: 1px solid black;
+		color: green;
 	}
 
 
 
 	table {
-		border-collapse: collapse;
-		margin-left:auto;
-    	margin-right:auto;
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
 	}
 	
 	td:nth-of-type(1) { width: 80px; }
@@ -83,11 +84,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 </style>
@@ -266,7 +269,7 @@
 	
 	<h3 class="kind2">Total Notice	: ${totalRecord}</h3>
 	
-	<h3 class="kind2">Search Notice	: ${findRecord}</h3>
+	
 	
 	
 	</div>

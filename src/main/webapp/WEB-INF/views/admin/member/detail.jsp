@@ -35,10 +35,34 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 	#f {
 		font-size: 18px;
+	}
+	
+	
+	table {
+		border-collapse: collapse;
+		margin: auto;
+		text-align: center;
+	}
+	
+	table td {
+		padding: 10px;
+		border-top: 1px solid #848484;
+	}
+	
+	form {
+		padding-top: 10px;
+	}
+	
+	table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 5px 3px gray;
+	border-radius: 5px;
 	}
 		
 </style>
@@ -80,27 +104,69 @@
 
     <section>
     <br>
+   
+ 
+  
 	<h3 class="kind">Member Detail</h3>
+	
+
+	
 
 	<form id="f">
 	
-		<input type="hidden" name="memberNo" value="${member.memberNo}"> <!-- 삭제에서 활용 -->
+		
 	
-		<strong>회원번호:</strong>&nbsp;&nbsp;&nbsp;${member.memberNo}<br><hr>
-		<strong>ID:</strong>&nbsp;&nbsp;&nbsp;${member.id}<br><hr>
-		<strong>이름:</strong>&nbsp;&nbsp;&nbsp;${member.name}<br><hr>
-		<strong>E-Mail:</strong>&nbsp;&nbsp;&nbsp;${member.email}<br><hr>
-		<strong>우편번호</strong>&nbsp;&nbsp;&nbsp;${member.postcode}<br><hr>
-		<strong>주소:</strong>&nbsp;&nbsp;&nbsp;${member.address}<br><hr>
-		<strong>상세주소:</strong>&nbsp;&nbsp;&nbsp;${member.addrDetail}<br><hr>
-		<strong>참고항목:</strong>&nbsp;&nbsp;&nbsp;${member.extraAddress}<br><hr>
-		<strong>휴대폰번호:</strong>&nbsp;&nbsp;&nbsp;${member.phone}<br><hr>
+		<table border="1">
+			<tbody>
+			<tr>
+				<td class="table-dark">회원번호</td>
+				<td class="table-secondary">${member.memberNo}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">ID</td>
+				<td class="table-secondary">${member.id}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">NAME</td>
+				<td class="table-secondary">${member.name}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">E-Mail</td>
+				<td class="table-secondary">${member.email}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">우편번호</td>
+				<td class="table-secondary">${member.postcode}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">주소</td>
+				<td class="table-secondary">${member.address}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">상세주소</td>
+				<td class="table-secondary">${member.addrDetail}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">참고항목</td>
+				<td class="table-secondary">${member.extraAddress}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">휴대폰번호</td>
+				<td class="table-secondary">${member.phone}</td>
+				<input type="hidden" name="memberNo" value="${member.memberNo}"> <!-- 삭제에서 활용 -->
+			</tr>
+			
+			</tbody>
+			
+			
+		</table>
 		
-		
+		<br>
+		<div>
 		<input type="button" value="수정" id="btnChangePage" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;
 		<input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;
 		<input type="button" value="목록" id="btnList" class="btn btn-secondary"><br><br>
-		
+		</div>
 	
 	</form>
 	</section>
