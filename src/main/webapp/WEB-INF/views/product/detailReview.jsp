@@ -79,6 +79,7 @@
 </script>
 <style>
 	
+	
 
 </style>
 
@@ -92,14 +93,14 @@
 	</c:forEach>
 	<hr>
 	<div class="">
-    	<h2>상품후기 상세</h2>
+    	<h2>${reviewbyno.reviewTitle}</h2>
 	</div>
-	리뷰 번호 ${reviewbyno.reviewNo}<br>
-	리뷰 내용 ${reviewbyno.reviewContent}<br>
-	작성일 ${reviewbyno.reviewDate}<br>
+	<div style="margin: 10px 0px 0px 0px">${reviewbyno.reviewContent}<br></div>
+	<div align="right" style="margin-top: 5px; font-size: 12px;">No: ${reviewbyno.reviewNo}</div>
+	<div align="right" style="margin-top: 5px; font-size: 12px;">작성일: <fmt:formatDate value="${reviewbyno.reviewDate}" pattern="yyyy-MM-dd HH:mm:ss"/><br></div>
 	<input type="hidden" value="${reviewbyno.reviewNo}">
 	<input type="hidden" value="${reviewbyno.proNo}">
-	<input type="button" value="리뷰 삭제하기" id="btnRemove">
+	<input type="button" value="리뷰 삭제하기" id="btnRemove" style="background: #212529; color: #fff; margin: 25px 1px 0px 330px; border-radius: 5px;">
 	<!-- <input type="button" value="수정하기" id="btnChangePage"> -->
 	
 </body>
