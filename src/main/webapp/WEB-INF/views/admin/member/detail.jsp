@@ -17,14 +17,16 @@
 	@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
 
 	form {
-			padding: 50px;
+			
 			text-align: center;
 	}
 
 	section {
+	
 			background-color: #BDBDBD;
-			text-align: center;
+			text-align: left;
 			font-family: Georgia, "Malgun Gothic", serif;
+			
 	}
 	
 	strong {
@@ -35,10 +37,44 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			
+			text-align: center;
+			background-color: #BDBDBD;
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 	#f {
 		font-size: 18px;
+	}
+	
+	
+	table {
+		border-collapse: collapse;
+		margin: auto;
+		text-align: left;
+		
+	}
+	
+	table td {
+		padding: 10px;
+		border-top: 1px solid #848484;
+	}
+	
+	form {
+		
+	}
+	
+	table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 2px 2px 2px 2px gray;
+	border-radius: 5px;
+	
+	}
+	
+	
+	tr:nth-of-type(1) td:nth-of-type(2) { 
+		width: 400px;
 	}
 		
 </style>
@@ -55,7 +91,7 @@
 		// 삭제
 		// 폼의 서브밋을 활용
 		$('#btnRemove').on('click', function(){
-			if(confirm('삭제할까요?')){
+			if(confirm('정말 삭제하시겠습니까?')){
 				$('#f').attr('action', '${contextPath}/admin/member/removeOne');
 				$('#f').submit();
 			}
@@ -74,33 +110,87 @@
 	<nav id="nav">
 		<div id="nav_box">
 			<%@ include file="../layout/nav.jsp" %>
+			
 		</div>
-	</nav>
+			</nav>
+			
+	
+	
+
+	
+	
+	
+	
 	
 
     <section>
-    <br>
-	<h3 class="kind">Member Detail</h3>
+  
+   <br>
+	<h3 class="kind">Notice Detail</h3><br>
+	
+   
+ 
+  
+	
+	
+
+	
 
 	<form id="f">
 	
-		<input type="hidden" name="memberNo" value="${member.memberNo}"> <!-- 삭제에서 활용 -->
+		
 	
-		<strong>회원번호:</strong>&nbsp;&nbsp;&nbsp;${member.memberNo}<br><hr>
-		<strong>ID:</strong>&nbsp;&nbsp;&nbsp;${member.id}<br><hr>
-		<strong>이름:</strong>&nbsp;&nbsp;&nbsp;${member.name}<br><hr>
-		<strong>E-Mail:</strong>&nbsp;&nbsp;&nbsp;${member.email}<br><hr>
-		<strong>우편번호</strong>&nbsp;&nbsp;&nbsp;${member.postcode}<br><hr>
-		<strong>주소:</strong>&nbsp;&nbsp;&nbsp;${member.address}<br><hr>
-		<strong>상세주소:</strong>&nbsp;&nbsp;&nbsp;${member.addrDetail}<br><hr>
-		<strong>참고항목:</strong>&nbsp;&nbsp;&nbsp;${member.extraAddress}<br><hr>
-		<strong>휴대폰번호:</strong>&nbsp;&nbsp;&nbsp;${member.phone}<br><hr>
+		<table border="1">
+			<tbody>
+			<tr>
+				<td class="table-dark">회원번호</td>
+				<td class="table-secondary">${member.memberNo}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">ID</td>
+				<td class="table-secondary">${member.id}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">NAME</td>
+				<td class="table-secondary">${member.name}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">E-Mail</td>
+				<td class="table-secondary">${member.email}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">우편번호</td>
+				<td class="table-secondary">${member.postcode}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">주소</td>
+				<td class="table-secondary">${member.address}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">상세주소</td>
+				<td class="table-secondary">${member.addrDetail}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">참고항목</td>
+				<td class="table-secondary">${member.extraAddress}</td>
+			</tr>
+			<tr>
+				<td class="table-dark">휴대폰번호</td>
+				<td class="table-secondary">${member.phone}</td>
+				<input type="hidden" name="memberNo" value="${member.memberNo}"> <!-- 삭제에서 활용 -->
+			</tr>
+			
+			</tbody>
+			
+			
+		</table>
 		
-		
+		<br>
+		<div>
 		<input type="button" value="수정" id="btnChangePage" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;
 		<input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;
 		<input type="button" value="목록" id="btnList" class="btn btn-secondary"><br><br>
-		
+		</div>
 	
 	</form>
 	</section>

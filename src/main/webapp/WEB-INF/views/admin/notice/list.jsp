@@ -31,16 +31,17 @@
 		font-weight: bold;
 	}
 	.link:hover {
-		border: 1px solid orange;
-		color: limegreen;
+		border: 1px solid black;
+		color: green;
 	}
 
 
 
 	table {
-		border-collapse: collapse;
-		margin-left:auto;
-    	margin-right:auto;
+	padding: 20px;
+	margin: auto;
+	box-shadow: 2px 2px 2px 2px gray;
+	border-radius: 5px;
 	}
 	
 	td:nth-of-type(1) { width: 80px; }
@@ -54,6 +55,8 @@
 	td {
 		padding: 5px;
 		text-align: center;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
 	}
 	tfoot td {
 		border-left: 0;
@@ -83,11 +86,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
+			
 	}
 	
 </style>
@@ -191,7 +196,7 @@
 		
 		$('#btnRemove').on('click', function(){
 			
-			var result = confirm("정말 삭제할까요?");
+			var result = confirm("선택한 공지사항을 삭제하시겠습니까?");
 			
 			if(result == true){
 					$('#f2').submit();
@@ -266,7 +271,7 @@
 	
 	<h3 class="kind2">Total Notice	: ${totalRecord}</h3>
 	
-	<h3 class="kind2">Search Notice	: ${findRecord}</h3>
+	
 	
 	
 	</div>

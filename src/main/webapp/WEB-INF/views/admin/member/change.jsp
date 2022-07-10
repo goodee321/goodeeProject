@@ -21,10 +21,50 @@
 		text-align: center;
 		font-family: Georgia, "Malgun Gothic", serif;
 		}
-		.kind {
-			font-family: 'Splash', cursive;
-			font-size: 40px;
+		
+	.kind {
+		font-family: 'Splash', cursive;
+		font-size: 40px;
+		text-shadow: 1px 1px 1px gray;
+		
+		}	
+		
+		table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 1px 1px 1px 1px gray;
+	border-radius: 5px;
+	font-size: 18px;
+	 
 	}
+  	
+	
+	table td {
+		padding: 10px;
+		border-top: 1px solid #848484;
+	}
+	
+	input {
+	text-align: left;
+  	width:100%;
+  	height:30px;
+  }
+  
+	  .hidden{
+	 display: none;
+	}
+
+
+.dont {
+	color: crimson;
+}
+  	
+ 
+tr:nth-of-type(1) td:nth-of-type(2) { 
+		width: 400px;
+	}
+			
+	
 </style>
 <script src="../../resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
@@ -41,8 +81,50 @@
 	$(function(){
 		
 		fnPhoneCheck();
-		
+		fnRegExp();
+		fnIn();
 	})
+	
+	function fnIn(){
+		$('#f').on('submit', function(event){
+			if(Pass == false){
+				alert('이메일을 확인하세요.');
+				event.preventDefault();
+				return false;
+			}
+			
+			return true;
+		})
+		
+	}
+	
+	
+	
+	let Pass = true;
+	function fnRegExp(){
+		
+		let numberRegExp = 	/^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+(\.[a-zA-Z]{2,}){1,2}$/;
+			
+			
+			
+			
+			$('#email').on('keyup',function(){
+			
+				if(numberRegExp.test( $('#email').val() ) == false){ 
+					$('#proDiscountError').text('올바른 이메일 형식이 아닙니다.').addClass('dont').removeClass('hidden');
+					Pass = false;
+					return;
+				}else{
+					$('#proDiscountError').addClass('hidden').removeClass('dont');
+					Pass = true;
+				}
+				
+			})
+	}
+
+	
+	
+	
 	
 	// 8. 휴대폰번호 정규식
 	let phonePass = false;
@@ -125,37 +207,59 @@
 	
 	<section>
 	<br>
-	<h3 class="kind">Member Modify</h3>
+	<h3 class="kind">Member Modify</h3><br>
 
 
-	<form action="${contextPath}/admin/member/change" method="post">
+	<form id="f" action="${contextPath}/admin/member/change" method="post">
 	
+	<input type="hidden" name="memberNo" value="${member.memberNo}">
+		<table border="1">
+			<tbody>
+				<tr>
+					<td class="table-dark">NAME</td>
+					<td class="table-secondary"><input type="text" name="name" id="name" value="${member.name}" placeholder="NAME" required></td>
+				</tr>
+				<tr>
+					<td class="table-dark">E-Mail</td>
+					<td class="table-secondary"><input type="text" name="email" id="email" value="${member.email}" placeholder="E-Mail" required>
+					<span id="proDiscountError"></span>
+					</td>
+				</tr>
+				<tr>
+					<td class="table-dark">우편번호</td>
+					<td class="table-secondary"><input type="text" name="postcode" id="postcode" value="${member.postcode}" placeholder="우편번호" required>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
+				</tr>
+				<tr>
+					<td class="table-dark">주소</td>
+					<td class="table-secondary"><input type="text" name="address" id="address" value="${member.address}" placeholder="주소" required></td>
+				</tr>
+				<tr>
+					<td class="table-dark">상세주소</td>
+					<td class="table-secondary"><input type="text" name="addrDetail" id="addrDetail" value="${member.addrDetail}" placeholder="상세주소" required></td>
+				</tr>
+				<tr>
+					<td class="table-dark">참고항목</td>
+					<td class="table-secondary"><input type="text" name="extraAddress" id="extraAddress" value="${member.extraAddress}" placeholder="참고항목"></td>
+				</tr>
+				<tr>
+					<td class="table-dark">휴대폰번호</td>
+					<td class="table-secondary"><input type="text" name="phone" id="phone" value="${member.phone}" placeholder="휴대폰번호" ></td>
+					
+				</tr>
+			</tbody>
+			
+		</table>
+		
+		<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="btn btn-secondary">수정완료</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	
-		<strong>이름</strong><br>
-		<input type="text" name="name" id="name" value="${member.name}" placeholder="이름"><br><br>
-		<strong>E-Mail</strong><br>
-		<input type="text" name="email" id="email" value="${member.email}" placeholder="E-Mail" required><br><br>
-		<strong>우편번호</strong><br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;
-		<input type="text" name="postcode" id="postcode" value="${loginMember.postcode}" placeholder="우편번호">
-		<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br><br>
-		<strong>주소</strong><br>
-		<input type="text" name="address" id="address" value="${loginMember.address}" placeholder="주소"><br><br>
-		<strong>상세주소</strong><br>
-		<input type="text" name="addrDetail" id="addrDetail" value="${loginMember.addrDetail}" placeholder="상세주소"><br><br>
-		<strong>참고항목</strong><br>
-		<input type="text" name="extraAddress" id="extraAddress" value="${loginMember.extraAddress}" placeholder="참고항목">
-		<br><br>
-		<strong>휴대폰번호</strong><br>
-		<input type="text" name="phone" id="phone" value="${member.phone}" placeholder="휴대폰번호" required><br><br>
-		<input type="hidden" name="memberNo" value="${member.memberNo}">
 		
-		
-		<button class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;
-		<input type="button" value="목록" id="btnList" class="btn btn-secondary">
+		<a href="${contextPath}/admin/member/list">목록으로가기</a>
 		
 	
 

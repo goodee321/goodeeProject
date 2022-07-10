@@ -20,7 +20,9 @@
                ORDER_DELIVERY,
                IMP_UID,
                ORDER_STATE
-        FROM ORDER_TB LIMIT #{beginRecord}, #{recordPerPage}
+        FROM ORDER_TB 
+        ORDER BY ORDER_NO DESC
+        LIMIT #{beginRecord}, #{recordPerPage}
     </select>
 
     <!-- 전체 레코드 갯수 -->
@@ -54,6 +56,7 @@
                ORDER_STATE
             FROM ORDER_TB
         WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+        LIMIT #{beginRecord}, #{recordPerPage}
     </select>
 
     <!-- 상세보기 -->
@@ -86,8 +89,7 @@
           , ORDER_ADDR     = #{orderAddr}
           , ADDR_DETAIL    = #{addrDetail}
           , ORDER_INVOICE  = #{orderInvoice}
-          , ORDER_DELIVERY = #{orderDelivery}
-          , ORDER_STATE    = #{orderState}
+        
 
 
         WHERE ORDER_NO = #{orderNo}

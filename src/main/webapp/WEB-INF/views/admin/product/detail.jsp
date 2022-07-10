@@ -12,13 +12,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../../resources/js/jquery-3.6.0.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <script>
 	
 	$(function(){
 		
 		fnData();
+		fnRemove();
 	})
 	
+	
+	function fnRemove(){
+	// 삭제
+		// 폼의 서브밋을 활용
+		$('#btnRemove').on('click', function(){
+			if(confirm('정말 삭제하시겠습니까?')){
+				$('#f').attr('action', '${contextPath}/admin/product/removeOne');
+				$('#f').submit();
+			}
+		})
+	
+	}
 	
 	
 	
@@ -92,6 +107,9 @@
 	
 </script>
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
+
 	* {
 		box-sizing: border-box;
 	} 
@@ -124,21 +142,47 @@
 		background-color: #BDBDBD;
 		text-align: center;
 		font-family: Georgia, "Malgun Gothic", serif;
+		
 	}
 	 
 	 
 	
+	table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 2px 2px 2px 2px gray;
+	border-radius: 5px;
+	border-collapse: collapse;
+		margin-left:auto;
+    	margin-right:auto;
+    	text-align: left;
+    	font-size: 20px;
+	}
 	
+	 tr:nth-of-type(1) td:nth-of-type(2) { 
+		width: 500px;
+		height: 100px;
+		text-align: center;
+	}
 	
-	 
+	tr:nth-of-type(3) td:nth-of-type(2) { 
+		width: 300px;
+		height: 100px;
+	}
         
-      
+      .kind {
+			font-family: 'Splash', cursive;
+			font-size: 40px;
+			text-shadow: 1px 1px 1px gray;
+			text-align: center;
+	}
 	
 	
 	
 </style>
 
 </head>
+
 <body>
 
 	
@@ -169,84 +213,82 @@
 	
 	
 	<section>
-	<div class="container" style="width: 70%; margin-bottom:100px;">
-		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;"></h1>
-			<input type="hidden" value="${product.proNo}" id="proNo" name="proNo" class="proNo">	<!-- 삭제에 이용 -->
-			
-		</div>
-		
-		<div class="row" style="float: left; text-align: center; width:50%; position:absolute;">
-		<p>
-		<br>
-		<br>
-	  <img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="60%" width="200px"><p>
-	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	  <input type="button" value="제품 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductPage?proNo=${product.proNo}'"/>
-	  &nbsp;&nbsp;&nbsp;
-      <input type="button" value="옵션 추가" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/saveProductOption?proNo=${product.proNo}'"/>
-       &nbsp;&nbsp;&nbsp;
-      <input type="button" value="옵션 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductOptionPage?proNo=${product.proNo}'"/>
-       &nbsp;&nbsp;&nbsp;
-      <input type="button" value="제품 삭제" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/productDelete?proNo=${product.proNo}'"/>
-			<br>
-			<br>
-			<a href="${contextPath}/admin/product/list">목록으로가기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		</div>
-
-		
-		<div class="row productInfo" style="width: 40%; float: right; margin-bottom: 30px; margin-left: 150px; padding-left: 150px;">
-			<div class="form-group">
-				
-				<h5><strong>상품명:</strong> ${product.proName}</h5>
-				
-				
-			</div>
-			
-			
-			<div class="form-group" style="text-align: left;">
-			<strong>내용:</strong><p> <textarea rows="20" cols="100" readonly>${product.proDetail}</textarea><p>
-				<strong><label>가격 : </label></strong><span>&nbsp;<fmt:formatNumber value="${product.proPrice}" type="number"/></span><span>&nbsp;원</span>
-				<input type="hidden" value="${product.proPrice}" id="price"><p>		
-			</div>
-		
-		
-			<div class="form-horizontal" style="text-align: left;">
-					<strong><label>SIZE</label></strong> :
-					<select class="form-control opt_select proSize" name="proSize" id="proSize">
+	<br>
+	<h3 class="kind">Product Detail</h3><br>
+	
+	
+	
+	<form id="f">
+	<input type="hidden" value="${product.proNo}" id="proNo" name="proNo" class="proNo"> <!-- 삭제에 이용 -->
+	<table border="1">
+	<tr>
+		<td class="table-dark">썸네일</td>
+		<td class="table-secondary"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="50%"></td>
+	</tr>
+	<tr>
+		<td class="table-dark">상품명</td>
+		<td class="table-secondary">${product.proName}</td>
+	</tr>
+	<tr>
+		<td class="table-dark">내용</td>
+		<td class="table-secondary">${product.proDetail}</td>
+	</tr>
+	<tr>
+		<td class="table-dark">가격</td>
+		<td class="table-secondary"><fmt:formatNumber value="${product.proPrice}" type="number"/>원</td>
+		<input type="hidden" value="${product.proPrice}" id="price">
+	</tr>
+	<tr>
+		<td class="table-dark">사이즈선택</td>
+		<td ><select class="form-control opt_select proSize" name="proSize" id="proSize">
 						<option selected disabled>SIZE를 선택해 주세요</option>
 						<option value="240">240</option>
 						<option value="250">250</option>
 						<option value="260">260</option>
 						<option value="270">270</option>
 						<option value="280">280</option>
-					</select>
-					<br>
-					<strong>수량 :</strong> <span id="proQty" class="proQty"></span><p><br>
-				<strong>할인 :</strong> <span id="proDiscount" class="proDiscount" ></span>
-				</div>
-				</div>
-		</div>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		</section>
-		
-		<footer id="footer">
-	<div id="footer_box">
-		<%@ include file="../layout/footer.jsp" %>
+					</select></td>
+	</tr>
+	
+	<tr>
+		<td class="table-dark">수량</td>
+		<td id="proQty" class="table-secondary"></td>
+	</tr>
+	<tr>
+		<td class="table-dark">할인율</td>
+		<td id="proDiscount" class="table-secondary"></td>
+	</tr>
+	</table>
+		<br>
+	</form>
+	
+<div>
+	<input type="button" value="제품 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductPage?proNo=${product.proNo}'"/>
+	  &nbsp;&nbsp;&nbsp;
+      <input type="button" value="옵션 추가" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/saveProductOption?proNo=${product.proNo}'"/>
+       &nbsp;&nbsp;&nbsp;
+      <input type="button" value="옵션 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductOptionPage?proNo=${product.proNo}'"/>
+       &nbsp;&nbsp;&nbsp;
+     <input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">
+     <a href="${contextPath}/admin/product/list">목록으로가기</a>
+     
+	<br>
 	</div>
+	<br>
+	</section>
 	
-</footer>
-				
-			
-				
+	
+	
+	<footer id="footer">
+	
+		<div id="footer_box">
 		
+			<%@ include file="../layout/footer.jsp" %>
+		</div>
+	</footer>
+
+
+	</body>
+	</html>
 		
 	
-
-		
-		
-</body>
-		
-</html>
-

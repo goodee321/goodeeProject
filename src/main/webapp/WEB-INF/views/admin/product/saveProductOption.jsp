@@ -17,17 +17,51 @@
 
 
 
+
 <script>
 	
 	$(function(){
+		
 		fnSignIn();
 		fnRegExp();
+		fnData();
 		
 	})
 	
+	
+	function fnData(){
+	
+$("#proSize").change(function () {
+	var proNo= $("#proNo").val();
+	var proSize= $("#proSize").val();
+	
+	  $.ajax({
+		    
+		    url: '${contextPath}/admin/product/changeProductOptionDetail/',
+		    type: 'get',
+		    data:"proNo="+proNo+'&proSize='+proSize,
+			dataType: 'json',
+			header: {
+				"Content-Type" : "application/json"
+			},
+			contentType : "application/json",
+		    success: function (data) {
+		    	$('#proQty').val(data.proQty); alert('이미 등록된 사이즈입니다.');
+		    	$('#proDiscount').val(data.proDiscount);
+		    },
+		    error: function () {
+		    	$('#proQty').val(''); alert('등록 가능한 사이즈입니다.');
+		    	$('#proDiscount').val('');
+		    }
+	  });
+	});
+	
+	}
+	
 	function fnSignIn(){
+		
 		$('#f').on('submit', function(event){
-			
+	
 			if(discountPass == false){
 				alert('할인율을 변경하시기 바랍니다.');
 				event.preventDefault();
@@ -61,7 +95,7 @@
 			
 	function fnRegExp(){
 			let numberRegExp = 	/^[0-9]+$/;
-			let decimalRegExp = /^[0][\.]?(\d{1,1})?$/g;	// 소수점 한자리까지
+			let decimalRegExp = /^[0][\.]?(\d{1,1})?$/g;	//시작이 0, 중간에 .이 하나, 마지막이 0으로 끝나지 않은 소수
 			
 			
 			
@@ -101,8 +135,22 @@
 
 <style>
 
+
 @import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
 
+section {
+		background-color: #BDBDBD;
+	
+		font-family: Georgia, "Malgun Gothic", serif;
+		}
+
+
+.kind {
+			font-family: 'Splash', cursive;
+			font-size: 40px;
+			text-shadow: 1px 1px 1px gray;
+			text-align: center;
+	}
 
 
 #f {
@@ -150,27 +198,6 @@ table{
 	color: crimson;
 }
 
-	section {
-		background-color: #BDBDBD;
-	
-		font-family: Georgia, "Malgun Gothic", serif;
-		}
-		
-		#btn {
-			margin: 0 auto;
-		}
-
-
-	.kind {
-			font-family: 'Splash', cursive;
-			font-size: 40px;
-	}
-	
-	
-	footer {
-		background-color: #BDBDBD;
-	}
-
 	 </style>
 
 </head>
@@ -181,6 +208,7 @@ table{
 			<%@ include file="../layout/nav.jsp" %>
 		</div>
 	</nav>
+
 	
 	<section>
 	<br>
@@ -190,7 +218,7 @@ table{
 	<div class="table">
 	<form id="f" class="form-horizontal" role="form"  action="${contextPath}/admin/product/saveProductOptionOk" method="post">
 		<table>
-		<input type="hidden" name="proNo" value="${product.proNo}" readonly="readonly">
+		<input type="hidden" name="proNo" id="proNo" value="${product.proNo}" readonly="readonly">
 		<tr>	
 		<td><strong>제품명</strong></td><td>	<input type="text" name="proName" id="proName" value="${product.proName}" class="form-control" placeholder="제품명" readonly="readonly"></td>
 		</tr><tr>
@@ -198,7 +226,7 @@ table{
 		</tr><tr>
 		<td><strong>사이즈</strong></td><td>
 		<select class="my-select selectpicker" name="proSize" id="proSize" >
-			<option value="0" selected >사이즈 선택</option>
+			<option value="0" >사이즈 선택</option>
 			<option value="240">240</option>
 			<option value="250">250</option>
 			<option value="260">260</option>
@@ -207,23 +235,23 @@ table{
 		</select>
 		</td>
 		</tr><tr>
-		<td><strong>수량</strong></td><td><input type="text" name="proQty" id="proQty" value="0"  class="form-control"></td>
+		<td><strong>수량</strong></td><td><input type="text" name="proQty" id="proQty"   class="form-control"></td>
 		</tr><tr>
 		<td></td><td id="proQtyError"></td>
 		</tr><tr>
-		<td><strong>할인가</strong></td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)" value="0"></td>
+		<td><strong>할인가</strong></td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)"></td>
 		</tr><tr>
 		<td></td><td id="proDiscountError"></td>
+		</tr>
 		</table>
 		
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<button id="btn" class="btn btn-secondary" style="margin: 0 auto;">작성완료</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
-		<br>
+		<button id="btn" class="btn btn-secondary">변경 완료</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="${contextPath}/admin/product/list">목록</a><br>
 		<br>
 	</form>
 	</div>
@@ -236,6 +264,7 @@ table{
 		<%@ include file="../layout/footer.jsp" %>
 	</div>
 </footer>
+	
 	
 </body>
 </html>

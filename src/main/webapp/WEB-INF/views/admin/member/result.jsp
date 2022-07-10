@@ -28,7 +28,7 @@
 	}
 	
 	if('${kind}' == 'deleteList'){
-		if(confirm('삭제할까요?')){
+		
 		if('${res}' > '0'){
 			alert('선택한 회원이 삭제되었습니다.');
 			location.href='${contextPath}/admin/member/list';
@@ -36,6 +36,6 @@
 			alert('선택한 회원이 삭제되지 않았습니다.');
 			history.back();
 		}
-		}
+		
 	}
 </script>

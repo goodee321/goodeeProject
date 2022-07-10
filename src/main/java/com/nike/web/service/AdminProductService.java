@@ -38,9 +38,12 @@ public interface AdminProductService {
 	public void changeProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
 	
 	
-	// 개별삭제
+	// 삭제
 	public void productDelete(HttpServletRequest request, HttpServletResponse response);
 	
+	
+	// 개별삭제
+	public int removeOne(HttpServletRequest request);
 	
 	
 	// 제품상세보기
@@ -60,11 +63,12 @@ public interface AdminProductService {
 	// 상품옵션변경
 	public void changeProductOptionPage(HttpServletRequest request, Model model);
 	
+	
 	// 상품옵션변경
 	public void changeProductOption(HttpServletRequest request, HttpServletResponse response);
 	
 	
-	
+	// 상품옵션변경시 사이즈 할인율 알려줌
 	public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request);
 	
 	

@@ -32,17 +32,19 @@
 		font-weight: bold;
 	}
 	.link:hover {
-		border: 1px solid orange;
-		color: limegreen;
+		border: 1px solid black;
+		color: green;
 	}
 
 
 
 	table {
-		border-collapse: collapse;
-		margin-left:auto;
-    	margin-right:auto;
+	padding: 20px;
+	margin: auto;
+	box-shadow: 2px 2px 2px 2px gray;
+	border-radius: 5px;
 	}
+
 	
 	td:nth-of-type(1) { width: 80px; }
 	td:nth-of-type(2) { width: 160px; }
@@ -55,6 +57,8 @@
 	td {
 		padding: 5px;
 		text-align: center;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
 	}
 	tfoot td {
 		border-left: 0;
@@ -84,11 +88,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
+			
 	}
 	
 </style>
@@ -200,7 +206,7 @@
 		$('#column').on('change', function(){
 			if( $(this).val() == '' ) {
 				$('#equalArea').css('display', 'none');
-			} else if( $(this).val() == 'PRO_NAME' || $(this).val() == 'PRO_SIZE' ) {
+			} else if( $(this).val() == 'PRO_NAME' || $(this).val() == 'PRO_SIZE') {
 				$('#equalArea').css('display', 'inline');
 			} else {
 				$('#equalArea').css('display', 'none');
@@ -242,7 +248,7 @@
 				return false;
 			}
 			
-			else if( column.val() == 'PRO_NAME' || column.val() == 'PRO_SIZE' ) {
+			else if( column.val() == 'PRO_NAME' || column.val() == 'PRO_SIZE'  ) {
 				location.href="${contextPath}/admin/member/search?column=" + column.val() + "&query=" + query.val();
 			} 
 			
@@ -306,7 +312,7 @@
 		<br>
 			<thead>
 				<tr>
-					<td  class="table-dark">
+					<td class="table-dark">
 						<label for="checkAll">전체선택</label>
 						<input type="checkbox" id="checkAll" class="blind">
 					</td>
@@ -323,7 +329,7 @@
 					<tr data-pro_no="${product.proNo}">
 						<td><input type="checkbox" name="productNoList" id="productNoList" value="${product.proNo}" class="checkes"></td>
 						<td>${product.proNo}</td>
-						<td><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="80%"></a>
+						<td><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="50%"></td>
 						<td>${product.proName}</td>
 						<td>${product.proDate}</td>
 					</tr>

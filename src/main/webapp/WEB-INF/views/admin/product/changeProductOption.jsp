@@ -46,12 +46,12 @@ $("#proSize").change(function () {
 			},
 			contentType : "application/json",
 		    success: function (data) {
-		    	$('#proQty').val(data.proQty);
+		    	$('#proQty').val(data.proQty); alert('수정가능한 사이즈입니다.');
 		    	$('#proDiscount').val(data.proDiscount);
 		    },
 		    error: function () {
-		    	$('#proQty').val('0');
-		    	$('#proDiscount').val('0');
+		    	$('#proQty').val(''); alert('등록되지 않은 사이즈입니다.');
+		    	$('#proDiscount').val('수정불가');
 		    }
 	  });
 	});
@@ -75,7 +75,7 @@ $("#proSize").change(function () {
 			}
 			
 			else if($('#proQty').val() == 0){
-				alert('수량을 확인하시길 바랍니다.');
+				alert('수정불가');
 				event.preventDefault();
 				return false;
 			}
@@ -148,6 +148,8 @@ section {
 .kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 1px 1px 1px gray;
+			text-align: center;
 	}
 
 
@@ -240,6 +242,7 @@ table{
 		<td><strong>할인가</strong></td><td>	<input type="text" name="proDiscount" id="proDiscount" class="form-control" placeholder="할인액(0.00)"></td>
 		</tr><tr>
 		<td></td><td id="proDiscountError"></td>
+		</tr>
 		</table>
 		
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -248,7 +251,7 @@ table{
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<button id="btn" class="btn btn-secondary">변경 완료</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
+		<a href="${contextPath}/admin/product/list">목록</a><br>
 		<br>
 	</form>
 	</div>

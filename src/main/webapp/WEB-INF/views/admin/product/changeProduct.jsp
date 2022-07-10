@@ -14,6 +14,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../../resources/js/jquery-3.6.0.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- bootstrap css -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
@@ -156,6 +158,8 @@ section {
 		.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 1px 1px 1px gray;
+			text-align: center;
 	}
 </style>
 </head>
@@ -193,7 +197,7 @@ section {
 			</tr><tr>
 			<td></td><td id="proPriceError"></td>
 			</tr><tr><p>
-			<td><strong>내용</strong><p></td><td>	<textarea class="form-control" name="proDetail"  "${product.proDetail}"rows="3" placeholder="상세 내용"></textarea>
+			<td><strong>내용</strong><p></td><td>	<textarea class="form-control" name="proDetail"  rows="3" placeholder="상세 내용">${product.proDetail} </textarea>
 			</tr><tr><p>
 			<td>첨부</td><td><input type="file" name="files" id="files" multiple="multiple"></td>
 			
@@ -201,8 +205,8 @@ section {
 			
 			
 			
-			<button id="btn" class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
+			<button id="btn" class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="${contextPath}/admin/product/list">목록</a><br>
 	</form>
 	<br>
 	</div>

@@ -262,6 +262,16 @@ public class AdminController {
     public void productDelete(HttpServletRequest request, HttpServletResponse response) {
         adminProductService.productDelete(request, response);
     }
+    
+    
+    // 상품개별삭제
+    @GetMapping("/admin/product/removeOne")
+    public String productRemoveOne(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("kind", "deleteOne");
+        redirectAttributes.addFlashAttribute("res", adminProductService.removeOne(request));
+        return "redirect:/admin/product/afterDML";
+    }
+    
 
     // 상품옵션추가
     @GetMapping("/admin/product/saveProductOption")
@@ -294,6 +304,15 @@ public class AdminController {
        return productQty;
     }
     
+    
+ // fnAjax1이 요청하는 곳
+ 	@JsonInclude(JsonInclude.Include.NON_NULL)
+ 	@ResponseBody
+ 	@RequestMapping(value="/admin/product/changeProductOptionDetail", method= {RequestMethod.GET, RequestMethod.POST})  
+ 	public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request) { 
+ 	ProductQtyDTO productQty = adminProductService.changeProductOptionDetail(request);
+ 		return productQty;
+ 	}
     
     
     

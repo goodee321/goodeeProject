@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 제품 리스트 -->
 	<select id="selectProductList" parameterType="Map" resultMap="ProductMap">
 
-        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE,  PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN,PQ.PRO_SIZE, PQ.PRO_QTY, PQ.PRO_DISCOUNT
+        SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, P.PRO_DATE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN,PQ.PRO_SIZE, PQ.PRO_QTY, PQ.PRO_DISCOUNT
       FROM  PRODUCT P INNER JOIN PRODUCT_IMAGE PI
       ON  P.PRO_NO = PI.PRO_NO INNER JOIN PRODUCT_QTY PQ
       ON P.PRO_NO = PQ.PRO_NO
@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		<!-- 제품 검색 레코드 갯수-->
 	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(P.PRO_NO)
 		  FROM PRODUCT P INNER JOIN PRODUCT_QTY
 		 WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
 	</select>
@@ -89,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		 ON  PI.PRO_NO = P.PRO_NO  INNER JOIN PRODUCT_QTY PQ
          ON P.PRO_NO = PQ.PRO_NO
 		 WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
+		 LIMIT #{beginRecord}, #{recordPerPage}
 	</select>
 
 
@@ -98,7 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  INSERT 
 	  INTO PRODUCT(PRO_NAME, PRO_PRICE, PRO_DETAIL, PRO_DATE)
 	   VALUES
-	   (#{proName}, #{proPrice}, #{proDetail}, SYSDATE())
+	   (#{proName}, #{proPrice}, #{proDetail}, NOW())
 	   <selectKey keyProperty="proNo" resultType="Integer" order="AFTER">
 	   	SELECT LAST_INSERT_ID();
 	   </selectKey>
@@ -223,7 +224,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	
+	<!-- 다중 삭제(선택해서 삭제) -->
+	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+	<delete id="deleteProductList">
+		DELETE
+		  FROM PRODUCT
+		<where> 
+		 	<foreach collection="list" item="proNo" open="PRO_NO IN(" separator="," close=")">
+				#{proNo}
+			</foreach>
+		</where>
+	</delete>
 	
 	
 	

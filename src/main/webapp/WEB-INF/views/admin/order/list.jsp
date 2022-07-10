@@ -34,16 +34,18 @@
         }
 
         .link:hover {
-            border: 1px solid orange;
-            color: limegreen;
+            border: 1px solid black;
+            color: green;
         }
 
 
         table {
-            border-collapse: collapse;
-            margin-left: auto;
-            margin-right: auto;
-        }
+	padding: 20px;
+	margin: auto;
+	box-shadow: 2px 2px 2px 2px gray;
+	border-radius: 5px;
+	}
+
 
         td:nth-of-type(1) {
             width: 80px;
@@ -76,6 +78,8 @@
         td {
             padding: 5px;
             text-align: center;
+            border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
         }
 
         tfoot td {
@@ -105,11 +109,13 @@
         .kind {
             font-family: 'Splash', cursive;
             font-size: 40px;
+           
         }
 
         .kind2 {
             font-family: 'Splash', cursive;
 			font-size: 32px;
+			
         }
 
     </style>
@@ -196,7 +202,7 @@
             $('#column').on('change', function () {
                 if ($(this).val() == '') {
                     $('#equalArea').css('display', 'none');
-                } else if ($(this).val() == 'ORDER_NO' || $(this).val() == 'MEMBER_NO') {
+                } else if ($(this).val() == 'ORDER_NO' || $(this).val() == 'MEMBER_NO' || $(this).val() == 'ORDER_NAME') {
                     $('#equalArea').css('display', 'inline');
                 } else {
                     $('#equalArea').css('display', 'none');
@@ -216,7 +222,7 @@
         	
         	$('#btnRemove').on('click', function(){
         		
-        		var result = confirm("정말 삭제할까요?");
+        		var result = confirm("선택한 주문을 삭제하시겠습니까?");
         		
         		if(result == true){
         				$('#f2').submit();
@@ -252,14 +258,14 @@
                     alert('검색어를 입력해주세요.');
                     event.preventDefault();
                     return false;
-                } else if (column.val() == 'ORDER_NO' || column.val() == 'MEMBER_NO') {
+                } else if (column.val() == 'ORDER_NO' || column.val() == 'MEMBER_NO' || column.val() == 'ORDER_NAME') {
                     location.href = "${contextPath}/admin/order/search?column=" + column.val() + "&query=" + query.val();
                 }
             })
         }
 
         function fnCancel() {
-            $(".btnCancel").on('click', function () {
+            $("#btnCancel").on('click', function () {
                 if (confirm("주문을 취소하시겠습니까? 취소된 주문은 복구할 수 없습니다.")) {
                     $("#cancelOrder").submit();
                 }
@@ -287,7 +293,7 @@
     <div>
         <h3 class="kind">Order Management</h3>
         <h3 class="kind2">Total Order	: ${totalRecord}</h3>
-        <h3 class="kind2">Search Order	: ${findRecord}</h3>
+        
     </div>
 
     <hr>
@@ -297,6 +303,7 @@
             <option value="">:::선택:::</option>
             <option value="ORDER_NO">주문번호</option>
             <option value="MEMBER_NO">회원번호</option>
+            <option value="ORDER_NAME">회원명</option>
         </select>
 
         <span id="equalArea">
@@ -345,7 +352,7 @@
                                 <input type="hidden" id="orderImpUid" name="orderImpUid" value="${order.impUid}">
                                 <input type="hidden" id="orderAmount" name="orderAmount" value="${order.orderAmount}">
                                 <input type="hidden" id="orderReason" name="orderReason" value="RequestCancel">
-                                <button class="btnCancel">주문취소</button>
+                                <button id="btnCancel" class="btn btn-secondary">주문취소</button>
                             </form>
                         </c:if>
                         <c:if test="${order.orderState == 4}">

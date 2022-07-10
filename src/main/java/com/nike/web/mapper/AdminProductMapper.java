@@ -28,7 +28,7 @@ public interface AdminProductMapper {
 			
 			public List<ProductImageDTO> selectProductImageListInTheProduct(Integer proimgNo);
 			
-			public int deleteProduct(Integer proNo);
+			
 			
 			
 			
@@ -71,5 +71,8 @@ public interface AdminProductMapper {
 			
 			public void deleteProductImage(Integer proimgNo);
 	
+			
+			// 개별삭제
+			public int deleteProduct(Integer proNo);
 	
 }

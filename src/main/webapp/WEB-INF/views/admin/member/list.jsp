@@ -31,8 +31,8 @@
 		font-weight: bold;
 	}
 	.link:hover {
-		border: 1px solid orange;
-		color: limegreen;
+		border: 1px solid black;
+		color: green;
 	}
 
 
@@ -54,6 +54,8 @@
 	td {
 		padding: 5px;
 		text-align: center;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
 	}
 	tfoot td {
 		border-left: 0;
@@ -69,6 +71,7 @@
 	
 	thead {
 		font-weight: bold;
+		
 	}
 	
 	
@@ -83,11 +86,22 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
+			
+			
+	}
+	
+	table {
+	padding: 20px;
+	margin: auto;
+	box-shadow: 2px 2px 2px 2px gray;
+	border-radius: 5px;
+	
 	}
 	
 </style>
@@ -207,7 +221,7 @@ function fnRemove(){
 	
 	$('#btnRemove').on('click', function(){
 		
-		var result = confirm("정말 삭제할까요?");
+		var result = confirm("선택한 회원을 삭제하시겠습니까?");
 		
 		if(result == true){
 				$('#f2').submit();
@@ -285,7 +299,7 @@ function fnSearch(){
 	
 	<h3 class="kind2">Total Member : ${totalRecord}</h3>
 	
-	<h3 class="kind2">Search Member : ${findRecord}</h3>
+	
 	</div>
 	
 	
@@ -329,7 +343,7 @@ function fnSearch(){
 					</td>
 					<td class="table-dark">회원번호</td>
 					<td class="table-dark">ID</td>
-					<td class="table-dark">이름</td>
+					<td class="table-dark">NAME</td>
 					<td class="table-dark">E-Mail</td>
 					
 				</tr>
