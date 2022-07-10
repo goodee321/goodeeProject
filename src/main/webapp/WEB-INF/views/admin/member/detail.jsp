@@ -40,7 +40,7 @@
 			
 			text-align: center;
 			background-color: #BDBDBD;
-			
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 	#f {

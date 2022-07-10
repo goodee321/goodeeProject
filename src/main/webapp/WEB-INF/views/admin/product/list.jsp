@@ -88,13 +88,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
-			text-shadow: 1px 1px 1px gray;
+			
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
-			text-shadow: 1px 1px 1px gray;
+			
 	}
 	
 </style>
@@ -206,7 +206,7 @@
 		$('#column').on('change', function(){
 			if( $(this).val() == '' ) {
 				$('#equalArea').css('display', 'none');
-			} else if( $(this).val() == 'PRO_NAME' || $(this).val() == 'PRO_SIZE' ) {
+			} else if( $(this).val() == 'PRO_NAME' || $(this).val() == 'PRO_SIZE') {
 				$('#equalArea').css('display', 'inline');
 			} else {
 				$('#equalArea').css('display', 'none');
@@ -248,7 +248,7 @@
 				return false;
 			}
 			
-			else if( column.val() == 'PRO_NAME' || column.val() == 'PRO_SIZE' ) {
+			else if( column.val() == 'PRO_NAME' || column.val() == 'PRO_SIZE'  ) {
 				location.href="${contextPath}/admin/member/search?column=" + column.val() + "&query=" + query.val();
 			} 
 			
@@ -312,7 +312,7 @@
 		<br>
 			<thead>
 				<tr>
-					<td  class="table-dark">
+					<td class="table-dark">
 						<label for="checkAll">전체선택</label>
 						<input type="checkbox" id="checkAll" class="blind">
 					</td>

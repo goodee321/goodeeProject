@@ -159,6 +159,7 @@ section {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
 			text-shadow: 1px 1px 1px gray;
+			text-align: center;
 	}
 </style>
 </head>
@@ -196,7 +197,7 @@ section {
 			</tr><tr>
 			<td></td><td id="proPriceError"></td>
 			</tr><tr><p>
-			<td><strong>내용</strong><p></td><td>	<textarea class="form-control" name="proDetail"  "${product.proDetail}"rows="3" placeholder="상세 내용"></textarea>
+			<td><strong>내용</strong><p></td><td>	<textarea class="form-control" name="proDetail"  rows="3" placeholder="상세 내용">${product.proDetail} </textarea>
 			</tr><tr><p>
 			<td>첨부</td><td><input type="file" name="files" id="files" multiple="multiple"></td>
 			

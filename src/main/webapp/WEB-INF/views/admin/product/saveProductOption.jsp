@@ -50,8 +50,8 @@ $("#proSize").change(function () {
 		    	$('#proDiscount').val(data.proDiscount);
 		    },
 		    error: function () {
-		    	$('#proQty').val('0'); alert('등록 가능한 사이즈입니다.');
-		    	$('#proDiscount').val('0');
+		    	$('#proQty').val(''); alert('등록 가능한 사이즈입니다.');
+		    	$('#proDiscount').val('');
 		    }
 	  });
 	});

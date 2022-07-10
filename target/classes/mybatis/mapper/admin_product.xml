@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		<!-- 제품 검색 레코드 갯수-->
 	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(P.PRO_NO)
 		  FROM PRODUCT P INNER JOIN PRODUCT_QTY
 		 WHERE ${column} LIKE CONCAT('%', TRIM(#{query}), '%')
 	</select>
