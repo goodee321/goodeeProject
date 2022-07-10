@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd" >
+
+<configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.nike.web.domain.CartDTO" alias="cart" />
+		<typeAlias type="com.nike.web.domain.MemberDTO" alias="MemberDTO" />
+		<typeAlias type="com.nike.web.domain.MemberLogDTO" alias="MemberLogDTO" />
+		<typeAlias type="com.nike.web.domain.NoticeDTO" alias="NoticeDTO" />
+		<typeAlias type="com.nike.web.domain.OrderDetailDTO" alias="orderDetail" />
+		<typeAlias type="com.nike.web.domain.OrderDTO" alias="order" />
+		<typeAlias type="com.nike.web.domain.OrderItemDTO" alias="orderItemDTO" />
+		<typeAlias type="com.nike.web.domain.ProductDTO" alias="ProductDTO" />
+		<typeAlias type="com.nike.web.domain.ProductQtyDTO" alias="ProductQtyDTO" />
+		<typeAlias type="com.nike.web.domain.ProductImageDTO" alias="ProductImageDTO" />
+		<typeAlias type="com.nike.web.domain.QnaDTO" alias="QnaDTO" />
+		<typeAlias type="com.nike.web.domain.ReviewDTO" alias="ReviewDTO" />
+		<typeAlias type="com.nike.web.domain.ReviewImageDTO" alias="ReviewImageDTO" />
+		<typeAlias type="com.nike.web.domain.SignOutMemberDTO" alias="SignOutMemberDTO" />
+	</typeAliases>
+
+</configuration>

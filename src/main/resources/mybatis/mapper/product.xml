@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.nike.web.mapper.ProductMapper">
+
+	<resultMap type="ProductImageDTO" id="ProductImageMap">
+		<result column="PROIMG_NO" property="proimgNo" />
+		<result column="PROIMG_NAME" property="proimgName" />
+		<result column="PROIMG_PATH" property="proimgPath" />
+		<result column="PROIMG_ORIGIN" property="proimgOrigin" />
+		<result column="PRO_NO" property="proNo" />
+	</resultMap>
+	<resultMap type="productQtyDTO" id="productQtyMap">
+		<result column="PRO_NO" property="proNo" />
+		<result column="PRO_SIZE" property="proSize" />
+		<result column="PRO_QTY" property="proQty" />
+		<result column="PRO_DISCOUNT" property="proDiscount" />
+	</resultMap>
+	
+	<resultMap type="ProductDTO" id="ProductMap">
+	<result column="PRO_NO" property="proNo" />
+	<result column="PRO_NAME" property="proName" />
+	<result column="PRO_PRICE" property="proPrice" />
+	<result column="PRO_DETAIL" property="proDetail" />
+	<result column="PRO_DATE" property="proDate" />
+	<collection resultMap="ProductImageMap" property="productImageDTO" />
+	<collection resultMap="productQtyMap" property="productQtyDTO" />
+	
+	</resultMap>
+	
+	<resultMap type="ReviewImageDTO" id="ReviewImageMap">
+   		<result column="RI_NO" property="riNo"/>
+   		<result column="RI_NAME" property="riName"/>
+   		<result column="RI_PATH" property="riPath"/>
+   		<result column="RI_ORIGIN" property="riOrigin"/>
+   		<result column="RI_SAVED" property="riSaved"/>
+   		<result column="REVIEW_NO" property="reviewNo"/>
+   	</resultMap>
+   
+   	<resultMap type="ReviewDTO" id="ReviewMap">
+   		<result column="REVIEW_NO" property="reviewNo"/>
+   		<result column="ORDER_NO" property="orderNo"/>
+   		<result column="PRO_NO" property="proNo"/>
+   		<result column="MEMBER_NO" property="memberNo"/>
+   		<result column="REVIEW_TITLE" property="reviewTitle"/>
+   		<result column="REVIEW_CONTENT" property="reviewContent"/>
+   		<result column="REVIEW_DATE" property="reviewDate"/>
+   		<result column="REVIEW_STAR" property="reviewStar"/>
+   		<collection resultMap="ReviewImageMap" property="reviewImageDTO"/>
+   	</resultMap>
+
+
+<!-- 갤러리 목록 -->
+	<!-- 전체 갤러리 갯수 -->
+	<select id="selectProductCount" resultType="Integer">
+		SELECT COUNT(PRO_NO)
+		  FROM PRODUCT
+	</select>
+	
+	
+	<!-- 제품 리스트 -->
+	<select id="selectProductList" parameterType="Map" resultMap="ProductMap">
+
+       SELECT DISTINCT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO AS PROIMG_NO , PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_QTY
+	  FROM  PRODUCT P  INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO LEFT JOIN PRODUCT_QTY PQ 
+	  ON  P.PRO_NO = PQ.PRO_NO
+	  GROUP BY P.PRO_NO
+      ORDER BY P.PRO_NO DESC 
+      LIMIT #{beginRecord}, #{recordPerPage}
+     
+	</select>
+
+	
+		<!-- 제품 검색 -->
+	<select id="selectFindProductCount" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM PRODUCT P
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+	</select>
+
+	<!-- 제품 검색 리스트 -->
+	<select id="selectFindProductList" parameterType="Map" resultMap="ProductMap">
+		SELECT P.PRO_NO, P.PRO_NAME, P.PRO_PRICE, PI.PROIMG_NO, PI.PROIMG_NAME, PI.PROIMG_PATH, PI.PROIMG_ORIGIN, PQ.PRO_SIZE 
+		 FROM  PRODUCT P  INNER JOIN PRODUCT_IMAGE PI
+      ON  P.PRO_NO = PI.PRO_NO LEFT JOIN PRODUCT_QTY PQ 
+	  ON  P.PRO_NO = PQ.PRO_NO
+		 WHERE ${column} LIKE CONCAT('%', CONCAT(IFNULL(#{query}, ''), '%'))
+		 ORDER BY P.PRO_NO DESC
+		 LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+
+
+	 <!-- 데이터 삽입 -->
+	 <insert id="insertProduct" parameterType="ProductDTO">
+	
+	  INSERT 
+	  INTO PRODUCT(PRO_NAME, PRO_PRICE, PRO_DETAIL, PRO_DATE)
+	   VALUES
+	   (#{proName}, #{proPrice}, #{proDetail}, SYSDATE())
+	   <selectKey keyProperty="proNo" resultType="Integer" order="AFTER">
+	   	SELECT LAST_INSERT_ID();
+	   </selectKey>
+	
+	  </insert>
+	  <!-- 옵션 삽입 -->
+	  <insert id="insertProductQty" parameterType="ProductQtyDTO">
+	  INSERT
+	  INTO PRODUCT_QTY (PRO_NO, PRO_SIZE,PRO_QTY,PRO_DISCOUNT)
+	  VALUES
+	  	(#{proNo}, #{proSize}, #{proQty}, #{proDiscount})
+	  
+	  </insert>
+	  
+	  <!-- 옵션 중복 확인 -->
+	  <select id="productQtyOverLap" parameterType="Map" resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM PRODUCT_QTY
+	  	WHERE PRO_NO = #{proNo}
+	  	AND	PRO_SIZE = #{proSize}
+	  
+	  </select>
+	  
+	  <!-- 파일 첨부 추가 -->
+	<insert id="insertProductAttach" parameterType="ProductImageDTO">
+		INSERT 
+		INTO PRODUCT_IMAGE (PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO)
+		VALUES
+			(#{proimgName}, #{proimgPath}, #{proimgOrigin}, #{proNo})
+	</insert>
+
+	<!-- 첨부 파일 정보 -->
+	<select id="selectProductImageByNo" parameterType="Integer" resultType="ProductImageDTO">
+		SELECT PROIMG_NO, PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO
+		  FROM PRODUCT_IMAGE
+		 WHERE  PROIMG_NO = #{proimgNo}
+	</select>
+	
+	<!-- 갤러리에 첨부된 첨부 파일 목록 -->
+		<select id="selectProductImageListInTheProduct" parameterType="Int" resultType="ProductImageDTO">
+			SELECT PROIMG_NO, PROIMG_NAME, PROIMG_PATH, PROIMG_ORIGIN, PRO_NO
+			  FROM PRODUCT_IMAGE
+			 WHERE PRO_NO = #{proNo}
+		</select>
+	<!-- 제품 수정 -->
+	<update id="updateProduct" parameterType="ProductDTO">
+		UPDATE PRODUCT
+		   SET PRO_NAME = #{proName}, PRO_PRICE= #{proPrice}, PRO_DETAIL= #{proDetail}, PRO_DATE = SYSDATE()
+		 WHERE PRO_NO = #{proNo}
+	</update>
+	
+	<!--  제품 이미지삭제 -->
+	<delete id="deleteProductImage" parameterType="Integer">
+		DELETE 
+		FROM PRODUCT_IMAGE
+		WHERE PROIMG_NO = #{proimgNo}
+	
+	</delete>
+
+	<!-- 제품 옵션 사이즈별 확인 -->
+	<select id="changeProductOptionByNo" parameterType="Map" resultType="ProductQtyDTO">
+		SELECT PRO_NO, PRO_QTY ,PRO_DISCOUNT, PRO_SIZE
+		FROM PRODUCT_QTY
+		WHERE PRO_NO = #{proNo}
+		AND PRO_SIZE = #{proSize}
+	
+	</select>
+	
+	<!-- 제품 옵션 수정 -->
+	<update id="updateProductQty" parameterType="Map">
+		UPDATE PRODUCT_QTY
+		SET PRO_QTY = #{proQty} ,PRO_DISCOUNT = #{proDiscount}
+		WHERE PRO_NO = #{proNo}
+		AND PRO_SIZE = #{proSize}
+	
+	</update>
+	
+	
+	<!-- 제품 상세 -->
+	<select id="selectProductByNo" parameterType="Integer" resultMap="ProductMap">
+	   SELECT * FROM PRODUCT P 
+	   INNER JOIN PRODUCT_QTY PQ ON P.PRO_NO = PQ.PRO_NO 
+	   INNER JOIN PRODUCT_IMAGE PI ON PI.PRO_NO = P.PRO_NO 
+	   WHERE P.PRO_NO = #{proNo};
+	</select>
+	
+	
+	<!-- <select id="selectProductQtyByNo" parameterType="ProductQtyDTO">
+	   SELECT PRO_QTY, PRO_DISCOUNT, PRO_SIZE 
+	   FROM PRODUCT P 
+	   INNER JOIN PRODUCT_QTY PQ ON P.PRO_NO = PQ.PRO_NO 
+	   WHERE P.PRO_NO = #{proNo};
+	</select> -->
+	
+	<!-- 상세페이지 리뷰 갯수 -->
+	<select id="selectDetailReviewCount" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM REVIEW
+	</select>
+	
+	<!-- 상세페이지 리뷰 리스트 -->
+	<select id="selectDetailReviewList" parameterType="Map" resultMap="ReviewMap">
+		SELECT * FROM REVIEW
+		WHERE PRO_NO = #{proNo}
+		ORDER BY REVIEW_NO DESC
+		LIMIT #{beginRecord}, #{recordPerPage}
+	</select>
+	
+	<!-- 리뷰 작성 -->
+	<insert id="insertDetailReview" parameterType="ReviewDTO">
+		INSERT INTO REVIEW
+			(REVIEW_NO, MEMBER_NO, PRO_NO, REVIEW_TITLE, REVIEW_CONTENT, REVIEW_DATE, REVIEW_STAR)
+		VALUES
+			(#{reviewNo}, #{memberNo}, #{proNo}, #{reviewTitle}, #{reviewContent}, NOW(), #{reviewStar})
+	</insert>
+	
+	<!-- 파일첨부 추가 -->
+	<insert id="insertDetailReviewImage" parameterType="ReviewImageDTO">
+		
+		INSERT INTO REVIEW_IMAGE
+			(RI_NO, RI_NAME, RI_PATH, RI_ORIGIN, REVIEW_NO)
+		VALUES
+			(#{riNo}, #{riName}, #{riPath}, #{riOrigin}, #{reviewNo})
+		<selectKey keyProperty="reviewNo" resultType="Integer" order="BEFORE">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+	
+	</insert>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteDetailReview" parameterType="Integer">
+		DELETE 
+		  FROM REVIEW
+		 WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+	
+	<!-- 리뷰 상세페이지 -->
+	<select id="selectReviewByNo" parameterType="Map" resultMap="ReviewMap">
+		SELECT REVIEW_NO, MEMBER_NO, PRO_NO, REVIEW_TITLE, REVIEW_CONTENT, REVIEW_DATE, REVIEW_STAR
+		  FROM REVIEW
+		 WHERE REVIEW_NO = #{reviewNo}
+	</select>
+	
+	<!-- 리뷰 수정 -->
+	<update id="updateReview" parameterType="ReviewDTO">
+		UPDATE REVIEW
+		   SET REVIEW_TITLE = #{reviewTitle}, REVIEW_CONTENT = #{reviewContent}, REVIEW_STAR = #{reviewStar}
+		 WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<!-- 첨부 파일 정보 -->
+	<select id="selectReviewImageByNo" parameterType="Integer" resultType="ReviewImageDTO">
+		SELECT RI_NO, RI_NAME, RI_PATH, RI_ORIGIN, REVIEW_NO
+		  FROM REVIEW_IMAGE
+		 WHERE RI_NO = #{riNo}
+	</select>
+	
+	
+	<select id="selectFileAttachListInTheGallery" parameterType="Integer" resultType="ReviewImageDTO">
+		SELECT RI_NO, RI_NAME, RI_PATH, RI_ORIGIN, REVIEW_NO
+		  FROM REVIEW_IMAGE
+		 WHERE REVIEW_NO = #{reviewNo}
+	</select>
+	
+	<delete id="deleteFileAttach" parameterType="Integer">
+		DELETE
+		  FROM REVIEW_IMAGE
+		 WHERE RI_NO = #{riNo}
+	</delete>
+	
+	<!-- 파일 삭제 -->
+	<delete id="deleteProduct" parameterType="Int">
+		DELETE
+		FROM PRODUCT
+		WHERE PRO_NO = #{proNo}
+	</delete>
+	
+
+</mapper>
