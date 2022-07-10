@@ -325,7 +325,7 @@
 					<tr data-pro_no="${product.proNo}">
 						<td><input type="checkbox" name="productNoList" id="productNoList" value="${product.proNo}" class="checkes"></td>
 						<td>${product.proNo}</td>
-						<td><img alt="이미지${product.productImageDTO.proNo}" src="${contextPath}/admin/product/display?proNo=${product.productImageDTO.proNo}" width="10%"></td>
+						<td><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="80%"></td>
 						<td>${product.proName}</td>
 						<td>${product.proDate}</td>
 					</tr>

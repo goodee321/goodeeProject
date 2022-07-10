@@ -582,10 +582,10 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 							// 썸네일
 							@Override
-							public ResponseEntity<byte[]> display(Integer proimgNo, String type) {
+							public ResponseEntity<byte[]> display(Integer proNo, String type) {
 								
 								// 보내줘야 할 이미지 정보(path, saved) 읽기
-								ProductImageDTO productImage = adminProductMapper.selectProductImageByNo(proimgNo);
+								ProductImageDTO productImage = adminProductMapper.selectProductImageByNo(proNo);
 							
 								// 보내줘야 할 이미지	
 								File file = null;
