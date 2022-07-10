@@ -3,16 +3,12 @@ package com.nike.web.controller;
 import com.nike.web.domain.*;
 import com.nike.web.service.MemberService;
 import com.nike.web.service.OrderService;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.List;
 
 @Controller
 public class OrderController {
@@ -43,8 +39,9 @@ public class OrderController {
         return orderService.orderComplete(impUid, order, request);
     }
 
-    @GetMapping("order/completePage")
-    public String completePage() {
+    @GetMapping("order/completePage/{orderId}")
+    public String completePage(@PathVariable("orderId") String orderId, Model model) {
+        orderService.getOrderByOrderId(orderId, model);
         return "order/complete";
     }
 

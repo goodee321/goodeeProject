@@ -18,8 +18,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -29,6 +27,7 @@ import com.nike.web.domain.OrderDetailDTO;
 import com.nike.web.domain.OrderItemDTO;
 import com.nike.web.mapper.CartMapper;
 import com.nike.web.mapper.OrderMapper;
+import org.springframework.ui.Model;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -116,15 +115,21 @@ public class OrderServiceImpl implements OrderService {
 
         int amount = paymentInfo(impUid, token);
 
+        System.out.println(amount);
+
         int res = 0;
 
         try {
             int orderAmount = order.getOrderAmount();
 
+            System.out.println(orderAmount);
+
             if (orderAmount != amount) {
                 OrderCancel(impUid, amount, "OrderCancel");
                 return 0;
             }
+
+            System.out.println("order : " + order);
 
             res = orderMapper.insertOrder(order);
 
@@ -266,5 +271,11 @@ public class OrderServiceImpl implements OrderService {
         product.add(productInfo);
         return product;
 
+    }
+
+    @Override
+    public void getOrderByOrderId(String orderId, Model model){
+        System.out.println("orderMapper.selectInfoByOrderId(orderId) : " + orderMapper.selectInfoByOrderId(orderId));
+        model.addAttribute("orderList", orderMapper.selectInfoByOrderId(orderId));
     }
 }

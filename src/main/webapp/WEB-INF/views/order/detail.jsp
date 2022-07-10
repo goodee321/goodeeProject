@@ -11,44 +11,109 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
     $(document).ready(function () {
         payment();
+
+        $(window).scroll(function () {
+            let contHeight = $(".order_cont").height();
+            let customContHeight = $(".custom_cont").height();
+            let scroll = $(this).scrollTop();
+            if (scroll > 274 && scroll < contHeight - customContHeight + 300) {
+                $(".custom_cont").css("position", "fixed").css("top", "17px");
+            } else if (scroll > contHeight - customContHeight + 158) {
+                $(".custom_cont").css("position", "absolute").css("top", contHeight - customContHeight - 41);
+            } else {
+                $(".custom_cont").css("position", "fixed").css("top", "270px");
+            }
+        });
+
+        $('input[name="shipping"]:radio').click(function () {
+            switch ($(this).prop('id')) {
+                case 'shippingBasic':
+                    $("#orderName").val($("#memberId").val());
+                    $("#orderPostcode").val($("#memberPost").val());
+                    $("#orderAddr").val($("#memberAddr").val());
+                    $("#addrDetail").val($("#memberAddrdetail").val());
+                    $("#orderPhone").val($("#memberPhone").val());
+                    break;
+                case 'shippingSameCheck':
+                    $("#orderName").val($("#orderNameId").val());
+                    $("#orderPostcode").val($("#orderPostId").val());
+                    $("#orderAddr").val($("#orderAddrId").val());
+                    $("#addrDetail").val($("#addrDetailId").val());
+                    $("#orderPhone").val($("#mobileNum").val());
+                    break;
+                case 'shippingNew':
+                    $("#orderName").val('');
+                    $("#orderPostcode").val('');
+                    $("#orderAddr").val('');
+                    $("#addrDetail").val('');
+                    $("#orderPhone").val('');
+                    break;
+            }
+        })
+
+        $("#selectSelf").hide();
+
+        $("#orderMessage").change(function () {
+            $("#orderMessage option:selected").each(function () {
+                if ($(this).val() == 'self') {
+                    $("#selectSelf").show();
+                } else {
+                    $("#selectSelf").hide();
+                }
+            })
+        })
+
+        $('.popup .close').click(function() {
+            $(this).parent().fadeOut(300);
+        });
+
     });
 
-    function daumPostcode() {
+    function openPop(){
+        document.getElementById("myShippingListLayer").style.display = "block";
+        document.getElementById("layer_wrap_cont").style.display = "block";
+    }
+
+    function open(){
+        document.getElementById("layer_wrap_cont").style.display = "none";
+        document.getElementById("deliveryAddLayer").style.display = "block";
+    }
+
+    function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
-                var roadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 참고 항목 변수
 
-                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                    extraRoadAddr += data.bname;
-                }
+                let addr = '';
+                let extraAddr = '';
 
-                if (data.buildingName !== '' && data.apartment === 'Y') {
-                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-
-                if (extraRoadAddr !== '') {
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-
-
-                document.getElementById('postalcode').value = data.zonecode;
-                document.getElementById("roadAddress").value = roadAddr;
-
-                var guideTextBox = document.getElementById("guide");
-
-                if (data.autoRoadAddress) {
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                    guideTextBox.style.display = 'block';
+                if (data.userSelectedType === 'R') {
+                    addr = data.roadAddress;
                 } else {
-                    guideTextBox.innerHTML = '';
-                    guideTextBox.style.display = 'none';
+                    addr = data.jibunAddress;
                 }
+
+                if (data.userSelectedType === 'R') {
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraAddr += data.bname;
+                    }
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    if (extraAddr !== '') {
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    document.getElementById("extraAddress").value = extraAddr;
+                } else {
+                    document.getElementById("extraAddress").value = '';
+                }
+                document.getElementById('orderPostcode').value = data.zonecode;
+                document.getElementById("orderAddr").value = addr;
+                document.getElementById("addrDetail").focus();
             }
         }).open();
     }
@@ -78,24 +143,32 @@
             priceData[i] = $("input[name='orderPrice']")[i].value;
         }
 
-        $('#iamportPayment').on('click', function () {
+
+        let Message = $("#orderMessage option:selected").text();
+        if ($("#orderMessage option:selected").val() == "self") {
+            Message = $("#selectSelf").val();
+        }
+
+        $('.order-buy').on('click', function () {
             let data = {
                 memberNo: parseInt($("#memberNo").val()),
                 orderName: $("#orderName").val(),
                 orderPhone: $("#orderPhone").val(),
                 orderAddr: $("#orderAddr").val(),
                 addrDetail: $("#addrDetail").val(),
-                orderAmount: parseInt($(".totalPrice").val()),
+                orderAmount: parseInt($("#finalTotal").val()),
                 orderPayment: $('input[name="payment"]:checked').val(),
                 orderDelivery: parseInt($(".orderDelivery").val()),
                 orderId: createOrderId(),
                 cartNo: cartData,
                 orderPrice: priceData,
-                productNo : $(".orderDetail_productNo").val(),
+                productNo: $(".orderDetail_productNo").val(),
                 cartQty: $(".orderDetail_cartQty").val(),
-                proPrice : $(".orderDetail_totalPrice").val(),
-                productSize : $(".orderDetail_productSize").val(),
+                proPrice: $(".orderDetail_totalPrice").val(),
+                productSize: $(".orderDetail_productSize").val(),
                 merchant_uid: createOrderId(),
+                orderPostcode: parseInt($("#orderPostcode").val()),
+                orderMessage: Message
             }
 
             IMP.init("imp28036390");
@@ -109,22 +182,9 @@
                 buyer_tel: $("#orderPhone").val(),
                 buyer_addr: $("#orderAddr").val()
             }, function (rsp) {
-                console.log(
-                    $("input[name='payment']:checked").val(),
-                    data.merchant_uid,
-                    data.orderName,
-                    data.orderAmount,
-                    "${loginMember.email}",
-                    $("#orderName").val(),
-                    $("#orderPhone").val(),
-                    $("#orderAddr").val()
-                )
                 if (rsp.success) {
                     data.impUid = rsp.imp_uid;
                     orderComplete(data);
-                } else {
-                    console.log(rsp.fail)
-                    console.log(rsp)
                 }
             })
         })
@@ -136,128 +196,543 @@
             method: "post",
             traditional: true,
             data: data,
-            success: function (res,request) {
-                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"\n"+"res"+res);
-                if(res > 0){
-                    location.href = "${contextPath}/order/completePage";
+            success: function (res) {
+                if (res > 0) {
+                    location.href = '${contextPath}/order/completePage/' + data.orderId;
+                } else {
+                    alert('결제가 실패되었습니다. 새로고침 후 다시 시도해주세요.');
                 }
-            }, error:function(request,status,error){
-                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         })
     }
 
 </script>
+<link href="../../resources/css/order.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="../layout/header.jsp"></jsp:include>
+<input type="hidden" id="memberNo" value="${loginMember.memberNo}">
+<div id="wrap">
+    <div id="container">
+        <div id="contents">
+            <div class="sub_content">
+                <div class="content_box">
+                    <div class="order_wrap">
+                        <div class="order_tit">
+                            <h2>주문서작성/결제<br></h2>
+                        </div>
+                        <div class="order_cont">
+                            <div class="cart_cont_list">
 
-    <button id="test">test</button>
+                                <div class="order_table_type">
 
-    ${orderList}
-    <input type="hidden" id="memberNo" value="${loginMember.memberNo}">
+                                    <c:forEach items="${orderList}" var="order">
+                                        <table>
+                                            <colgroup>
+                                                <col style="width:23%">
+                                                <col>
+                                                <col style="width:5%">
+                                                <col style="width:13%">
+                                                <col style="width:10%">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr class="order-goods-layout" data-goodsNo="1000002266">
+                                                <td class="td_left" style="padding-left:30px;">
+                                                    <input type="hidden" class="orderDetail_cartNo" name="cartNo"
+                                                           value="${order.cartNo}">
+                                                    <input type="hidden" class="orderDetail_productNo" name="productNo"
+                                                           value="${order.productNo}">
+                                                    <input type="hidden" class="orderDetail_cartQty" name="orderQty"
+                                                           value="${order.cartQty}">
+                                                    <input type="hidden" class="orderDetail_totalPrice"
+                                                           name="orderPrice"
+                                                           value="${order.totalPrice}">
+                                                    <input type="hidden" class="orderDetail_productSize"
+                                                           name="productSize"
+                                                           value="${order.productSize}">
+                                                    <div class="pick_add_cont">
+                                                <span class="pick_add_img">
+                                                    <a href="${contextPath}/product/detail?proNo=${order.productNo}"><img
+                                                            src="https://image.shutterstock.com/image-photo/grey-casual-sports-shoessneaker-isolated-600w-1541764289.jpg"
+                                                            width="120px" height="120px" class="middle"
+                                                            class="imgsize-s"/></a>
+                                                </span>
+                                                        <div class="pick_add_info">
+                                                            <em><a href="${contextPath}/product/detail?proNo=${order.productNo}">${order.proName}</a></em>
+                                                            <div class="pick_option_box">
+                                                                <span class="text_type_cont">옵션 : ${order.productSize} </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                </td>
+                                                <td class="td_order_amount">
+                                                    <div class="order_goods_num">
+                                                        <strong>${order.cartQty}개</strong>
+                                                    </div>
+                                                </td>
+                                                <td class="td_benefit">
+                                                    <ul class="benefit_list">
+                                                        <li class="benefit_mileage js_mileage">
+                                                            <span>상품 할인</span>
+                                                            <strong style="font-weight: bold">-<fmt:formatNumber
+                                                                    pattern="#,##0"
+                                                                    value="${order.discountPrice * order.cartQty}"/>원</strong>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td style="width:118px;">
+                                                    <strong class="order_sum_txt"><fmt:formatNumber pattern="#,##0"
+                                                                                                    value="${order.totalPrice}"/>원</strong>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                            <div class="order_view_info">
+                                <div class="order_info order_line">
+                                    <div class="order_zone_tit">
+                                        <h4>주문자 정보</h4>
+                                    </div>
 
-    주문/결제
-    <table border="1">
-        <thead>
-        <tr>
-            <td>이미지</td>
-            <td>상품명</td>
-            <td>옵션</td>
-            <td>수량</td>
-            <td>상품금액(할인포함)</td>
-            <td></td>
-        </tr>
-        </thead>
+                                    <div class="order_table_type">
+                                        <table class="table_left">
+                                            <input type="hidden" id="memberId" value="${loginMember.name}">
+                                            <input type="hidden" id="memberPost" value="${loginMember.postcode}">
+                                            <input type="hidden" id="memberAddr" value="${loginMember.address}">
+                                            <input type="hidden" id="memberAddrdetail"
+                                                   value="${loginMember.addrDetail}">
+                                            <input type="hidden" id="memberPhone" value="${loginMember.phone}">
+                                            <colgroup>
+                                                <col style="width:15%;">
+                                                <col style="width:85%;">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row"><span class="important">주문자 성명</span></th>
+                                                <td><input type="text" id="orderNameId" name="orderNameId"
+                                                           value="${loginMember.name}"
+                                                           maxlength="20"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">주소</th>
+                                                <td> [${loginMember.postcode}]
+                                                    ${loginMember.address}, ${loginMember.addrDetail}
+                                                    <input type="hidden" id="orderPostId" name="orderPostId"
+                                                           value="${loginMember.postcode}">
+                                                    <input type="hidden" id="orderAddrId" name="orderAddrId"
+                                                           value="${loginMember.address}">
+                                                    <input type="hidden" id="addrDetailId" name="addrDetailId"
+                                                           value="${loginMember.addrDetail}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">휴대폰 번호</span></th>
+                                                <td>
+                                                    <input type="text" id="mobileNum" name="orderCellPhone"
+                                                           value="${loginMember.phone}"
+                                                           maxlength="20"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">이메일</span></th>
+                                                <td class="member_email">
+                                                    <input type="text" name="orderEmail" value="kny2237@naver.com"/>
+                                                    <select id="emailDomain" class="chosen-select">
+                                                        <option value="self">직접입력</option>
+                                                        <option value="naver.com">naver.com</option>
+                                                        <option value="hanmail.net">hanmail.net</option>
+                                                        <option value="daum.net">daum.net</option>
+                                                        <option value="nate.com">nate.com</option>
+                                                        <option value="gmail.com">gmail.com</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="delivery_info order_line">
+                                    <div class="order_zone_tit">
+                                        <h4>배송정보</h4>
+                                    </div>
 
-        <tbody>
-        <c:forEach items="${orderList}" var="order">
-            <tr>
-                <td>
-                    <a href="${contextPath}/product/detail?proNo=${order.productNo}">
-                    </a>이미지
-                </td>
-                <td>${order.proName}</td>
-                <td>${order.productSize}</td>
-                <td>${order.cartQty}</td>
-                <td><fmt:formatNumber value="${order.salePrice}"></fmt:formatNumber></td>
-
-                <td class="orderDetail_td" colspan="5">
-                    <input type="hidden" class="orderDetail_cartNo" name="cartNo" value="${order.cartNo}">
-                    <input type="hidden" class="orderDetail_productNo" name="productNo" value="${order.productNo}">
-                    <input type="hidden" class="orderDetail_cartQty" name="orderQty" value="${order.cartQty}">
-                    <input type="hidden" class="orderDetail_totalPrice" name="orderPrice" value="${order.totalPrice}">
-                    <input type="hidden" class="orderDetail_productSize" name="productSize" value="${order.productSize}">
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-
-    </table>
-    <br><br>
-    배송지정보
-    <hr>
-
-    이름 <input type="text" id="orderName" value="${loginMember.name}"><br>
-    휴대폰번호 <input type="text" id="orderPhone" value="${loginMember.phone}"><br>
-    주소 <input type="text" id="orderAddr" value="${loginMember.address}"><br>
-    상세주소 <input type="text" id="addrDetail" value="${loginMember.addrDetail}"><br>
-    요청사항 <input type="text" id="orderRequest" name="orderRequest" value=""><br>
-    <c:set var="total" value="0"/>
-    <c:forEach var="result" items="${orderList}" varStatus="status">
-        <c:set var="total" value="${total + (result.totalPrice)}"/>
-    </c:forEach>
-
-
-
-    <c:if test="${total >= 50000}">
-        배송비 <span class="orderDelivery">0원</span><br>
-        <input type="hidden" class="totalPrice" value="${total}">
-        합계 <span class="totalPrice"><fmt:formatNumber value="${total}"></fmt:formatNumber></span>원<br>
-    </c:if>
-
-
-
-    <c:if test="${total <= 50000}">
-        배송비 <fmt:formatNumber value="3000"></fmt:formatNumber>원<br>
-        <input type="hidden" class="orderDelivery" value="3000">
-        <input type="hidden" class="totalPrice" value="${total + 3000}">
-        합계 <fmt:formatNumber value="${total + 3000}"></fmt:formatNumber></span>원<br>
-    </c:if>
-
-    결제수단
-    <input type="radio" name="payment" value="kakaopay" checked="checked">카카오페이
-    <input type="radio" name="payment" value="html5_inicis">신용카드
-    <input type="radio" name="payment" value="settle">세틀뱅크
-    <button id="iamportPayment">구매하기</button>
-    <br>
-
-    <%--<div class="col-lg-12">
-        <div class="row">
-            <div class="col-lg-3">
-                <label>배송지 주소</label><span class="emph"></span>
-            </div>
-            <div class="col-lg-9">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <input type="text" id="newPostalcode" name="postalcode">
+                                    <div class="order_table_type shipping_info">
+                                        <table class="table_left shipping_info_table">
+                                            <colgroup>
+                                                <col style="width:15%;">
+                                                <col style="width:85%;">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row">배송지 확인</th>
+                                                <td>
+                                                    <div class="form_element">
+                                                        <ul>
+                                                            <li>
+                                                                <input type="radio" name="shipping" id="shippingBasic"
+                                                                       checked="checked">
+                                                                <label for="shippingBasic"
+                                                                       class="choice_s"><span></span>기본
+                                                                    배송지</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="radio" name="shipping"
+                                                                       id="shippingSameCheck">
+                                                                <label for="shippingSameCheck"
+                                                                       class="choice_s"><span></span>주문자 정보와
+                                                                    동일</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="radio" name="shipping" id="shippingNew">
+                                                                <label for="shippingNew" class="choice_s"><span></span>직접
+                                                                    입력</label>
+                                                            </li>
+                                                        </ul>
+                                                        <a href="javascript:openPop()"
+                                                           class="btn_gray_small btn_open_layer js_shipping">
+                                                            <span>배송지 관리</span>
+                                                        </a>
+                                                        <input type="hidden" class="shipping-delivery-visit" value="n"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">받으실분</span></th>
+                                                <td><input type="text" name="receiverName" id="orderName"
+                                                           value="${loginMember.name}"
+                                                           maxlength="20"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">받으실 곳</span></th>
+                                                <td class="member_address">
+                                                    <div class="address_postcode">
+                                                        <input type="text" id="orderPostcode" name="orderPostcode"
+                                                               value="${loginMember.postcode}"
+                                                               readonly="readonly"/>
+                                                        <input type="hidden" name="receiverZipcode"/>
+                                                        <button type="button" class="btn_post_search"
+                                                                onclick="execDaumPostcode()">
+                                                            우편번호검색
+                                                        </button>
+                                                    </div>
+                                                    <div class="address_input">
+                                                        <input type="text" name="orderAddr" id="orderAddr"
+                                                               value="${loginMember.address}"
+                                                               readonly="readonly"/>
+                                                        <input type="text" id="addrDetail" name="addrDetail"
+                                                               value="${loginMember.addrDetail}"/>
+                                                        <input type="hidden" name="extraAddress" id="extraAddress">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">휴대폰 번호</span></th>
+                                                <td>
+                                                    <input type="text" id="orderPhone" name="orderPhone"
+                                                           value="${loginMember.phone}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">요청사항</th>
+                                                <td class="td_last_say">
+                                                    <select id="orderMessage" class="chosen-select"
+                                                            style="width: 265px">
+                                                        <option value="call">배송 전에 미리 연락 바랍니다.</option>
+                                                        <option value="office">부재시 경비실에 맡겨 주세요.</option>
+                                                        <option value="phone">부재시 전화 주시거나 문자 남겨 주세요.</option>
+                                                        <option value="self">직접입력</option>
+                                                    </select>
+                                                    <input type="text" id="selectSelf" name="selectSelf"
+                                                           style="margin-top: 6px;"/>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="payment_progress order_line"
+                                     style="padding-bottom: 20px; margin-bottom: 90px;">
+                                    <div class="order_zone_tit">
+                                        <h4>결제수단 선택 / 결제</h4>
+                                    </div>
+                                    <div class="payment_progress_list">
+                                        <div class="js_pay_content">
+                                            <div id="settlekind_general" class="general_payment">
+                                                <dl>
+                                                    <dt style="width:140px;">결제수단</dt>
+                                                    <dd>
+                                                        <div class="form_element">
+                                                            <ul class="payment_progress_select">
+                                                                <li id="settlekindType_gb">
+                                                                    <input type="radio" id="settleKind_gb"
+                                                                           name="payment"
+                                                                           value="kakaopay" checked="checked"/>
+                                                                    <label for="settleKind_gb"
+                                                                           class="choice_s"
+                                                                           style="padding-right: 10px;"><span></span>카카오페이</label>
+                                                                </li>
+                                                                <li id="settlekindType_pv">
+                                                                    <input type="radio" id="settleKind_pv"
+                                                                           name="payment"
+                                                                           value="tosspay"/>
+                                                                    <label for="settleKind_pv"
+                                                                           class="choice_s"
+                                                                           style="padding-right: 10px;"><span></span>토스</label>
+                                                                </li>
+                                                                <li id="settlekindType_pc">
+                                                                    <input type="radio" id="settleKind_pc"
+                                                                           name="payment"
+                                                                           value="html5_inicis"/>
+                                                                    <label for="settleKind_pc"
+                                                                           class="choice_s"
+                                                                           style="padding-right: 10px;"><span></span>신용카드</label>
+                                                                </li>
+                                                                <li id="settlekindType_pb">
+                                                                    <input type="radio" id="settleKind_pb"
+                                                                           name="payment"
+                                                                           value="settle"/>
+                                                                    <label for="settleKind_pb"
+                                                                           class="choice_s"><span></span>세틀뱅크</label>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom_wrap1">
+                            <div class="custom_cont">
+                                <div class="custom_payment_info">
+                                    <div class="custom_order_table_type">
+                                        <table class="table_left2" style="width: 100%;">
+                                            <colgroup>
+                                                <col>
+                                                <col>
+                                            </colgroup>
+                                            <tbody>
+                                            <c:set var="total" value="0"/>
+                                            <c:forEach var="result" items="${orderList}" varStatus="status">
+                                                <c:set var="total"
+                                                       value="${total + (result.proPrice * result.cartQty)}"/>
+                                            </c:forEach>
+                                            <tr class="order_right_list1">
+                                                <th scope="row">상품 합계 금액</th>
+                                                <td>
+                                                    <strong style="font-size:16px; font-weight:500; color:#111;"
+                                                            id="totalGoodsPrice"
+                                                            class="order_payment_sum"><fmt:formatNumber pattern="#,##0"
+                                                                                                        value="${total}"/>원</strong>
+                                                </td>
+                                            </tr>
+                                            <c:set var="saleTotal" value="0"/>
+                                            <c:forEach var="result" items="${orderList}" varStatus="status">
+                                                <c:set var="saleTotal"
+                                                       value="${saleTotal + (result.discountPrice * result.cartQty)}"/>
+                                            </c:forEach>
+                                            <tr class="order_list_sale_bottom">
+                                            </tr>
+                                            <tr class="order_right_list1">
+                                                <th scope="row">할인 금액</th>
+                                                <td><strong><b class="total-member-dc-price"
+                                                               style="color:#fc123e">-<fmt:formatNumber
+                                                        value="${saleTotal}"
+                                                        pattern="#,##0"/>
+                                                </b></strong>원
+                                                </td>
+                                            </tr>
+                                            <tr class="order_list_sale">
+                                            <tr class="order_list_sale_bottom">
+                                            </tr>
+                                            <tr class="order_right_list1">
+                                                <th scope="row">배송비</th>
+                                                <c:if test="${total >= 50000}">
+                                                    <td>
+                                                        <input type="hidden" class="orderDelivery" value=0>
+                                                        <span class="totalDeliveryCharge"><b>0</b></span>원
+                                                    </td>
+                                                </c:if>
+                                                <c:if test="${total <= 50000}">
+                                                    <td>
+                                                        <input type="hidden" class="orderDelivery" value=3000>
+                                                        <span class="totalDeliveryCharge"><b>3,000</b></span>원
+                                                    </td>
+                                                </c:if>
+                                            </tr>
+                                            <tr class="order_list_sale" style="margin-left: 5px">
+                                                <th style="color: #999; display: contents; font-size: 15px; font-weight: normal">
+                                                    └ 50,000원 이상 주문 시 무료배송
+                                                </th>
+                                            </tr>
+                                            <tbody id="mileageDefault" style="display: none;">
+                                            </tbody>
+                                            <tr class="order_list_sale_bottom" style="display: none;">
+                                            </tr>
+                                            <c:set var="total" value="0"/>
+                                            <c:forEach var="result" items="${orderList}" varStatus="status">
+                                                <c:set var="total" value="${total + (result.totalPrice)}"/>
+                                            </c:forEach>
+                                            <tr class="order_right_list1">
+                                                <th scope="row" style="font-size:18px;">최종 결제 금액</th>
+                                                <td>
+                                                    <c:if test="${total >= 50000}">
+                                                        <input type="hidden" id="finalTotal" value="${total}">
+                                                        <span>
+                                                            <strong class="totalSettlePriceView"
+                                                                    style="font-size:20px; color:#fc123e">
+                                                                <fmt:formatNumber
+                                                                        pattern="#,##0" value="${total}"/>
+                                                            </strong>원
+                                                            </span>
+                                                    </c:if>
+                                                    <c:if test="${total <= 50000}">
+                                                        <input type="hidden" id="finalTotal" value="${total + 3000}">
+                                                        <span>
+                                                            <strong class="totalSettlePriceView"
+                                                                    style="font-size:20px; color:#fc123e;">
+                                                                <fmt:formatNumber
+                                                                        pattern="#,##0" value="${total + 3000}"/>
+                                                            </strong>원
+                                                            </span>
+                                                    </c:if>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="payment_final">
+                                    <div class="btn_center_box">
+                                        <button class="btn_order_buy order-buy"><em>결제하기</em></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-3" style="padding: 0;">
-                        <button type="button" class="site-btn deliverListBtn postalBtn" onclick="daumPostcode();">우편번호</button>
-                    </div>
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6" style="padding-right: 3px;">
-                        <input type="text" id="newRoadAddress">
+                <div id="myShippingListLayer" class="layer_wrap delivery_add_list_layer" style="display: none">
+                    <div class="layer_wrap_cont" id="layer_wrap_cont"
+                         style="position: absolute; margin: 0px; top: 246px; left: 400px; display: none">
+                        <div class="ly_tit">
+                            <h4>나의 배송지 관리</h4>
+                        </div>
+                        <div class="ly_cont">
+                            <div class="scroll_box">
+                                <h5>배송지 목록</h5>
+                                <div class="delivery_add_list">
+                                    <div class="top_table_type">
+                                        <table>
+                                            <colgroup>
+                                                <col style="width:10%">
+                                                <col style="width:13%">
+                                                <col style="width:12%">
+                                                <col>
+                                                <col style="width:20%">
+                                                <col style="width:12%">
+                                            </colgroup>
+                                            <thead>
+                                            <tr>
+                                                <th>선택</th>
+                                                <th>배송지이름</th>
+                                                <th>받으실분</th>
+                                                <th>주 소</th>
+                                                <th>연락처</th>
+                                                <th>수정/삭제</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <a href="javascript:open()" class="btn_ly_add_shipping btn_open_layer">+ 새 배송지
+                                        추가</a>
+                                </div>
+                                <div class="pagination">
+                                </div>
+                            </div>
+                        </div>
+                        <a href="javascript:closePop()" class="ly_close layer_close"><i class="fa-solid fa-x"></i></a>
                     </div>
-                    <div class="col-lg-6" style="padding-left: 3px;">
-                        <input type="text" id="newDetailAddress">
+                    <div id="deliveryAddLayer" class="layer_wrap dn" style="position: absolute; margin: 0px; top: 246px; left: 41.5px; display: none">
+                        <form name="frmDeliveryAddressRegist" id="frmDeliveryAddressRegist"
+                              action="../order/layer_shipping_ps.php" method="post" novalidate="novalidate">
+                            <input type="hidden" name="mode" value="shipping_regist">
+                            <input type="hidden" name="sno" value="">
+                            <input type="hidden" name="shippingNo" value="">
+                            <div class="ly_tit">
+                                <h4>나의 배송지 관리</h4>
+                            </div>
+                            <div class="ly_cont">
+                                <div class="scroll_box">
+                                    <h5>배송지 등록</h5>
+                                    <div class="left_table_type">
+                                        <table>
+                                            <colgroup>
+                                                <col style="width:20%;">
+                                                <col style="width:80%;">
+                                            </colgroup>
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row"><span class="important">배송지 별칭</span></th>
+                                                <td><input type="text" name="shippingTitle" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">주문자 성명</span></th>
+                                                <td><input type="text" name="shippingName" maxlength="20" value=""></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">배송지 주소</span></th>
+                                                <td class="member_address">
+                                                    <div class="address_postcode">
+                                                        <input type="text" name="shippingZonecode" value=""
+                                                               readonly="readonly">
+                                                        <button type="button"
+                                                                onclick="gd_postcode_search('shippingZonecode', 'shippingAddress', 'shippingZipcode');"
+                                                                class="btn_post_search">우편번호검색
+                                                        </button>
+                                                        <input type="hidden" name="shippingZipcode" value="">
+                                                    </div>
+                                                    <div class="address_input">
+                                                        <input type="text" name="shippingAddress" value=""
+                                                               readonly="readonly">
+                                                        <input type="text" name="shippingAddressSub" value="">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row"><span class="important">휴대폰번호</span></th>
+                                                <td>
+                                                    <input type="text" id="shippingMobile" name="shippingCellPhone"
+                                                           value="">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="btn_center_box">
+                                    <button type="button" class="btn_ly_cancel layer_close"><strong>취소</strong></button>
+                                    <button type="submit" class="btn_ly_save"><strong>저장</strong></button>
+                                </div>
+                            </div>
+                            <a href="javascript:closePop2()" class="ly_close layer_close"><img
+                                    src="/data/skin/front/dalbame_pc/img/common/layer/btn_layer_close.png" alt="닫기"></a>
+                        </form>
                     </div>
-                    <span id="guide" style="color:#999;display:none"></span>
                 </div>
             </div>
         </div>
-    </div>--%>
-
+    </div>
+</div>
+</div>
+</body>
 </body>
 </html>
