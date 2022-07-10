@@ -63,11 +63,12 @@ public interface AdminProductService {
 	// 상품옵션변경
 	public void changeProductOptionPage(HttpServletRequest request, Model model);
 	
+	
 	// 상품옵션변경
 	public void changeProductOption(HttpServletRequest request, HttpServletResponse response);
 	
 	
-	
+	// 상품옵션변경시 사이즈 할인율 알려줌
 	public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request);
 	
 	

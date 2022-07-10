@@ -305,6 +305,15 @@ public class AdminController {
     }
     
     
+ // fnAjax1이 요청하는 곳
+ 	@JsonInclude(JsonInclude.Include.NON_NULL)
+ 	@ResponseBody
+ 	@RequestMapping(value="/admin/product/changeProductOptionDetail", method= {RequestMethod.GET, RequestMethod.POST})  
+ 	public ProductQtyDTO changeProductOptionDetail(HttpServletRequest request) { 
+ 	ProductQtyDTO productQty = adminProductService.changeProductOptionDetail(request);
+ 		return productQty;
+ 	}
+    
     
     
 

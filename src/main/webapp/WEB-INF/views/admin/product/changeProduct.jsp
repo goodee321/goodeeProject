@@ -158,6 +158,7 @@ section {
 		.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 </style>
 </head>
@@ -203,8 +204,8 @@ section {
 			
 			
 			
-			<button id="btn" class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
+			<button id="btn" class="btn btn-secondary">수정완료</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="${contextPath}/admin/product/list">목록</a><br>
 	</form>
 	<br>
 	</div>

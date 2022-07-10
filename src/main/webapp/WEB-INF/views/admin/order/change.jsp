@@ -25,15 +25,15 @@
 	.kind {
 		font-family: 'Splash', cursive;
 		font-size: 40px;
-		text-shadow: 2px 4px 2px gray;
+		text-shadow: 1px 1px 1px gray;
 		}	
 		
 		table {
 	padding: 20px;
 	margin: auto;
-	box-shadow: 5px 5px 5px 3px gray;
+	box-shadow: 1px 1px 1px 1px gray;
 	border-radius: 5px;
-	
+	font-size: 18px;
 	}
   	
 	
@@ -218,7 +218,7 @@ tr:nth-of-type(1) td:nth-of-type(2) {
 				</tr>
 				<tr>
 					<td class="table-dark">회원명</td>
-					<td class="table-secondary"><input type="text" name="orderName" id="orderName" value="${order.orderName}" placeholder="NAME" required></td>
+					<td class="table-secondary"><input type="text" name="orderName" id="orderName" value="${order.orderName}" placeholder="NAME" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<td class="table-dark">휴대폰번호</td>

@@ -185,6 +185,7 @@ table{
    font-family: inherit;  /* 폰트 상속 */
    border-collapse: separate;
   border-spacing: 0 10px;
+ 
   
 }
 
@@ -221,6 +222,7 @@ section {
 		.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 
 
@@ -283,7 +285,7 @@ section {
 		<button id="btn" class="btn btn-secondary">작성완료</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
+		<a href="${contextPath}/admin/product/list">목록</a><br>
 	</form>
 	</div>
 	<br>

@@ -46,11 +46,11 @@ $("#proSize").change(function () {
 			},
 			contentType : "application/json",
 		    success: function (data) {
-		    	$('#proQty').val(data.proQty);
+		    	$('#proQty').val(data.proQty); alert('수정가능한 사이즈입니다.');
 		    	$('#proDiscount').val(data.proDiscount);
 		    },
 		    error: function () {
-		    	$('#proQty').val('0');
+		    	$('#proQty').val('0'); alert('등록되지 않은 사이즈입니다.');
 		    	$('#proDiscount').val('0');
 		    }
 	  });
@@ -148,6 +148,7 @@ section {
 .kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 
 
@@ -249,7 +250,7 @@ table{
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<button id="btn" class="btn btn-secondary">변경 완료</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="${contextPath}/admin/product/list">목록으로가기</a><br>
+		<a href="${contextPath}/admin/product/list">목록</a><br>
 		<br>
 	</form>
 	</div>
