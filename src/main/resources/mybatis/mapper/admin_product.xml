@@ -224,7 +224,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	
+	<!-- 다중 삭제(선택해서 삭제) -->
+	<!-- DELETE FROM NOTICE WHERE NOTICE_NO IN(1,4) -->
+	<delete id="deleteProductList">
+		DELETE
+		  FROM PRODUCT
+		<where> 
+		 	<foreach collection="list" item="proNo" open="PRO_NO IN(" separator="," close=")">
+				#{proNo}
+			</foreach>
+		</where>
+	</delete>
 	
 	
 	

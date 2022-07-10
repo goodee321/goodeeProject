@@ -17,8 +17,21 @@
 	$(function(){
 		
 		fnData();
+		fnRemove();
 	})
 	
+	
+	function fnRemove(){
+	// 삭제
+		// 폼의 서브밋을 활용
+		$('#btnRemove').on('click', function(){
+			if(confirm('정말 삭제하시겠습니까?')){
+				$('#f').attr('action', '${contextPath}/admin/product/removeOne');
+				$('#f').submit();
+			}
+		})
+	
+	}
 	
 	
 	
@@ -169,6 +182,7 @@
 	
 	
 	<section>
+	<form id="f">
 	<div class="container" style="width: 70%; margin-bottom:100px;">
 		<div class="row"><h1 class="page-header" style="text-align: center; margin-bottom: 50px;"></h1>
 			<input type="hidden" value="${product.proNo}" id="proNo" name="proNo" class="proNo">	<!-- 삭제에 이용 -->
@@ -189,7 +203,7 @@
        &nbsp;&nbsp;&nbsp;
       <input type="button" value="옵션 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductOptionPage?proNo=${product.proNo}'"/>
        &nbsp;&nbsp;&nbsp;
-      <input type="button" value="제품 삭제" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/productDelete?proNo=${product.proNo}'"/>
+     <input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">
 			<br>
 			<br>
 			<a href="${contextPath}/admin/product/list">목록으로가기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -229,13 +243,16 @@
 				</div>
 		</div>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		</form>
 		</section>
+		
+		
+		
 		
 		<footer id="footer">
 	<div id="footer_box">
 		<%@ include file="../layout/footer.jsp" %>
 	</div>
-	
 </footer>
 				
 			

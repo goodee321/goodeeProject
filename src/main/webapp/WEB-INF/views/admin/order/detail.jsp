@@ -46,7 +46,7 @@
 	table {
 		border-collapse: collapse;
 		margin: auto;
-		text-align: center;
+		text-align: left;
 	}
 	
 	table td {
@@ -63,6 +63,10 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
+	}
+	
+	tr:nth-of-type(1) td:nth-of-type(2) { 
+		width: 400px;
 	}
 		
 </style>

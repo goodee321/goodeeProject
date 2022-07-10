@@ -33,7 +33,7 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
-	font-size: 19px;
+	
 	}
   	
 	
@@ -56,6 +56,10 @@
 .dont {
 	color: crimson;
 }
+
+tr:nth-of-type(1) td:nth-of-type(2) { 
+		width: 400px;
+	}
 			
 	
 </style>
@@ -75,7 +79,7 @@
 		
 		fnPhoneCheck();
 		fnRegExp();
-		//fnIn();
+		fnIn();
 	})
 	
 	
@@ -97,7 +101,7 @@
 		let Pass = true;
 	function fnRegExp(){
 		
-		let numberRegExp = 	/^[0-9]{12}$/;
+		let numberRegExp = 	/^[0-9]{10}$/;
 			
 			
 			
@@ -105,7 +109,7 @@
 			$('#orderInvoice').on('keyup',function(){
 			
 				if(numberRegExp.test( $('#orderInvoice').val() ) == false){ 
-					$('#proDiscountError').text('12자리 번호 입력').addClass('dont').removeClass('hidden');
+					$('#proDiscountError').text('10자리 번호 입력').addClass('dont').removeClass('hidden');
 					Pass = false;
 					return;
 				}else{

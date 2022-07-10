@@ -9,10 +9,10 @@
 	
 	if('${kind}' == 'update'){
 		if('${res}' == '1'){
-			alert('공지사항이 수정되었습니다.');
+			alert('제품이 수정되었습니다.');
 			location.href='${contextPath}/admin/product/list';
 		} else {
-			alert('공지사항이 수정되지 않았습니다.');
+			alert('제품이 수정되지 않았습니다.');
 			history.back();
 		}
 	}
@@ -20,10 +20,10 @@
 	if('${type}' == 'insert'){
 		
 		if('${insRes}' == '1'){	
-			alert('공지사항이 등록되었습니다.');
+			alert('제품이 등록되었습니다.');
 			location.href='${contextPath}/admin/product/list';
 		} else{
-			alert('공지사항이 등록되지 않았습니다.');
+			alert('제품이 등록되지 않았습니다.');
 			history.back();
 		}
 	}
@@ -32,10 +32,10 @@
 	
 	if('${kind}' == 'deleteOne'){
 		if('${res}' == '1'){
-			alert('공지사항이 삭제되었습니다.');
+			alert('제품이 삭제되었습니다.');
 			location.href='${contextPath}/admin/product/list';
 		} else {
-			alert('공지사항이 삭제되지 않았습니다.');
+			alert('제품이 삭제되지 않았습니다.');
 			history.back();
 		}
 	}
@@ -43,10 +43,10 @@
 	if('${kind}' == 'deleteList'){
 		
 		if('${res}' > '0'){
-			alert('선택한 공지사항이 삭제되었습니다.');
+			alert('선택한 제품이 삭제되었습니다.');
 			location.href='${contextPath}/admin/product/list';
 		} else {
-			alert('선택한 공지사항이 삭제되지 않았습니다.');
+			alert('선택한 제품이 삭제되지 않았습니다.');
 			history.back();
 		}
 		

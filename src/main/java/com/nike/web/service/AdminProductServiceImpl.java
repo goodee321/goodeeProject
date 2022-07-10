@@ -680,7 +680,12 @@ public class AdminProductServiceImpl implements AdminProductService {
 									adminProductMapper.deleteProductImage(proimgNo);
 								}
 							
-			
+							//개별삭제
+							@Override
+							public int removeOne(HttpServletRequest request) {
+								Integer proNo = Integer.parseInt(request.getParameter("proNo"));
+								return adminProductMapper.deleteProduct(proNo);
+							}
 	
 	
 }

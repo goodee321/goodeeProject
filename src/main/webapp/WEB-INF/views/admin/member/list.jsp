@@ -71,6 +71,7 @@
 	
 	thead {
 		font-weight: bold;
+		
 	}
 	
 	
@@ -99,6 +100,7 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
+	
 	}
 	
 </style>

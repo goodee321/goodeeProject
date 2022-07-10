@@ -59,7 +59,9 @@
 }
   	
  
-}
+tr:nth-of-type(1) td:nth-of-type(2) { 
+		width: 400px;
+	}
 			
 	
 </style>

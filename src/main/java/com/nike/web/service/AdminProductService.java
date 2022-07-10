@@ -38,9 +38,12 @@ public interface AdminProductService {
 	public void changeProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response);
 	
 	
-	// 개별삭제
+	// 삭제
 	public void productDelete(HttpServletRequest request, HttpServletResponse response);
 	
+	
+	// 개별삭제
+	public int removeOne(HttpServletRequest request);
 	
 	
 	// 제품상세보기

@@ -17,14 +17,16 @@
 	@import url('https://fonts.googleapis.com/css2?family=Splash&display=swap');
 
 	form {
-			padding: 50px;
+			
 			text-align: center;
 	}
 
 	section {
+	
 			background-color: #BDBDBD;
-			text-align: center;
+			text-align: left;
 			font-family: Georgia, "Malgun Gothic", serif;
+			
 	}
 	
 	strong {
@@ -36,6 +38,9 @@
 			font-family: 'Splash', cursive;
 			font-size: 40px;
 			text-shadow: 2px 4px 2px gray;
+			text-align: center;
+			background-color: #BDBDBD;
+			
 	}
 	
 	#f {
@@ -46,7 +51,8 @@
 	table {
 		border-collapse: collapse;
 		margin: auto;
-		text-align: center;
+		text-align: left;
+		
 	}
 	
 	table td {
@@ -55,7 +61,7 @@
 	}
 	
 	form {
-		padding-top: 10px;
+		
 	}
 	
 	table {
@@ -63,6 +69,12 @@
 	margin: auto;
 	box-shadow: 5px 5px 5px 3px gray;
 	border-radius: 5px;
+	
+	}
+	
+	
+	tr:nth-of-type(1) td:nth-of-type(2) { 
+		width: 400px;
 	}
 		
 </style>
@@ -98,16 +110,28 @@
 	<nav id="nav">
 		<div id="nav_box">
 			<%@ include file="../layout/nav.jsp" %>
+			
 		</div>
-	</nav>
+			</nav>
+			
+	
+	
+
+	
+	
+	
+	
 	
 
     <section>
-    <br>
+  
+   <br>
+	<h3 class="kind">Notice Detail</h3><br>
+	
    
  
   
-	<h3 class="kind">Member Detail</h3>
+	
 	
 
 	

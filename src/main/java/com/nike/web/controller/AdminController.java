@@ -262,6 +262,16 @@ public class AdminController {
     public void productDelete(HttpServletRequest request, HttpServletResponse response) {
         adminProductService.productDelete(request, response);
     }
+    
+    
+    // 상품개별삭제
+    @GetMapping("/admin/product/removeOne")
+    public String productRemoveOne(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("kind", "deleteOne");
+        redirectAttributes.addFlashAttribute("res", adminProductService.removeOne(request));
+        return "redirect:/admin/product/afterDML";
+    }
+    
 
     // 상품옵션추가
     @GetMapping("/admin/product/saveProductOption")

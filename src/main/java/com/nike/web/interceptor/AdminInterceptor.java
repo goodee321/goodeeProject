@@ -26,9 +26,14 @@ public class AdminInterceptor implements HandlerInterceptor {
 	
 		if(loginMember == null || loginMember.getMemberNo() != 5) {
 			
-			response.sendRedirect("/web");
-			
-			return false;
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('해당 페이지는 관리자 권한이 필요합니다.')");
+			out.println("location.href='" + request.getContextPath() + "'");
+			out.println("</script>");
+			out.close();
+			return false;	
 		}
 		
 		return true;
