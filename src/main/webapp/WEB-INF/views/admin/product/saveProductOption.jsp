@@ -149,6 +149,7 @@ section {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
 			text-shadow: 1px 1px 1px gray;
+			text-align: center;
 	}
 
 
