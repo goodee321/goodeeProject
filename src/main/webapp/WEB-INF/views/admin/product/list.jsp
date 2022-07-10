@@ -86,11 +86,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
+			text-shadow: 2px 4px 2px gray;
 	}
 	
 </style>
@@ -325,7 +327,7 @@
 					<tr data-pro_no="${product.proNo}">
 						<td><input type="checkbox" name="productNoList" id="productNoList" value="${product.proNo}" class="checkes"></td>
 						<td>${product.proNo}</td>
-						<td><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="80%"></td>
+						<td><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/admin/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="60%"></td>
 						<td>${product.proName}</td>
 						<td>${product.proDate}</td>
 					</tr>

@@ -109,12 +109,14 @@ public class AdminProductServiceImpl implements AdminProductService {
 						String proName = multipartRequest.getParameter("proName");
 						int proPrice = Integer.parseInt(multipartRequest.getParameter("proPrice"));
 						String proDetail = multipartRequest.getParameter("proDetail");
+						String proDate = multipartRequest.getParameter("proDate");
 						
 						// GalleryDTO
 						ProductDTO product = ProductDTO.builder()
 								.proName(proName)
 								.proPrice(proPrice)
 								.proDetail(proDetail)
+								.proDate(proDate)
 								.build();
 						
 						

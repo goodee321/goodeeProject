@@ -19,7 +19,7 @@ public class ProductDTO {
     private String proName;
     private int proPrice;
     private String proDetail;
-    private Date proDate;
+    private String proDate;
 
 
     private ProductImageDTO productImageDTO;
