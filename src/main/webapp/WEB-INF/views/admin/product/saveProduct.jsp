@@ -222,7 +222,7 @@ section {
 		.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
-			text-shadow: 2px 4px 2px gray;
+			text-shadow: 1px 1px 1px gray;
 	}
 
 

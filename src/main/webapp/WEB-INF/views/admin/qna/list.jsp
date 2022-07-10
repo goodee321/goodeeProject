@@ -68,7 +68,7 @@
 	border-collapse: collapse;
 	padding: 20px;
 	margin: auto;
-	box-shadow: 5px 5px 5px 3px gray;
+	box-shadow: 2px 2px 2px 2px gray;
 	border-radius: 5px;
 	}
 
@@ -132,13 +132,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
-			text-shadow: 2px 4px 2px gray;
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
-			text-shadow: 2px 4px 2px gray;
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 	

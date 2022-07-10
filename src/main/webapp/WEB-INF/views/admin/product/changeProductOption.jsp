@@ -50,8 +50,8 @@ $("#proSize").change(function () {
 		    	$('#proDiscount').val(data.proDiscount);
 		    },
 		    error: function () {
-		    	$('#proQty').val('0'); alert('등록되지 않은 사이즈입니다.');
-		    	$('#proDiscount').val('0');
+		    	$('#proQty').val(''); alert('등록되지 않은 사이즈입니다.');
+		    	$('#proDiscount').val('수정불가');
 		    }
 	  });
 	});
@@ -75,7 +75,7 @@ $("#proSize").change(function () {
 			}
 			
 			else if($('#proQty').val() == 0){
-				alert('수량을 확인하시길 바랍니다.');
+				alert('수정불가');
 				event.preventDefault();
 				return false;
 			}
@@ -148,7 +148,7 @@ section {
 .kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
-			text-shadow: 2px 4px 2px gray;
+			text-shadow: 1px 1px 1px gray;
 	}
 
 
