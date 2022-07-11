@@ -52,17 +52,20 @@ public class AdminProductServiceImpl implements AdminProductService {
 				map.put("query", request.getParameter("query"));
 				
 				int findRecord = adminProductMapper.selectFindProductCount(map);
+				int totalRecord = adminProductMapper.selectProductCount();
 				
 				Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
 				int page = Integer.parseInt(opt.orElse("1"));
 				
 				PageUtils pageUtils = new PageUtils();
 				pageUtils.setPageEntity(findRecord, page);
+				pageUtils.setPageEntity(totalRecord, page);
 				
 				map.put("beginRecord", pageUtils.getBeginRecord() - 1);
 				map.put("recordPerPage", pageUtils.getRecordPerPage());
 				
 				model.addAttribute("findRecord",findRecord);
+				model.addAttribute("totalRecord", totalRecord);
 				model.addAttribute("products", adminProductMapper.selectFindProductList(map));
 				model.addAttribute("beginNo", findRecord - pageUtils.getRecordPerPage() * (page - 1) );
 				model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/admin/product/find?column=" + column + "&query=" + query));

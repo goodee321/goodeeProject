@@ -10,6 +10,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- bootstrap css -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="../resources/js/jquery-3.6.0.js"></script>
 <script>
 	
@@ -40,7 +45,7 @@
 	text-align: center;
 	align-items: center;
     justify-content: center;
-     letter-spacing: 2px;
+    letter-spacing: 2px;
 }
 h3{
     font-size: 20px;
@@ -97,7 +102,7 @@ h3{
 	border: 1px solid white;
 	text-align: center;
 	text-decoration: none;
-	color: #555555;
+	color: black;
 	align-items:center;
 	text-decoration: none;  /* 링크 밑줄 없애기 */
 }
@@ -133,11 +138,13 @@ h3{
 }
 
 .main-image {
-    width:1920px;
+    width:1280px;
     height:100%;
     object-fit:cover;
     background-image: url("../resources/images/main.jpg");
     background-position: center;
+    
+    margin-left: 35px;
 }
 
 
@@ -161,7 +168,7 @@ h3{
 	<br>
 	
 		<div class="ui_box">
-			<h3>제품 목록</h3>
+			
 			
 			<ul class="product_list">
 				<c:forEach var="product" items="${products}" begin="1">
@@ -197,7 +204,7 @@ h3{
 					<option value="PRO_SIZE">SIZE</option>
 				</select>
 				<input type="text" name="query" id="query">
-				<button>검색하기</button>
+				<button class="btn btn-dark">검색하기</button>
 			</form>
 	
 
