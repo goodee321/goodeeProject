@@ -15,21 +15,21 @@
     <link href="../../resources/css/member.css" rel="stylesheet">
     <style>
         .link {
-            display: inline-block; /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
+            display: inline-block;
             margin: 5px;
             border: 1px solid white;
             text-align: center;
-            text-decoration: none; /* 링크 밑줄 없애기 */
+            text-decoration: none;
             color: gray;
             font-weight: bold;
         }
 
         .unlink {
-            display: inline-block; /* 같은 줄에 둘 수 있고, width, height 등 크기 지정 속성을 지정할 수 있다. */
+            display: inline-block;
             margin: 5px;
             border: 1px solid white;
             text-align: center;
-            text-decoration: none; /* 링크 밑줄 없애기 */
+            text-decoration: none;
             color: #ed8699;
             font-weight: bold;
         }
@@ -43,11 +43,11 @@
             <div class="mypage_cont">
                 <div class="mypage_lately_info">
                     <div class="mypage_zone_tit" style="margin-left: 290px; padding-bottom: 0px;">
-                        <h3>주문목록/배송조회</h3>
+                        <h3>주문목록</h3>
                     </div>
                     <div class="mypage_lately_info_cont">
                 <span class="pick_list_num" style="margin-left: 290px;">
-                    주문목록 / 배송조회 내역 총 <strong>${orderCount}</strong> 건
+                    주문목록 총 <b style="color: #00000">${orderCount}</b> 건
                 </span>
                         <div class="mypage_table_type" style="margin-left: 290px; margin-right: 290px; margin-top: 10px;">
                             <table>
@@ -67,9 +67,7 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${orderList}" var="list">
-                                    <tr class="" data-order-no="" data-order-goodsno="116755"
-                                        data-order-status="o1"
-                                        data-order-userhandlesno="0">
+                                    <tr>
                                         <td rowspan="" class="order_day_num">
                                             <a href="${contextPath}/member/order/detail/${list.orderId}"
                                                class="order_num_link"><span style="font-size : 16px">${list.orderId}</span></a>

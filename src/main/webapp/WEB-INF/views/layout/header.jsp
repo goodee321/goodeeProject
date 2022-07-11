@@ -119,7 +119,7 @@
     <div class="container d-flex flex-wrap justify-content-center">
       <a href="${contextPath}/product/list" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
      
-        <span class="fs-4"><img src="../resources/images/logo.png" width="170px" style="padding-top: -50px; margin-bottom: -25px; margin-top: -20px;"></span>
+        <span class="fs-4"><img src="http://nishoe.shop/resources/images/logo.png" width="170px" style="padding-top: -50px; margin-bottom: -25px; margin-top: -20px;"></span>
       </a>
      
       <form id="f" class="col-12 col-lg-auto mb-3 mb-lg-0" method="get" action="${contextPath}/product/find">

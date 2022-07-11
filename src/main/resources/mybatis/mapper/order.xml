@@ -75,6 +75,7 @@
         SELECT MAX(PI.PROIMG_NO) AS PROIMG_NO,
                P.PRO_NAME,
                OD.PRODUCT_SIZE,
+               OD.PRODUCT_NO,
                OD.ORDER_QTY,
                OD.ORDER_PRICE,
                P.PRO_PRICE,

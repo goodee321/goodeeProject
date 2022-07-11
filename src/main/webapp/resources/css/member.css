@@ -120,7 +120,7 @@ a {
 }
 
 .mypage_table_type .order_num_link {
-    color: #fc123e;
+    color: #f56984;
     font-weight: bold;
     font-size: 14px;
     text-decoration-line: none;
@@ -314,10 +314,10 @@ a {
     width: 200px;
     height: 61px;
     line-height: 59px;
-    color: #fff;
+    color: #353333;
     font-size: 16px;
-    border: 1px solid #fc123e;
-    background: #fc123e;
+    border: 1px solid #ccc;
+    background: #ccc;
     text-align: center;
     text-decoration-line: none;
 }
@@ -327,7 +327,7 @@ a {
 }
 
 .btn_order_end_ok:hover {
-    border: 1px solid #6908c3;
-    background: #6908c3;
+    border: 1px solid #fc123e;
+    background: #f15f7b;
     color: white;
 }

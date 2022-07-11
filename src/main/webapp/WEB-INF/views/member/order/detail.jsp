@@ -66,7 +66,9 @@
                                 src="${contextPath}/product/display?proimgNo=${detail.proimgNo}"
                                 width="70" class="middle"/></a>
                     </span>
-                                            <em>${detail.proName}</em>
+                                            <div class="pick_add_info">
+                                                <a href="${contextPath}/product/detail?proNo=${detail.productNo}"><em>${detail.proName}</em></a>
+                                            </div>
                                         </div>
                                     </td>
                                     <td><strong><fmt:formatNumber value="${detail.proPrice}" pattern="#,##0"/>원</strong>

@@ -269,7 +269,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void getOrderByOrderId(String orderId, Model model){
+    public void getOrderByOrderId(String orderId, Model model) {
         model.addAttribute("orderList", orderMapper.selectInfoByOrderId(orderId));
     }
 }
