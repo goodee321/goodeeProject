@@ -86,13 +86,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
-			
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
-			
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 </style>

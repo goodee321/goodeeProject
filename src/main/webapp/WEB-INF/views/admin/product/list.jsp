@@ -88,13 +88,13 @@
 	.kind {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
-			
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 	.kind2 {
 			font-family: 'Splash', cursive;
 			font-size: 32px;
-			
+			text-shadow: 1px 1px 1px gray;
 	}
 	
 </style>
@@ -182,7 +182,7 @@
 		
 		$('#btnRemove').on('click', function(){
 			
-			var result = confirm("정말 삭제할까요?");
+			var result = confirm("선택한 상품을 삭제하시겠습니까?");
 			
 			if(result == true){
 					$('#f2').submit();

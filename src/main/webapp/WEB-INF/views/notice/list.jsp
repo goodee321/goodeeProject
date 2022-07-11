@@ -109,11 +109,7 @@
 </style>
 </head>
 <body>
-	<!-- 헤더 검색부분때문에 공지사항 검색이 안먹음 
 	
-	<jsp:include page="../layout/header.jsp"></jsp:include>
-	
-	-->
 	<jsp:include page="../layout/header2.jsp"></jsp:include>
 	
 	<div class="noticeTitle">

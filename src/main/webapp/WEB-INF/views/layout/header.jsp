@@ -92,9 +92,9 @@
   <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">
-      	<li class="nav-item"><a href="${contextPath}" class="nav-link link-dark px-2">로고</a></li>
-        <li class="nav-item"><a href="${contextPath}/product/list" class="nav-link link-dark px-2 active" aria-current="page">상품</a></li>
+      
         <li class="nav-item"><a href="${contextPath}/notice/list" class="nav-link link-dark px-2">공지사항</a></li>
+        <li class="nav-item"><a href="${contextPath}/product/list" class="nav-link link-dark px-2 active" aria-current="page">상품</a></li>
         <li class="nav-item"><a href="${contextPath}/qna/list" class="nav-link link-dark px-2">Q&A</a></li>
         <c:if test="${loginMember.id eq 'admin'}">
         <li class="nav-item"><a href="${contextPath}/notice/savePage" class="nav-link link-dark px-2">공지 작성하기</a></li>
