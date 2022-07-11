@@ -77,8 +77,8 @@
 <main class="form-signin">
   <form id="ffff" action="${contextPath}/member/login" method="post" class="box">
   	<div class="shadow p-3 mb-5 bg-body rounded">
-	    <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-	    <h1 class="h3 mb-3 fw-normal">NiShoe</h1>
+	    <img class="fs-4" src="../resources/images/logo.png" width="170px" style="padding-top: 20px; margin-bottom: -25px; margin-top: -20px;">
+	    <br><br>
 	    
 	    <input type="hidden" name="url" value="${url}">
 	

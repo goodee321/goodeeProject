@@ -160,7 +160,7 @@
 	}
 	
 	 tr:nth-of-type(1) td:nth-of-type(2) { 
-		width: 500px;
+		width: 450px;
 		height: 100px;
 		text-align: center;
 	}
@@ -263,6 +263,7 @@
 	</form>
 	
 <div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="button" value="제품 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductPage?proNo=${product.proNo}'"/>
 	  &nbsp;&nbsp;&nbsp;
       <input type="button" value="옵션 추가" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/saveProductOption?proNo=${product.proNo}'"/>
@@ -270,7 +271,8 @@
       <input type="button" value="옵션 수정" class="btn btn-secondary" onclick="location.href='${contextPath}/admin/product/changeProductOptionPage?proNo=${product.proNo}'"/>
        &nbsp;&nbsp;&nbsp;
      <input type="button" value="삭제" id="btnRemove" class="btn btn-secondary">
-     <a href="${contextPath}/admin/product/list">목록으로가기</a>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a href="${contextPath}/admin/product/list">목록으로</a>
      
 	<br>
 	</div>

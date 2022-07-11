@@ -21,9 +21,9 @@
 
     <insert id="insertOrder" parameterType="order">
         INSERT INTO ORDER_TB
-            (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID)
+            (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID, ORDER_POSTCODE, ORDER_MESSAGE)
         VALUES
-            (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid})
+            (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid}, #{orderPostcode}, #{orderMessage})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="orderItemDTO">
@@ -73,12 +73,19 @@
                ORDER_AMOUNT,
                ORDER_PAYMENT,
                ORDER_NAME,
-               ORDER_POSTCODE,
                ORDER_ADDR,
+               ORDER_POSTCODE,
+               ADDR_DETAIL,
                ORDER_PHONE,
                ORDER_MESSAGE
             FROM ORDER_TB
         WHERE ORDER_ID = #{orderId}
+    </select>
+    
+    <select id="selectCountByOrderId" resultType="int">
+        SELECT COUNT(*)
+            FROM ORDER_DETAIL
+        WHERE ORDER_ID = ${orderId}
     </select>
 
 </mapper>
