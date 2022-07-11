@@ -97,7 +97,7 @@
 	</div>
 	<div style="margin: 10px 0px 0px 0px">${reviewbyno.reviewContent}<br></div>
 	<div align="right" style="margin-top: 5px; font-size: 12px;">No: ${reviewbyno.reviewNo}</div>
-	<div align="right" style="margin-top: 5px; font-size: 12px;">작성일: <fmt:formatDate value="${reviewbyno.reviewDate}" pattern="yyyy-MM-dd HH:mm:ss"/><br></div>
+	<div align="right" style="margin-top: 5px; font-size: 12px;">작성일: <fmt:formatDate value="${reviewbyno.reviewDate}" pattern="yyyy-MM-dd"/><br></div>
 	<input type="hidden" value="${reviewbyno.reviewNo}">
 	<input type="hidden" value="${reviewbyno.proNo}">
 	<input type="button" value="리뷰 삭제하기" id="btnRemove" style="background: #212529; color: #fff; margin: 25px 1px 0px 330px; border-radius: 5px;">
