@@ -94,7 +94,9 @@
                                     </tr>
                                     <tr>
                                         <th>총 결제금액</th>
-                                        <td><strong class="order_payment_sum">19,000원</strong>
+                                        <td><strong class="order_payment_sum">
+                                            <fmt:formatNumber value="${orderList[0].orderAmount}"
+                                                              pattern="#,##0"></fmt:formatNumber>원</strong>
                                             <span class="add_currency"></span>
                                         </td>
                                     </tr>
@@ -102,7 +104,7 @@
                             </div>
                         </div>
                         <div class="btn_center_box" style="margin-bottom: 80px;">
-                            <a href="/" class="btn_order_end_ok"><em>확인</em></a>
+                            <a href="${contextPath}/product/list" class="btn_order_end_ok"><em>확인</em></a>
                         </div>
                     </div>
                 </div>

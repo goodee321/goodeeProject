@@ -393,11 +393,11 @@
                                                                     입력</label>
                                                             </li>
                                                         </ul>
-                                                        <a href="javascript:openPop()"
+                                                        <%--<a href="javascript:openPop()"
                                                            class="btn_gray_small btn_open_layer js_shipping">
                                                             <span>배송지 관리</span>
                                                         </a>
-                                                        <input type="hidden" class="shipping-delivery-visit" value="n"/>
+                                                        <input type="hidden" class="shipping-delivery-visit" value="n"/>--%>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -474,14 +474,6 @@
                                                                     <label for="settleKind_gb"
                                                                            class="choice_s"
                                                                            style="padding-right: 10px;"><span></span>카카오페이</label>
-                                                                </li>
-                                                                <li id="settlekindType_pv">
-                                                                    <input type="radio" id="settleKind_pv"
-                                                                           name="payment"
-                                                                           value="tosspay"/>
-                                                                    <label for="settleKind_pv"
-                                                                           class="choice_s"
-                                                                           style="padding-right: 10px;"><span></span>토스</label>
                                                                 </li>
                                                                 <li id="settlekindType_pc">
                                                                     <input type="radio" id="settleKind_pc"

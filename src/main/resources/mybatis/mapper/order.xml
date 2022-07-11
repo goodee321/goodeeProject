@@ -19,6 +19,19 @@
         WHERE P.PRO_NO = #{productNo}
     </select>
 
+    <select id="selectProductsByNo" parameterType="Map" resultType="orderItemDTO">
+        SELECT DISTINCT P.PRO_NO,
+                        P.PRO_NAME,
+                        P.PRO_PRICE,
+                        PQ.PRO_SIZE,
+                        PQ.PRO_DISCOUNT
+        FROM PRODUCT P
+                 INNER JOIN PRODUCT_QTY PQ
+                            ON P.PRO_NO = PQ.PRO_NO
+        WHERE P.PRO_NO = #{productNo} AND
+              PQ.PRO_SIZE = #{productSize}
+    </select>
+
     <insert id="insertOrder" parameterType="order">
         INSERT INTO ORDER_TB
             (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID, ORDER_POSTCODE, ORDER_MESSAGE)
@@ -33,21 +46,27 @@
             (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice})
     </insert>
 
-    <select id="selectOrderByMemberNo" resultType="order">
+    <select id="selectOrderCntByMemberNo" resultType="int">
+        SELECT COUNT(*)
+            FROM ORDER_TB
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="selectOrderByMemberNo" parameterType="Map" resultType="order">
         SELECT O.ORDER_ID,
                O.ORDER_DATE,
                P.PRO_NAME,
-               OD.PRODUCT_SIZE,
                OD.ORDER_QTY,
-               OD.ORDER_PRICE,
+               O.ORDER_AMOUNT,
                O.ORDER_STATE,
-               MAX(PI.PROIMG_NO) AS PROIMG_NO
+               COUNT(*) AS ORDER_CNT
         FROM ORDER_TB O
-                 INNER JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
+                 LEFT JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
-                 LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
         WHERE O.MEMBER_NO = #{memberNo}
-        GROUP BY ORDER_ID
+            GROUP BY ORDER_ID
+            ORDER BY ORDER_DATE DESC
+        LIMIT #{beginRecord}, #{recordPerPage}
     </select>
 
     <select id="selectProductDetailByOrderId" resultType="order">
@@ -85,7 +104,17 @@
     <select id="selectCountByOrderId" resultType="int">
         SELECT COUNT(*)
             FROM ORDER_DETAIL
-        WHERE ORDER_ID = ${orderId}
+        WHERE ORDER_ID = #{orderId}
+    </select>
+
+    <select id="selectCntByMemberNo" resultType="Map">
+        SELECT
+            COUNT(*) AS COUNT
+        FROM ORDER_DETAIL OD
+            JOIN ORDER_TB O ON OD.ORDER_ID = O.ORDER_ID
+        WHERE O.MEMBER_NO = #{memberNo}
+            GROUP BY O.ORDER_ID
+            ORDER BY O.ORDER_DATE DESC
     </select>
 
 </mapper>

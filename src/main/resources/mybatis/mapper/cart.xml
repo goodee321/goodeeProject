@@ -66,4 +66,10 @@
         WHERE MEMBER_NO = #{memberNo}
     </delete>
 
+    <select id="selectCartCntByMemberNo" resultType="int">
+        SELECT COUNT(*)
+            FROM CART
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
 </mapper>

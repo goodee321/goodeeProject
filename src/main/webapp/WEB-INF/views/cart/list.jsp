@@ -61,11 +61,12 @@
 
             $(".order_btn").on("click", function (event) {
 
+                let cartCnt = parseInt($(".hide_cartCnt_input").val());
                 let form_contents = '';
                 let orderNo = 0;
 
                 $(".cart_info_td").each(function (i, element) {
-                    if ($(element).find(".hide_cart_checkbox").is(":checked") == true) {
+                    if ($(element).find(".hide_cart_checkbox").is(":checked") == true && cartCnt > 1) {
 
                         let productNo = parseInt($(element).find(".hide_productNo_input").val());
                         let cartQty = $(element).find(".hide_cartQty_input").val();
@@ -85,10 +86,14 @@
                         form_contents += productSize_input;
 
                         orderNo += 1;
+
                     }
+
+                    $(".order_form").append(form_contents);
+                    $(".order_form").submit();
+
                 });
-                $(".order_form").append(form_contents);
-                $(".order_form").submit();
+
             });
         }
 
@@ -291,6 +296,7 @@
                                                        value="${cart.productSize}">
                                                 <input type="hidden" class="hide_finalPrice_input"
                                                        value="${cart.proPrice * (1 - cart.proDiscount) * cart.cartQty}">
+                                                <input type="hidden" class="hide_cartCnt_input" value="${cartCnt}">
                                             </td>
                                             <td class="thumb">
                                                 <a href="${contextPath}/product/detail?proNo=${cart.productNo}">
