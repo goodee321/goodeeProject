@@ -783,7 +783,7 @@
 											    <c:forEach var="reviewStar" items="${ ratingOptions }" varStatus="vs" begin="1" end="${re.reviewStar}"><img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/84580/preview.svg" style="width:30px"></c:forEach>
 											</td>
 											<td>
-												<fmt:formatDate value="${re.reviewDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+												<fmt:formatDate value="${re.reviewDate}" pattern="yyyy-MM-dd"/>
 											</td>
 										</tr>
 									</c:forEach>
