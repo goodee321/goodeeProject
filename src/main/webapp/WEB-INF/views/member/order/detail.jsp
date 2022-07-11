@@ -1,127 +1,246 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
-<html>
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    <style>
+        .content {
+            padding: 20px 0 0 0;
+            position: relative;
+            width: 1308px;
+            margin-left: 300px;
+            margin-right: 135px;
+        }
+    </style>
+    <link href="../../../resources/css/member.css" rel="stylesheet">
 </head>
 <body>
-    <jsp:include page="../../layout/header.jsp"></jsp:include>
-
-    주문정보
-    <c:forEach items="${memberInfo}" var="member">
-        <table>
-            <tr>
-                <td>주문번호</td>
-                <td>${member.orderId}</td>
-            </tr>
-            <tr>
-                <td>주문일자</td>
-                <td>${member.orderDate}</td>
-            </tr>
-            <tr>
-                <td>주문자</td>
-                <td>${member.orderName}</td>
-            </tr>
-            <tr>
-                <td>주문상태</td>
-                <td>${member.orderState}</td>
-            </tr>
-        </table>
-        <hr>
-
-        결제정보
-        <table>
-            <tr>
-                <td>총 주문금액</td>
-                <c:set var="total" value="0"/>
-                <c:forEach var="detail" items="${products}" varStatus="status">
-                    <c:set var="total" value="${total + (detail.proPrice * detail.orderQty)}"/>
-                </c:forEach>
-                <td><fmt:formatNumber value="${total}" pattern="#,##0"/>원</td>
-            </tr>
-            <tr>
-                <td>총 할인금액</td>
-                <c:set var="total" value="0"/>
-                <c:forEach var="detail" items="${products}" varStatus="status">
-                    <c:set var="total" value="${total + (detail.proPrice * (detail.proDiscount) * detail.orderQty)}"/>
-                </c:forEach>
-                <td><fmt:formatNumber value="${total}" pattern="#,##0"/>원</td>
-            </tr>
-            <tr>
-                <td>총 결제금액</td>
-                <td><fmt:formatNumber value="${member.orderAmount}" pattern="#,##0"/>원</td>
-            </tr>
-            <tr>
-                <td>결제수단</td>
-                <td>${member.orderPayment}</td>
-            </tr>
-        </table>
-    </c:forEach>
-    <hr>
-
-    주문 상품 정보
-    <table>
-        <tr>
-            <td>이미지</td>
-            <td>상품명</td>
-            <td>옵션</td>
-            <td>수량</td>
-            <td>상품구매금액</td>
-        </tr>
-        <c:forEach items="${products}" var="detail">
-            <tr>
-                <td>
-                    <a href="${contextPath}/product/detail?proNo=${detail.productNo}">
-                        <img
-                                alt="이미지${detail.proimgNo}"
-                                src="${contextPath}/product/display?proimgNo=${detail.proimgNo}"
-                                width="100px" height="100px"
-                        >
-                    </a>
-                </td>
-                <td><a href="${contextPath}/product/detail?proNo=${detail.productNo}">${detail.proName}</a></td>
-                <td>${detail.productSize}</td>
-                <td>${detail.orderQty}</td>
-                <td><fmt:formatNumber value="${detail.proPrice}" pattern="#,##0"/>원</td>
-            </tr>
-        </c:forEach>
-    </table>
-    <hr>
-
-    배송지정보
-    <c:forEach items="${memberInfo}" var="member">
-        <table>
-            <tr>
-                <td>받으시는 분</td>
-                <td>${member.orderName}</td>
-            </tr>
-            <tr>
-                <td>우편번호</td>
-                <td>${member.postcode}</td>
-            </tr>
-            <tr>
-                <td>주소</td>
-                <td>${member.orderAddr}, ${member.addrDetail}</td>
-            </tr>
-            <tr>
-                <td>휴대전화</td>
-                <td>${member.orderPhone}</td>
-            </tr>
-            <tr>
-                <td>배송메시지</td>
-                <td>${member.orderMessage}</td>
-            </tr>
-        </table>
-    </c:forEach>
-    <hr>
-
-    <a href="${contextPath}/member/order/list">주문목록보기</a>
-
+<jsp:include page="../../layout/header.jsp"></jsp:include>
+<div>
+    <div id="wrap">
+        <div class="content">
+            <div class="mypage_main">
+                <div class="mypage_lately_info">
+                    <div class="mypage_zone_tit">
+                        <h3>주문/배송상세</h3>
+                    </div>
+                    <div class="mypage_lately_info_cont">
+                        <div class="mypage_table_type">
+                            <table>
+                                <colgroup>
+                                    <col style="width:15%">
+                                    <col>
+                                    <col style="width:15%">
+                                    <col style="width:15%">
+                                    <col style="width:15%">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>날짜/주문번호</th>
+                                    <th>상품명/옵션</th>
+                                    <th>상품금액</th>
+                                    <th>수량</th>
+                                    <th>
+                                        주문상태
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="row_line" data-order-no="${detail.orderId}"
+                                    data-order-goodsno="${detail.productNo}">
+                                    <td rowspan="${orderCnt}" class="order_day_num">
+                                        <span class="order_num_link">${memberInfo[0].orderId}</span><br>
+                                        <em style="font-size: 13px">(${memberInfo[0].orderDate})</em>
+                                        <div class="btn_claim">
+                                        </div>
+                                    </td>
+                                    <c:forEach items="${products}" var="detail">
+                                    <td class="td_left">
+                                        <div class="pick_add_cont">
+                    <span class="pick_add_img">
+                        <a href="${contextPath}/product/detail?proNo=${detail.productNo}"><img
+                                src="https://image.shutterstock.com/image-photo/united-kingdom-london-january-22-600w-2123281973.jpg"
+                                width="70" alt="test" class="middle"/></a>
+                    </span>
+                                            <div class="pick_add_info">
+                                                <a href="${contextPath}/product/detail?proNo="><em>${detail.proName}</em></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><strong><fmt:formatNumber value="${detail.proPrice}" pattern="#,##0"/>원</strong>
+                                    </td>
+                                    <td>${detail.orderQty}개</td>
+                                    <td>
+                                        <em>
+                                            <c:if test="${memberInfo[0].orderState eq '0'}">
+                                                결제완료
+                                            </c:if>
+                                            <c:if test="${memberInfo[0].orderState eq '1'}">
+                                                배송준비중
+                                            </c:if>
+                                            <c:if test="${memberInfo[0].orderState eq '2'}">
+                                                배송중
+                                            </c:if>
+                                            <c:if test="${memberInfo[0].orderState eq '3'}">
+                                                배송완료
+                                            </c:if>
+                                            <c:if test="${memberInfo[0].orderState eq '4'}">
+                                                주문취소
+                                            </c:if>
+                                        </em>
+                                    </td>
+                                </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="order_view_info">
+                    <div class="orderer_info">
+                        <div class="mypage_zone_tit">
+                            <h4>주문자 정보</h4>
+                        </div>
+                        <div class="mypage_table_type">
+                            <table class="table_left">
+                                <colgroup>
+                                    <col style="width:15%;">
+                                    <col style="width:85%;">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">주문자 정보</th>
+                                    <td>${memberInfo[0].orderName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">주소</th>
+                                    <td>
+                                        (${memberInfo[0].orderPostcode}) ${memberInfo[0].orderAddr}, ${memberInfo[0].addrDetail}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">휴대폰 번호</th>
+                                    <td>
+                                        ${memberInfo[0].orderPhone}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">이메일</th>
+                                    <td>${loginMember.email}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="delivery_info">
+                        <div class="mypage_zone_tit">
+                            <h4>배송지 정보</h4>
+                        </div>
+                        <div class="mypage_table_type">
+                            <table class="table_left">
+                                <colgroup>
+                                    <col style="width:15%;">
+                                    <col style="width:85%;">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">수령인</th>
+                                    <td>${memberInfo[0].orderName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">주소</th>
+                                    <td>
+                                        (${memberInfo[0].orderPostcode}) ${memberInfo[0].orderAddr}, ${memberInfo[0].addrDetail}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">휴대폰 번호</th>
+                                    <td>
+                                        ${memberInfo[0].orderPhone}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">요청사항</th>
+                                    <td>${memberInfo[0].orderMessage}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mypage_zone_tit">
+                        <h4>결제정보</h4>
+                    </div>
+                    <div class="mypage_table_type">
+                        <table class="table_left">
+                            <colgroup>
+                                <col style="width:15%;">
+                                <col style="width:85%;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th scope="row">상품 합계 금액</th>
+                                <td>
+                                    <fmt:formatNumber value="${memberInfo[0].orderAmount - memberInfo[0].orderDelivery}"
+                                                      pattern="#,##0"/>원
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">배송비</th>
+                                <td>
+                                    <fmt:formatNumber value="${memberInfo[0].orderDelivery}" pattern="#,##0"/>원
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">총 결제 금액</th>
+                                <td><strong class="total_pay_money">
+                                    <fmt:formatNumber value="${memberInfo[0].orderAmount}" pattern="#,##0"/>원
+                                </strong></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">결제수단</th>
+                                <td>
+                                    <div class="pay_with_list">
+                                        <strong>
+                                            <c:if test="${memberInfo[0].orderPayment eq 'kakaopay'}">
+                                                카카오페이
+                                            </c:if>
+                                            <c:if test="${memberInfo[0].orderPayment eq 'tosspay'}">
+                                                토스
+                                            </c:if>
+                                            <c:if test="${memberInfo[0].orderPayment eq 'html5_inicis'}">
+                                                신용카드
+                                            </c:if>
+                                            <c:if test="${memberInfo[0].orderPayment eq 'settle'}">
+                                                세틀뱅크
+                                            </c:if>
+                                        </strong>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="btn_center_box" style="margin-bottom: 80px;">
+                        <a href="${contextPath}/member/order/list" class="btn_order_end_ok"><em>목록보기</em></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="scroll_right">
+    <div class="right_banner">
+            <span class="btn_scroll_top">
+                <a href="#TOP">
+                    <i class="fa-solid fa-angle-up fa-lg"></i>
+                </a>
+            </span>
+    </div>
+</div>
+<jsp:include page="../../layout/Footer.jsp"></jsp:include>
 </body>
 </html>

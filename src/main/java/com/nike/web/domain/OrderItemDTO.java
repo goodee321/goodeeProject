@@ -43,8 +43,11 @@ public class OrderItemDTO {
 
     private int totalPrice;
 
+    private int discountPrice;
+
     public void initSaleTotal() {
-        this.salePrice = (int) (this.proPrice * (1 - (this.proDiscount / 10)));
+        this.discountPrice = (int) (this.proPrice * (this.proDiscount));
+        this.salePrice = (int) (this.proPrice * (1 - (this.proDiscount)));
         this.totalPrice = this.salePrice * this.cartQty;
     }
 
@@ -66,7 +69,7 @@ public class OrderItemDTO {
                 ", orders=" + orders +
                 ", salePrice=" + salePrice +
                 ", totalPrice=" + totalPrice +
+                ", discountPrice=" + discountPrice +
                 '}';
     }
-
 }

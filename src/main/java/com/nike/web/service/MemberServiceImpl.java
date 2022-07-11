@@ -531,6 +531,7 @@ public class MemberServiceImpl implements MemberService {
     public void OrderDetail(String orderId, Model model) {
         model.addAttribute("products", orderMapper.selectProductDetailByOrderId(orderId));
         model.addAttribute("memberInfo", orderMapper.selectInfoByOrderId(orderId));
+        model.addAttribute("orderCnt", orderMapper.selectCountByOrderId(orderId));
     }
 
     /*@Override

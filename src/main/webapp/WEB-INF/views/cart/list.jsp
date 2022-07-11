@@ -59,7 +59,7 @@
 
         function order() {
 
-            $(".order_btn").on("click", function () {
+            $(".order_btn").on("click", function (event) {
 
                 let form_contents = '';
                 let orderNo = 0;
@@ -87,7 +87,6 @@
                         orderNo += 1;
                     }
                 });
-
                 $(".order_form").append(form_contents);
                 $(".order_form").submit();
             });
@@ -182,18 +181,19 @@
                 if ($(element).find(".hide_cart_checkbox").is(":checked") === true) {
                     totalPrice += parseInt($(element).find(".hide_totalPrice_input").val());
                     totalCount += parseInt($(element).find(".hide_cartQty_input").val());
+                    finalTotalPrice += parseInt($(element).find(".hide_finalPrice_input").val());
                 }
             });
 
-            if (totalPrice >= 50000) {
+            if (finalTotalPrice >= 50000) {
                 deliveryPrice = 0;
-            } else if (totalPrice == 0) {
+            } else if (finalTotalPrice == 0) {
                 deliveryPrice = 0;
             } else {
                 deliveryPrice = 3000;
             }
 
-            finalTotalPrice = totalPrice + deliveryPrice;
+            finalTotalPrice += deliveryPrice;
 
             $(".totalPrice_span").text(totalPrice.toLocaleString());
             $(".totalCount_span").text(totalCount);
@@ -205,209 +205,17 @@
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link href="../resources/css/order.css" rel="stylesheet">
+    <link href="../resources/css/cart.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        .xans-order-basketpackage .boardList {
-            background-color: white;
-            border-radius: 20px;
-            table-layout: fixed;
-            margin: 0px;
-            color: #353535;
-            line-height: 1.5;
-            width: 100%;
-            border: 0;
-            border-spacing: 0;
-            border-collapse: collapse;
-            box-sizing: border-box;
-            text-indent: initial;
-            box-shadow: 0px 3px 9px rgb(0 0 0 / 8%);
-        }
-        body {
-            font-family: "YG730";
-        }
-        thead {
-            display: table-header-group;
-            vertical-align: middle;
-            border-color: inherit;
-            border-top-width: 15px;
-        }
-        th {
-            font-size: 14px;
-        }
-        td, tr, span, button {
-            font-size: 13px;
-        }
-        .delete_btn_All {
+        .qty_modify_btn {
             border: 1px solid #ddd;
+            border-radius: 8px;
             background-color: #FFFFFF;
-            border-radius: 20px;
-            width: 70px;
-            height: 30px;
+            width: 40px;
+            height: 25px;
             font-size: 12px;
-            border-color: white;
-            float: right;
-            margin-top: 10px;
-        }
-        .delete_btn_All :hover {
-            color: #ccc;
-        }
-        tr {
-            border-top-width: 10px;
-            border-color: #FFFFFF;
-        }
-        img {
-            vertical-align: middle;
-            display: block;
-            margin: auto;
-        }
-        .emptyCart {
-            margin-top: 5px;
-            margin-bottom: 3px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #333333;
-        }
-        p {
-            font-size: 14px;
-            margin-top: 5px;
-            color: #888888;
-        }
-        .delete_btn {
-            color: #cccccc;
-            text-decoration: none;
-        }
-        .delete_btn:hover {
-            color: black;
-            text-decoration: none;
-        }
-        .shop_btn {
-            font-size: 15px;
-            font-weight: bold;
-            color: #222222;
-            border: 1px solid #e1e1e1;
-            line-height: 35px;
-            display: inline-block;
-            padding: 0 31px;
-            margin-bottom: 20px;
-        }
-        .bg-gray-100 {
-            --tw-bg-opacity: 0;
-        }
-        .td_width_1 cart_info_td {
-            width: 50px;
-        }
-        .xans-order-basketpackage .boardList .thumb {
-            text-align: center;
-            width: 125px;
-        }
-        .xans-order-basketpackage .boardList .product {
-            text-align: center;
-            width: 250px;
-        }
-        .xans-order-basketpackage .boardList .option {
-            text-align: center;
-            width: 150px;
-        }
-        .xans-order-basketpackage .boardList .price {
-            text-align: center;
-            width: 100px;
-        }
-        .xans-order-basketpackage .boardList .quantity {
-            text-align: center;
-            width: 260px;
-        }
-        .xans-order-basketpackage .boardList .total {
-            text-align: center;
-            width: 200px;
-        }
-        .xans-order-basketpackage .boardList .button {
-            text-align: center;
-            width: 125px;
-        }
-        #white_container {
-            padding: 0px;
-            width: 1296px;
-            min-height: 700px;
-            margin: 0 auto;
-            display: table;
-        }
-        .lastTotalPrice_span, .totalCount_span {
-            font-size: 18px;
-            text-align: center;
-            font-weight: bold;
-        }
-        .finalTotalPrice_span {
-            text-align: left;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fa671c;
-        }
-        .order_btn  {
-            background-color: #ffffff;
-            border: #ccc 1px;
-            line-height: 54px;
-            width: 540px;
-            padding: 0 10px;
-            margin: 33px auto 0;
-            border-radius: 6px;
-            font-size: 18px;
-            text-align: center;
-            font-weight: bold;
-        }
-        .tdTitle {
-            text-align: center;
-            font-size: 14px;
-            line-height: 21px;
-            font-weight: bold;
-            color: #222222;
-            letter-spacing: -0.5px;
-            width: 110px;
-        }
-        .tdIcon {
-            text-align: center;
-            font-size: 14px;
-            line-height: 21px;
-            font-weight: bold;
-            color: #222222;
-            letter-spacing: -0.5px;
-            width: 50px;
-        }
-        .tdContent, .totalPrice_span, .delivery_price {
-            text-align: center;
-            margin-top: 3px;
-            padding-left: 0;
-            font-size: 20px;
-            font-weight: bold;
-            line-height: 20px;
-            color: #222222;
-        }
-        .totalSalePrice {
-            text-align: center;
-            margin-top: 3px;
-            padding-left: 0;
-            font-size: 20px;
-            font-weight: 500;
-            line-height: 20px;
-            color: #fa671c;
-        }
-        .totalOrder {
-            text-align: left;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .cartQty {
-            width: 38px;
-            margin-bottom: 10px;
-            border-left-width: 14px;
-            border-color: #FFFFFF;
-        }
-        .line {
-            text-align: center;
-            border-bottom-width: 40px;
-            border-color: #FFFFFF;
-            border-top-width: 15px;
         }
     </style>
 </head>
@@ -433,8 +241,9 @@
                                         </th>
                                         <th scope="col" class="thumb">이미지</th>
                                         <th scope="col" class="product">상품명</th>
-                                        <th scope="col" class="option">옵션</th>
-                                        <th scope="col" class="price">판매가</th>
+                                        <th scope="col" class="option">옵션<br>(사이즈)</th>
+                                        <th scope="col" class="price">상품가</th>
+                                        <th scope="col" class="sale">판매가</th>
                                         <th scope="col" class="quantity">수량</th>
                                         <th scope="col" class="total">합계</th>
                                         <th scope="col" class="button"></th>
@@ -443,17 +252,26 @@
                                     <tbody class="xsans-element- xans-order xans-order-list price_checker"
                                            style="text-align: center">
                                     <c:if test="${empty cartList}">
-                                        <td colspan="8">
-                                            <img src="../resources/images/cart/sneakers.png" width="60px">
-                                            <h2 class="emptyCart">장바구니에 담긴 상품이 없습니다.</h2>
-                                            <p>원하는 상품을 장바구니에 담아보세요!</p>
-                                            <button class="shop_btn">쇼핑하러 가기 <i class="fa-solid fa-angle-right"></i>
-                                            </button>
-                                        </td>
+                                        <tr>
+                                            <td colspan="8"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="8" style="padding-bottom: 0px;">
+                                                <img src="../resources/images/order/sneakers.png" width="60px">
+                                                <h2 class="emptyCart">장바구니에 담긴 상품이 없습니다.</h2>
+                                                <p>원하는 상품을 장바구니에 담아보세요!</p>
+                                                <button class="shop_btn">쇼핑하러 가기<i class="fa-solid fa-angles-right"
+                                                                                   style="color: #fa671c; margin-left: 6px;"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     </c:if>
+                                    <tr>
+                                        <td colspan="8"></td>
+                                    </tr>
                                     <c:if test="${not empty cartList}">
                                     <c:forEach items="${cartList}" var="cart" varStatus="vs">
-                                        <tr style="border-bottom-width: 10px; border-color: white">
+                                        <tr>
                                             <td class="td_width_1 cart_info_td">
                                                 <input type="checkbox" class="hide_cart_checkbox input_size"
                                                        checked="checked">
@@ -471,6 +289,8 @@
                                                        value="${cart.productNo}">
                                                 <input type="hidden" class="hide_productSize_input"
                                                        value="${cart.productSize}">
+                                                <input type="hidden" class="hide_finalPrice_input"
+                                                       value="${cart.proPrice * (1 - cart.proDiscount) * cart.cartQty}">
                                             </td>
                                             <td class="thumb">
                                                 <a href="${contextPath}/product/detail?proNo=${cart.productNo}">
@@ -488,18 +308,26 @@
                                             <td class="price">
                                                 <fmt:formatNumber value="${cart.proPrice}"></fmt:formatNumber>원
                                             </td>
+                                            <td class="sale">
+                                                <fmt:formatNumber
+                                                        value="${cart.proPrice * (1-cart.proDiscount)}"></fmt:formatNumber>원
+                                            </td>
                                             <td class="quantity">
                                                 <div class="table_text_align_center qty_div">
-                                                    <button class="font-semibold_minus_btn">-</button>
-                                                    <input type="number" value="${cart.cartQty}" class="cartQty">
-                                                    <button class="font-semibold_plus_btn">+</button>
+                                                    <a class="font-semibold_minus_btn"><i
+                                                            class="fa-solid fa-circle-minus"
+                                                            style="cursor: pointer"></i></a>
+                                                    <input type="number" value="${cart.cartQty}" class="cartQty" style="margin-bottom: 5px">
+                                                    <a class="font-semibold_plus_btn"><i class="fa-solid fa-circle-plus"
+                                                                                         style="cursor: pointer"></i></a>
                                                 </div>
                                                 <button class="qty_modify_btn" value="${cart.cartNo}"
-                                                        id="button_${vs.index}"><b>수정</b>
+                                                        id="button_${vs.index}">변경
                                                 </button>
                                             </td>
-                                            <td class="total"><fmt:formatNumber
-                                                    value="${cart.cartQty * cart.proPrice}"></fmt:formatNumber>원
+                                            <td class="total">
+                                                <fmt:formatNumber
+                                                    value="${cart.cartQty * cart.proPrice * (1-cart.proDiscount)}"></fmt:formatNumber>원
                                             </td>
                                             <td class="button">
                                                 <a class="delete_btn" data-cartno="${cart.cartNo}"><i
@@ -508,9 +336,9 @@
                                         </tr>
                                     </c:forEach>
                                     </tbody>
-                                    </c:if>
                                 </table>
                                 <button class="delete_btn_All" value="${loginMember.memberNo}">전체삭제</button>
+                                </c:if>
                                 <form action="${contextPath}/cart/update" method="post" class="qty_update_form">
                                     <input type="hidden" name="cartQty" class="update_cartQty">
                                     <input type="hidden" name="cartNo" class="update_cartNo">
@@ -520,7 +348,7 @@
                                 </form>
                                 <br><br>
                                 <c:if test="${not empty cartList}">
-                                    <table style="margin-left:auto; margin-right:auto; margin-top: 80px">
+                                    <table style="margin: 70px auto 30px auto;">
                                         <thead>
                                         <tr>
                                             <td class="tdTitle">총 선택상품금액</td>
@@ -529,7 +357,9 @@
                                             <td rowspan="2" class="tdIcon"><i class="fa-solid fa-minus"></i></td>
                                             <td class="tdTitle">할인금액</td>
                                             <td rowspan="2" class="tdIcon"><i class="fa-solid fa-equals"></i></td>
-                                            <td rowspan="2" class="totalOrder"> 총 주문금액 <span class="finalTotalPrice_span"></span>원</td>
+                                            <td rowspan="2" class="totalOrder"> 총 주문금액 <span
+                                                    class="finalTotalPrice_span"></span>원
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="tdContent"><span class="totalPrice_span"></span>원</td>
@@ -539,7 +369,9 @@
                                                 <c:set var="sale"
                                                        value="${sale + (cart.proPrice * cart.proDiscount * cart.cartQty)}"/>
                                             </c:forEach>
-                                            <td class="totalSalePrice"><fmt:formatNumber value="${sale}"></fmt:formatNumber>원</td>
+                                            <td class="totalSalePrice"><fmt:formatNumber
+                                                    value="${sale}"></fmt:formatNumber>원
+                                            </td>
                                         </tr>
                                         </thead>
                                         <tbody>

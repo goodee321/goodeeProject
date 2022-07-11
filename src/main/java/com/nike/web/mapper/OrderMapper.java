@@ -23,4 +23,6 @@ public interface OrderMapper {
 
     public List<OrderDTO> selectInfoByOrderId(String orderId);
 
+    public int selectCountByOrderId(String orderId);
+
 }

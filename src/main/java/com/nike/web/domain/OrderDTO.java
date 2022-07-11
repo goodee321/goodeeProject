@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,7 +27,7 @@ public class OrderDTO {
     private int orderDelivery;
     private String impUid;
     private int orderState;
-    private int postcode;
+    private int orderPostcode;
     private String orderMessage;
 
     //  Product
