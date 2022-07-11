@@ -33,8 +33,7 @@ public class CartController {
     public void cartlist(HttpSession session, Model model) {
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
         long MemberNo = loginMember.getMemberNo();
-        List<CartDTO> cartList = cartService.getCartByNo(MemberNo);
-        model.addAttribute("cartList", cartList);
+        cartService.getCartByNo(MemberNo, model);
     }
 
     @PostMapping(value = "cart/update")

@@ -22,4 +22,6 @@ public interface CartMapper {
 
     public int selectcartQtybyCartNo(int cartNo);
 
+    public int selectCartCntByMemberNo(long memberNo);
+
 }

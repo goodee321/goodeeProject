@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 
 import com.nike.web.domain.CartDTO;
 import com.nike.web.mapper.CartMapper;
+import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -23,10 +25,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartDTO> getCartByNo(long memberNo) {
-
-        return cartMapper.selectListByMemberNo(memberNo);
-
+    public void getCartByNo(long memberNo, Model model) {
+        model.addAttribute("cartList", cartMapper.selectListByMemberNo(memberNo));
+        model.addAttribute("cartCnt", cartMapper.selectCartCntByMemberNo(memberNo));
     }
 
     @Override

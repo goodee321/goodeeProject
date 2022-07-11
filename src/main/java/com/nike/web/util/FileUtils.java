@@ -31,7 +31,7 @@ public class FileUtils {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         String sep = Matcher.quoteReplacement(File.separator);
 
-        return "C:" + sep + "upload" + sep + year + sep + month + sep + day;
+        return "upload" + sep + year + sep + month + sep + day;
     }
 
     // 어제 경로

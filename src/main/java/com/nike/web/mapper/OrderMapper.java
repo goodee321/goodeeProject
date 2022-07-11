@@ -15,14 +15,18 @@ public interface OrderMapper {
 
     public int insertOrderDetail(OrderDetailDTO orderDetailDTO);
 
+    public OrderItemDTO selectProductsByNo(Map<String, Object> map);
+
     public OrderItemDTO selectProductByNo(int productNo);
 
-    public List<OrderDTO> selectOrderByMemberNo(long memberNo);
+    public List<OrderDTO> selectOrderByMemberNo(Map<String, Object> map);
 
     public List<OrderDTO> selectProductDetailByOrderId(String orderId);
 
     public List<OrderDTO> selectInfoByOrderId(String orderId);
 
     public int selectCountByOrderId(String orderId);
+
+    public int selectOrderCntByMemberNo(long memberNo);
 
 }

@@ -30,6 +30,8 @@ public class OrderDTO {
     private int orderPostcode;
     private String orderMessage;
 
+    private int orderCnt;
+
     //  Product
     private String proName;
     private int proPrice;

@@ -8,12 +8,14 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 
+import com.nike.web.domain.SignOutMemberDTO;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -115,31 +117,21 @@ public class OrderServiceImpl implements OrderService {
 
         int amount = paymentInfo(impUid, token);
 
-        System.out.println(amount);
-
         int res = 0;
 
         try {
             int orderAmount = order.getOrderAmount();
-
-            System.out.println(orderAmount);
 
             if (orderAmount != amount) {
                 OrderCancel(impUid, amount, "OrderCancel");
                 return 0;
             }
 
-            System.out.println("order : " + order);
-
             res = orderMapper.insertOrder(order);
-
-            System.out.println("res : " + res);
 
             if (res > 0) {
 
                 String[] cartNo = request.getParameterValues("cartNo");
-
-                System.out.println("order.getProductSize() : " + order.getProductSize());
 
                 if (cartNo[0].equals("0")) {
                     OrderDetailDTO odd = OrderDetailDTO.builder()
@@ -242,6 +234,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderItemDTO> productInfo(List<OrderItemDTO> order) {
 
         List<OrderItemDTO> products = new ArrayList<>();
+        System.out.println(products);
         for (OrderItemDTO orders : order) {
             OrderItemDTO productInfo = orderMapper.selectProductByNo(orders.getProductNo());
             productInfo.setProductNo(orders.getProductNo());
@@ -252,7 +245,6 @@ public class OrderServiceImpl implements OrderService {
             products.add(productInfo);
         }
         return products;
-
     }
 
     @Override
@@ -263,10 +255,13 @@ public class OrderServiceImpl implements OrderService {
         int cartQty = Integer.parseInt(request.getParameter("cartQty"));
         int productSize = Integer.parseInt(request.getParameter("productSize"));
 
-        OrderItemDTO productInfo = orderMapper.selectProductByNo(productNo);
-        productInfo.setProductNo(productNo);
+        Map<String, Object> map = new HashMap<>();
+        map.put("productSize", productSize);
+        map.put("productNo", productNo);
+
+        OrderItemDTO productInfo = orderMapper.selectProductsByNo(map);
+
         productInfo.setCartQty(cartQty);
-        productInfo.setProductSize(productSize);
         productInfo.initSaleTotal();
         product.add(productInfo);
         return product;
@@ -275,7 +270,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void getOrderByOrderId(String orderId, Model model){
-        System.out.println("orderMapper.selectInfoByOrderId(orderId) : " + orderMapper.selectInfoByOrderId(orderId));
         model.addAttribute("orderList", orderMapper.selectInfoByOrderId(orderId));
     }
 }

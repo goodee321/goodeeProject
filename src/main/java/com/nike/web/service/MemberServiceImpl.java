@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nike.web.util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -523,8 +524,25 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<OrderDTO> getOrderByMemberNo(long memberNo) {
-        return orderMapper.selectOrderByMemberNo(memberNo);
+    public void orderList(long memberNo, Model model, HttpServletRequest request) {
+
+        int totalRecord = orderMapper.selectOrderCntByMemberNo(memberNo);
+
+        PageUtils pageUtils = new PageUtils();
+        Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+        int page = Integer.parseInt(opt.orElse("1"));
+
+        pageUtils.setPageEntity(totalRecord, page);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberNo", memberNo);
+        map.put("beginRecord", pageUtils.getBeginRecord() - 1);
+        map.put("recordPerPage", pageUtils.getRecordPerPage());
+
+        model.addAttribute("orderCount", orderMapper.selectOrderCntByMemberNo(memberNo));
+        model.addAttribute("orderList", orderMapper.selectOrderByMemberNo(map));
+        model.addAttribute("totalRecord", totalRecord);
+        model.addAttribute("paging", pageUtils.getPagings(request.getContextPath() + "/member/order/list"));
     }
 
     @Override
@@ -533,11 +551,5 @@ public class MemberServiceImpl implements MemberService {
         model.addAttribute("memberInfo", orderMapper.selectInfoByOrderId(orderId));
         model.addAttribute("orderCnt", orderMapper.selectCountByOrderId(orderId));
     }
-
-    /*@Override
-    public void findOrderList(HttpServletRequest request, Model model) {  // 페이지 만들기
-
-
-    }*/
 
 }
