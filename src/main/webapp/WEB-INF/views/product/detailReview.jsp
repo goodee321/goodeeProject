@@ -25,6 +25,7 @@
 			var memberNo = "${reviewbyno.memberNo}";
 			var sessionNo = "${loginMember.memberNo}";
 			
+			
 			if(${loginMember eq null}){
 				
 				alert('로그인 후 이용해주세요');
@@ -37,7 +38,13 @@
 						//location.href='${contextPath}/product/deleteReview?proNo=${reviewbyno.proNo}';
 						//location.href='${contextPath}/product/deleteReview?reviewNo=' + $('#reviewNo').val();
 					}
-				} else {
+				} else if(sessionNo == 5) {
+					if (confirm('삭제하시겠습니까?')) {
+						location.href='${contextPath}/product/deleteReview?reviewNo=${reviewbyno.reviewNo}';
+					}
+				}
+				
+				else {
 					alert('작성자만 삭제 가능합니다.');
 				}
 				
