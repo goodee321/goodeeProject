@@ -34,6 +34,9 @@
 		fnAdd();
 		fnFileName();
 		fnReviewImage();
+		/* FnPrice(); */
+		
+		
 	})
 	
 	function fnReviewCheck(){
@@ -128,24 +131,48 @@
 			}); 
 	}
 	
-	function numCheck(){
-		
-		var sizeOption = "${detail.productQtyDTO.proSize}";
-		var qtyOption = "${detail.productQtyDTO.proQty}";
-		
-		if(qtyOption == "0"){
-			$("#proSize").not("option[value*= '0']").prop('disabled',true);
-			/* $("select option[value*='1']").prop('disabled',true);
-			$("select option[value*='2']").prop('disabled',true);
-			$("select option[value*='3']").prop('disabled',true);
-			$("select option[value*='4']").prop('disabled',true);
-			$("select option[value*='5']").prop('disabled',true);
-			
-			$("select[name=selectedQty]").val(); */
-		}
-		
 	
-	}
+	/*  // 천단위 콤마 (소수점포함) 
+	  function numberWithCommas() {
+		 
+		  $("#totalPrice").on("keyup", function(){    $(this).val($(this).val().toLocaleString("ko-KR"));});
+		 
+	  } */
+	  
+	  
+	 // 숫자 타입에서 쓸 수 있도록 format() 함수 추가
+	  Number.prototype.format = function(){
+	      if(this==0) return 0;
+
+	      var reg = /(^[+-]?\d+)(\d{3})/;
+	      var n = (this + '');
+
+	      while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+
+	      return n;
+	  };
+
+	  // 문자열 타입에서 쓸 수 있도록 format() 함수 추가
+	  String.prototype.format = function(){
+	      var num = parseFloat(this);
+	      if( isNaN(num) ) return "0";
+
+	      return num.format();
+	  };   
+		
+	  
+	   function FnPrice(){
+		  
+		  $('.totalPrice').text(function() {
+			    $(this).text(
+			        $(this).text().format()
+			    );
+			});
+	  } 
+	  
+	
+	  
+	  
 	
 	function fnData(){
 		   
@@ -170,7 +197,7 @@
 		        	 let Price = "${detail.proPrice}";
 		             $('#proQty').text(data.proQty);
 		             $('#proDiscount').text(data.proDiscount);
-		             // $(".finalPrice").text(Price);
+		             // $(".totalPrice").text(Price);
 		          },
 		          error: function (err) {
 		        	 
@@ -214,6 +241,12 @@
 		let show_total_amount = basic_amount * this_qty;
 		$("#cartQty").val(this_qty);
 		$(".totalPrice").text(show_total_amount);
+		$("#totalPrice").text(function() {
+		    $(this).text(
+		        $(this).text().format()
+		    );
+		});
+		$(".totalPrice").on("keyup", function(){    $(this).val($(this).val().toLocaleString("ko-KR"));});
 	}
 
 	function fnAdd() {
@@ -297,6 +330,8 @@
 	        }
 	    });
 	}
+	
+	
 	
 </script>
 <style>
@@ -634,10 +669,12 @@
 						</div>
 						<div style="padding: 5px 1px 1px 40px">
 						<span class="minus" style="margin:25px 1px 1px 1px; font-size: 28px;"><a href="javascript:change_qty2('m')"><i class="fa-solid fa-square-caret-left" style="color:black;"></i></a></span>
-						<input type="text" class="cartQty" id="cartQty" value="1" readonly="readonly" style="margin:1px 1px 20px 1px; width: 30px; height: 30px; font-size: 18px; border: 0; text-align:center;">
+						<input type="text" class="cartQty" id="cartQty" value="1" readonly="readonly" style="margin:1px 1px 20px 1px; width: 30px; height: 30px; font-size: 24px; border: 0; text-align:center;">
 	                    <span class="plus" style="margin:25px 1px 1px 1px; font-size: 28px;"><a href="javascript:change_qty2('p')"><i class="fa-solid fa-square-caret-right" style="color:black;"></i></a></span>
 						</div>
-	                    <h2 style="margin: 5px 1px 1px 438px">총 금액: <span class="totalPrice"><fmt:formatNumber value="${detail.proPrice}" pattern="#,###"/></span>원</h2>
+	                    <h2 style="margin: 5px 1px 1px 438px">
+	                    	총 금액: <span class="totalPrice" id="totalPrice"></span>원
+	                    </h2>
 	                    <button type="button" class="btn btn-light" style="margin:10px 1px 1px 575px;">장바구니 담기</button><br>
 	                    <button type="button" id="iamportPayment" class="btn btn-dark" style="margin:10px 1px 1px 610px;">구매하기</button><br>
 	                    <input type="hidden" value="${detail.proPrice}" id="proPrice">
@@ -650,72 +687,51 @@
 	                </div><br>
 	                
 	                <div class="col-lg-12 col-md-12 col-sm-12">
-	                    <h1 class="box-title mt-5" style="margin: 1px 1px 5px 10px">General Info</h1>
+	                    <h2 class="box-title mt-5" style="margin: 1px 1px 5px 10px">General Info</h2>
 	                    <div class="table-responsive">
 	                        <table class="table table-striped table-product">
 	                            <tbody>
 	                                <tr>
 	                                    <td width="390">Brand</td>
-	                                    <td>Stellar</td>
+	                                    <td>Nishoe</td>
 	                                </tr>
 	                                <tr>
-	                                    <td>Delivery Condition</td>
-	                                    <td>Knock Down</td>
+	                                    <td>Product Number</td>
+	                                    <td>${detail.proNo}</td>
 	                                </tr>
 	                                <tr>
-	                                    <td>Seat Lock Included</td>
-	                                    <td>Yes</td>
+	                                    <td>제품소재</td>
+	                                    <td>겉감 : 폴리에스터 100%, 합성수지 / 안감 : 폴리에스터 100% / 창 : 합성고무</td>
 	                                </tr>
 	                                <tr>
-	                                    <td>Price</td>
-	                                    <td>${detail.proPrice} Won</td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Style</td>
+	                                    <td>제품명</td>
 	                                    <td>${detail.proName}</td>
 	                                </tr>
 	                                <tr>
-	                                    <td>Wheels Included</td>
-	                                    <td>Yes</td>
+	                                    <td>소비자가</td>
+	                                    <td><fmt:formatNumber value="${detail.proPrice}" pattern="#,###"/>원</td>
 	                                </tr>
 	                                <tr>
-	                                    <td>Upholstery Included</td>
-	                                    <td>Yes</td>
+	                                    <td>치수</td>
+	                                    <td>240 - 280</td>
 	                                </tr>
 	                                <tr>
-	                                    <td>Upholstery Type</td>
-	                                    <td>Cushion</td>
+	                                    <td>제조국</td>
+	                                    <td>중국</td>
 	                                </tr>
 	                                <tr>
-	                                    <td>Head Support</td>
-	                                    <td>No</td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Suitable For</td>
-	                                    <td>Study&amp;Home Office</td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Adjustable Height</td>
-	                                    <td>Yes</td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Model Number</td>
-	                                    <td>F01020701-00HT744A06</td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Armrest Included</td>
-	                                    <td>Yes</td>
-	                                </tr>
-	                                <tr>
-	                                    <td>Care Instructions</td>
-	                                    <td>Handle With Care,Keep In Dry Place,Do Not Apply Any Chemical For Cleaning.</td>
+	                                    <td>품질보증기준</td>
+	                                    <td>품질보증기간:구입후 6개월</td>
 	                                </tr>
 	                                
 	                            </tbody>
 	                        </table>
 	                    </div>
 	                </div><br>
-	                ${detail.proDetail}<br>
+	                <h2 class="box-title mt-5" style="margin: 1px 1px 5px 10px">제품상세</h2>
+	                <div style="height: 500px; margin: 10px 1px 1px 10px;">
+		                ${detail.proDetail}<br>
+	                </div>
 	                <hr>
 	                <div class="col-lg-12 col-md-12 col-sm-12">
 	                    <h1 class="box-title mt-5" style="margin: 1px 1px 5px 10px">Review</h1>
