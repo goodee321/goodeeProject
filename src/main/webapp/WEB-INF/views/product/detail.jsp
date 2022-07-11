@@ -252,6 +252,14 @@
 		
 		$(".totalPrice").on("keyup", function(){    $(this).val($(this).val().toLocaleString("ko-KR"));});
 	}
+	
+	function fnSizeCheck(ev) {
+		if ($('#proSize').val() == null) {
+			alert('사이즈를 선택해주세요.');
+			ev.preventDefault();
+			return false;
+		}
+	}
 
 	function fnAdd() {
 		$(".btn-light").on('click', function () {
