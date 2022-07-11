@@ -163,7 +163,7 @@ public class MemberServiceImpl implements MemberService {
             if (res == 1) {
                 out.println("<script>");
                 out.println("alert('회원 가입되었습니다.')");
-                out.println("location.href='" + request.getContextPath() + "'");
+                out.println("location.href='/'");
                 out.println("</script>");
                 out.close();
             } else {

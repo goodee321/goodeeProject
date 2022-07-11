@@ -63,12 +63,10 @@
                                         <div class="pick_add_cont">
                     <span class="pick_add_img">
                         <a href="${contextPath}/product/detail?proNo=${detail.productNo}"><img
-                                src="https://image.shutterstock.com/image-photo/united-kingdom-london-january-22-600w-2123281973.jpg"
-                                width="70" alt="test" class="middle"/></a>
+                                src="${contextPath}/product/display?proimgNo=${detail.proimgNo}"
+                                width="70" class="middle"/></a>
                     </span>
-                                            <div class="pick_add_info">
-                                                <a href="${contextPath}/product/detail?proNo="><em>${detail.proName}</em></a>
-                                            </div>
+                                            <em>${detail.proName}</em>
                                         </div>
                                     </td>
                                     <td><strong><fmt:formatNumber value="${detail.proPrice}" pattern="#,##0"/>원</strong>

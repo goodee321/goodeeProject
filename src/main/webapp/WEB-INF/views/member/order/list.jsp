@@ -83,7 +83,7 @@
                                         <td class="td_left">
                                             <div class="pick_add_cont">
                                     <span class="pick_add_img">
-                                            <img src="https://cdn.ownerclan.com/dPBUJp3y~vPDFfDDyFPito95KmukUKUuqlcZ_~__uk0/marketize/640/as/v1.jpg"
+                                            <img src="${contextPath}/product/display?proimgNo=${list.proimgNo}"
                                                  width="50" class="middle"/>
                                         </span>
                                                 <c:if test="${list.orderCnt == 1}">

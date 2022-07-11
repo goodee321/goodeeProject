@@ -59,18 +59,20 @@
                OD.ORDER_QTY,
                O.ORDER_AMOUNT,
                O.ORDER_STATE,
+               MAX(PI.PROIMG_NO) AS PROIMG_NO,
                COUNT(*) AS ORDER_CNT
         FROM ORDER_TB O
                  LEFT JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
+                 LEFT JOIN PRODUCT_IMAGE PI ON P.PRO_NO = PI.PRO_NO
         WHERE O.MEMBER_NO = #{memberNo}
-            GROUP BY ORDER_ID
-            ORDER BY ORDER_DATE DESC
-        LIMIT #{beginRecord}, #{recordPerPage}
+        GROUP BY ORDER_ID
+        ORDER BY ORDER_DATE DESC
+            LIMIT #{beginRecord}, #{recordPerPage}
     </select>
 
     <select id="selectProductDetailByOrderId" resultType="order">
-        SELECT PI.PROIMG_NO,
+        SELECT MAX(PI.PROIMG_NO) AS PROIMG_NO,
                P.PRO_NAME,
                OD.PRODUCT_SIZE,
                OD.ORDER_QTY,

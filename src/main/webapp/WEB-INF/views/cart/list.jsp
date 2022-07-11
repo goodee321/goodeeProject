@@ -300,7 +300,7 @@
                                             </td>
                                             <td class="thumb">
                                                 <a href="${contextPath}/product/detail?proNo=${cart.productNo}">
-                                                    <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                                                    <img src="${contextPath}/product/display?proimgNo=${cart.proimgNo}"
                                                          alt="" style="width: 120px; height: 120px"></a>
                                             </td>
                                             <td class="price">
