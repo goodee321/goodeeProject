@@ -89,7 +89,7 @@
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 
-	<form id="f" action="${contextPath}/member/modifyPw" method="post" class="box">
+	<form id="f" action="/member/modifyPw" method="post" class="box">
 		<h3 class="shadow p-3 mb-5 bg-body rounded">비밀번호 변경</h3>
 		<div>
 			<p>

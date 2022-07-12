@@ -94,7 +94,7 @@
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 
-	<form action="${contextPath}/member/findPw" class="box">
+	<form action="/member/findPw" class="box">
 		<h3 class="shadow p-3 mb-5 bg-body rounded">비밀번호 재설정</h3>
 		<div class="shadow p-3 mb-5 bg-body rounded">
 			<p class="input-group mb-3">

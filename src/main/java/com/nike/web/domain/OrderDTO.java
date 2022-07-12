@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@Data
 public class OrderDTO {
 
     private int orderNo;
@@ -23,7 +24,7 @@ public class OrderDTO {
     private String addrDetail;
     private int orderAmount;
     private String orderPayment;
-    private int orderInvoice;
+    private long orderInvoice;
     private int orderDelivery;
     private String impUid;
     private int orderState;

@@ -223,6 +223,7 @@ section {
 			font-family: 'Splash', cursive;
 			font-size: 40px;
 			text-shadow: 1px 1px 1px gray;
+			text-align: center;
 	}
 
 
@@ -284,8 +285,8 @@ section {
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<button id="btn" class="btn btn-secondary">작성완료</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="${contextPath}/admin/product/list">목록</a><br>
+		
+		<a href="${contextPath}/admin/product/list">목록으로</a><br>
 	</form>
 	</div>
 	<br>

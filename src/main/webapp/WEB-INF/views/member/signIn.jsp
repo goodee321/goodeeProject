@@ -163,7 +163,7 @@
 			}
 			// 2) 이메일 중복 체크
 			$.ajax({
-				url: '${contextPath}/member/emailCheck',
+				url: '/member/emailCheck',
 				type: 'get',
 				data: 'email=' + $('#email').val(),
 				dataType: 'json',
@@ -185,7 +185,7 @@
 			fnEmailCheck().then(
 				function(){
 					$.ajax({
-						url: '${contextPath}/member/sendAuthCode',
+						url: '/member/sendAuthCode',
 						type: 'get',
 						data: 'email=' + $('#email').val(),
 						dataType: 'json',
@@ -266,7 +266,7 @@
 			}
 			// 아이디 중복 체크
 			$.ajax({
-				url: '${contextPath}/member/idCheck',
+				url: '/member/idCheck',
 				type: 'get',
 				data: 'id=' + $('#id').val(),
 				dataType: 'json',
@@ -344,7 +344,7 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
 	
-	<form id="f" action="${contextPath}/member/signIn" method="post" class="box">
+	<form id="f" action="/member/signIn" method="post" class="box">
 	<h3 class="shadow p-3 mb-5 bg-body rounded">회원 가입</h3>
 	
 		<input type="hidden" name="location" value="${agreements[0]}">

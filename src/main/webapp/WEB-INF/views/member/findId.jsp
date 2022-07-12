@@ -24,7 +24,7 @@
 <script>
 	$(function(){
 		$("#loginBtn").click(function(){
-			location.href='${contextPath}/member/loginPage';
+			location.href='/member/loginPage';
 		})
 	})
 </script>

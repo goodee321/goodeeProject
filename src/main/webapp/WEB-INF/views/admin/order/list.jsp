@@ -264,10 +264,13 @@
             })
         }
 
+        
         function fnCancel() {
             $("#btnCancel").on('click', function () {
                 if (confirm("주문을 취소하시겠습니까? 취소된 주문은 복구할 수 없습니다.")) {
                     $("#cancelOrder").submit();
+                } else {
+                	return false;
                 }
             })
         }

@@ -25,6 +25,7 @@
 			var memberNo = "${reviewbyno.memberNo}";
 			var sessionNo = "${loginMember.memberNo}";
 			
+			
 			if(${loginMember eq null}){
 				
 				alert('로그인 후 이용해주세요');
@@ -37,7 +38,13 @@
 						//location.href='${contextPath}/product/deleteReview?proNo=${reviewbyno.proNo}';
 						//location.href='${contextPath}/product/deleteReview?reviewNo=' + $('#reviewNo').val();
 					}
-				} else {
+				} else if(sessionNo == 5) {
+					if (confirm('삭제하시겠습니까?')) {
+						location.href='${contextPath}/product/deleteReview?reviewNo=${reviewbyno.reviewNo}';
+					}
+				}
+				
+				else {
 					alert('작성자만 삭제 가능합니다.');
 				}
 				
@@ -96,11 +103,11 @@
     	<h2>${reviewbyno.reviewTitle}</h2>
 	</div>
 	<div style="margin: 10px 0px 0px 0px">${reviewbyno.reviewContent}<br></div>
-	<div align="right" style="margin-top: 5px; font-size: 12px;">No: ${reviewbyno.reviewNo}</div>
+	<div align="right" style="margin-top: 35px; font-size: 12px;">No: ${reviewbyno.reviewNo}</div>
 	<div align="right" style="margin-top: 5px; font-size: 12px;">작성일: <fmt:formatDate value="${reviewbyno.reviewDate}" pattern="yyyy-MM-dd"/><br></div>
 	<input type="hidden" value="${reviewbyno.reviewNo}">
 	<input type="hidden" value="${reviewbyno.proNo}">
-	<input type="button" value="리뷰 삭제하기" id="btnRemove" style="background: #212529; color: #fff; margin: 25px 1px 0px 330px; border-radius: 5px;">
+	<input type="button" value="리뷰 삭제하기" id="btnRemove" style="background: #212529; color: #fff; margin: 55px 1px 0px 330px; border-radius: 5px;">
 	<!-- <input type="button" value="수정하기" id="btnChangePage"> -->
 	
 </body>

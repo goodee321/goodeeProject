@@ -101,7 +101,7 @@ tr:nth-of-type(1) td:nth-of-type(2) {
 		let Pass = true;
 	function fnRegExp(){
 		
-		let numberRegExp = 	/^[0-9]{10}$/;
+		let numberRegExp = 	/^[0-9]{8}$/;
 			
 			
 			
@@ -109,7 +109,7 @@ tr:nth-of-type(1) td:nth-of-type(2) {
 			$('#orderInvoice').on('keyup',function(){
 			
 				if(numberRegExp.test( $('#orderInvoice').val() ) == false){ 
-					$('#proDiscountError').text('10자리 번호 입력').addClass('dont').removeClass('hidden');
+					$('#proDiscountError').text('8자리 번호 입력').addClass('dont').removeClass('hidden');
 					Pass = false;
 					return;
 				}else{

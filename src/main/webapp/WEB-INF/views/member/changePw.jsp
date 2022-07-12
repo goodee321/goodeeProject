@@ -42,7 +42,7 @@
 	function fnNowPwCheck(){
 		$('#nowPw').on('keyup', function(){
 			$.ajax({
-				url: '${contextPath}/member/checkNowPw',
+				url: '/member/checkNowPw',
 				type: 'post',
 				data: 'nowPw=' + $('#nowPw').val(),
 				dataType: 'json',
@@ -112,7 +112,7 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 
 	
-	<form id="fff" action="${contextPath}/member/modifyPw" method="post" class="box">
+	<form id="fff" action="/member/modifyPw" method="post" class="box">
 		<h3 class="shadow p-3 mb-5 bg-body rounded">비밀번호 변경</h3>
 		<div>
 			<p>

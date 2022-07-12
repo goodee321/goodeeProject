@@ -42,7 +42,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/member/idCheck", produces = "application/json")
+    @GetMapping(value="/member/idCheck", produces = "application/json")
     public Map<String, Object> idCheck(@RequestParam String id) {
         return memberService.idCheck(id);
         // {"res": null}
@@ -50,7 +50,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/member/emailCheck", produces = "application/json")
+    @GetMapping(value="/member/emailCheck", produces = "application/json")
     public Map<String, Object> emailCheck(@RequestParam String email) {
         return memberService.emailCheck(email);
         // {"res": null}
@@ -58,7 +58,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/member/sendAuthCode", produces = "application/json")
+    @GetMapping(value="/member/sendAuthCode", produces = "application/json")
     public Map<String, Object> sendAuthCode(@RequestParam String email) {
         return memberService.sendAuthCode(email);
     }
@@ -96,7 +96,7 @@ public class MemberController {
             // 로그인 이후 이동
             try {
                 if (url.toString().isEmpty()) {    // 로그인 이전 화면 정보가 없으면 contextPath 이동
-                    response.sendRedirect(request.getContextPath());
+                    response.sendRedirect("/");
                 } else {    // 로그인 이전 화면 정보가 있으면 해당 화면으로 이동
                     response.sendRedirect(url.toString());
                 }
@@ -150,7 +150,7 @@ public class MemberController {
 
     @GetMapping("/member/logout")
     public String logout(HttpSession session) {
-        MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
+        MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
         if (loginMember != null) {
             session.invalidate();
         }
@@ -174,7 +174,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/member/checkNowPw", produces = "application/json")
+    @PostMapping(value="/member/checkNowPw", produces="application/json")
     public Map<String, Object> checkNowPw(HttpServletRequest request) {
         String nowPw = SecurityUtils.sha256(request.getParameter("nowPw"));
         String pw = ((MemberDTO) request.getSession().getAttribute("loginMember")).getPw();
@@ -218,17 +218,19 @@ public class MemberController {
     public String createNewPw() {
         return "member/createNewPw";
     }
-
+    
     @PostMapping("/member/beforeReSignForm")
     public String beforeReSignForm() {
-        return "member/beforeReSignForm";
+    	return "member/beforeReSignForm";
     }
-
+    
     @PostMapping("/member/beforeReSign")
     public void beforeReSign(HttpServletRequest request, HttpServletResponse response) {
-        memberService.beforeReSign(request, response);
+    	memberService.beforeReSign(request, response);
     }
 
+    // nyk
+    
     @GetMapping("/member/order/list")
     public String orderList(HttpSession session, Model model, HttpServletRequest request) {
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
@@ -243,4 +245,5 @@ public class MemberController {
         return "member/order/detail";
     }
 
+	
 }

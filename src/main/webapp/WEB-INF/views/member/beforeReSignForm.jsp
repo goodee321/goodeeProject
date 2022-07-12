@@ -76,7 +76,7 @@
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 
-	<form action="${contextPath}/member/beforeReSign" method="post" class="box">
+	<form action="/member/beforeReSign" method="post" class="box">
 		<h3 class="shadow p-3 mb-5 bg-body rounded">재가입 조건</h3>
 		<div class="shadow p-3 mb-5 bg-body rounded">
 			<p class="input-group mb-3">
