@@ -141,7 +141,7 @@ h3{
     width:1280px;
     height:100%;
     object-fit:cover;
-    background-image: url("../resources/images/main.jpg");
+    background-image: url("../resources/images/main1.jpg");
     background-position: center;
     
     margin-left: 35px;
@@ -171,7 +171,7 @@ h3{
 			
 			
 			<ul class="product_list">
-				<c:forEach var="product" items="${products}" begin="1">
+				<c:forEach var="product" items="${products}">
 					<li class="item">
 							
 							<div class="thumb">

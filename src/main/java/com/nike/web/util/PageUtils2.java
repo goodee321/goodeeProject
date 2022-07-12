@@ -14,7 +14,7 @@ public class PageUtils2 {
 	   - 전체 페이지는 4페이지가 된다.
 	*****************************************************************************/
 	private int totalRecord;         // DB에서 구해온다.
-	private int recordPerPage = 10;  // 여기서 마음대로 정한다.
+	private int recordPerPage = 9;  // 여기서 마음대로 정한다.
 	private int totalPage;           // totalRecord와 recordPerPage로 계산한다.
 	
 	
