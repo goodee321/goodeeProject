@@ -123,7 +123,7 @@
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
-	<form id="ff" action="${contextPath}/member/signInPage" class="box">
+	<form id="ff" action="/member/signInPage" class="box">
 		
 		<div class="box2">
 			<h3 class="shadow p-3 mb-5 bg-body rounded">회원 서비스약관</h3>
@@ -286,6 +286,6 @@
 		
 	</form>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
- --></body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
