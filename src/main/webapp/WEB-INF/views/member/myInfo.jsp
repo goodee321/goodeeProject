@@ -134,7 +134,7 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
 	
-	<form id="f" action="${contextPath}/member/modify" method="post" class="box">
+	<form id="f" action="/member/modify" method="post" class="box">
 	
 	<h3 class="shadow p-3 mb-5 bg-body rounded">회원정보 설정</h3>
 	
@@ -145,7 +145,7 @@
 			<input type="button" value="비밀번호 변경" id="btnEditPw" class="btn btn-secondary"><br><br>
 			<script>
 				$('#btnEditPw').on('click', function(){
-					location.href = '${contextPath}/member/editPw';
+					location.href = '/member/editPw';
 				})
 			</script>
 			
@@ -201,7 +201,7 @@
 	</form>
 	
 	<div class="box2">
-		<a href="${contextPath}/member/signOut?memberNo=${loginMember.memberNo}" onclick="return confirm('정말로 회원탈퇴 하시겠습니까?')" class="btn btn-secondary">회원탈퇴하기</a>
+		<a href="/member/signOut?memberNo=${loginMember.memberNo}" onclick="return confirm('정말로 회원탈퇴 하시겠습니까?')" class="btn btn-secondary">회원탈퇴하기</a>
 		<br><br><br><br>
 	</div>
 
