@@ -75,7 +75,7 @@
     <jsp:include page="../layout/header.jsp"></jsp:include>
     
 <main class="form-signin">
-  <form id="ffff" action="${contextPath}/member/login" method="post" class="box">
+  <form id="ffff" action="/member/login" method="post" class="box">  <!-- "${contextPath}/member/login" -->
   	<div class="shadow p-3 mb-5 bg-body rounded">
 	    <img class="fs-4" src="../resources/images/logo.png" width="170px" style="padding-top: 20px; margin-bottom: -25px; margin-top: -20px;">
 	    <br><br>
@@ -102,8 +102,8 @@
   	<hr>
   </form>
 	<div>
-		<a href="${contextPath}/member/findIdForm" class="btn btn-secondary">아이디 찾기</a> | 
-		<a href="${contextPath}/member/findPwForm" class="btn btn-secondary">비밀번호 찾기</a>
+		<a href="/member/findIdForm" class="btn btn-secondary">아이디 찾기</a> | 
+		<a href="/member/findPwForm" class="btn btn-secondary">비밀번호 찾기</a>
 	</div>
 </main>
 
