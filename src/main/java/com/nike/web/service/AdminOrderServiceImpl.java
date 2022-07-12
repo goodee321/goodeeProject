@@ -144,7 +144,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
         order.setOrderPhone(request.getParameter("orderPhone"));
         order.setOrderAddr(request.getParameter("orderAddr"));
         order.setAddrDetail(request.getParameter("addrDetail"));
-        order.setOrderInvoice(Integer.parseInt(request.getParameter("orderInvoice")));
+        order.setOrderInvoice(Long.parseLong(request.getParameter("orderInvoice")));
         return adminOrderMapper.updateOrder(order);
     }
 
