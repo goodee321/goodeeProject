@@ -549,7 +549,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 									if(productQtyResult == 1 ) {				
 										out.println("<script>");
 										out.println("alert('옵션이 등록되었습니다.')");
-										out.println("location.href='" + request.getContextPath() + "/admin/product/list'");
+										out.println("location.href='" + request.getContextPath() + "/admin/product/detail?proNo=" + proNo + "'");
 										out.println("</script>");
 										out.close();
 									} else {

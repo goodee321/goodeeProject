@@ -141,10 +141,13 @@ h3{
     width:1280px;
     height:100%;
     object-fit:cover;
-    background-image: url("../resources/images/main.jpg");
+    background-image: url("../resources/images/main1.jpg");
     background-position: center;
+    margin-left: 100px;
     
-    margin-left: 35px;
+    
+    
+    
 }
 
 

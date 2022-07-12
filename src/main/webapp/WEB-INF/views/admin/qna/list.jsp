@@ -72,6 +72,9 @@
 	border-radius: 5px;
 	}
 
+	table td {
+		padding: 10px;
+	}
 	
 	table caption {
 		margin-bottom: 5px;
@@ -213,10 +216,10 @@
 									</c:if>
 								</td>
 								<td>
-									<c:if test="${qna.qnaContent.length() gt 24}">
+									<c:if test="${qna.qnaContent.length() gt 40}">
 										${qna.qnaContent.substring(0, 24)}	
 									</c:if>
-									<c:if test="${qna.qnaContent.length() lt 24}">
+									<c:if test="${qna.qnaContent.length() lt 40}">
 										${qna.qnaContent}
 									</c:if>
 								</td>
