@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: GDJ45
+=======
+Built-By: ￬ﾠﾕ￫ﾯﾼ￭ﾙﾘ
+>>>>>>> 97e9b0fc638d12fb5c13cacd099de89bd4efb78b
 Build-Jdk: 11.0.13
 Created-By: Maven Integration for Eclipse
 
