@@ -178,7 +178,7 @@ h3{
 					<li class="item">
 							
 							<div class="thumb">
-									<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="200px" height="200px"></a><!-- width="200px" height="200px" --> 
+									<a href="${contextPath}/product/detail?proNo=${product.proNo}"><img alt="이미지${product.productImageDTO.proimgNo}" src="${contextPath}/product/display?proimgNo=${product.productImageDTO.proimgNo}" width="316.5px" height="200px"></a><!-- width="200px" height="200px" -->
 							</div>
 						
 						

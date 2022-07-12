@@ -12,10 +12,13 @@
         SELECT DISTINCT P.PRO_NO,
                         P.PRO_NAME,
                         P.PRO_PRICE,
-                        PQ.PRO_DISCOUNT
+                        PQ.PRO_DISCOUNT,
+                        MAX(PI.PROIMG_NO) AS PROIMG_NO
         FROM PRODUCT P
                  INNER JOIN PRODUCT_QTY PQ
                             ON P.PRO_NO = PQ.PRO_NO
+                 INNER JOIN PRODUCT_IMAGE PI
+                            ON P.PRO_NO = PI.PRO_NO
         WHERE P.PRO_NO = #{productNo}
     </select>
 
@@ -28,27 +31,27 @@
         FROM PRODUCT P
                  INNER JOIN PRODUCT_QTY PQ
                             ON P.PRO_NO = PQ.PRO_NO
-        WHERE P.PRO_NO = #{productNo} AND
-              PQ.PRO_SIZE = #{productSize}
+        WHERE P.PRO_NO = #{productNo}
+          AND PQ.PRO_SIZE = #{productSize}
     </select>
 
     <insert id="insertOrder" parameterType="order">
         INSERT INTO ORDER_TB
-            (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT, ORDER_DELIVERY, IMP_UID, ORDER_POSTCODE, ORDER_MESSAGE)
-        VALUES
-            (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount}, #{orderPayment}, #{orderDelivery}, #{impUid}, #{orderPostcode}, #{orderMessage})
+        (ORDER_ID, MEMBER_NO, ORDER_NAME, ORDER_PHONE, ORDER_ADDR, ADDR_DETAIL, ORDER_AMOUNT, ORDER_PAYMENT,
+         ORDER_DELIVERY, IMP_UID, ORDER_POSTCODE, ORDER_MESSAGE)
+        VALUES (#{orderId}, #{memberNo}, #{orderName}, #{orderPhone}, #{orderAddr}, #{addrDetail}, #{orderAmount},
+                #{orderPayment}, #{orderDelivery}, #{impUid}, #{orderPostcode}, #{orderMessage})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="orderItemDTO">
         INSERT INTO ORDER_DETAIL
-            (ORDER_ID, PRODUCT_NO, ORDER_QTY, ORDER_PRICE)
-        VALUES
-            (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice})
+            (ORDER_ID, PRODUCT_NO, ORDER_QTY, ORDER_PRICE, PRODUCT_SIZE)
+        VALUES (#{orderId}, #{productNo}, #{orderQty}, #{orderPrice}, #{productSize})
     </insert>
 
     <select id="selectOrderCntByMemberNo" resultType="int">
         SELECT COUNT(*)
-            FROM ORDER_TB
+        FROM ORDER_TB
         WHERE MEMBER_NO = #{memberNo}
     </select>
 
@@ -60,7 +63,7 @@
                O.ORDER_AMOUNT,
                O.ORDER_STATE,
                MAX(PI.PROIMG_NO) AS PROIMG_NO,
-               COUNT(*) AS ORDER_CNT
+               COUNT(*)          AS ORDER_CNT
         FROM ORDER_TB O
                  LEFT JOIN ORDER_DETAIL OD ON O.ORDER_ID = OD.ORDER_ID
                  LEFT JOIN PRODUCT P ON OD.PRODUCT_NO = P.PRO_NO
@@ -100,24 +103,24 @@
                ADDR_DETAIL,
                ORDER_PHONE,
                ORDER_MESSAGE
-            FROM ORDER_TB
+        FROM ORDER_TB
         WHERE ORDER_ID = #{orderId}
     </select>
-    
+
     <select id="selectCountByOrderId" resultType="int">
         SELECT COUNT(*)
-            FROM ORDER_DETAIL
+        FROM ORDER_DETAIL
         WHERE ORDER_ID = #{orderId}
     </select>
 
     <select id="selectCntByMemberNo" resultType="Map">
-        SELECT
-            COUNT(*) AS COUNT
+        SELECT COUNT(*) AS COUNT
         FROM ORDER_DETAIL OD
-            JOIN ORDER_TB O ON OD.ORDER_ID = O.ORDER_ID
+            JOIN ORDER_TB O
+        ON OD.ORDER_ID = O.ORDER_ID
         WHERE O.MEMBER_NO = #{memberNo}
-            GROUP BY O.ORDER_ID
-            ORDER BY O.ORDER_DATE DESC
+        GROUP BY O.ORDER_ID
+        ORDER BY O.ORDER_DATE DESC
     </select>
 
 </mapper>

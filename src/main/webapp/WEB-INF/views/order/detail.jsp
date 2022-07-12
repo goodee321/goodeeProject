@@ -8,9 +8,9 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
 </head>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
@@ -68,21 +68,7 @@
             })
         })
 
-        $('.popup .close').click(function() {
-            $(this).parent().fadeOut(300);
-        });
-
     });
-
-    function openPop(){
-        document.getElementById("myShippingListLayer").style.display = "block";
-        document.getElementById("layer_wrap_cont").style.display = "block";
-    }
-
-    function open(){
-        document.getElementById("layer_wrap_cont").style.display = "none";
-        document.getElementById("deliveryAddLayer").style.display = "block";
-    }
 
     function execDaumPostcode() {
         new daum.Postcode({
@@ -253,10 +239,12 @@
                                                            value="${order.productSize}">
                                                     <div class="pick_add_cont">
                                                 <span class="pick_add_img">
-                                                    <a href="${contextPath}/product/detail?proNo=${order.productNo}"><img
-                                                            src="https://image.shutterstock.com/image-photo/grey-casual-sports-shoessneaker-isolated-600w-1541764289.jpg"
+                                                    <a href="${contextPath}/product/detail?proNo=${order.productNo}">
+                                                        <img
+                                                            src="${contextPath}/product/display?proimgNo=${order.proimgNo}"
                                                             width="120px" height="120px" class="middle"
-                                                            class="imgsize-s"/></a>
+                                                            class="imgsize-s"/>
+                                                    </a>
                                                 </span>
                                                         <div class="pick_add_info">
                                                             <em><a href="${contextPath}/product/detail?proNo=${order.productNo}">${order.proName}</a></em>
@@ -475,6 +463,13 @@
                                                                            class="choice_s"
                                                                            style="padding-right: 10px;"><span></span>카카오페이</label>
                                                                 </li>
+                                                                <li id="settlekindType_pb">
+                                                                    <input type="radio" id="settleKind_pb"
+                                                                           name="payment"
+                                                                           value="tosspay"/>
+                                                                    <label for="settleKind_pb"
+                                                                           class="choice_s"><span></span>토스</label>
+                                                                </li>
                                                                 <li id="settlekindType_pc">
                                                                     <input type="radio" id="settleKind_pc"
                                                                            name="payment"
@@ -483,13 +478,6 @@
                                                                            class="choice_s"
                                                                            style="padding-right: 10px;"><span></span>신용카드</label>
                                                                 </li>
-                                                                <%--<li id="settlekindType_pb">
-                                                                    <input type="radio" id="settleKind_pb"
-                                                                           name="payment"
-                                                                           value="settle"/>
-                                                                    <label for="settleKind_pb"
-                                                                           class="choice_s"><span></span>세틀뱅크</label>
-                                                                </li>--%>
                                                             </ul>
                                                         </div>
                                                     </dd>
@@ -654,70 +642,6 @@
                         <a href="javascript:closePop()" class="ly_close layer_close"><i class="fa-solid fa-x"></i></a>
                     </div>
                     <div id="deliveryAddLayer" class="layer_wrap dn" style="position: absolute; margin: 0px; top: 246px; left: 41.5px; display: none">
-                        <form name="frmDeliveryAddressRegist" id="frmDeliveryAddressRegist"
-                              action="../order/layer_shipping_ps.php" method="post" novalidate="novalidate">
-                            <input type="hidden" name="mode" value="shipping_regist">
-                            <input type="hidden" name="sno" value="">
-                            <input type="hidden" name="shippingNo" value="">
-                            <div class="ly_tit">
-                                <h4>나의 배송지 관리</h4>
-                            </div>
-                            <div class="ly_cont">
-                                <div class="scroll_box">
-                                    <h5>배송지 등록</h5>
-                                    <div class="left_table_type">
-                                        <table>
-                                            <colgroup>
-                                                <col style="width:20%;">
-                                                <col style="width:80%;">
-                                            </colgroup>
-                                            <tbody>
-                                            <tr>
-                                                <th scope="row"><span class="important">배송지 별칭</span></th>
-                                                <td><input type="text" name="shippingTitle" value=""></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><span class="important">주문자 성명</span></th>
-                                                <td><input type="text" name="shippingName" maxlength="20" value=""></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><span class="important">배송지 주소</span></th>
-                                                <td class="member_address">
-                                                    <div class="address_postcode">
-                                                        <input type="text" name="shippingZonecode" value=""
-                                                               readonly="readonly">
-                                                        <button type="button"
-                                                                onclick="gd_postcode_search('shippingZonecode', 'shippingAddress', 'shippingZipcode');"
-                                                                class="btn_post_search">우편번호검색
-                                                        </button>
-                                                        <input type="hidden" name="shippingZipcode" value="">
-                                                    </div>
-                                                    <div class="address_input">
-                                                        <input type="text" name="shippingAddress" value=""
-                                                               readonly="readonly">
-                                                        <input type="text" name="shippingAddressSub" value="">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><span class="important">휴대폰번호</span></th>
-                                                <td>
-                                                    <input type="text" id="shippingMobile" name="shippingCellPhone"
-                                                           value="">
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="btn_center_box">
-                                    <button type="button" class="btn_ly_cancel layer_close"><strong>취소</strong></button>
-                                    <button type="submit" class="btn_ly_save"><strong>저장</strong></button>
-                                </div>
-                            </div>
-                            <a href="javascript:closePop2()" class="ly_close layer_close"><img
-                                    src="/data/skin/front/dalbame_pc/img/common/layer/btn_layer_close.png" alt="닫기"></a>
-                        </form>
                     </div>
                 </div>
             </div>

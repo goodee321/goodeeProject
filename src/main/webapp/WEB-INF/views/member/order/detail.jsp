@@ -67,8 +67,9 @@
                                 width="70" class="middle"/></a>
                     </span>
                                             <div class="pick_add_info">
-                                                <a href="${contextPath}/product/detail?proNo=${detail.productNo}"><em>${detail.proName}</em></a>
+                                                <a href="${contextPath}/product/detail?proNo=${detail.productNo}"><em>${detail.proName} / ${detail.productSize}</em></a>
                                             </div>
+
                                         </div>
                                     </td>
                                     <td><strong><fmt:formatNumber value="${detail.proPrice}" pattern="#,##0"/>원</strong>
