@@ -56,7 +56,7 @@
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 
-	<form action="${contextPath}/member/findId" class="box">
+	<form action="/member/findId" class="box">
 		<div class="shadow p-3 mb-5 bg-body rounded">
 			<h3>아이디 찾기</h3>
 		</div>
