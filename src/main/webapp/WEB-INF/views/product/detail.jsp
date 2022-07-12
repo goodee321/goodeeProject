@@ -31,6 +31,7 @@
 		imageShow();
 		change_qty2();
 		fnOrder();
+		fnOrders();
 		fnAdd();
 		fnFileName();
 		fnReviewImage();
@@ -280,7 +281,7 @@
 						}
 					} else if (res == 0) {
 						if (confirm("로그인이 필요한 기능입니다. 로그인 할까요?")) {
-							location.href = '${contextPath}/member/loginPage?url=${contextPath}/Product/detailPage';
+							location.href = '${contextPath}/member/loginPage?url=${contextPath}/product/detail?proNo=${detail.proNo}';
 						}
 					} else {
 						alert("장바구니 담기에 실패했습니다. 새로고침 후 다시 시도해주세요.");
@@ -308,6 +309,23 @@
             $(".order_form").submit();
         })
     }
+
+	function fnOrders() {
+		$(".testOrder").on('click', function () {
+			fnSizeCheck();
+			if(${loginMember == null}){
+				if(confirm('로그인이 필요한 기능입니다. 로그인 할까요?')){
+					location.href = '${contextPath}/member/loginPage?url=${contextPath}/product/detail?proNo=${detail.proNo}';
+				}
+				return false;
+			}
+			let cartQty = $(".cartQty").val();
+			$(".order_forms").find("input[name='cartQty']").val(cartQty);
+			let proSize = $("#proSize").val();
+			$(".order_forms").find("input[name='productSize']").val(proSize);
+			$(".order_forms").submit();
+		})
+	}
 	
 	
 	
@@ -358,7 +376,7 @@
 		border: 1px solid white;
 		text-align: center;
 		text-decoration: none;  /* 링크 밑줄 없애기 */
-		color: gray; */
+		color: gray;
 	}
 	.link:hover {
 		border: 1px solid orange;
@@ -709,12 +727,18 @@
 	                    </h2>
 	                    <button type="button" class="btn btn-light" style="margin:10px 1px 1px 575px; background: #212529; color: #fff; border-radius: 5px;">장바구니 담기</button><br>
 	                    <button type="button" id="iamportPayment" class="btn btn-dark" style="margin:10px 1px 1px 610px;">구매하기</button><br>
+						<button class="testOrder">..</button>
 	                    <input type="hidden" value="${detail.proPrice}" id="proPrice">
 	                    
 						<form class="order_form" action="${contextPath}/order/orderPage/${loginMember.memberNo}" method="get">
 							<input type="hidden" name="productNo" value="${detail.proNo}">
 							<input type="hidden" name="cartQty" value="">
 				            <input type="hidden" name="productSize" value="">
+						</form>
+						<form class="order_forms" action="${contextPath}/order/orderPages/${loginMember.memberNo}" method="get">
+							<input type="hidden" name="productNo" value="${detail.proNo}">
+							<input type="hidden" name="cartQty" value="">
+							<input type="hidden" name="productSize" value="">
 						</form>
 	                </div><br>
 	                
@@ -845,10 +869,9 @@
 	             </div>
 	             <button class="btn-review" style="background: #212529; color: #fff; margin: 5px 1px 0px 350px; border-radius: 5px;">작성완료</button>
 	         </form>
-	     	</div>   
-	
-	
-	
+	     	</div>
+
+
+		   <jsp:include page="../layout/Footer.jsp"></jsp:include>
 </body>
-	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>

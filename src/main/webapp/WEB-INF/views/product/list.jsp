@@ -164,7 +164,7 @@ h3{
 			<h3>제품 목록</h3>
 			
 			<ul class="product_list">
-				<c:forEach var="product" items="${products}" begin="1">
+				<c:forEach var="product" items="${products}">
 					<li class="item">
 							
 							<div class="thumb">

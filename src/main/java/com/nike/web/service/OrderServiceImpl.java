@@ -234,7 +234,6 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderItemDTO> productInfo(List<OrderItemDTO> order) {
 
         List<OrderItemDTO> products = new ArrayList<>();
-        System.out.println(products);
         for (OrderItemDTO orders : order) {
             OrderItemDTO productInfo = orderMapper.selectProductByNo(orders.getProductNo());
             productInfo.setProductNo(orders.getProductNo());
@@ -243,8 +242,10 @@ public class OrderServiceImpl implements OrderService {
             productInfo.setProductSize(orders.getProductSize());
             productInfo.initSaleTotal();
             products.add(productInfo);
+            System.out.println(products);
         }
         return products;
+
     }
 
     @Override
@@ -255,13 +256,10 @@ public class OrderServiceImpl implements OrderService {
         int cartQty = Integer.parseInt(request.getParameter("cartQty"));
         int productSize = Integer.parseInt(request.getParameter("productSize"));
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("productSize", productSize);
-        map.put("productNo", productNo);
-
-        OrderItemDTO productInfo = orderMapper.selectProductsByNo(map);
-
+        OrderItemDTO productInfo = orderMapper.selectProductByNo(productNo);
+        productInfo.setProductNo(productNo);
         productInfo.setCartQty(cartQty);
+        productInfo.setProductSize(productSize);
         productInfo.initSaleTotal();
         product.add(productInfo);
         return product;

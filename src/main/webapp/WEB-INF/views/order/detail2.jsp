@@ -176,7 +176,7 @@
                 pg: $("input[name='payment']:checked").val(),
                 merchant_uid: data.merchant_uid,
                 name: data.orderName,
-                amount: data.orderAmount,
+                amount: 100,
                 buyer_email: "${loginMember.email}",
                 buyer_name: $("#orderName").val(),
                 buyer_tel: $("#orderPhone").val(),
