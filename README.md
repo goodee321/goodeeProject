@@ -1,5 +1,5 @@
-# goodeeProject
-쇼핑몰 제작
+# goodeeProject 3조
+신발 쇼핑몰 NiShoe 제작
 
 6/14 첫 업로드
 
