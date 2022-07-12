@@ -155,7 +155,7 @@
 	
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	
-	<form id="f" action="${contextPath}/member/reSignIn" method="post" class="box">
+	<form id="f" action="/member/reSignIn" method="post" class="box">
 	
 	<h3 class="shadow p-3 mb-5 bg-body rounded">재가입 페이지</h3>
 	
