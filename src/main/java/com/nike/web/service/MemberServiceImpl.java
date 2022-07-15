@@ -69,8 +69,8 @@ public class MemberServiceImpl implements MemberService {
         props.put("mail.smtp.starttls.enable", "true"); // TLS 허용한다.
 
         // 메일을 보내는 사용자 정보
-        final String USERNAME = "ejrrn7437@gmail.com";
-        final String PASSWORD = "jgktzrribdatykjw"; // 발급 받은 앱 비밀번호
+        final String USERNAME = "qkekrkwk1234@gmail.com";
+        final String PASSWORD = "mbpzsucprufvccnb"; // 발급 받은 앱 비밀번호
 
         // 사용자 정보를 javax.mail.Session에 저장
         Session session = Session.getInstance(props, new Authenticator() {
