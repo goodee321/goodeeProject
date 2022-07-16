@@ -19,6 +19,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+db.properties
 
 # External tool builders
 .externalToolBuilders/
