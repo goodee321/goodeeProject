@@ -7,6 +7,13 @@ pom.properties
 .classpath
 MANIFEST.MF
 
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+db.properties
+
 ### Eclipse ###
 .metadata
 bin/
@@ -15,11 +22,11 @@ tmp/
 *.bak
 *.swp
 *~.nib
+db.properties
 local.properties
 .settings/
 .loadpath
 .recommenders
-db.properties
 
 # External tool builders
 .externalToolBuilders/
